@@ -51,6 +51,33 @@ route.post("/login", async (req, res) => {
     res.status(400).json({ message: error });
   }
 });
+
+route.patch("/update/:id", async (req, res) => {
+  try {
+    const user = await User.updateOne(
+      { _id: req.params.id },
+      {
+        $set: {
+          ...req.body
+        }
+      }
+    );
+    res.status(201).json({ user: user, message: "Successfully Updated Profile!" });
+  } catch (error) {
+    res.status(400).json(error);
+  }
+});
+
+route.get("/", async (req, res) => {
+  try {
+    const user = await User.find();
+    res
+      .status(201)
+      .json({ user: user });
+  } catch (error) {
+    res.status(400).json(error);
+  }
+});
 route.get("/", (req, res) => {
   res.send("Server is running ");
 });
