@@ -11,6 +11,7 @@ const userSchema = new mongoose.Schema({
   businessPhone: { type: Number, minlength: 7, required: false },
   webAddress: { type: String, minlength: 3, required: false },
   title: { type: String, minlength: 5, required: false },
-  affiliateId: { type: String, required: false }
+  affiliateId: { type: String, required: false },
+  url: { type: String, required: false }
 })
 module.exports = mongoose.model('User', userSchema)

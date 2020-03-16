@@ -24,7 +24,7 @@ route.post("/register", async (req, res) => {
     const register = await user.save();
     res
       .status(201)
-      .json({ email: user.email, message: "Successfully registered!" });
+      .json({ register, message: "Successfully registered!" });
   } catch (error) {
     res.status(400).json(error);
   }

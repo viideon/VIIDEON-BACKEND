@@ -1,15 +1,20 @@
 const route = require("express").Router();
 const Video = require('../models/videos');
+const User = require('../models/user');
+const { sendEmail } = require('../helpers/email');
 
 route.post("/", async (req, res) => {
   try {
-    const Url = await Video.findOne({ url: req.body.url });
-    if (Url) res.status(400).json({message: "URL is already taken"});
+    const url = await Video.findOne({ url: req.body.url });
+    if (url) res.status(400).json({ message: "URL is already taken" });
     const video = new Video({
-     ...req.body
+      ...req.body
     });
     video.save();
-    res.status(201).json({ video: video, message: "Successfully Updated!" });
+    const user = await User.findOne({ _id: req.body.userId });
+    if (!user) res.status(400).send("user is not fined");
+    await sendEmail(video.url, user, req, res);
+    res.status(201).json({ video: video, message: "Successfully Updated! and email sent" });
   } catch (error) {
     res.status(400).json(error);
   }
@@ -18,10 +23,10 @@ route.post("/", async (req, res) => {
 route.get("/", async (req, res) => {
   try {
     const videos = await Video.find();
-    if (!videos) res.status(400).json({message: "No Video Available" });
+    if (!videos) res.status(400).json({ message: "No Video Available" });
     res
       .status(201)
-      .json({message: videos });
+      .json({ message: videos });
   } catch (error) {
     res.status(400).json(error);
   }
