@@ -1,15 +1,15 @@
 const nodemailer = require('nodemailer');
 const transporter = nodemailer.createTransport({
-    service:'gmail',
-    secure:false,
-    auth: {
-        user: process.env.FROM_EMAIL,
-        pass: process.env.EMAIL_PASSWORD
-    }
+  service: 'gmail',
+  secure: false,
+  auth: {
+    user: process.env.FROM_EMAIL,
+    pass: process.env.EMAIL_PASSWORD
+  }
 });
-const sendEmail = async (url ,user,req, res) => {
+const sendEmail = async (url, recieverEmail, req, res) => {
   const mailOptions = {
-    to: user.email,
+    to: recieverEmail,
     from: process.env.FROM_EMAIL,
     subject: 'Video Url',
     text: `Hi This is The Video ${url}  code\n 

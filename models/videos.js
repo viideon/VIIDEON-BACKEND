@@ -5,6 +5,7 @@ const videoSchema = new mongoose.Schema({
   thumbnail: { type: String, required: true },
   title: { type: String, required: true },
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-  date: { type: Date, default: Date.now }
+  date: { type: Date, default: Date.now },
+  recieverEmail: { type: String, required: true }
 })
 module.exports = mongoose.model('Video', videoSchema)

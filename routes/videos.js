@@ -11,9 +11,7 @@ route.post("/", async (req, res) => {
       ...req.body
     });
     video.save();
-    const user = await User.findOne({ _id: req.body.userId });
-    if (!user) res.status(400).send("user is not fined");
-    await sendEmail(video.url, user, req, res);
+    await sendEmail(video.url, req.body.recieverEmail, req, res);
     res.status(201).json({ video: video, message: "Successfully Updated! and email sent" });
   } catch (error) {
     res.status(400).json(error);
