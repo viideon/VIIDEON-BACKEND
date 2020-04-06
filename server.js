@@ -1,19 +1,19 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const cors=require("cors")
+const cors = require("cors");
 
 //config
-require('dotenv').config()
+require("dotenv").config();
 // dependencies
 const user = require("./routes/user");
-const videos = require('./routes/videos');
+const videos = require("./routes/videos");
 mongoose.connect(
   "mongodb+srv://username:username@myfirstcluster-8ccsm.mongodb.net/test22?retryWrites=true&w=majority",
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    useCreateIndex: false,
+    useCreateIndex: false
   },
   () => {
     console.log("connected to db");
@@ -21,12 +21,14 @@ mongoose.connect(
 );
 
 //middlewares
-app.use(cors())
-app.use(express.json())
+app.use(cors());
+app.use(express.json());
 //routes
 app.use("/user", user);
-app.use('/video',videos);
-app.get('/',(req,res)=>{res.send("Root place")})
+app.use("/video", videos);
+app.get("/", (req, res) => {
+  res.send("Root place");
+});
 
 const port = process.env.PORT || 3008;
 app.listen(port, () => {
