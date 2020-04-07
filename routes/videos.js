@@ -1,7 +1,7 @@
 const route = require("express").Router();
 const Video = require("../models/videos");
-// const User = require("../models/user");
 const { sendEmail } = require("../helpers/email");
+const videoService = require("../services/videoService");
 
 route.post("/", async (req, res) => {
   try {
@@ -44,6 +44,19 @@ route.get("/user", async (req, res) => {
     res.status(200).json({ message: videos });
   } catch (error) {
     res.status(400).json(error);
+  }
+});
+route.patch("/:id", async (req, res) => {
+  try {
+    const video = await videoService.updateVideo(req.params.id, req.body);
+    if (video) {
+      return res.status(200).json({
+        message: video
+      });
+    }
+    res.status(400).json({ message: "video update failed" });
+  } catch (error) {
+    res.status(400).json({ message: error });
   }
 });
 route.get("/", (req, res) => {
