@@ -27,11 +27,21 @@ route.post("/", async (req, res) => {
 });
 
 route.get("/", async (req, res) => {
-  console.log("route hit");
   try {
     const videos = await Video.find();
+
     if (!videos) res.status(400).json({ message: "No Video Available" });
-    res.status(201).json({ message: videos });
+    res.status(200).json({ message: videos });
+  } catch (error) {
+    res.status(400).json(error);
+  }
+});
+route.get("/user", async (req, res) => {
+  let id = req.query.id;
+  try {
+    const videos = await Video.find({ userId: id });
+    if (!videos) res.status(400).json({ message: "No video available" });
+    res.status(200).json({ message: videos });
   } catch (error) {
     res.status(400).json(error);
   }

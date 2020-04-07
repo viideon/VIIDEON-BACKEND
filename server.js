@@ -8,6 +8,7 @@ require("dotenv").config();
 // dependencies
 const user = require("./routes/user");
 const videos = require("./routes/videos");
+
 mongoose.connect(
   "mongodb+srv://username:username@myfirstcluster-8ccsm.mongodb.net/test22?retryWrites=true&w=majority",
   {
