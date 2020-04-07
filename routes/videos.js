@@ -46,12 +46,20 @@ route.get("/user", async (req, res) => {
     res.status(400).json(error);
   }
 });
-route.patch("/:id", async (req, res) => {
+route.patch("/", async (req, res) => {
+  let videoId = req.body.id;
+  delete req.body.id;
+
   try {
-    const video = await videoService.updateVideo(req.params.id, req.body);
+    if (!videoId) {
+      return res.status(400).json({
+        message: "video id not provided"
+      });
+    }
+    const video = await videoService.updateVideo(videoId, req.body);
     if (video) {
       return res.status(200).json({
-        message: video
+        message: "video updated"
       });
     }
     res.status(400).json({ message: "video update failed" });
