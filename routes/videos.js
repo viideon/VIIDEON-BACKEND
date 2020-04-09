@@ -59,7 +59,8 @@ route.patch("/", async (req, res) => {
     const video = await videoService.updateVideo(videoId, req.body);
     if (video) {
       return res.status(200).json({
-        message: "video updated"
+        message: "video updated",
+        video: video
       });
     }
     res.status(400).json({ message: "video update failed" });
