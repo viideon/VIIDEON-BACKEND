@@ -12,14 +12,17 @@ const sendEmail = async (url, recieverEmail, req, res) => {
     to: recieverEmail,
     from: process.env.FROM_EMAIL,
     subject: "Video Url",
-    text: `Hi This is The Video ${url}  code\n 
-                Please Click the Code and Check `
+    html: `<h5>Hi This is The Video ${url}  code\n 
+                Please Click the Code and Check </h5>  `
   };
   try {
-    await transporter.sendMail(mailOptions);
-    return res.status(200).json({ message: "email sent sucessfully" });
+    const response = await transporter.sendMail(mailOptions);
+    if (response.error) {
+      return false;
+    }
+    return true;
   } catch (err) {
-    return res.status(500).json({ message: err.message });
+    return false;
   }
 };
 

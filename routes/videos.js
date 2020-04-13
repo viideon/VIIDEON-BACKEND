@@ -3,22 +3,38 @@ const Video = require("../models/videos");
 const { sendEmail } = require("../helpers/email");
 const videoService = require("../services/videoService");
 
+route.post("/email", async (req, res) => {
+  try {
+    if (req.body.recieverEmail === "") {
+      return res.status(400).json({ message: "no email provided" });
+    }
+
+    const result = await sendEmail(
+      req.body.url,
+      req.body.recieverEmail,
+      req,
+      res
+    );
+    if (result === false) {
+      return res.status(400).json({ message: "fail to send email" });
+    }
+    return res.status(200).json({ message: "email sent sucessfully" });
+  } catch (error) {
+    res.status(400).json(error);
+  }
+});
+
 route.post("/", async (req, res) => {
   try {
     const url = await Video.findOne({ url: req.body.url });
-
     if (url) return res.status(400).json({ message: "URL is already taken" });
     const video = new Video({
       ...req.body
     });
     video.save();
-    if (req.body.recieverEmail !== "") {
-      await sendEmail(video.url, req.body.recieverEmail, req, res);
-    } else {
-      return res
-        .status(201)
-        .json({ video: video, message: "sucessfully saved" });
-    }
+    return res
+      .status(201)
+      .json({ video: video, message: "video sucessfully saved" });
   } catch (error) {
     res.status(400).json(error);
   }
@@ -69,12 +85,13 @@ route.patch("/", async (req, res) => {
   }
 });
 
-route.delete("/video", async (res, res) => {
+route.delete("/", async (req, res) => {
   let videoId = req.body.videoId;
   let userId = req.body.userId;
 
   try {
     const res = await videoService.deleteVideo(videoId, userId);
+    console.log("response", res);
     if (res) {
       return res.status(200).json({
         message: "video deleted"
