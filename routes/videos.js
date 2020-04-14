@@ -8,17 +8,17 @@ route.post("/email", async (req, res) => {
     if (req.body.recieverEmail === "") {
       return res.status(400).json({ message: "no email provided" });
     }
-
     const result = await sendEmail(
       req.body.url,
       req.body.recieverEmail,
       req,
       res
     );
-    if (result === false) {
+    if (result === true) {
+      return res.status(200).json({ message: "email sent sucessfully" });
+    } else {
       return res.status(400).json({ message: "fail to send email" });
     }
-    return res.status(200).json({ message: "email sent sucessfully" });
   } catch (error) {
     res.status(400).json(error);
   }
@@ -91,7 +91,7 @@ route.delete("/", async (req, res) => {
 
   try {
     const res = await videoService.deleteVideo(videoId, userId);
-    console.log("response", res);
+
     if (res) {
       return res.status(200).json({
         message: "video deleted"

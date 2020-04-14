@@ -12,8 +12,8 @@ const sendEmail = async (url, recieverEmail, req, res) => {
     to: recieverEmail,
     from: process.env.FROM_EMAIL,
     subject: "Video Url",
-    html: `<h5>Hi This is The Video ${url}  code\n 
-                Please Click the Code and Check </h5>  `
+    html: `<p>Hi This is The Video ${url}  code\n 
+                Please Click the Code and Check </p>  `
   };
   try {
     const response = await transporter.sendMail(mailOptions);
