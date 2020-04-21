@@ -1,17 +1,17 @@
 const User = require("../models/user");
-const { hashPassword } = require("./../helpers/helper");
+// const { hashPassword } = require("./../helpers/helper");
 
-const createUser = async user => {
-  const hash = await hashPassword(user.password);
-  const user = new User({
-    email: user.email,
-    firstName: user.firstName,
-    lastName: user.lastName,
-    userName: user.userName,
-    password: hash
-  });
-  return user.save();
-};
+// const createUser = async newUser => {
+//   const hash = await hashPassword(newUser.password);
+//   const user = new User({
+//     email: newUser.email,
+//     firstName: newUser.firstName,
+//     lastName: newUser.lastName,
+//     userName: newUser.userName,
+//     password: hash
+//   });
+//   return user.save();
+// };
 const findUserByEmail = email => {
   return User.findOne({ email: email });
 };
@@ -28,7 +28,6 @@ const getAllUsers = () => {
   return User.find();
 };
 module.exports = {
-  createUser,
   findUserByEmail,
   updateUser,
   getAllUsers

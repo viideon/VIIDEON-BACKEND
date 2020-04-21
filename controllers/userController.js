@@ -9,9 +9,9 @@ const userService = require("../services/userService");
 module.exports.registerUser = async (req, res) => {
   try {
     const person = await userService.findUserByEmail(req.body.email);
-    if (person) res.status(400).send("Email already registered!");
+    if (person) return res.status(400).send("Email already registered!");
     const userName = await User.findOne({ userName: req.body.userName });
-    if (userName) res.status(400).send("Username is already taken");
+    if (userName) return res.status(400).send("Username is already taken");
     const hash = await hashPassword(req.body.password);
     const user = new User({
       email: req.body.email,
@@ -30,14 +30,14 @@ module.exports.registerUser = async (req, res) => {
 module.exports.login = async (req, res) => {
   try {
     const user = await userService.findUserByEmail(req.body.email);
-    if (!user) res.status(404).send("Email is not registered!");
+    if (!user) return res.status(404).send("Email is not registered!");
     const passwordCheck = await comparePassword(
       req.body.password,
       user.password
     );
-    if (!passwordCheck) res.status(400).send("Password do not match");
+    if (!passwordCheck) return res.status(400).send("Password do not match");
     const token = generateToken(user);
-    if (!token) res.status(500).send("Error in generating token");
+    if (!token) return res.status(500).send("Error in generating token");
     res
       .status(201)
       .json({ user: user, token, message: "Successfully logged in" });
