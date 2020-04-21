@@ -7,7 +7,7 @@ const transporter = nodemailer.createTransport({
     pass: process.env.EMAIL_PASSWORD
   }
 });
-const sendEmail = async (url, recieverEmail, req, res) => {
+const sendEmail = async (url, recieverEmail) => {
   const mailOptions = {
     to: recieverEmail,
     from: process.env.FROM_EMAIL,
@@ -17,10 +17,7 @@ const sendEmail = async (url, recieverEmail, req, res) => {
   };
   try {
     const response = await transporter.sendMail(mailOptions);
-    if (response.error) {
-      return false;
-    }
-    return true;
+    return response;
   } catch (err) {
     return false;
   }

@@ -1,19 +1,11 @@
 const User = require("../models/user");
-// const { hashPassword } = require("./../helpers/helper");
 
-// const createUser = async newUser => {
-//   const hash = await hashPassword(newUser.password);
-//   const user = new User({
-//     email: newUser.email,
-//     firstName: newUser.firstName,
-//     lastName: newUser.lastName,
-//     userName: newUser.userName,
-//     password: hash
-//   });
-//   return user.save();
-// };
 const findUserByEmail = email => {
   return User.findOne({ email: email });
+};
+
+const findByNameEmail = (email, name) => {
+  return User.findOne({ $or: [{ email: email }, { userName: name }] });
 };
 
 const updateUser = (userId, user) => {
@@ -30,5 +22,6 @@ const getAllUsers = () => {
 module.exports = {
   findUserByEmail,
   updateUser,
-  getAllUsers
+  getAllUsers,
+  findByNameEmail
 };

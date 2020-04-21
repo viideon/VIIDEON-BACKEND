@@ -7,16 +7,11 @@ module.exports.emailVideo = async (req, res) => {
     if (req.body.recieverEmail === "") {
       return res.status(400).json({ message: "no email provided" });
     }
-    const result = await sendEmail(
-      req.body.url,
-      req.body.recieverEmail,
-      req,
-      res
-    );
-    if (result === true) {
-      return res.status(200).json({ message: "email sent sucessfully" });
-    } else {
+    const result = await sendEmail(req.body.url, req.body.recieverEmail);
+    if (result.error || result === false) {
       return res.status(400).json({ message: "fail to send email" });
+    } else {
+      return res.status(200).json({ message: "email sent sucessfully" });
     }
   } catch (error) {
     res.status(400).json(error);
@@ -25,8 +20,6 @@ module.exports.emailVideo = async (req, res) => {
 
 module.exports.postVideo = async (req, res) => {
   try {
-    // const url = await Video.findOne({ url: req.body.url });
-    // if (url) return res.status(400).json({ message: "URL is already taken" });
     const video = new Video({
       ...req.body
     });
