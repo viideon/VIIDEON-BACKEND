@@ -4,10 +4,11 @@ const {
   comparePassword,
   generateToken
 } = require("./../helpers/helper");
+const userService = require("../services/userService");
 
 module.exports.registerUser = async (req, res) => {
   try {
-    const person = await User.findOne({ email: req.body.email });
+    const person = await userService.findUserByEmail(req.body.email);
     if (person) res.status(400).send("Email already registered!");
     const userName = await User.findOne({ userName: req.body.userName });
     if (userName) res.status(400).send("Username is already taken");
@@ -28,19 +29,18 @@ module.exports.registerUser = async (req, res) => {
 
 module.exports.login = async (req, res) => {
   try {
-    const user = await User.findOne({ email: req.body.email });
+    const user = await userService.findUserByEmail(req.body.email);
     if (!user) res.status(404).send("Email is not registered!");
     const passwordCheck = await comparePassword(
       req.body.password,
       user.password
     );
-
-    if (!passwordCheck) res.status(400).send("Password donot match");
+    if (!passwordCheck) res.status(400).send("Password do not match");
     const token = generateToken(user);
     if (!token) res.status(500).send("Error in generating token");
     res
       .status(201)
-      .json({ user: user, token, message: "Successfully generated User" });
+      .json({ user: user, token, message: "Successfully logged in" });
   } catch (error) {
     res.status(400).json({ message: error });
   }
@@ -48,14 +48,7 @@ module.exports.login = async (req, res) => {
 
 module.exports.updateUser = async (req, res) => {
   try {
-    const user = await User.updateOne(
-      { _id: req.params.id },
-      {
-        $set: {
-          ...req.body
-        }
-      }
-    );
+    const user = await userService.updateUser(req.params.id, req.body);
     res
       .status(201)
       .json({ user: user, message: "Successfully Updated Profile!" });
@@ -66,8 +59,8 @@ module.exports.updateUser = async (req, res) => {
 
 module.exports.getAllUsers = async (req, res) => {
   try {
-    const user = await User.find();
-    res.status(201).json({ user: user });
+    const users = await userService.getAllUsers();
+    res.status(201).json({ user: users });
   } catch (error) {
     res.status(400).json(error);
   }

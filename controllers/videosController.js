@@ -25,8 +25,8 @@ module.exports.emailVideo = async (req, res) => {
 
 module.exports.postVideo = async (req, res) => {
   try {
-    const url = await Video.findOne({ url: req.body.url });
-    if (url) return res.status(400).json({ message: "URL is already taken" });
+    // const url = await Video.findOne({ url: req.body.url });
+    // if (url) return res.status(400).json({ message: "URL is already taken" });
     const video = new Video({
       ...req.body
     });
@@ -41,7 +41,7 @@ module.exports.postVideo = async (req, res) => {
 
 module.exports.getAllVideos = async (req, res) => {
   try {
-    const videos = await Video.find();
+    const videos = await videoService.getAllVideos();
     if (!videos) res.status(400).json({ message: "No Video Available" });
     res.status(200).json({ message: videos });
   } catch (error) {
@@ -52,7 +52,7 @@ module.exports.getAllVideos = async (req, res) => {
 module.exports.getUserVideos = async (req, res) => {
   let id = req.query.id;
   try {
-    const videos = await Video.find({ userId: id });
+    const videos = await videoService.findUserVideo(id);
     if (!videos) res.status(400).json({ message: "No video available" });
     res.status(200).json({ message: videos });
   } catch (error) {
