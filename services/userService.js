@@ -9,11 +9,12 @@ const findByNameEmail = (email, name) => {
 };
 
 const updateUser = (userId, user) => {
-  return User.updateOne(
+  return User.findOneAndUpdate(
     { _id: userId },
     {
       $set: { ...user }
-    }
+    },
+    { new: true }
   );
 };
 const getAllUsers = () => {

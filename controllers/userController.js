@@ -53,6 +53,10 @@ module.exports.login = async (req, res) => {
 module.exports.updateUser = async (req, res) => {
   try {
     const user = await userService.updateUser(req.params.id, req.body);
+    if (!user) {
+      res.status(400).json({ message: "Can't update profile" });
+      return;
+    }
     res
       .status(201)
       .json({ user: user, message: "Successfully Updated Profile!" });
