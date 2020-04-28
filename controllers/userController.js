@@ -15,7 +15,13 @@ module.exports.registerUser = async (req, res) => {
     if (person && person.userName === userName)
       return res.status(400).send("Username is already taken");
     const hash = await hashPassword(password);
-    await createNewUser(email, firstName, lastName, userName, hash);
+    const register = await userService.createNewUser(
+      email,
+      firstName,
+      lastName,
+      userName,
+      hash
+    );
     res.status(201).json({ register, message: "Successfully registered!" });
   } catch (error) {
     res.status(400).json(error);
