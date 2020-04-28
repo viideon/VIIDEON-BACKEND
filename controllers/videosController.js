@@ -7,7 +7,7 @@ module.exports.emailVideo = async (req, res) => {
     if (req.body.recieverEmail === "") {
       return res.status(400).json({ message: "no email provided" });
     }
-    const result = await sendEmail(req.body.url, req.body.recieverEmail);
+    const result = await sendEmail(req.body.id, req.body.recieverEmail);
     if (result.error || result === false) {
       return res.status(400).json({ message: "fail to send email" });
     } else {
@@ -90,5 +90,25 @@ module.exports.deleteVideo = async (req, res) => {
     });
   } catch (error) {
     res.status(400).json({ message: error });
+  }
+};
+
+module.exports.getSingleVideo = async (req, res) => {
+  let id = req.query.id;
+
+  try {
+    const video = await videoService.findVideoById(id);
+    if (video) {
+      res.status(200).json({
+        status: true,
+        video: video
+      });
+    } else {
+      res.status(404).json({
+        status: false
+      });
+    }
+  } catch (err) {
+    res.status(400).json({ error: err });
   }
 };

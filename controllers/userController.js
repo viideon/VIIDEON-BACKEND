@@ -8,23 +8,14 @@ const userService = require("../services/userService");
 
 module.exports.registerUser = async (req, res) => {
   try {
-    const person = await userService.findByNameEmail(
-      req.body.email,
-      req.body.userName
-    );
-    if (person && person.email === req.body.email)
+    const { email, firstName, lastName, userName, password } = req.body;
+    const person = await userService.findByNameEmail(email, userName);
+    if (person && person.email === email)
       return res.status(400).send("Email already registered!");
-    if (person && person.userName === req.body.userName)
+    if (person && person.userName === userName)
       return res.status(400).send("Username is already taken");
-    const hash = await hashPassword(req.body.password);
-    const user = new User({
-      email: req.body.email,
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      userName: req.body.userName,
-      password: hash
-    });
-    const register = await user.save();
+    const hash = await hashPassword(password);
+    await createNewUser(email, firstName, lastName, userName, hash);
     res.status(201).json({ register, message: "Successfully registered!" });
   } catch (error) {
     res.status(400).json(error);

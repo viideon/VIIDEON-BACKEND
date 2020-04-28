@@ -7,5 +7,6 @@ router.route("/").patch(videosController.updateVideo);
 router.route("/").delete(videosController.deleteVideo);
 router.route("/email").post(videosController.emailVideo);
 router.route("/user").get(videosController.getUserVideos);
+router.route("/single").get(videosController.getSingleVideo);
 
 module.exports = router;

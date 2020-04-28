@@ -8,6 +8,17 @@ const findByNameEmail = (email, name) => {
   return User.findOne({ $or: [{ email: email }, { userName: name }] });
 };
 
+const createNewUser = (email, firstName, lastName, userName, hash) => {
+  const user = new User({
+    email: email,
+    firstName: firstName,
+    lastName: lastName,
+    userName: userName,
+    password: hash
+  });
+  return user.save();
+};
+
 const updateUser = (userId, user) => {
   return User.findOneAndUpdate(
     { _id: userId },
@@ -24,5 +35,6 @@ module.exports = {
   findUserByEmail,
   updateUser,
   getAllUsers,
-  findByNameEmail
+  findByNameEmail,
+  createNewUser
 };

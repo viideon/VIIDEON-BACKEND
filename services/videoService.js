@@ -17,10 +17,14 @@ const getAllVideos = () => {
 const findVideoByUrl = url => {
   return Video.find({ url: url });
 };
+const findVideoById = id => {
+  return Video.findOne({ _id: id });
+};
 module.exports = {
   updateVideo,
   deleteVideo,
   findUserVideo,
   getAllVideos,
-  findVideoByUrl
+  findVideoByUrl,
+  findVideoById
 };
