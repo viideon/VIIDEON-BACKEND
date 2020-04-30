@@ -8,5 +8,6 @@ router.route("/").delete(videosController.deleteVideo);
 router.route("/email").post(videosController.emailVideo);
 router.route("/user").get(videosController.getUserVideos);
 router.route("/single").get(videosController.getSingleVideo);
+router.route("/multiple/email").post(videosController.sendMultipleEmail);
 
 module.exports = router;

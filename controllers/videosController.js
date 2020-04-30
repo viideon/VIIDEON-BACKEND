@@ -18,6 +18,25 @@ module.exports.emailVideo = async (req, res) => {
   }
 };
 
+module.exports.sendMultipleEmail = async (req, res) => {
+  const { emails, videoId } = req.body;
+  try {
+    if (emails.lenght === 0) {
+      res.status(400).json({
+        message: "no email provided"
+      });
+      return;
+    }
+    const result = await sendEmail(videoId, emails);
+    if (result.error || result === false) {
+      return res.status(400).json({ message: "fail to send email" });
+    } else {
+      return res.status(200).json({ message: "email sent sucessfully" });
+    }
+  } catch (err) {
+    res.status(400).json(err);
+  }
+};
 module.exports.postVideo = async (req, res) => {
   try {
     const video = new Video({
