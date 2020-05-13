@@ -3,7 +3,7 @@ const path = require("path");
 var fs = require("fs");
 
 module.exports.mergeVideos = async (req, res) => {
-  // res.contentType("video/webm");
+  res.contentType("video/webm");
   res.attachment("merged.webm");
   let filePath = path.join(__dirname, "..", "temp", "merged.webm");
   try {
@@ -20,14 +20,12 @@ module.exports.mergeVideos = async (req, res) => {
       .input(`temp/two`)
       .on("error", function(err) {
         console.log("An error occurred: " + err.message);
+        fs.unlinkSync(path.join(__dirname, "..", `temp/one`));
+        fs.unlinkSync(path.join(__dirname, "..", `temp/two`));
         res.status(400).json({ message: "failed to merge" });
       })
       .on("end", function() {
-        console.log("Merging finished !");
-        let readStream = fs.createReadStream(filePath);
-        readStream.pipe(res);
-        // res.sendFile(filePath);
-        // res.download(filePath);
+        res.sendFile(filePath);
         // fs.unlinkSync(filePath);
         fs.unlinkSync(path.join(__dirname, "..", `temp/one`));
         fs.unlinkSync(path.join(__dirname, "..", `temp/two`));

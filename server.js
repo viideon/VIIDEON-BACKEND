@@ -28,9 +28,7 @@ app.use(express.json());
 app.use(fileUpload({ useTempFiles: true, tempFileDir: "/temp/" }));
 
 //configure ffmpeg
-ffmpeg.setFfmpegPath(
-  "D:/FFMPEG/ffmpeg-20200504-5767a2e-win64-static/bin/ffmpeg.exe"
-);
+ffmpeg.setFfmpegPath("D:/ff/bin/ffmpeg.exe");
 //routes
 app.use("/user", user);
 app.use("/video", videos);
