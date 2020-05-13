@@ -1,9 +1,12 @@
 const express = require("express");
+const ffmpeg = require("fluent-ffmpeg");
+const fileUpload = require("express-fileupload");
 const app = express();
 const mongoose = require("mongoose");
 const cors = require("cors");
 const user = require("./routes/user");
 const videos = require("./routes/videos");
+const edit = require("./routes/edit");
 require("dotenv").config();
 const port = process.env.PORT || 3008;
 
@@ -22,9 +25,16 @@ mongoose.connect(
 
 app.use(cors());
 app.use(express.json());
+app.use(fileUpload({ useTempFiles: true, tempFileDir: "/temp/" }));
+
+//configure ffmpeg
+ffmpeg.setFfmpegPath(
+  "D:/FFMPEG/ffmpeg-20200504-5767a2e-win64-static/bin/ffmpeg.exe"
+);
 //routes
 app.use("/user", user);
 app.use("/video", videos);
+app.use("/edit", edit);
 app.get("/", (req, res) => {
   res.send("Root place");
 });
