@@ -20,15 +20,31 @@ module.exports.mergeVideos = async (req, res) => {
       .input(`temp/two`)
       .on("error", function(err) {
         console.log("An error occurred: " + err.message);
-        fs.unlinkSync(path.join(__dirname, "..", `temp/one`));
-        fs.unlinkSync(path.join(__dirname, "..", `temp/two`));
+
         res.status(400).json({ message: "failed to merge" });
+        res.on("finish", function() {
+          try {
+            fs.unlinkSync(path.join(__dirname, "..", `temp/one`));
+            fs.unlinkSync(path.join(__dirname, "..", `temp/two`));
+          } catch (err) {
+            console.log("error removing user files");
+          }
+        });
       })
       .on("end", function() {
-        res.sendFile(filePath);
-        // fs.unlinkSync(filePath);
-        fs.unlinkSync(path.join(__dirname, "..", `temp/one`));
-        fs.unlinkSync(path.join(__dirname, "..", `temp/two`));
+        res.sendFile(filePath, function(err) {
+          if (err) {
+            console.log("error", err);
+          } else {
+            try {
+              fs.unlinkSync(filePath);
+              fs.unlinkSync(path.join(__dirname, "..", `temp/one`));
+              fs.unlinkSync(path.join(__dirname, "..", `temp/two`));
+            } catch (e) {
+              console.log("error deleting files", e);
+            }
+          }
+        });
       })
       .mergeToFile("temp/merged.webm", "/temp");
   } catch (err) {
