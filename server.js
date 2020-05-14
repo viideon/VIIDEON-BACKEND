@@ -1,5 +1,6 @@
 const express = require("express");
 const ffmpeg = require("fluent-ffmpeg");
+const path = require("path");
 const fileUpload = require("express-fileupload");
 const app = express();
 const mongoose = require("mongoose");
@@ -25,7 +26,9 @@ mongoose.connect(
 
 app.use(cors());
 app.use(express.json());
-app.use(fileUpload({ useTempFiles: true, tempFileDir: "/temp/" }));
+app.use(
+  fileUpload({ useTempFiles: true, tempFileDir: path.join(__dirname, "temp") })
+);
 
 //configure ffmpeg
 ffmpeg.setFfmpegPath("ffmpeg");
