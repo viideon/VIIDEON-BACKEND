@@ -4,7 +4,6 @@ const pathToFfmpeg = require("ffmpeg-static");
 let ffprobe = require("ffprobe-static");
 const path = require("path");
 const fileUpload = require("express-fileupload");
-// const extendTimeoutMiddleware = require("./middleware/delay");
 const app = express();
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -41,7 +40,7 @@ ffmpeg.setFfprobePath(ffprobe.path);
 // console.log(pathToFfmpeg);
 
 //routes
-// app.use(extendTimeoutMiddleware);
+
 app.use("/user", user);
 app.use("/video", videos);
 app.use("/edit", edit);
