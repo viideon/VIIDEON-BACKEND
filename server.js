@@ -36,7 +36,7 @@ app.use(
 // ffmpeg.setFfmpegPath("ffmpeg");
 // ffmpeg.setFfmpegPath("D:/ff/bin/ffmpeg.exe");
 ffmpeg.setFfmpegPath(pathToFfmpeg);
-console.log(pathToFfmpeg);
+// console.log(pathToFfmpeg);
 
 //routes
 app.use(extendTimeoutMiddleware);
