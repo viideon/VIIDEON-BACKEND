@@ -8,19 +8,13 @@ module.exports.mergeVideos = async (req, res) => {
   let filePath = path.join(__dirname, "..", "temp", "merged.webm");
   try {
     const files = req.files;
-    files.one.mv("temp/" + "one", function(err) {
-      if (err) return res.sendStatus(500).send(err);
-    });
-    files.two.mv("temp/" + "two", function(err) {
-      if (err) return res.sendStatus(500).send(err);
-    });
-
+    await fileUpload(files.one, "temp/one");
+    await fileUpload(files.two, "temp/two");
+    console.log("files uploaded");
     ffmpeg()
-      .input(`temp/one`)
-      .input(`temp/two`)
+      .input(path.join(__dirname, "..", "temp/one"))
+      .input(path.join(__dirname, "..", "temp/two"))
       .on("error", function(err) {
-        console.log("An error occurred: " + err.message);
-
         res.status(400).json({ message: "failed to merge" });
         res.on("finish", function() {
           try {
@@ -54,6 +48,15 @@ module.exports.mergeVideos = async (req, res) => {
     });
   }
 };
+
+function fileUpload(file, name) {
+  return new Promise(function(resolve, reject) {
+    file.mv(name, function(err) {
+      if (err) reject();
+      resolve();
+    });
+  });
+}
 
 module.exports.addMusic = async (req, res, next) => {
   res.contentType("video/webm");
