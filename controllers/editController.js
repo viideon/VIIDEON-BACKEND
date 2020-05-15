@@ -55,6 +55,59 @@ module.exports.mergeVideos = async (req, res) => {
   }
 };
 
+module.exports.addMusic = async (req, res, next) => {
+  res.contentType("video/webm");
+  res.attachment("video.webm");
+  let filePath = path.join(__dirname, "..", "temp", "video.webm");
+  try {
+    const files = req.files;
+    files.video.mv("temp/" + "video", function(err) {
+      if (err) return res.sendStatus(500).send(err);
+    });
+    files.audio.mv("temp/" + "audio", function(err) {
+      if (err) return res.sendStatus(500).send(err);
+    });
+    ffmpeg()
+      .input("temp/audio")
+      .input("temp/video")
+      .complexFilter("[0:a][1:a]amerge , pan=stereo|c0<c0+c2|c1<c1+c3[out]")
+      .outputOptions(["-map 1:v", "-map [out]", "-c:v copy", "-shortest"])
+      .on("error", function(err) {
+        console.log("error", err);
+        res.status(400).json({ message: "failed to merge" });
+        res.on("finish", function() {
+          try {
+            fs.unlinkSync(path.join(__dirname, "..", `temp/video`));
+            fs.unlinkSync(path.join(__dirname, "..", `temp/audio`));
+          } catch (err) {
+            console.log("error removing user files");
+          }
+        });
+      })
+      .on("end", function() {
+        res.sendFile(filePath, function(err) {
+          if (err) {
+            console.log("error", err);
+          } else {
+            try {
+              fs.unlinkSync(filePath);
+              fs.unlinkSync(path.join(__dirname, "..", `temp/video`));
+              fs.unlinkSync(path.join(__dirname, "..", `temp/audio`));
+            } catch (e) {
+              console.log("error deleting files", e);
+            }
+          }
+        });
+      })
+      .saveToFile(filePath);
+  } catch (err) {
+    console.log("error", err);
+    res.status(400).json({
+      error: err
+    });
+  }
+};
+
 // ffmpeg("temp/" + req.files.mp4.name)
 // .toFormat("mp3")
 // .on("end", function() {

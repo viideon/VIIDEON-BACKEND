@@ -2,6 +2,7 @@ const express = require("express");
 const ffmpeg = require("fluent-ffmpeg");
 const path = require("path");
 const fileUpload = require("express-fileupload");
+const extendTimeoutMiddleware = require("./middleware/delay");
 const app = express();
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -31,11 +32,15 @@ app.use(
 );
 
 //configure ffmpeg
-ffmpeg.setFfmpegPath("ffmpeg");
+// ffmpeg.setFfmpegPath("ffmpeg");
+ffmpeg.setFfmpegPath("D:/ff/bin/ffmpeg.exe");
+
 //routes
+app.use(extendTimeoutMiddleware);
 app.use("/user", user);
 app.use("/video", videos);
 app.use("/edit", edit);
+
 app.get("/", (req, res) => {
   res.send("Root place");
 });
