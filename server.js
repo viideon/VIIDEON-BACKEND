@@ -1,6 +1,7 @@
 const express = require("express");
 const ffmpeg = require("fluent-ffmpeg");
 const pathToFfmpeg = require("ffmpeg-static");
+let ffprobe = require("ffprobe-static");
 const path = require("path");
 const fileUpload = require("express-fileupload");
 // const extendTimeoutMiddleware = require("./middleware/delay");
@@ -36,6 +37,7 @@ app.use(
 // ffmpeg.setFfmpegPath("ffmpeg");
 // ffmpeg.setFfmpegPath("D:/ff/bin/ffmpeg.exe");
 ffmpeg.setFfmpegPath(pathToFfmpeg);
+ffmpeg.setFfprobePath(ffprobe.path);
 // console.log(pathToFfmpeg);
 
 //routes
