@@ -1,7 +1,7 @@
 const express = require("express");
 const ffmpeg = require("fluent-ffmpeg");
-// const pathToFfmpeg = require("ffmpeg-static");
-// const ffprobe = require("ffprobe-static");
+const pathToFfmpeg = require("ffmpeg-static");
+const ffprobe = require("ffprobe-static");
 const path = require("path");
 const fileUpload = require("express-fileupload");
 const mongoose = require("mongoose");
