@@ -19,6 +19,7 @@
     "ffmpeg-static": "^4.2.1",
     "fluent-ffmpeg": "^2.1.2",
     "jsonwebtoken": "^8.5.1",
+    "ffprobe-static": "^3.0.0",
     "mongoose": "^5.9.2",
     "nodemailer": "^6.4.5",
     "nodemailer-express-handlebars": "^4.0.0",
