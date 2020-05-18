@@ -60,6 +60,12 @@ module.exports.mergeFile = async (req, res) => {
     await fileUpload(files.two, "temp/two");
     console.log("files uploaded");
 
+    process.stdout.on("error", function(err) {
+      if (err.code == "EPIPE") {
+        process.exit(0);
+      }
+    });
+
     ffmpeg()
       .input(listPath)
       .inputOptions(["-f concat", "-safe 0"])
