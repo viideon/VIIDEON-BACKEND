@@ -1,16 +1,17 @@
 const express = require("express");
 const ffmpeg = require("fluent-ffmpeg");
-const pathToFfmpeg = require("ffmpeg-static");
-let ffprobe = require("ffprobe-static");
+// const pathToFfmpeg = require("ffmpeg-static");
+// const ffprobe = require("ffprobe-static");
 const path = require("path");
 const fileUpload = require("express-fileupload");
-const app = express();
 const mongoose = require("mongoose");
 const cors = require("cors");
 const user = require("./routes/user");
 const videos = require("./routes/videos");
 const edit = require("./routes/edit");
 require("dotenv").config();
+const app = express();
+
 const port = process.env.PORT || 3008;
 
 mongoose.connect(
