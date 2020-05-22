@@ -1,14 +1,14 @@
 const express = require("express");
-const ffmpeg = require("fluent-ffmpeg");
-const pathToFfmpeg = require("ffmpeg-static");
-const ffprobe = require("ffprobe-static");
+// const ffmpeg = require("fluent-ffmpeg");
+// const pathToFfmpeg = require("ffmpeg-static");
+// const ffprobe = require("ffprobe-static");
 const path = require("path");
 const fileUpload = require("express-fileupload");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const user = require("./routes/user");
 const videos = require("./routes/videos");
-const edit = require("./routes/edit");
+// const edit = require("./routes/edit");
 require("dotenv").config();
 const app = express();
 
@@ -36,15 +36,15 @@ app.use(
 //configure ffmpeg
 // ffmpeg.setFfmpegPath("ffmpeg");
 // ffmpeg.setFfmpegPath("D:/ff/bin/ffmpeg.exe");
-ffmpeg.setFfmpegPath(pathToFfmpeg);
-ffmpeg.setFfprobePath(ffprobe.path);
+// ffmpeg.setFfmpegPath(pathToFfmpeg);
+// ffmpeg.setFfprobePath(ffprobe.path);
 // console.log(pathToFfmpeg);
 
 //routes
 
 app.use("/user", user);
 app.use("/video", videos);
-app.use("/edit", edit);
+// app.use("/edit", edit);
 
 app.get("/", (req, res) => {
   res.send("Root place");
