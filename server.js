@@ -8,6 +8,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const user = require("./routes/user");
 const videos = require("./routes/videos");
+const contact = require("./routes/contact");
 // const edit = require("./routes/edit");
 require("dotenv").config();
 const app = express();
@@ -44,6 +45,7 @@ app.use(
 
 app.use("/user", user);
 app.use("/video", videos);
+app.use("/contact", contact);
 // app.use("/edit", edit);
 
 app.get("/", (req, res) => {

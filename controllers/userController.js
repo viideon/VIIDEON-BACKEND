@@ -1,4 +1,3 @@
-const User = require("../models/user");
 const {
   hashPassword,
   comparePassword,

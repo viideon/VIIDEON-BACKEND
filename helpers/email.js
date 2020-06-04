@@ -21,15 +21,17 @@ const handlebarOptions = {
   extName: ".hbs"
 };
 transporter.use("compile", hbs(handlebarOptions));
-const sendEmail = async (id, recieverEmail) => {
+const sendEmail = async (id, recieverEmail, fromName, thumbnail) => {
   try {
+    // console.log("from email", fromEmail);
     const mailOptions = {
       to: recieverEmail,
-      from: process.env.FROM_EMAIL,
-      subject: "Video For Vidion Pro",
+      from: `${fromName}`,
+      subject: "Video From VidionPro",
       template: "campaign",
       context: {
-        id: id
+        id: id,
+        thumbnail: thumbnail
       }
     };
     const response = await transporter.sendMail(mailOptions);
