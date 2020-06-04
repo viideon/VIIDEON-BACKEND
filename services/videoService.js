@@ -8,8 +8,10 @@ const deleteVideo = (videoId, userId) => {
   return Video.deleteOne({ _id: videoId, userId: userId });
 };
 
-const findUserVideo = userId => {
-  return Video.find({ userId: userId });
+const findUserVideo = (userId, page) => {
+  return Video.find({ userId: userId })
+    .skip((page - 1) * 9)
+    .limit(9);
 };
 const getAllVideos = () => {
   return Video.find();

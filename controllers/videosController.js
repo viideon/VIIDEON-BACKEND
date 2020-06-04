@@ -70,8 +70,11 @@ module.exports.getAllVideos = async (req, res) => {
 
 module.exports.getUserVideos = async (req, res) => {
   let id = req.query.id;
+  let page = req.query.page ? req.query.page : 1;
+
   try {
-    const videos = await videoService.findUserVideo(id);
+    const videos = await videoService.findUserVideo(id, page);
+
     if (!videos) res.status(400).json({ message: "No video available" });
     res.status(200).json({ message: videos });
   } catch (error) {
