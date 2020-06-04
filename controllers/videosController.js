@@ -3,14 +3,14 @@ const { sendEmail } = require("../helpers/email");
 const videoService = require("../services/videoService");
 
 module.exports.emailVideo = async (req, res) => {
-  const { id, recieverEmail, fromName } = req.body;
+  const { id, recieverEmail } = req.body;
   const video = await videoService.findVideoById(id);
   const { thumbnail } = video;
   try {
     if (req.body.recieverEmail === "") {
       return res.status(400).json({ message: "no email provided" });
     }
-    const result = await sendEmail(id, recieverEmail, fromName, thumbnail);
+    const result = await sendEmail(id, recieverEmail, thumbnail);
     if (result.error || result === false) {
       return res.status(400).json({ message: "fail to send email" });
     } else {
@@ -22,7 +22,7 @@ module.exports.emailVideo = async (req, res) => {
 };
 
 module.exports.sendMultipleEmail = async (req, res) => {
-  const { emails, id, fromName } = req.body;
+  const { emails, id } = req.body;
   const video = await videoService.findVideoById(id);
   const { thumbnail } = video;
   try {
@@ -32,7 +32,7 @@ module.exports.sendMultipleEmail = async (req, res) => {
       });
       return;
     }
-    const result = await sendEmail(id, emails, fromName, thumbnail);
+    const result = await sendEmail(id, emails, thumbnail);
     if (result.error || result === false) {
       console.log("result error", result.error);
       return res.status(400).json({ message: "fail to send email" });
