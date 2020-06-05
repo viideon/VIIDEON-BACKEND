@@ -8,4 +8,5 @@ const videoSchema = new mongoose.Schema({
   date: { type: Date, default: Date.now },
   recieverEmail: { type: String, required: false }
 });
+videoSchema.index({ title: "text" });
 module.exports = mongoose.model("Video", videoSchema);

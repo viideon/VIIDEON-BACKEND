@@ -71,14 +71,23 @@ module.exports.getAllVideos = async (req, res) => {
 module.exports.getUserVideos = async (req, res) => {
   let id = req.query.id;
   let page = req.query.page ? req.query.page : 1;
+  let search = req.query.title;
 
   try {
-    const videos = await videoService.findUserVideo(id, page);
-
-    if (!videos) res.status(400).json({ message: "No video available" });
-    res.status(200).json({ message: videos });
+    let videos = [];
+    if (req.query.title !== "" && req.query.title !== undefined) {
+      console.log("2 called");
+      videos = await videoService.findUserVideoByTitle(id, page, search);
+      if (!videos) res.status(400).json({ message: "No video available" });
+      return res.status(200).json({ message: videos });
+    } else {
+      console.log("1 called");
+      videos = await videoService.findUserVideo(id, page);
+      if (!videos) res.status(400).json({ message: "No video available" });
+      return res.status(200).json({ message: videos });
+    }
   } catch (error) {
-    res.status(400).json(error);
+    res.status(400).json({ message: error.message });
   }
 };
 
@@ -105,20 +114,22 @@ module.exports.updateVideo = async (req, res) => {
 };
 
 module.exports.deleteVideo = async (req, res) => {
-  let videoId = req.body.videoId;
-  let userId = req.body.userId;
+  let { id } = req.query;
   try {
-    const res = await videoService.deleteVideo(videoId, userId);
-    if (res) {
+    const video = await videoService.findVideoById(id);
+    if (video) {
+      await videoService.deleteVideo(id);
       return res.status(200).json({
         message: "video deleted"
       });
+    } else {
+      return res.status(400).json({
+        message: "No record found"
+      });
     }
-    return res.status(400).json({
-      message: "failed to delete video"
-    });
   } catch (error) {
-    res.status(400).json({ message: error });
+    console.log("error", error.message);
+    res.status(400).json({ message: error.message });
   }
 };
 
@@ -138,6 +149,6 @@ module.exports.getSingleVideo = async (req, res) => {
       });
     }
   } catch (err) {
-    res.status(400).json({ error: err });
+    res.status(400).json({ error: err.message });
   }
 };
