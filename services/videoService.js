@@ -9,8 +9,6 @@ const deleteVideo = videoId => {
 };
 
 const findUserVideo = (userId, page) => {
-  console.log("called 1");
-
   return Video.find({ userId: userId })
     .sort({ date: -1 })
     .skip((page - 1) * 9)
@@ -37,6 +35,12 @@ const findVideoByUrl = url => {
 const findVideoById = id => {
   return Video.findOne({ _id: id });
 };
+const getVideoCount = id => {
+  const count = Video.countDocuments({ userId: id }, function(err, count) {
+    return count;
+  });
+  return count;
+};
 module.exports = {
   updateVideo,
   deleteVideo,
@@ -44,32 +48,33 @@ module.exports = {
   getAllVideos,
   findVideoByUrl,
   findVideoById,
-  findUserVideoByTitle
+  findUserVideoByTitle,
+  getVideoCount
 };
 
-const getBusinessCity = (
-  fullAddress,
-  type,
-  city,
-  businessName,
-  option,
-  pagination,
-  page
-) => {
-  return Business.find({
-    $and: [{ city: city }, { typeOfBusiness: type }],
-    $or: [
-      { fullAddress: { $regex: fullAddress, $options: "i" } },
-      { businessName: { $regex: businessName, $options: "i" } },
-      { option: { $regex: option, $options: "i" } }
-    ]
-  })
-    .skip((page - 1) * pagination)
-    .limit(pagination);
-};
+// const getBusinessCity = (
+//   fullAddress,
+//   type,
+//   city,
+//   businessName,
+//   option,
+//   pagination,
+//   page
+// ) => {
+//   return Business.find({
+//     $and: [{ city: city }, { typeOfBusiness: type }],
+//     $or: [
+//       { fullAddress: { $regex: fullAddress, $options: "i" } },
+//       { businessName: { $regex: businessName, $options: "i" } },
+//       { option: { $regex: option, $options: "i" } }
+//     ]
+//   })
+//     .skip((page - 1) * pagination)
+//     .limit(pagination);
+// };
 
-const getBusinessForName = city => {
-  return Business.find({
-    city: { $regex: new RegExp("^" + city), $options: "i" }
-  });
-};
+// const getBusinessForName = city => {
+//   return Business.find({
+//     city: { $regex: new RegExp("^" + city), $options: "i" }
+//   });
+// };

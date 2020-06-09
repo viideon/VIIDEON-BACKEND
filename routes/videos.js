@@ -9,5 +9,5 @@ router.route("/email").post(videosController.emailVideo);
 router.route("/user").get(videosController.getUserVideos);
 router.route("/single").get(videosController.getSingleVideo);
 router.route("/multiple/email").post(videosController.sendMultipleEmail);
-
+router.route("/count").get(videosController.getVideoCount);
 module.exports = router;

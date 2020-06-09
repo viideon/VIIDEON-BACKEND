@@ -114,13 +114,17 @@ module.exports.updateVideo = async (req, res) => {
 };
 
 module.exports.deleteVideo = async (req, res) => {
-  let { id } = req.query;
+  let { id, pageNo } = req.query;
+  console.log("page no", pageNo);
   try {
     const video = await videoService.findVideoById(id);
     if (video) {
+      let userId = video.userId;
       await videoService.deleteVideo(id);
+      const videos = await videoService.findUserVideo(userId, pageNo);
       return res.status(200).json({
-        message: "video deleted"
+        message: "video deleted",
+        nextVideo: videos[videos.length - 1]
       });
     } else {
       return res.status(400).json({
@@ -150,5 +154,15 @@ module.exports.getSingleVideo = async (req, res) => {
     }
   } catch (err) {
     res.status(400).json({ error: err.message });
+  }
+};
+
+module.exports.getVideoCount = async (req, res) => {
+  let id = req.query.id;
+  try {
+    let count = await videoService.getVideoCount(id);
+    res.status(200).json({ count: count });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
   }
 };
