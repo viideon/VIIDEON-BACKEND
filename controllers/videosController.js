@@ -34,13 +34,11 @@ module.exports.sendMultipleEmail = async (req, res) => {
     }
     const result = await sendEmail(id, emails, thumbnail);
     if (result.error || result === false) {
-      console.log("result error", result.error);
       return res.status(400).json({ message: "fail to send email" });
     } else {
       return res.status(200).json({ message: "email sent sucessfully" });
     }
   } catch (err) {
-    console.log("error", err);
     res.status(400).json(err);
   }
 };
