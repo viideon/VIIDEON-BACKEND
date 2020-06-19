@@ -4,6 +4,7 @@ const videoService = require("../services/videoService");
 
 module.exports.emailVideo = async (req, res) => {
   const { id, recieverEmail } = req.body;
+
   const video = await videoService.findVideoById(id);
   const { thumbnail } = video;
   try {
@@ -22,8 +23,10 @@ module.exports.emailVideo = async (req, res) => {
 };
 
 module.exports.sendMultipleEmail = async (req, res) => {
-  const { emails, id } = req.body;
-  const video = await videoService.findVideoById(id);
+  const { emails, videoId } = req.body;
+
+  const video = await videoService.findVideoById(videoId);
+
   const { thumbnail } = video;
   try {
     if (emails.lenght === 0) {
@@ -32,7 +35,7 @@ module.exports.sendMultipleEmail = async (req, res) => {
       });
       return;
     }
-    const result = await sendEmail(id, emails, thumbnail);
+    const result = await sendEmail(videoId, emails, thumbnail);
     if (result.error || result === false) {
       return res.status(400).json({ message: "fail to send email" });
     } else {

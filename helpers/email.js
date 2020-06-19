@@ -35,6 +35,7 @@ const sendEmail = async (id, recieverEmail, thumbnail) => {
       }
     };
     const response = await transporter.sendMail(mailOptions);
+    console.log("response", response);
     return response;
   } catch (err) {
     console.log("err", err);
