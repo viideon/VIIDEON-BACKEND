@@ -26,7 +26,7 @@ const sendEmail = async (id, recieverEmail, thumbnail) => {
     // console.log("from email", fromEmail);
     const mailOptions = {
       to: recieverEmail,
-      from: `VidionPro`,
+      sender: "asad<iasadsherazi@gmail.com>",
       subject: "Video From VidionPro",
       template: "campaign",
       context: {
