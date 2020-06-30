@@ -9,7 +9,7 @@ const cors = require("cors");
 const user = require("./routes/user");
 const videos = require("./routes/videos");
 const contact = require("./routes/contact");
-// const edit = require("./routes/edit");
+const email = require("./routes/email");
 require("dotenv").config();
 const app = express();
 
@@ -42,11 +42,10 @@ app.use(
 // console.log(pathToFfmpeg);
 
 //routes
-
 app.use("/user", user);
 app.use("/video", videos);
 app.use("/contact", contact);
-// app.use("/edit", edit);
+app.use("/email", email);
 
 app.get("/", (req, res) => {
   res.send("Root place");

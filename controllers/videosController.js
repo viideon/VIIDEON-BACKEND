@@ -1,6 +1,5 @@
 const Video = require("../models/videos");
 const { sendEmail } = require("../helpers/email");
-const { sendGridEmail } = require("../helpers/sendGridEmail");
 const videoService = require("../services/videoService");
 
 module.exports.emailVideo = async (req, res) => {
@@ -14,22 +13,6 @@ module.exports.emailVideo = async (req, res) => {
     }
     const result = await sendEmail(id, recieverEmail, thumbnail);
     if (result.error || result === false) {
-      return res.status(400).json({ message: "fail to send email" });
-    } else {
-      return res.status(200).json({ message: "email sent sucessfully" });
-    }
-  } catch (error) {
-    res.status(400).json(error);
-  }
-};
-module.exports.sendGridEmail = async (req, res) => {
-  const { fromEmail, recieverEmail } = req.body;
-  try {
-    if (req.body.recieverEmail === "") {
-      return res.status(400).json({ message: "no email provided" });
-    }
-    const result = await sendGridEmail(recieverEmail, fromEmail);
-    if (result === false) {
       return res.status(400).json({ message: "fail to send email" });
     } else {
       return res.status(200).json({ message: "email sent sucessfully" });
@@ -94,12 +77,10 @@ module.exports.getUserVideos = async (req, res) => {
   try {
     let videos = [];
     if (req.query.title !== "" && req.query.title !== undefined) {
-      console.log("2 called");
       videos = await videoService.findUserVideoByTitle(id, page, search);
       if (!videos) res.status(400).json({ message: "No video available" });
       return res.status(200).json({ message: videos });
     } else {
-      console.log("1 called");
       videos = await videoService.findUserVideo(id, page);
       if (!videos) res.status(400).json({ message: "No video available" });
       return res.status(200).json({ message: videos });

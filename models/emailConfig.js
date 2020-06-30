@@ -3,9 +3,8 @@ const mongoose = require("mongoose");
 const emailConfigSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   date: { type: Date, default: Date.now },
-  emailAddress: { type: String },
-  name: { type: String },
-  tokenInfo: {
+  userEmail: { type: String },
+  tokenObj: {
     access_token: { type: String },
     expires_in: { type: Number },
     refresh_token: { type: String },

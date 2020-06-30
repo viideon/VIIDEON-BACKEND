@@ -1,5 +1,5 @@
 const fs = require("fs");
-// const readline = require('readline');
+
 const token =
   "ya29.a0AfH6SMBOV1W01zUT1xhBS4raTGHVLmDHQkFkZdsyWAftniiXwBaxaBLar8PNBPkYn3XAQwg_GXyQuzeeW4LR7l1FJ7y2LkG_uC90SpRrkkNDV5GXenttSh7Ixlm0FBhhSIeHbkG_GIq7A6tAIcCmZlo30GY6kW37YNs";
 const { google } = require("googleapis");
@@ -39,7 +39,7 @@ function sendMessage(auth) {
     "iasadsherazi@gmail.com",
     "iasadsherazi@gmail.com",
     "hi there",
-    "This is your subject I got this working finally!!!"
+    "<div><p>Hi there</p><h2>Hello</h2></div>"
   );
   const gmail = google.gmail({ version: "v1", auth });
   gmail.users.messages.send(
