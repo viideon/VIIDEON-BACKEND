@@ -13,15 +13,6 @@ module.exports.sendWithGmail = async (req, res) => {
     const tokenObjects = await emailService.findUserTokenObj(userId);
     const singleTokenObj = tokenObjects[0].tokenObj;
     const fromEmail = tokenObjects[0].userEmail;
-    // if (
-    //   singleTokenObj === undefined ||
-    //   fromEmail === undefined ||
-    //   fromEmail === ""
-    // ) {
-    //   return res.status(400).json({
-    //     messaage: "no user data present please authorize your account"
-    //   });
-    // }
     const video = await videoService.findVideoById(videoId);
     const { thumbnail } = video;
     var templateString = await template.generateStringTemplate(
@@ -30,7 +21,6 @@ module.exports.sendWithGmail = async (req, res) => {
     );
     authorize(sendMessage);
     function authorize(callback) {
-      // const { client_secret, client_id } = credentials;
       const oAuth2Client = new google.auth.OAuth2(
         `${process.env.CLIENT_ID}`,
         `${process.env.CLIENT_SECRET}`
@@ -39,11 +29,11 @@ module.exports.sendWithGmail = async (req, res) => {
       callback(oAuth2Client);
     }
 
-    // console.log(templateString);
+    // console.log("template string", templateString);
     async function sendMessage(auth) {
       var raw = await makeBody(
-        fromEmail,
         recieverEmail,
+        fromEmail,
         "video from vidionPro",
         templateString
       );
@@ -100,7 +90,7 @@ module.exports.getAndSaveConfig = async (req, res) => {
 
     const tokenObj = response.data;
     const userEmail = await decodeJwtToEmail(tokenObj.id_token);
-    console.log("user email", userEmail);
+
     const result = await emailService.saveEmailConfig({
       userId,
       userEmail,
@@ -137,7 +127,7 @@ function decodeJwtToEmail(idToken) {
   return tokenData.payload.email;
 }
 function makeBody(recieverEmail, from, subject, message) {
-  console.log(typeof messaage);
+  // console.log(typeof messaage);
 
   var str = [
     'Content-Type: text/html; charset="UTF-8"\n',
@@ -161,57 +151,3 @@ function makeBody(recieverEmail, from, subject, message) {
     .replace(/\//g, "_");
   return encodedMail;
 }
-// const oauth2Client = new OAuth2(
-//   `${process.env.CLIENT_ID}`,
-//   `${process.env.CLIENT_SECRET}`,
-//   "https://developers.google.com/oauthplayground"
-// );
-// console.log("single token obj", singleTokenObj.refresh_token);
-// oauth2Client.setCredentials({
-//   refresh_token: singleTokenObj.refresh_token
-// });
-// const accessToken = await oauth2Client.getAccessToken();
-// console.log("acess token", accessToken);
-// let transporter = nodemailer.createTransport({
-//   host: "smtp.gmail.com",
-//   port: 465,
-//   secure: true,
-//   auth: {
-//     type: "OAuth2",
-//     clientId: `${process.env.CLIENT_ID}`,
-//     clientSecret: `${process.env.CLIENT_SECRET}`
-//   }
-// });
-
-// const response = await transporter.sendMail({
-//   from: "iasadsherazi@gmail.com",
-//   to: "basitdev850@gmail.com",
-//   subject: "Message",
-//   text: "I hope this message gets through!",
-//   auth: {
-//     user: "iasadsherazi@gmail.com",
-//     accessToken: singleTokenObj.access_token,
-//     refreshToken: singleTokenObj.refresh_token,
-//     expires: singleTokenObj.expires
-//   }
-// });
-// console.log("response", response);
-// if (response) {
-//   res.status(200).json({
-//     message: "email sent"
-//   });
-// }
-// fs.readFile("config.gmail.json", function processClientSecrets(
-//   err,
-//   content
-// ) {
-//   if (err) {
-//     console.log("Error loading client secret file: " + err);
-//     return res.status(400).json({
-//       message: "server error"
-//     });
-//   }
-//   // Authorize a client with the loaded credentials, then call the
-//   // Gmail API.
-
-// });
