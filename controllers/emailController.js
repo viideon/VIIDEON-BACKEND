@@ -133,7 +133,7 @@ function makeBody(recieverEmail, from, subject, message) {
     'Content-Type: text/html; charset="UTF-8"\n',
     "MIME-Version: 1.0\n",
     "Content-Transfer-Encoding: 7bit\n",
-    "to: ",
+    "bcc: ",
     recieverEmail,
     "\n",
     "from: ",
