@@ -114,7 +114,6 @@ module.exports.updateVideo = async (req, res) => {
 
 module.exports.deleteVideo = async (req, res) => {
   let { id, pageNo } = req.query;
-  console.log("page no", pageNo);
   try {
     const video = await videoService.findVideoById(id);
     if (video) {

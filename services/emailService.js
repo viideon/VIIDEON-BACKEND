@@ -12,8 +12,16 @@ const findUserConfig = userId => {
 const findUserTokenObj = userId => {
   return emailConfig.find({ userId: userId });
 };
+const findEmailConfig = id => {
+  return emailConfig.findOne({ _id: id });
+};
+const deleteConfigById = id => {
+  return emailConfig.deleteOne({ _id: id });
+};
 module.exports = {
   saveEmailConfig,
   findUserConfig,
-  findUserTokenObj
+  findUserTokenObj,
+  findEmailConfig,
+  deleteConfigById
 };

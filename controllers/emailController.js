@@ -122,6 +122,25 @@ module.exports.getUserEmailConfig = async (req, res) => {
     });
   }
 };
+module.exports.deleteUserConfig = async (req, res) => {
+  let { id } = req.query;
+  try {
+    const config = await emailService.findEmailConfig(id);
+    if (config) {
+      await emailService.deleteConfigById(id);
+      return res.status(200).json({
+        message: "config deleted"
+      });
+    } else {
+      return res.status(400).json({
+        message: "No such record found"
+      });
+    }
+  } catch (error) {
+    console.log("error", error.message);
+    res.status(400).json({ message: error.message });
+  }
+};
 function decodeJwtToEmail(idToken) {
   const tokenData = decodeToken(idToken);
   return tokenData.payload.email;
