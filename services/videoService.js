@@ -40,6 +40,9 @@ const getVideoCount = id => {
   });
   return count;
 };
+const incrementVideoEmail = id => {};
+const incrementVideoViews = id => {};
+const incrementVideoWatched = id => {};
 module.exports = {
   updateVideo,
   deleteVideo,
@@ -48,5 +51,8 @@ module.exports = {
   findVideoByUrl,
   findVideoById,
   findUserVideoByTitle,
-  getVideoCount
+  getVideoCount,
+  incrementVideoEmail,
+  incrementVideoViews,
+  incrementVideoWatched
 };

@@ -28,8 +28,6 @@ module.exports.sendWithGmail = async (req, res) => {
       oAuth2Client.setCredentials(singleTokenObj);
       callback(oAuth2Client);
     }
-
-    // console.log("template string", templateString);
     async function sendMessage(auth) {
       var raw = await makeBody(
         recieverEmail,
