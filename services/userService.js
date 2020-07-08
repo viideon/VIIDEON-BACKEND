@@ -1,20 +1,25 @@
 const User = require("../models/user");
 
-const findUserByEmail = email => {
+const findUserByEmail = (email) => {
   return User.findOne({ email: email });
 };
 
 const findByNameEmail = (email, name) => {
   return User.findOne({ $or: [{ email: email }, { userName: name }] });
 };
-
+const getUserById = (id) => {
+  return User.findOne({ _id: id });
+};
+const verifyUser = (_id) => {
+  return User.updateOne({ _id }, { $set: { isVerified: true } });
+};
 const createNewUser = (email, firstName, lastName, userName, hash) => {
   const user = new User({
     email: email,
     firstName: firstName,
     lastName: lastName,
     userName: userName,
-    password: hash
+    password: hash,
   });
   return user.save();
 };
@@ -23,7 +28,7 @@ const updateUser = (userId, user) => {
   return User.findOneAndUpdate(
     { _id: userId },
     {
-      $set: { ...user }
+      $set: { ...user },
     },
     { new: true }
   );
@@ -36,5 +41,7 @@ module.exports = {
   updateUser,
   getAllUsers,
   findByNameEmail,
-  createNewUser
+  createNewUser,
+  getUserById,
+  verifyUser,
 };

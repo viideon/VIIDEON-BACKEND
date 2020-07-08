@@ -1,12 +1,21 @@
 const {
   hashPassword,
   comparePassword,
-  generateToken
+  generateToken,
 } = require("./../helpers/helper");
+const Token = require("../models/token");
 const userService = require("../services/userService");
-
+const {
+  signupSchema,
+  signinSchema,
+  verificationTokenSchema,
+  profileSchema,
+} = require("../schemas/auth");
+const { helpers } = require("../helpers");
 module.exports.registerUser = async (req, res) => {
   try {
+    console.log(req.body);
+
     const { email, firstName, lastName, userName, password } = req.body;
     const person = await userService.findByNameEmail(email, userName);
     if (person && person.email === email)
@@ -21,8 +30,20 @@ module.exports.registerUser = async (req, res) => {
       userName,
       hash
     );
-    res.status(201).json({ register, message: "Successfully registered!" });
+    const mail = await helpers.sendEmail(register, req, res);
+    if (mail) {
+      return res.status(201).json({
+        success: register,
+        message: "Account is successfully created and email has been sent.",
+      });
+    } else {
+      return res.status(400).json({
+        message: "not created",
+      });
+    }
+    // res.status(201).json({ register, message: "Successfully registered!" });
   } catch (error) {
+    console.log(error);
     res.status(400).json(error);
   }
 };
@@ -67,5 +88,116 @@ module.exports.getAllUsers = async (req, res) => {
     res.status(201).json({ user: users });
   } catch (error) {
     res.status(400).json(error);
+  }
+};
+
+module.exports.verify = async (req, res, next) => {
+  const tokenCode = verificationTokenSchema.validate(req.body);
+  if (!tokenCode)
+    return res.status(400).json({ message: "token is not provided" });
+  try {
+    const token = await Token.findOne({ token: req.body.token });
+    if (!token) {
+      return res.status(400).json({ message: "invalid Token" });
+    }
+    const user = await userService.getUserById(token.userId);
+    if (!user) {
+      return res.status(400).json({ message: "no user for this token." });
+    }
+    if (user.isVerified) {
+      return res
+        .status(400)
+        .json({ message: " user has already been verified." });
+    }
+    await userService.verifyUser(user._id);
+    return res.status(201).json({
+      success: true,
+      message: "Account is successfully verified.",
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+module.exports.resend = async (req, res) => {
+  try {
+    const { email } = req.body;
+    const user = await userService.findUserByEmail(email);
+    if (!user)
+      return res.status(401).json({
+        message:
+          "The email address " +
+          req.body.email +
+          " is not associated with any account",
+      });
+    if (user.isVerified)
+      return res
+        .status(400)
+        .json({ message: "This account has already been verified" });
+    const mail = await helpers.sendEmail(user, req, res);
+    if (mail) {
+      return res.status(201).json({
+        success: register,
+        message: "Verification email has been sent.",
+      });
+    } else {
+      return res.status(400).json({
+        message: "Email not sent",
+      });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+module.exports.forget = async (req, res) => {
+  try {
+    const { email } = req.body;
+    const user = await userService.findUserByEmail(email);
+    if (!user)
+      return res.status(400).send({ message: "This email is not valid." });
+    const token = user.generateVerificationToken();
+    // Send the mail
+    const mail = await helpers.sendForGotEmail(user, token, req, res);
+    if (mail) {
+      return res.status(201).json({
+        success: register,
+        message: "Forgot password link  has been sent to your email.",
+      });
+    } else {
+      return res.status(400).json({
+        message: "Email not sent",
+      });
+    }
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+module.exports.reset = async (req, res) => {
+  try {
+    const token = await Token.findOne({ token: req.body.token });
+    if (!token) {
+      return res.status(400).json({ message: "invalid Token" });
+    }
+    var user = await userService.getUserById(token.userId);
+    if (!user) {
+      return res.status(400).json({ message: "no user for this token." });
+    }
+
+    user.password = req.body.password;
+    user.save(function (err, user) {
+      if (err) {
+        return res.status(500).json({ message: err });
+      } else {
+        return res.status(200).json({
+          success: true,
+          message: "Password reset successfully",
+        });
+      }
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: error.message });
   }
 };
