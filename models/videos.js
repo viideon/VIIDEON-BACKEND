@@ -20,7 +20,8 @@ const videoSchema = new mongoose.Schema({
     vAlign: { type: String },
     textColor: { type: String },
     fontSize: { type: Number }
-  }
+  },
+  description: { type: String }
 });
 videoSchema.index({ title: "text" });
 module.exports = mongoose.model("Video", videoSchema);
