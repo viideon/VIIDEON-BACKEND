@@ -185,7 +185,8 @@ module.exports.reset = async (req, res) => {
       return res.status(400).json({ message: "no user for this token." });
     }
 
-    user.password = req.body.password;
+    var hash = await hashPassword(req.body.password);
+    user.password = hash;
     user.save(function (err, user) {
       if (err) {
         return res.status(500).json({ message: err });

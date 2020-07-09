@@ -8,6 +8,9 @@ const videoSchema = new mongoose.Schema({
   date: { type: Date, default: Date.now },
   recieverEmail: { type: String, required: false },
   campaign: { type: Boolean, required: false },
+  views: { type: Number },
+  watch: { type: Number },
+  emailShareCount: { type: Number },
   logoProps: {
     url: { type: String },
     width: { type: String },
