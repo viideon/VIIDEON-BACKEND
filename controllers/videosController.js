@@ -89,6 +89,26 @@ module.exports.getUserVideos = async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 };
+module.exports.getUserCampaignVideos = async (req, res) => {
+  let id = req.query.id;
+  let page = req.query.page ? req.query.page : 1;
+  let search = req.query.title;
+
+  try {
+    let videos = [];
+    if (req.query.title !== "" && req.query.title !== undefined) {
+      videos = await videoService.findUserCamaignVideoByTitle(id, page, search);
+      if (!videos) res.status(400).json({ message: "No video available" });
+      return res.status(200).json({ message: videos });
+    } else {
+      videos = await videoService.findUserCampaignVideo(id, page);
+      if (!videos) res.status(400).json({ message: "No video available" });
+      return res.status(200).json({ message: videos });
+    }
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
 
 module.exports.updateVideo = async (req, res) => {
   let videoId = req.body.id;
@@ -175,6 +195,22 @@ module.exports.updateVideoEmailShare = async (req, res) => {
     return res.status(400).json({ message: error });
   }
 };
+// module.exports.getCampaignVideos = async (req, res) => {
+//   let { id } = req.query;
+//   try {
+//     const videos = await videoService.getCampaignVideos(id);
+
+//     if (videos) {
+//       return res.status(200).json({
+//         message: "success",
+//         video: videos,
+//       });
+//     }
+//     return res.status(400).json({ message: "get campaign videos failed" });
+//   } catch (error) {
+//     return res.status(400).json({ message: error });
+//   }
+// };
 
 module.exports.deleteVideo = async (req, res) => {
   let { id, pageNo } = req.query;

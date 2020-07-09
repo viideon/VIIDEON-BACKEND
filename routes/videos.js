@@ -11,6 +11,7 @@ router.route("/updateWatch").post(videosController.updateVideoWatchCount);
 router.route("/updateEmailShare").post(videosController.updateVideoEmailShare);
 router.route("/user").get(videosController.getUserVideos);
 router.route("/single").get(videosController.getSingleVideo);
+router.route("/campaignVideos").get(videosController.getUserCampaignVideos);
 router.route("/multiple/email").post(videosController.sendMultipleEmail);
 router.route("/count").get(videosController.getVideoCount);
 module.exports = router;
