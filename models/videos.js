@@ -8,19 +8,22 @@ const videoSchema = new mongoose.Schema({
   date: { type: Date, default: Date.now },
   recieverEmail: { type: String, required: false },
   campaign: { type: Boolean, required: false },
+  views: { type: Number },
+  watch: { type: Number },
+  emailShareCount: { type: Number },
   logoProps: {
     url: { type: String },
     width: { type: String },
     height: { type: String },
-    position: { type: String }
+    position: { type: String },
   },
   textProps: {
     text: { type: String },
     align: { type: String },
     vAlign: { type: String },
     textColor: { type: String },
-    fontSize: { type: Number }
-  }
+    fontSize: { type: Number },
+  },
 });
 videoSchema.index({ title: "text" });
 module.exports = mongoose.model("Video", videoSchema);

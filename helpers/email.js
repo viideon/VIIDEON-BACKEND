@@ -79,7 +79,7 @@ const sendForGotEmail = async (user, token, req, res) => {
     subject: "Reset password link",
     text: "Some useless text",
     html: `<p>You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n Please click on the following link, or paste this into your browser to complete the process:\n\n
-        <a href="https://vidionpro.000webhostapp.com/resetpassword?code=${token.token}">https://secure-lake-14290.herokuapp.com/reset?code=${token.token}</a> \n\n If you did not request this, please ignore this email and your password will remain unchanged.\n </p>`,
+        <a href="https://vidionpro.000webhostapp.com/resetpassword?code=${token.token}">https://vidionpro.000webhostapp.com/resetpassword?code=${token.token}</a> \n\n If you did not request this, please ignore this email and your password will remain unchanged.\n </p>`,
   };
   try {
     const tokenSaved = await token.save();
