@@ -50,6 +50,7 @@ module.exports.registerUser = async (req, res) => {
 
 module.exports.login = async (req, res) => {
   try {
+    console.log(req.body);
     const user = await userService.findUserByEmail(req.body.email);
     if (!user) return res.status(404).send("Email is not registered!");
     const passwordCheck = await comparePassword(
@@ -57,9 +58,14 @@ module.exports.login = async (req, res) => {
       user.password
     );
     if (!passwordCheck) return res.status(400).send("Password do not match");
+    if (!user.isVerified) {
+      return res
+        .status(410)
+        .send({ message: "Email not Verified, Please Verify your email" });
+    }
     const token = generateToken(user);
     if (!token) return res.status(500).send("Error in generating token");
-    res
+    return res
       .status(201)
       .json({ user: user, token, message: "Successfully logged in" });
   } catch (error) {
@@ -187,18 +193,22 @@ module.exports.reset = async (req, res) => {
 
     var hash = await hashPassword(req.body.password);
     user.password = hash;
-    user.save(function (err, user) {
-      if (err) {
-        return res.status(500).json({ message: err });
-      } else {
+
+    try {
+      var newUser = await userService.updatePassword(user._id, hash);
+      if (newUser) {
         return res.status(200).json({
           success: true,
           message: "Password reset successfully",
+          user: newUser,
         });
       }
-    });
+      return res.status(400).json({ message: "Password not updated." });
+    } catch (err) {
+      return res.status(500).json({ message: err, errr: "catch2" });
+    }
   } catch (error) {
     console.log(error);
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ message: error.message, errr: "catch" });
   }
 };
