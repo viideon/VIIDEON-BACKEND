@@ -14,10 +14,29 @@ const findUserVideo = (userId, page) => {
     .skip((page - 1) * 9)
     .limit(9);
 };
+
 const findUserVideoByTitle = (userId, page, search) => {
   return Video.find({
     $and: [
       { userId: userId },
+      { title: { $regex: new RegExp(".*" + search + ".*"), $options: "i" } },
+    ],
+  }).sort({ date: -1 });
+  // .skip((page - 1) * 9)
+  // .limit(9);
+};
+
+const findUserCampaignVideo = (userId, page) => {
+  return Video.find({ userId: userId, campaign: true })
+    .sort({ date: -1 })
+    .skip((page - 1) * 9)
+    .limit(9);
+};
+
+const findUserCamaignVideoByTitle = (userId, page, search) => {
+  return Video.find({
+    $and: [
+      { userId: userId, campaign: true },
       { title: { $regex: new RegExp(".*" + search + ".*"), $options: "i" } },
     ],
   }).sort({ date: -1 });
@@ -33,6 +52,9 @@ const findVideoByUrl = (url) => {
 };
 const findVideoById = (id) => {
   return Video.findOne({ _id: id });
+};
+const getCampaignVideos = (id) => {
+  return Video.find({ userId: id, campaign: true });
 };
 const getVideoCount = (id) => {
   const count = Video.countDocuments({ userId: id }, function (err, count) {
@@ -61,4 +83,7 @@ module.exports = {
   incrementVideoEmail,
   incrementVideoViews,
   incrementVideoWatch,
+  getCampaignVideos,
+  findUserCamaignVideoByTitle,
+  findUserCampaignVideo,
 };
