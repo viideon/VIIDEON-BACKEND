@@ -4,6 +4,7 @@ const decodeToken = require("jsontokens").decodeToken;
 const { google } = require("googleapis");
 const template = require("../helpers/template");
 const emailService = require("../services/emailService");
+const { incrementVideoEmail } = require("../services/videoService");
 const videoService = require("../services/videoService");
 require("dotenv").config();
 
@@ -14,6 +15,8 @@ module.exports.sendWithGmail = async (req, res) => {
     const singleTokenObj = tokenObjects[0].tokenObj;
     const fromEmail = tokenObjects[0].userEmail;
     const video = await videoService.findVideoById(videoId);
+    var emailList = recieverEmail.split(",");
+    await incrementVideoEmail(videoId, emailList.length);
     const { thumbnail } = video;
     var templateString = await template.generateStringTemplate(
       videoId,
