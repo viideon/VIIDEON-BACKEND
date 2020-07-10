@@ -33,6 +33,16 @@ const updateUser = (userId, user) => {
     { new: true }
   );
 };
+const updatePassword = (_id, password) => {
+  console.log(_id, password);
+  return User.findOneAndUpdate(
+    { _id },
+    {
+      $set: { password },
+    },
+    { new: true }
+  );
+};
 const getAllUsers = () => {
   return User.find();
 };
@@ -44,4 +54,5 @@ module.exports = {
   createNewUser,
   getUserById,
   verifyUser,
+  updatePassword,
 };
