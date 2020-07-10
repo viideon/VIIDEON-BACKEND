@@ -62,8 +62,8 @@ const getVideoCount = (id) => {
   });
   return count;
 };
-const incrementVideoEmail = (_id) => {
-  return Video.updateOne({ _id }, { $inc: { emailShareCount: 1 } });
+const incrementVideoEmail = (_id, count) => {
+  return Video.updateOne({ _id }, { $inc: { emailShareCount: count } });
 };
 const incrementVideoViews = (_id) => {
   return Video.updateOne({ _id }, { $inc: { views: 1 } });
