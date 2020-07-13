@@ -9,7 +9,7 @@ const deleteVideo = (videoId) => {
 };
 
 const findUserVideo = (userId, page) => {
-  return Video.find({ userId: userId })
+  return Video.find({ userId: userId, campaign: { $ne: true } })
     .sort({ date: -1 })
     .skip((page - 1) * 9)
     .limit(9);
@@ -18,7 +18,7 @@ const findUserVideo = (userId, page) => {
 const findUserVideoByTitle = (userId, page, search) => {
   return Video.find({
     $and: [
-      { userId: userId },
+      { userId: userId, campaign: { $ne: true } },
       { title: { $regex: new RegExp(".*" + search + ".*"), $options: "i" } },
     ],
   }).sort({ date: -1 });
