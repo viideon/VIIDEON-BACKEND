@@ -31,7 +31,7 @@ module.exports.sendMultipleEmail = async (req, res) => {
   try {
     if (emails.lenght === 0) {
       res.status(400).json({
-        message: "no email provided",
+        message: "no email provided"
       });
       return;
     }
@@ -48,7 +48,7 @@ module.exports.sendMultipleEmail = async (req, res) => {
 module.exports.postVideo = async (req, res) => {
   try {
     const video = new Video({
-      ...req.body,
+      ...req.body
     });
     video.save();
     return res
@@ -116,14 +116,14 @@ module.exports.updateVideo = async (req, res) => {
   try {
     if (!videoId) {
       return res.status(400).json({
-        message: "video id not provided",
+        message: "video id not provided"
       });
     }
     const video = await videoService.updateVideo(videoId, req.body);
     if (video) {
       return res.status(200).json({
         message: "video updated",
-        video: video,
+        video: video
       });
     }
     res.status(400).json({ message: "video update failed" });
@@ -138,14 +138,14 @@ module.exports.updateVideoViews = async (req, res) => {
   try {
     if (!videoId) {
       return res.status(400).json({
-        message: "video id not provided",
+        message: "video id not provided"
       });
     }
     const isViewUpdated = await videoService.incrementVideoViews(videoId);
     if (isViewUpdated) {
       return res.status(200).json({
         message: "video views updated",
-        video: isViewUpdated,
+        video: isViewUpdated
       });
     }
     return res.status(400).json({ message: "video view update failed" });
@@ -159,14 +159,14 @@ module.exports.updateVideoWatchCount = async (req, res) => {
   try {
     if (!videoId) {
       return res.status(400).json({
-        message: "video id not provided",
+        message: "video id not provided"
       });
     }
     const isWatchUpdated = await videoService.incrementVideoWatch(videoId);
     if (isWatchUpdated) {
       return res.status(200).json({
         message: "video watch updated",
-        video: isWatchUpdated,
+        video: isWatchUpdated
       });
     }
     return res.status(400).json({ message: "video watch update failed" });
@@ -180,14 +180,14 @@ module.exports.updateVideoEmailShare = async (req, res) => {
   try {
     if (!videoId) {
       return res.status(400).json({
-        message: "video id not provided",
+        message: "video id not provided"
       });
     }
     const isEmailShareUpdated = await videoService.incrementVideoEmail(videoId);
     if (isEmailShareUpdated) {
       return res.status(200).json({
         message: "video email share updated",
-        video: isEmailShareUpdated,
+        video: isEmailShareUpdated
       });
     }
     return res.status(400).json({ message: "video email share update failed" });
@@ -222,11 +222,11 @@ module.exports.deleteVideo = async (req, res) => {
       const videos = await videoService.findUserVideo(userId, pageNo);
       return res.status(200).json({
         message: "video deleted",
-        nextVideo: videos[videos.length - 1],
+        nextVideo: videos[videos.length - 1]
       });
     } else {
       return res.status(400).json({
-        message: "No record found",
+        message: "No record found"
       });
     }
   } catch (error) {
@@ -243,11 +243,11 @@ module.exports.getSingleVideo = async (req, res) => {
     if (video) {
       res.status(200).json({
         status: true,
-        video: video,
+        video: video
       });
     } else {
       res.status(404).json({
-        status: false,
+        status: false
       });
     }
   } catch (err) {
@@ -259,6 +259,15 @@ module.exports.getVideoCount = async (req, res) => {
   let id = req.query.id;
   try {
     let count = await videoService.getVideoCount(id);
+    res.status(200).json({ count: count });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+module.exports.getCampaignCount = async (req, res) => {
+  let id = req.query.id;
+  try {
+    let count = await videoService.getCampaignCount(id);
     res.status(200).json({ count: count });
   } catch (error) {
     res.status(400).json({ error: error.message });

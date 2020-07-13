@@ -1,7 +1,7 @@
 const {
   hashPassword,
   comparePassword,
-  generateToken,
+  generateToken
 } = require("./../helpers/helper");
 const Token = require("../models/token");
 const userService = require("../services/userService");
@@ -9,7 +9,7 @@ const {
   signupSchema,
   signinSchema,
   verificationTokenSchema,
-  profileSchema,
+  profileSchema
 } = require("../schemas/auth");
 const { helpers } = require("../helpers");
 module.exports.registerUser = async (req, res) => {
@@ -34,11 +34,11 @@ module.exports.registerUser = async (req, res) => {
     if (mail) {
       return res.status(201).json({
         success: register,
-        message: "Account is successfully created and email has been sent.",
+        message: "Account is successfully created and email has been sent."
       });
     } else {
       return res.status(400).json({
-        message: "not created",
+        message: "not created"
       });
     }
     // res.status(201).json({ register, message: "Successfully registered!" });
@@ -50,7 +50,6 @@ module.exports.registerUser = async (req, res) => {
 
 module.exports.login = async (req, res) => {
   try {
-    console.log(req.body);
     const user = await userService.findUserByEmail(req.body.email);
     if (!user) return res.status(404).send("Email is not registered!");
     const passwordCheck = await comparePassword(
@@ -118,7 +117,7 @@ module.exports.verify = async (req, res, next) => {
     await userService.verifyUser(user._id);
     return res.status(201).json({
       success: true,
-      message: "Account is successfully verified.",
+      message: "Account is successfully verified."
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -134,7 +133,7 @@ module.exports.resend = async (req, res) => {
         message:
           "The email address " +
           req.body.email +
-          " is not associated with any account",
+          " is not associated with any account"
       });
     if (user.isVerified)
       return res
@@ -144,11 +143,11 @@ module.exports.resend = async (req, res) => {
     if (mail) {
       return res.status(201).json({
         success: register,
-        message: "Verification email has been sent.",
+        message: "Verification email has been sent."
       });
     } else {
       return res.status(400).json({
-        message: "Email not sent",
+        message: "Email not sent"
       });
     }
   } catch (error) {
@@ -168,11 +167,11 @@ module.exports.forget = async (req, res) => {
     if (mail) {
       return res.status(201).json({
         success: register,
-        message: "Forgot password link  has been sent to your email.",
+        message: "Forgot password link  has been sent to your email."
       });
     } else {
       return res.status(400).json({
-        message: "Email not sent",
+        message: "Email not sent"
       });
     }
   } catch (error) {
@@ -200,7 +199,7 @@ module.exports.reset = async (req, res) => {
         return res.status(200).json({
           success: true,
           message: "Password reset successfully",
-          user: newUser,
+          user: newUser
         });
       }
       return res.status(400).json({ message: "Password not updated." });

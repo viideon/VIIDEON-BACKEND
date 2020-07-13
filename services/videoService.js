@@ -62,6 +62,16 @@ const getVideoCount = (id) => {
   });
   return count;
 };
+const getCampaignCount = (id) => {
+  const count = Video.countDocuments({ userId: id, campaign: true }, function (
+    err,
+    count
+  ) {
+    return count;
+  });
+  return count;
+};
+
 const incrementVideoEmail = (_id, count) => {
   return Video.updateOne({ _id }, { $inc: { emailShareCount: count } });
 };
@@ -86,4 +96,5 @@ module.exports = {
   getCampaignVideos,
   findUserCamaignVideoByTitle,
   findUserCampaignVideo,
+  getCampaignCount,
 };

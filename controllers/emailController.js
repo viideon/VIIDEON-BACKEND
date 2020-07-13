@@ -15,9 +15,9 @@ module.exports.sendWithGmail = async (req, res) => {
     const singleTokenObj = tokenObjects[0].tokenObj;
     const fromEmail = tokenObjects[0].userEmail;
     const video = await videoService.findVideoById(videoId);
+    const { thumbnail } = video;
     var emailList = recieverEmail.split(",");
     await incrementVideoEmail(videoId, emailList.length);
-    const { thumbnail } = video;
     var templateString = await template.generateStringTemplate(
       videoId,
       thumbnail
@@ -44,27 +44,26 @@ module.exports.sendWithGmail = async (req, res) => {
           auth: auth,
           userId: "me",
           resource: {
-            raw: raw,
-          },
+            raw: raw
+          }
         },
-        function (err, response) {
+        function(err, response) {
           if (err) {
             return res.status(400).json({
-              messaage: "failed,server error",
+              messaage: "failed,server error"
             });
           }
           if (response) {
             return res.status(200).json({
-              message: "email sent",
+              message: "email sent"
             });
           }
         }
       );
     }
   } catch (error) {
-    console.log("error", error);
     res.status(400).json({
-      error: error.message,
+      error: error.message
     });
   }
 };
@@ -73,7 +72,7 @@ module.exports.getAndSaveConfig = async (req, res) => {
   const { code, userId } = req.body;
   if (code === "") {
     return res.status(400).json({
-      error: "include authorization code",
+      error: "include authorization code"
     });
   }
   try {
@@ -82,7 +81,7 @@ module.exports.getAndSaveConfig = async (req, res) => {
       client_id: `${process.env.CLIENT_ID}`,
       client_secret: `${process.env.CLIENT_SECRET}`,
       grant_type: "authorization_code",
-      redirect_uri: "postmessage",
+      redirect_uri: "postmessage"
     });
     const response = await axios.post(
       `${process.env.TOKEN_OBJECT_PATH}`,
@@ -95,18 +94,18 @@ module.exports.getAndSaveConfig = async (req, res) => {
     const result = await emailService.saveEmailConfig({
       userId,
       userEmail,
-      tokenObj,
+      tokenObj
     });
 
     if (result) {
       res.status(201).json({
         message: "configuration created",
-        emailConfig: result,
+        emailConfig: result
       });
     }
   } catch (error) {
     res.status(400).json({
-      error: error.message,
+      error: error.message
     });
   }
 };
@@ -115,11 +114,11 @@ module.exports.getUserEmailConfig = async (req, res) => {
   try {
     const result = await emailService.findUserConfig(userId);
     res.status(200).json({
-      configurations: result,
+      configurations: result
     });
   } catch (error) {
     res.status(400).json({
-      error: error.message,
+      error: error.message
     });
   }
 };
@@ -130,11 +129,11 @@ module.exports.deleteUserConfig = async (req, res) => {
     if (config) {
       await emailService.deleteConfigById(id);
       return res.status(200).json({
-        message: "config deleted",
+        message: "config deleted"
       });
     } else {
       return res.status(400).json({
-        message: "No such record found",
+        message: "No such record found"
       });
     }
   } catch (error) {
@@ -162,7 +161,7 @@ function makeBody(recieverEmail, from, subject, message) {
     "subject: ",
     subject,
     "\n\n",
-    message,
+    message
   ].join("");
 
   var encodedMail = new Buffer(str)

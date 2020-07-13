@@ -14,4 +14,5 @@ router.route("/single").get(videosController.getSingleVideo);
 router.route("/campaignVideos").get(videosController.getUserCampaignVideos);
 router.route("/multiple/email").post(videosController.sendMultipleEmail);
 router.route("/count").get(videosController.getVideoCount);
+router.route("/campaign/count").get(videosController.getCampaignCount);
 module.exports = router;

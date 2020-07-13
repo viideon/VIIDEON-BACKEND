@@ -15,15 +15,16 @@ const videoSchema = new mongoose.Schema({
     url: { type: String },
     width: { type: String },
     height: { type: String },
-    position: { type: String },
+    position: { type: String }
   },
   textProps: {
     text: { type: String },
     align: { type: String },
     vAlign: { type: String },
     textColor: { type: String },
-    fontSize: { type: Number },
+    fontSize: { type: Number }
   },
+  description: { type: String }
 });
 videoSchema.index({ title: "text" });
 module.exports = mongoose.model("Video", videoSchema);
