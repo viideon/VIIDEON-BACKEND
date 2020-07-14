@@ -56,6 +56,18 @@ const findVideoById = (id) => {
 const getCampaignVideos = (id) => {
   return Video.find({ userId: id, campaign: true });
 };
+const getViewCount = async (id) => {
+  let count = await Video.find({ userId: id }, function (err, userVideos) {
+    if (userVideos.length < 1) return;
+    let values = userVideos.map((x) => parseInt(x["views"]) || 0);
+    let count = values.reduce((a, b) => a + b);
+    console.log(values.reduce((a, b) => a + b));
+    console.log(count);
+    return count;
+  });
+  console.log(count);
+  return count;
+};
 const getVideoCount = (id) => {
   const count = Video.countDocuments({ userId: id }, function (err, count) {
     return count;
@@ -89,6 +101,7 @@ module.exports = {
   findVideoByUrl,
   findVideoById,
   findUserVideoByTitle,
+  getViewCount,
   getVideoCount,
   incrementVideoEmail,
   incrementVideoViews,
