@@ -5,17 +5,10 @@ const {
 } = require("./../helpers/helper");
 const Token = require("../models/token");
 const userService = require("../services/userService");
-const {
-  signupSchema,
-  signinSchema,
-  verificationTokenSchema,
-  profileSchema
-} = require("../schemas/auth");
+const { verificationTokenSchema } = require("../schemas/auth");
 const { helpers } = require("../helpers");
 module.exports.registerUser = async (req, res) => {
   try {
-    console.log(req.body);
-
     const { email, firstName, lastName, userName, password } = req.body;
     const person = await userService.findByNameEmail(email, userName);
     if (person && person.email === email)
@@ -41,9 +34,7 @@ module.exports.registerUser = async (req, res) => {
         message: "not created"
       });
     }
-    // res.status(201).json({ register, message: "Successfully registered!" });
   } catch (error) {
-    console.log(error);
     res.status(400).json(error);
   }
 };
@@ -163,10 +154,9 @@ module.exports.forget = async (req, res) => {
       return res.status(400).send({ message: "This email is not valid." });
     const token = user.generateVerificationToken();
     // Send the mail
-    const mail = await helpers.sendForGotEmail(user, token, req, res);
+    const mail = await helpers.sendForGotEmail(user, token);
     if (mail) {
       return res.status(201).json({
-        success: register,
         message: "Forgot password link  has been sent to your email."
       });
     } else {
@@ -207,7 +197,6 @@ module.exports.reset = async (req, res) => {
       return res.status(500).json({ message: err, errr: "catch2" });
     }
   } catch (error) {
-    console.log(error);
     res.status(500).json({ message: error.message, errr: "catch" });
   }
 };

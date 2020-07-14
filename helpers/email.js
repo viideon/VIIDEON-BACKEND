@@ -9,7 +9,6 @@ const transporter = nodemailer.createTransport({
     pass: `${process.env.EMAIL_PASSWORD}`
   }
 });
-
 const sendEmail = async (user, req, res) => {
   const token = user.generateVerificationToken();
   const mailOptions = {
@@ -32,12 +31,11 @@ const sendEmail = async (user, req, res) => {
     });
     return true;
   } catch (err) {
-    console.log(err);
     return false;
   }
 };
 
-const sendForGotEmail = async (user, token, req, res) => {
+const sendForGotEmail = async (user, token) => {
   const mailOptions = {
     to: user.email,
     from: process.env.FROM_EMAIL,
@@ -52,11 +50,7 @@ const sendForGotEmail = async (user, token, req, res) => {
       return false;
     }
     await transporter.sendMail(mailOptions);
-    return res.status(201).json({
-      success: true,
-      message: " A verification email has been sent.",
-      user: user
-    });
+    return true;
   } catch (err) {
     return false;
   }
