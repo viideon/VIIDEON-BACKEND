@@ -155,7 +155,6 @@ module.exports.updateVideoViews = async (req, res) => {
 };
 module.exports.updateVideoWatchCount = async (req, res) => {
   let videoId = req.body.id;
-  console.log(videoId);
   try {
     if (!videoId) {
       return res.status(400).json({
@@ -257,9 +256,9 @@ module.exports.getVideoCount = async (req, res) => {
   let id = req.query.id;
   try {
     let videoCount = await videoService.getVideoCount(id);
-
     await Video.find({ userId: id }, function(err, userVideos) {
-      if (userVideos.length < 1) return;
+      if (userVideos.length < 1)
+        return res.status(200).json({ count: 0, viewCount: 0 });
       let values = userVideos.map(x => parseInt(x["views"]) || 0);
       let count = values.reduce((a, b) => a + b);
 
