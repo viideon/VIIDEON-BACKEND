@@ -11,6 +11,8 @@ const videoSchema = new mongoose.Schema({
   views: { type: Number },
   watch: { type: Number },
   emailShareCount: { type: Number },
+  emailOpens: { type: Number },
+  ctaClicks: { type: Number },
   logoProps: {
     url: { type: String },
     width: { type: String },
