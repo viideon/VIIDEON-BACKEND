@@ -303,6 +303,7 @@ module.exports.updateCtaClicks = async (req, res) => {
     await videoService.incrementCtaClicks(id);
     res.status(200).json({ message: "incremented" });
   } catch (error) {
+    console.log("error", error);
     res.status(400).json({ message: "failed" });
   }
 };
