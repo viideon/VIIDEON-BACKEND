@@ -134,7 +134,7 @@ module.exports.updateVideo = async (req, res) => {
 
 module.exports.updateVideoViews = async (req, res) => {
   let videoId = req.body.id;
-  console.log(videoId);
+
   try {
     if (!videoId) {
       return res.status(400).json({
@@ -293,7 +293,7 @@ module.exports.trackEmailOpen = async (req, res) => {
   }
 };
 module.exports.updateCtaClicks = async (req, res) => {
-  let id = req.query.id;
+  let id = req.body.id;
   try {
     if (!id) {
       return res.status(400).json({
