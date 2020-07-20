@@ -10,11 +10,12 @@ module.exports.addNewAsset = async (req, res) => {
 };
 
 module.exports.getAssets = async (req, res) => {
-  let { userId } = req.body;
+  let userId = req.query.userId;
   try {
-    const asset = await assetService.getAssets(userId);
+    let asset = await assetService.getAssets(userId);
+    let assets = asset.assets;
     if (asset) {
-      return res.status(200).json({ asset: asset });
+      return res.status(200).json({ assets: assets });
     }
     res.status(400).json({ message: "failed to fetch an asset" });
   } catch (error) {

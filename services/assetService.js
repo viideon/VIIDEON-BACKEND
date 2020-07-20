@@ -4,11 +4,11 @@ const addAsset = (userId, asset) => {
   return userAssets.findOneAndUpdate(
     { userId: userId },
     { $push: { assets: asset } },
-    {upsert:true}
+    { upsert: true }
   );
 };
 const getAssets = userId => {
-  return userAssets.find({ userId: userId }, "assets");
+  return userAssets.findOne({ userId: userId }, "assets").exec();
 };
 module.exports = {
   addAsset,
