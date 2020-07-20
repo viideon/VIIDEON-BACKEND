@@ -302,7 +302,6 @@ module.exports.getCampaignCount = async (req, res) => {
   }
 };
 module.exports.trackEmailOpen = async (req, res) => {
-  console.log("open");
   let id = req.query.id;
   try {
     const fs = require("fs");
