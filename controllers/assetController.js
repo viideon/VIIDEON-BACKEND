@@ -22,3 +22,17 @@ module.exports.getAssets = async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 };
+
+module.exports.removeAsset = async (req, res) => {
+  let assetId = req.query.assetId;
+  let userId = req.query.userId;
+  try {
+    if (userId === "" && assetId === "") {
+      res.status(400).json({ message: "user id or asset id missing" });
+      return;
+    }
+    await assetService.removeUserAsset(userId, assetId, res);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+};
