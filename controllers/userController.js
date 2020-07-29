@@ -11,10 +11,13 @@ module.exports.registerUser = async (req, res) => {
   try {
     const { email, firstName, lastName, userName, password } = req.body;
     const person = await userService.findByNameEmail(email, userName);
-    if (person && person.email === email)
-      return res.status(400).send("Email already registered!");
-    if (person && person.userName === userName)
-      return res.status(400).send("Username is already taken");
+    if (person && person.email === email) {
+      return res
+        .status(303)
+        .json({ message: "Email address is already registered" });
+    }
+    // if (person && person.userName === userName)
+    //   return res.status(409).send("Username is already taken");
     const hash = await hashPassword(password);
     const register = await userService.createNewUser(
       email,
@@ -30,6 +33,7 @@ module.exports.registerUser = async (req, res) => {
         message: "Account is successfully created and email has been sent."
       });
     } else {
+      await userService.deleteUser(register._id);
       return res.status(400).json({
         message: "not created"
       });
@@ -70,9 +74,7 @@ module.exports.updateUser = async (req, res) => {
       res.status(400).json({ message: "Can't update profile" });
       return;
     }
-    res
-      .status(201)
-      .json({ user: user, message: "Successfully Updated Profile!" });
+    res.status(201).json({ user: user, message: "Profile Updated" });
   } catch (error) {
     res.status(400).json(error);
   }

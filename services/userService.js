@@ -45,6 +45,9 @@ const updatePassword = (_id, password) => {
 const getAllUsers = () => {
   return User.find();
 };
+const deleteUser = id => {
+  return User.deleteOne({ _id: id });
+};
 module.exports = {
   findUserByEmail,
   updateUser,
@@ -53,5 +56,6 @@ module.exports = {
   createNewUser,
   getUserById,
   verifyUser,
-  updatePassword
+  updatePassword,
+  deleteUser
 };

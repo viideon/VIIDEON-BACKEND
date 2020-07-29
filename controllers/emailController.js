@@ -35,7 +35,7 @@ module.exports.sendWithGmail = async (req, res) => {
       var raw = await makeBody(
         recieverEmail,
         fromEmail,
-        "video from vidionPro",
+        "video from videonPro",
         templateString
       );
       const gmail = google.gmail({ version: "v1", auth });
