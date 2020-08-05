@@ -136,12 +136,11 @@ module.exports.resend = async (req, res) => {
     const mail = await helpers.sendEmail(user, req, res);
     if (mail) {
       return res.status(201).json({
-        success: register,
         message: "Verification email has been sent."
       });
     } else {
       return res.status(400).json({
-        message: "Email not sent"
+        message: "Failed to send verification email"
       });
     }
   } catch (error) {
@@ -187,7 +186,7 @@ module.exports.reset = async (req, res) => {
     user.password = hash;
 
     try {
-      var newUser = await userService.updatePassword(user._id, hash);
+      let newUser = await userService.updatePassword(user._id, hash);
       if (newUser) {
         return res.status(200).json({
           success: true,
