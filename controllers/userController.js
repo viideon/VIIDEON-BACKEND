@@ -47,19 +47,22 @@ module.exports.registerUser = async (req, res) => {
 module.exports.login = async (req, res) => {
   try {
     const user = await userService.findUserByEmail(req.body.email);
-    if (!user) return res.status(404).send("Email is not registered!");
+    if (!user)
+      return res.status(404).send({ message: "Email is not registered!" });
     const passwordCheck = await comparePassword(
       req.body.password,
       user.password
     );
-    if (!passwordCheck) return res.status(400).send("Password do not match");
+    if (!passwordCheck)
+      return res.status(400).send({ message: "Invalid email or password" });
     if (!user.isVerified) {
       return res
         .status(410)
-        .send({ message: "Email not Verified, Please Verify your email" });
+        .send({ message: "Email not verified, Please verify your email" });
     }
     const token = generateToken(user);
-    if (!token) return res.status(500).send("Error in generating token");
+    if (!token)
+      return res.status(500).send({ message: "Error in generating token" });
     return res
       .status(201)
       .json({ user: user, token, message: "Successfully logged in" });
@@ -72,12 +75,16 @@ module.exports.updateUser = async (req, res) => {
   try {
     const user = await userService.updateUser(req.params.id, req.body);
     if (!user) {
-      res.status(400).json({ message: "Can't update profile" });
+      res.status(400).json({ message: "Failed to update user" });
       return;
     }
     res.status(201).json({ user: user, message: "Profile Updated" });
   } catch (error) {
-    res.status(400).json(error);
+    if (error.message) {
+      res.status(400).json({ message: error.message });
+    } else {
+      res.sendStatus(500);
+    }
   }
 };
 
@@ -156,6 +163,12 @@ module.exports.forget = async (req, res) => {
       return res
         .status(400)
         .send({ message: "No account exist with this email" });
+    }
+    if (user.isVerified === false) {
+      return res.status(400).send({
+        message:
+          "Please verify your account with the link sent to your email before changing your password"
+      });
     }
     const token = user.generateVerificationToken();
     // Send the mail
