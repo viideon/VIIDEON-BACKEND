@@ -152,8 +152,11 @@ module.exports.forget = async (req, res) => {
   try {
     const { email } = req.body;
     const user = await userService.findUserByEmail(email);
-    if (!user)
-      return res.status(400).send({ message: "This email is not valid." });
+    if (!user) {
+      return res
+        .status(400)
+        .send({ message: "No account exist with this email" });
+    }
     const token = user.generateVerificationToken();
     // Send the mail
     const mail = await helpers.sendForGotEmail(user, token);
@@ -163,7 +166,7 @@ module.exports.forget = async (req, res) => {
       });
     } else {
       return res.status(400).json({
-        message: "Email not sent"
+        message: "Failed to send email , try again"
       });
     }
   } catch (error) {
@@ -181,10 +184,8 @@ module.exports.reset = async (req, res) => {
     if (!user) {
       return res.status(400).json({ message: "no user for this token." });
     }
-
     var hash = await hashPassword(req.body.password);
     user.password = hash;
-
     try {
       let newUser = await userService.updatePassword(user._id, hash);
       if (newUser) {
