@@ -13,11 +13,11 @@ module.exports.getAssets = async (req, res) => {
   let userId = req.query.userId;
   try {
     let asset = await assetService.getAssets(userId);
-    let assets = asset.assets;
-    if (asset) {
+    if (asset && asset.assets) {
+      let assets = asset.assets;
       return res.status(200).json({ assets: assets });
     }
-    res.status(400).json({ message: "failed to fetch an asset" });
+    res.status(200).json({ assets: [] });
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
