@@ -27,6 +27,9 @@ const videoSchema = new mongoose.Schema({
     textColor: { type: String },
     fontSize: { type: Number }
   },
+  musicProps:{
+    url:{type:String}
+  }
   description: { type: String }
 });
 videoSchema.index({ title: "text" });
