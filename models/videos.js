@@ -28,7 +28,8 @@ const videoSchema = new mongoose.Schema({
     fontSize: { type: Number }
   },
   musicProps: {
-    url: { type: String }
+    url: { type: String },
+    title: { type: String }
   },
   description: { type: String }
 });
