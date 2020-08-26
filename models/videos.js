@@ -29,7 +29,8 @@ const videoSchema = new mongoose.Schema({
   },
   musicProps: {
     url: { type: String },
-    title: { type: String }
+    title: { type: String },
+    musicVolume: { type: Number }
   },
   description: { type: String }
 });
