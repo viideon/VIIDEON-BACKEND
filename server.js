@@ -11,6 +11,7 @@ const videos = require("./routes/videos");
 const contact = require("./routes/contact");
 const email = require("./routes/email");
 const asset = require("./routes/asset");
+const campaign = require("./routes/campaign");
 require("dotenv").config();
 const app = express();
 
@@ -48,6 +49,7 @@ app.use("/video", videos);
 app.use("/contact", contact);
 app.use("/email", email);
 app.use("/asset", asset);
+app.use("/campaign", campaign);
 
 app.get("/", (req, res) => {
   res.send("Root place");
