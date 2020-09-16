@@ -9,5 +9,7 @@ const addTemplate = template => {
 const getTemplates = () => {
   return campaignTemplate.find();
 };
-
-module.exports = { addTemplate, getTemplates };
+const updateTemplate = (id, template) => {
+  return campaignTemplate.findByIdAndUpdate(id, template, { new: true });
+};
+module.exports = { addTemplate, getTemplates, updateTemplate };
