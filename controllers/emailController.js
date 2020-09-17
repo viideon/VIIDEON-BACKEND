@@ -8,6 +8,67 @@ const { incrementVideoEmail } = require("../services/videoService");
 const videoService = require("../services/videoService");
 require("dotenv").config();
 
+module.exports.sendTemplateWithGmail = async (req, res) => {
+  // const { userId, recieverEmail, videoId } = req.body;
+  try {
+    const tokenObjects = await emailService.findUserTokenObj("5f5b61ccdd828c1f7f11c09a");
+    const singleTokenObj = tokenObjects[0].tokenObj;
+    const fromEmail = tokenObjects[0].userEmail;
+    // const video = await videoService.findVideoById(videoId);
+    // const { thumbnail } = video;
+
+    // const headerImage = require('../template/spreadHeader.jpg')
+    // const logo = require('../template/logo.png')
+    const customTemplate = await template.spreadTheme();
+
+    authorize(sendMessage);
+    function authorize(callback) {
+      const oAuth2Client = new google.auth.OAuth2(
+        `${process.env.CLIENT_ID}`,
+        `${process.env.CLIENT_SECRET}`
+      );
+      oAuth2Client.setCredentials(singleTokenObj);
+      callback(oAuth2Client);
+    }
+    async function sendMessage(auth) {
+      var raw = await makeBody(
+        "hafiz.quraishi.official@gmail.com",
+        // "ehtisham.asghar.pak@gmail.com",
+        fromEmail,
+        "video from videonPro",
+        customTemplate
+      );
+      const gmail = google.gmail({ version: "v1", auth });
+      gmail.users.messages.send(
+        {
+          auth: auth,
+          userId: "me",
+          resource: {
+            raw: raw
+          }
+        },
+        function(err, response) {
+          if (err) {
+            return res.status(400).json({
+              messaage: "failed,server error"
+            });
+          }
+          if (response) {
+            return res.status(200).json({
+              message: "email sent"
+            });
+          }
+        }
+      );
+    }
+  } catch (error) {
+    console.log('error', error);
+    res.status(400).json({
+      error: error.message
+    });
+  }
+};
+
 module.exports.sendWithGmail = async (req, res) => {
   const { userId, recieverEmail, videoId } = req.body;
   try {
@@ -18,7 +79,7 @@ module.exports.sendWithGmail = async (req, res) => {
     const { thumbnail } = video;
     var emailList = recieverEmail.split(",");
     await incrementVideoEmail(videoId, emailList.length);
-    var templateString = await template.generateStringTemplate(
+    var templateString = await template.spreadTheme(
       videoId,
       thumbnail
     );
@@ -164,7 +225,7 @@ function makeBody(recieverEmail, from, subject, message) {
     message
   ].join("");
 
-  var encodedMail = new Buffer(str)
+  var encodedMail = new Buffer.from(str)
     .toString("base64")
     .replace(/\+/g, "-")
     .replace(/\//g, "_");
