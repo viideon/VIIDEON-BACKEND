@@ -70,7 +70,7 @@ module.exports.sendTemplateWithGmail = async (req, res) => {
 };
 
 module.exports.sendWithGmail = async (req, res) => {
-  const { userId, recieverEmail, videoId } = req.body;
+  const { userId, recieverEmail, videoId, themeName } = req.body;
   try {
     const tokenObjects = await emailService.findUserTokenObj(userId);
     const singleTokenObj = tokenObjects[0].tokenObj;
@@ -79,10 +79,47 @@ module.exports.sendWithGmail = async (req, res) => {
     const { thumbnail } = video;
     var emailList = recieverEmail.split(",");
     await incrementVideoEmail(videoId, emailList.length);
-    var templateString = await template.spreadTheme(
-      videoId,
-      thumbnail
-    );
+    let templateString = await template.generateStringTemplate(videoId, thumbnail);
+    if(themeName === "Spread") {
+      console.log("Spread")
+      templateString = await template.spreadTheme(videoId,thumbnail);
+    }
+    if(themeName === "Corporate Light") {
+      console.log("Corporate Light")
+      templateString = await template.corporateLight(videoId,thumbnail);
+    }
+    if(themeName === "Modern Simple") {
+      console.log("Modern Simple")
+      templateString = await template.modernSimple(videoId,thumbnail);
+    }
+    if(themeName === "Streamlined") {
+      console.log("Streamlined")
+      templateString = await template.modernSimple(videoId,thumbnail);
+    }
+    if(themeName === "Simple Blue") {
+      console.log("Simple Blue")
+      templateString = await template.modernSimple(videoId,thumbnail);
+    }
+    if(themeName === "Sleek") {
+      console.log("Sleek")
+      templateString = await template.modernSimple(videoId,thumbnail);
+    }
+    if(themeName === "Social Business") {
+      console.log("Social Business")
+      templateString = await template.modernSimple(videoId,thumbnail);
+    }
+    if(themeName === "Social Impact") {
+      console.log("Social Impact")
+      templateString = await template.modernSimple(videoId,thumbnail);
+    }
+    if(themeName === "Clasic Dark") {
+      console.log("Clasic Dark")
+      templateString = await template.modernSimple(videoId,thumbnail);
+    }
+    if(themeName === "Ocean") {
+      console.log("Ocean")
+      templateString = await template.modernSimple(videoId,thumbnail);
+    }
     authorize(sendMessage);
     function authorize(callback) {
       const oAuth2Client = new google.auth.OAuth2(

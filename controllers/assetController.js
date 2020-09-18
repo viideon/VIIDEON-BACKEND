@@ -31,6 +31,18 @@ module.exports.getAssets = async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 };
+module.exports.getAllAssets = async (req, res) => {
+  try {
+    let asset = await assetService.getAllAssets();
+    if (asset && asset.assets) {
+      let assets = asset.assets;
+      return res.status(200).json({ assets: assets });
+    }
+    res.status(200).json({ assets: [] });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
 module.exports.getMusicAsset = async (req, res) => {
   let userId = req.query.userId;
   try {

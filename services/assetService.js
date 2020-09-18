@@ -17,6 +17,9 @@ const addMusicAsset = (userId, asset) => {
 const getAssets = userId => {
   return userAssets.findOne({ userId: userId }, "assets").exec();
 };
+const getAllAssets = () => {
+  return userAssets.find();
+}
 const getMusicAssets = userId => {
   return userAssets.findOne({ userId: userId }, "musicAssets").exec();
 };
@@ -49,6 +52,7 @@ const removeMusicAsset = (userId, assetId, res) => {
 module.exports = {
   addAsset,
   getAssets,
+  getAllAssets,
   removeUserAsset,
   addMusicAsset,
   getMusicAssets,

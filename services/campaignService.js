@@ -12,4 +12,7 @@ const getTemplates = () => {
 const updateTemplate = (id, template) => {
   return campaignTemplate.findByIdAndUpdate(id, template, { new: true });
 };
-module.exports = { addTemplate, getTemplates, updateTemplate };
+const deleteTemplate = (id) => {
+  return campaignTemplate.deleteOne({_id: id})
+}
+module.exports = { addTemplate, getTemplates, updateTemplate, deleteTemplate };

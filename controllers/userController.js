@@ -90,8 +90,9 @@ module.exports.updateUser = async (req, res) => {
 
 module.exports.getAllUsers = async (req, res) => {
   try {
-    const users = await userService.getAllUsers();
-    res.status(201).json({ user: users });
+    const { pageNo, pageSize } = req.query;
+    const users = await userService.getAllUsers(pageNo, pageSize);
+    res.status(201).json({ users: users.users, count: users.count });
   } catch (error) {
     res.status(400).json(error);
   }

@@ -42,8 +42,11 @@ const updatePassword = (_id, password) => {
     { new: true }
   );
 };
-const getAllUsers = () => {
-  return User.find();
+const getAllUsers = async (pageNo, pageSize) => {
+  const skip = pageSize * (pageNo - 1);
+  let count = await User.count();
+  let users = await User.find().skip(skip).limit(Number(pageSize));
+  return {count, users}
 };
 const deleteUser = id => {
   return User.deleteOne({ _id: id });
