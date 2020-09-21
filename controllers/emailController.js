@@ -94,19 +94,19 @@ module.exports.sendWithGmail = async (req, res) => {
     }
     if(themeName === "Streamlined") {
       console.log("Streamlined")
-      templateString = await template.modernSimple(videoId,thumbnail);
+      templateString = await template.streamlined(videoId,thumbnail);
     }
     if(themeName === "Simple Blue") {
       console.log("Simple Blue")
-      templateString = await template.modernSimple(videoId,thumbnail);
+      templateString = await template.simple_blue(videoId,thumbnail);
     }
     if(themeName === "Sleek") {
       console.log("Sleek")
-      templateString = await template.modernSimple(videoId,thumbnail);
+      templateString = await template.sleek(videoId,thumbnail);
     }
     if(themeName === "Social Business") {
       console.log("Social Business")
-      templateString = await template.modernSimple(videoId,thumbnail);
+      templateString = await template.social_business(videoId,thumbnail);
     }
     if(themeName === "Social Impact") {
       console.log("Social Impact")
@@ -114,7 +114,7 @@ module.exports.sendWithGmail = async (req, res) => {
     }
     if(themeName === "Clasic Dark") {
       console.log("Clasic Dark")
-      templateString = await template.modernSimple(videoId,thumbnail);
+      templateString = await template.classic_dark(videoId,thumbnail);
     }
     if(themeName === "Ocean") {
       console.log("Ocean")
