@@ -235,6 +235,7 @@ module.exports.corporateLight = (id, thumbnail) => {
 </html>
   `
 }
+
 module.exports.modernSimple = (id, thumbnail) => {
   return `
   <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
@@ -296,7 +297,7 @@ module.exports.modernSimple = (id, thumbnail) => {
     </tr>
     <tr align="center">
         <td style="background: #4d4d4d; padding: 100px 0px 100px 0px;max-width: 400px;width: 100%;">
-            <table width="100%" cellspacing="0" cellpadding="0">
+            <table class="thumbnailWrapper" width="100%" cellspacing="0" cellpadding="0">
                 <tr align="center">
                     <td>
                         <img style="width: 80px"
@@ -494,7 +495,7 @@ module.exports.classic_dark = (id, thumbnail) => {
         </tr>
         <tr align="center">
             <td>
-                <table width="70%" cellspacing="0" cellpadding="0"
+                <table class="thumbnailWrapper" width="70%" cellspacing="0" cellpadding="0"
                     style="background: #333333; padding: 100px 0px 100px 0px;max-width: 400px;">
                     <tr align="center">
                         <td>
@@ -638,7 +639,7 @@ module.exports.sleek = (id, thumbnail) => {
     </tr>
     <tr align="center">
         <td>
-            <table width=" 100%" cellspacing="0" cellpadding="0" width="70%"
+            <table class="thumbnailWrapper" width=" 100%" cellspacing="0" cellpadding="0" width="70%"
                 style="background: #4d4d4d;padding: 100px 0px 100px 0px;max-width: 400px;">
                 <tr align="center">
                     <td>
@@ -820,7 +821,7 @@ module.exports.social_business = (id, thumbnail) => {
                 </tr>
                 <tr align="center">
                     <td>
-                        <table width="100%" style="background: #999999; padding: 100px 0px 100px 0px;max-width: 350px;"
+                        <table class="thumbnailWrapper" width="100%" style="background: #999999; padding: 100px 0px 100px 0px;max-width: 350px;"
                             cellspacing="0" cellpadding="0">
                             <tr align="center">
                                 <td>
@@ -1001,7 +1002,7 @@ module.exports.streamlined = (id, thumbnail) => {
     </tr>
     <tr align="center">
         <td style="background: #f6b415; padding: 100px 0px 100px 0px;max-width: 400px;width: 100%;">
-            <table width="100%" cellspacing="0" cellpadding="0">
+            <table class="thumbnailWrapper" width="100%" cellspacing="0" cellpadding="0">
                 <tr align="center">
                     <td>
                         <img style="width: 80px"
@@ -1155,7 +1156,7 @@ module.exports.simple_blue = (id, thumbnail) => {
 
     <tr align="center">
         <td>
-            <table width="70%" style="background: #3b93d2; padding: 100px 0px 100px 0px;max-width: 400px;width: 100%;"
+            <table class="thumbnailWrapper" width="70%" style="background: #3b93d2; padding: 100px 0px 100px 0px;max-width: 400px;width: 100%;"
                 cellspacing="0" cellpadding="0">
                 <tr align="center">
                     <td>
@@ -1289,7 +1290,7 @@ module.exports.social_impact = (id, thumbnail) => {
         </tr>
         <tr align="center">
             <td>
-                <table width=" 70% " style=" background: #f6b415; padding: 100px 0px 100px 0px;max-width: 400px;width: 100%; " cellspacing=" 0 " cellpadding=" 0 ">
+                <table class="thumbnailWrapper" width=" 70% " style=" background: #f6b415; padding: 100px 0px 100px 0px;max-width: 400px;width: 100%; " cellspacing=" 0 " cellpadding=" 0 ">
                     <tr align=" center ">
                         <td>
                             <img style=" width: 80px " src=" https://vidionpro-backend.herokuapp.com/video/email/track?id=${id} " />
@@ -1422,6 +1423,7 @@ module.exports.ocean = (id, thumbnail) => {
                     <tr align="center">
                         <td>
                             <table width="100%"
+                                class="thumbnailWrapper"
                                 style="background: #4d4d4d; padding: 100px 0px 100px 0px;max-width: 350px;"
                                 cellspacing="0" cellpadding="0">
                                 <tr align="center">
