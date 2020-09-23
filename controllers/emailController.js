@@ -110,7 +110,7 @@ module.exports.sendWithGmail = async (req, res) => {
     }
     if(themeName === "Social Impact") {
       console.log("Social Impact")
-      templateString = await template.modernSimple(videoId,thumbnail);
+      templateString = await template.social_impact(videoId,thumbnail);
     }
     if(themeName === "Clasic Dark") {
       console.log("Clasic Dark")
@@ -118,7 +118,7 @@ module.exports.sendWithGmail = async (req, res) => {
     }
     if(themeName === "Ocean") {
       console.log("Ocean")
-      templateString = await template.modernSimple(videoId,thumbnail);
+      templateString = await template.ocean(videoId,thumbnail);
     }
     authorize(sendMessage);
     function authorize(callback) {

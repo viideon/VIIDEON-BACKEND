@@ -1231,3 +1231,273 @@ module.exports.simple_blue = (id, thumbnail) => {
 </html>
   `
 }
+
+module.exports.social_impact = (id, thumbnail) => {
+    return `
+    <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+​
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="Content-Style-Type" content="text/css">
+    <title></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta name="Generator" content="Cocoa HTML Writer">
+    <meta name="CocoaVersion" content="1894.6">
+    <style type="text/css">
+        .thumbnailWrapper {
+            background-image: url(${thumbnail});
+        }
+        
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            content: '';
+            width: 100%;
+            background: #000000;
+            z-index: -1;
+            opacity: .3;
+        }
+    </style>
+</head>
+​
+<body>
+    <table align="center" cellpadding="0" cellspacing="0" width="700">
+​
+        <tr align="center">
+            <td align="center" style="background-image: url(https://videonpro.s3.amazonaws.com/assets/IntelicaCRE-BlogPhoto-office-social-gathering.jpg); background-size: cover; height: 200px;box-shadow: inset 2000px 0 0 0 rgba(255, 255, 255, 0.5); border-color:
+    rgba(255, 255, 255, 1); max-width: 200px;">
+​
+                <table align="center" cellpadding="0" cellspacing="0" width="100%">
+                    <tr align="center">
+                        <td style=" padding-left: 20px; display: -webkit-box; -webkit-box-align: center; -webkit-box-pack: center; min-width: 60%; height: 80%; ">
+                            <img src=" https://videonpro.s3.amazonaws.com/assets/logo.png " style=" width: 60px; height: 60px; opacity: 1;margin-top: 50px; margin-left: 100px;" />
+                            <p style=" color: #f6b415; padding-bottom: 0px; margin-left: 3%; font-weight: bolder; font-size: 50px; ">
+                                VideonPRO</p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr align="center">
+            <p style=" color: #f6b415;font-size: 20px;font-weight: bold; ">Watch this Video!</p>
+        </tr>
+        <tr align="center">
+            <td>
+                <table width=" 70% " style=" background: #f6b415; padding: 100px 0px 100px 0px;max-width: 400px;width: 100%; " cellspacing=" 0 " cellpadding=" 0 ">
+                    <tr align=" center ">
+                        <td>
+                            <img style=" width: 80px " src=" https://vidionpro-backend.herokuapp.com/video/email/track?id=${id} " />
+                            <p style=" color: white ">VIDEO PLACEHOLDER</p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr align="center">
+            <td align=" center " style=" padding: 30px 0px 30px 0px ">
+                <p style=" margin: 0px;color: #f6b415; ">
+                    VideonPRO is a video communication platform design for sale
+                </p>
+                <p style=" margin: 0px;color: #f6b415; ">
+                    and marketing leaders. Learn more at
+                    <a style=" text-decoration: none; color: #f6b415; font-weight: bold; cursor: pointer; ">videonpro.com</a>
+                </p>
+            </td>
+        </tr>
+​
+​
+​
+        <tr align="center">
+            <td align=" center " style=" padding: 15px 0px 15px 0px ">
+​
+                <img style=" vertical-align: middle; width: 50px; height: 50px; border-radius: 50%; " src=" http://placeimg.com/80/80/sport ">
+                <p style=" margin-bottom: 0; font-size: 16px; font-weight: bold;color: #f6b415; ">Chris Cullen
+                </p>
+                <p style=" margin-top: 0; font-size: 14px;color: #f6b415; ">Nature Lover</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 20px 0px 20px 0px;">
+                <table width="100% " cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td width="33% " align="center ">
+                            <p style=" font-size: 12px; padding-left: 5px;color: #f6b415; ">
+                                &copy; 2020 VideonPro All Rights Reserved
+                            </p>
+                        </td>
+                        <td width="33% " align="center"></td>
+                        <td width="33% " align="center">
+                            <img src="https://videonpro.s3.amazonaws.com/assets/logo.png " style=" width: 20px; opacity: 1; height: 20px; margin-right: 5px; margin-top: 10px; " />
+                            <span style="color: #f6b415; ">Sent with VideonPro</span>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+​
+​
+    </table>
+</body>
+​
+</html>
+    `
+}
+
+module.exports.ocean = (id, thumbnail) => {
+  return `
+  <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+​
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="Content-Style-Type" content="text/css">
+    <title></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta name="Generator" content="Cocoa HTML Writer">
+    <meta name="CocoaVersion" content="1894.6">
+    <style type="text/css">
+        .thumbnailWrapper {
+            background-image: url(${thumbnail});
+        }
+​
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            content: '';
+            width: 100%;
+            background: #000000;
+            z-index: -1;
+            opacity: .3;
+        }
+    </style>
+</head>
+​
+<body>
+    <table align=" center" cellpadding="0" cellspacing="0" width="700" style="background-color: #3b93d2;">
+​
+        <tr>
+            <td>
+​
+                <table align="center" cellpadding="0" cellspacing="0" style="background-color: #ffffff;border-top-right-radius: 10px;
+                border-top-left-radius: 10px;margin-bottom: 10px;margin-top: 5%;" width="80%">
+                    <tr align="left">
+​
+​
+                        <td align="center">
+                            <img src=" https://videonpro.s3.amazonaws.com/assets/logo.png"
+                                style="width: 60px; height: 60px; opacity: 1;margin-top: 10%;" />
+                        </td>
+                    </tr>
+                    <tr align="center">
+                        <p style="color: #3b93d2; padding-bottom: 0px;                            
+                                    font-weight: bolder;
+                                    margin: 0 0 0 3%;
+                                    font-size: 50px;">VideonPRO</p>
+                    </tr>
+                    <tr align="center">
+                        <p style="color: black; margin-bottom: 10px;
+                                    font-size: 14px;">Newsletter Bundle</p>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr align="center">
+            <td width=100%>
+                <table style="background-color: #e6e6e6;" width="80%">
+                    <tr align="center" style="margin-left:100px">
+                        <p style="color: #3b93d2;font-size: 24px;margin-left: 10px;">Create & Send Campaigns Simplified
+                        </p>
+                    </tr>
+                    <tr align="center">
+                        <td>
+                            <table width="100%"
+                                style="background: #4d4d4d; padding: 100px 0px 100px 0px;max-width: 350px;"
+                                cellspacing="0" cellpadding="0">
+                                <tr align="center">
+                                    <td>
+                                        <img style="width: 80px"
+                                            src="https://vidionpro-backend.herokuapp.com/video/email/track?id=${id}" />
+                                        <p style="color: white">VIDEO PLACEHOLDER</p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+​
+                    <tr align="center">
+                        <td align="center">
+​
+                            <a href="${process.env.APP_DOMAIN}/watch/${id}/cta" style="text-decoration: none;">
+                                <p style="width: 180px;
+                            color: white;
+                            font-size: 20px;
+                            border-radius: 20px;
+                            background-color: #3b93d2;
+                            padding: 5px;">Watch this Video!</p>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr align="center">
+                        <p style="color: black;margin-top: 0;font-size: 12px;">*Promotion ends next month</p>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+​
+        <tr align="center">
+            <td width="100%">
+                <table style="    background-color: #ffffff;
+                margin-top: 10px;
+                margin-bottom: 5%;
+                border-bottom-left-radius: 10px;
+                border-bottom-right-radius: 10px;" width="80%">
+                    <tr align="center">
+​
+                        <td align=" center" style="padding: 30px 0px 10px 0px">
+                            <p style="margin: 0px;color: #3b93d2;margin: 0;">
+                                VideonPRO is a video communication platform design for sale
+                            </p>
+                            <p style="margin: 0px;color: #3b93d2; margin: 0;">
+                                and marketing leaders. Learn more at
+                                <a style="
+                          text-decoration: none;
+                          color: #3b93d2;
+                          font-weight: bold;
+                          cursor: pointer;
+                        ">videonpro.com</a>
+                            </p>
+                        </td>
+​
+                    </tr>
+                    <tr align="center">
+​
+                        <td align=" center" style="padding: 5px 0px 10px 0px">
+                            <p style="margin: 0px;color: black;">
+                                Try view on your <span style="color: #3b93d2;"><i>browser</i></span> or <span
+                                    style="color: #3b93d2;"><i>unsubscribe</i></span>
+​
+                            </p>
+​
+                        </td>
+​
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+​
+</html>
+  `
+}
