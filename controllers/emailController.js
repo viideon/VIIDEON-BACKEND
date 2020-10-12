@@ -70,13 +70,15 @@ module.exports.sendTemplateWithGmail = async (req, res) => {
 };
 
 module.exports.sendWithGmail = async (req, res) => {
-  const { userId, recieverEmail, videoId, themeName } = req.body;
+  const { userId, recieverEmail, videoId } = req.body;
+  let themeName = req.body.themeName;
   try {
     const tokenObjects = await emailService.findUserTokenObj(userId);
     const singleTokenObj = tokenObjects[0].tokenObj;
     const fromEmail = tokenObjects[0].userEmail;
     const video = await videoService.findVideoById(videoId);
-    const { thumbnail } = video;
+    const { thumbnail, eMailTemplate } = video;
+    if(eMailTemplate) themeName = eMailTemplate;
     var emailList = recieverEmail.split(",");
     await incrementVideoEmail(videoId, emailList.length);
     let templateString = await template.generateStringTemplate(videoId, thumbnail);

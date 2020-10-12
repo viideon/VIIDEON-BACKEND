@@ -32,7 +32,8 @@ const videoSchema = new mongoose.Schema({
     title: { type: String },
     musicVolume: { type: Number }
   },
-  description: { type: String }
+  description: { type: String },
+  eMailTemplate: { type: String}
 });
 videoSchema.index({ title: "text" });
 module.exports = mongoose.model("Video", videoSchema);
