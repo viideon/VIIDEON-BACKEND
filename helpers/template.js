@@ -1237,7 +1237,6 @@ module.exports.social_impact = (id, thumbnail) => {
     return `
     <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
-​
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -1251,7 +1250,6 @@ module.exports.social_impact = (id, thumbnail) => {
         .thumbnailWrapper {
             background-image: url(${thumbnail});
         }
-        
         .overlay {
             position: absolute;
             top: 0;
@@ -1269,11 +1267,9 @@ module.exports.social_impact = (id, thumbnail) => {
 ​
 <body>
     <table align="center" cellpadding="0" cellspacing="0" width="700">
-​
         <tr align="center">
             <td align="center" style="background-image: url(https://videonpro.s3.amazonaws.com/assets/IntelicaCRE-BlogPhoto-office-social-gathering.jpg); background-size: cover; height: 200px;box-shadow: inset 2000px 0 0 0 rgba(255, 255, 255, 0.5); border-color:
     rgba(255, 255, 255, 1); max-width: 200px;">
-​
                 <table align="center" cellpadding="0" cellspacing="0" width="100%">
                     <tr align="center">
                         <td style=" padding-left: 20px; display: -webkit-box; -webkit-box-align: center; -webkit-box-pack: center; min-width: 60%; height: 80%; ">
@@ -1290,14 +1286,16 @@ module.exports.social_impact = (id, thumbnail) => {
         </tr>
         <tr align="center">
             <td>
-                <table class="thumbnailWrapper" width=" 70% " style=" background: #f6b415; padding: 100px 0px 100px 0px;max-width: 400px;width: 100%; " cellspacing=" 0 " cellpadding=" 0 ">
-                    <tr align=" center ">
-                        <td>
-                            <img style=" width: 80px " src=" https://vidionpro-backend.herokuapp.com/video/email/track?id=${id} " />
-                            <p style=" color: white ">VIDEO PLACEHOLDER</p>
-                        </td>
-                    </tr>
-                </table>
+                <a style="cursor: pointer;text-decoration: none;" href="${process.env.APP_DOMAIN}/watch/${id}">
+                    <table width="70%" style="background: #f6b415;background-image: url(${thumbnail});background-size: cover; padding: 100px 0px 100px 0px;max-width: 400px;width: 100%; " cellspacing=" 0 " cellpadding=" 0 ">
+                        <tr align=" center ">
+                            <td>
+                                <img style=" width: 80px " src=" https://vidionpro-backend.herokuapp.com/video/email/track?id=${id} " />
+                                <p style=" color: white ">VIDEO PLACEHOLDER</p>
+                            </td>
+                        </tr>
+                    </table>
+                </a>
             </td>
         </tr>
         <tr align="center">
@@ -1307,13 +1305,10 @@ module.exports.social_impact = (id, thumbnail) => {
                 </p>
                 <p style=" margin: 0px;color: #f6b415; ">
                     and marketing leaders. Learn more at
-                    <a style=" text-decoration: none; color: #f6b415; font-weight: bold; cursor: pointer; ">videonpro.com</a>
+                    <a href="https://app.videonpro.app" style=" text-decoration: none; color: #f6b415; font-weight: bold; cursor: pointer; ">videonpro.com</a>
                 </p>
             </td>
         </tr>
-​
-​
-​
         <tr align="center">
             <td align=" center " style=" padding: 15px 0px 15px 0px ">
 ​
@@ -1341,11 +1336,8 @@ module.exports.social_impact = (id, thumbnail) => {
                 </table>
             </td>
         </tr>
-​
-​
     </table>
 </body>
-​
 </html>
     `
 }
@@ -1465,7 +1457,6 @@ module.exports.ocean = (id, thumbnail) => {
                 border-bottom-left-radius: 10px;
                 border-bottom-right-radius: 10px;" width="80%">
                     <tr align="center">
-​
                         <td align=" center" style="padding: 30px 0px 10px 0px">
                             <p style="margin: 0px;color: #3b93d2;margin: 0;">
                                 VideonPRO is a video communication platform design for sale
@@ -1483,16 +1474,12 @@ module.exports.ocean = (id, thumbnail) => {
 ​
                     </tr>
                     <tr align="center">
-​
                         <td align=" center" style="padding: 5px 0px 10px 0px">
                             <p style="margin: 0px;color: black;">
                                 Try view on your <span style="color: #3b93d2;"><i>browser</i></span> or <span
                                     style="color: #3b93d2;"><i>unsubscribe</i></span>
-​
                             </p>
-​
                         </td>
-​
                     </tr>
                 </table>
             </td>
