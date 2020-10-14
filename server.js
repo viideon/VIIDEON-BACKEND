@@ -12,6 +12,7 @@ const contact = require("./routes/contact");
 const email = require("./routes/email");
 const asset = require("./routes/asset");
 const campaign = require("./routes/campaign");
+const industry = require("./routes/industry");
 require("dotenv").config();
 const app = express();
 
@@ -50,6 +51,8 @@ app.use("/contact", contact);
 app.use("/email", email);
 app.use("/asset", asset);
 app.use("/campaign", campaign);
+app.use("/industry", industry);
+
 
 app.get("/", (req, res) => {
   res.send("Root place");
