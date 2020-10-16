@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const Setting = require("../models/setting");
 
 const findUserByEmail = email => {
   return User.findOne({ email: email });
@@ -51,6 +52,27 @@ const getAllUsers = async (pageNo, pageSize) => {
 const deleteUser = id => {
   return User.deleteOne({ _id: id });
 };
+
+const saveSetting = (setting) => {
+  let newSet = new Setting({...setting});
+  return newSet.save();
+}
+
+const updateSetting = (_id, userId, setting) => {
+  return Setting.updateOne({_id, userId}, {...setting});
+}
+
+const getSettingsByUserID = (userId) => {
+  return Setting.find({userId});
+}
+
+const getSettingsByID = (_id) => {
+  return Setting.find({_id})
+}
+
+const getSetttingByUserIDAndName = (userId, name) => {
+  return Setting.find({userId, name});
+}
 module.exports = {
   findUserByEmail,
   updateUser,
@@ -60,5 +82,10 @@ module.exports = {
   getUserById,
   verifyUser,
   updatePassword,
-  deleteUser
+  deleteUser,
+  saveSetting,
+  updateSetting,
+  getSettingsByUserID,
+  getSettingsByID,
+  getSetttingByUserIDAndName
 };

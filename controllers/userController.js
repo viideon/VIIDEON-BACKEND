@@ -1,12 +1,10 @@
-const {
-  hashPassword,
-  comparePassword,
-  generateToken
-} = require("./../helpers/helper");
+const {hashPassword,comparePassword,generateToken} = require("./../helpers/helper");
 const Token = require("../models/token");
 const userService = require("../services/userService");
 const { verificationTokenSchema } = require("../schemas/auth");
 const { helpers } = require("../helpers");
+const Templates = require("../helpers/template");
+
 module.exports.registerUser = async (req, res) => {
   try {
     const { email, firstName, lastName, userName, password } = req.body;
@@ -20,13 +18,7 @@ module.exports.registerUser = async (req, res) => {
       return res.status(303).json({ message: "Username is already taken" });
     }
     const hash = await hashPassword(password);
-    const register = await userService.createNewUser(
-      email,
-      firstName,
-      lastName,
-      userName,
-      hash
-    );
+    const register = await userService.createNewUser(email,firstName,lastName,userName,hash);
     const mail = await helpers.sendEmail(register, req, res);
     if (mail) {
       return res.status(201).json({
@@ -217,3 +209,92 @@ module.exports.reset = async (req, res) => {
     res.status(500).json({ message: error.message, errr: "catch" });
   }
 };
+
+module.exports.addTempSetting = async (req, res) => {
+  try {
+    let { settings } = req.body;
+    settings.userId = settings.userId._id;
+    let setting = await userService.getSetttingByUserIDAndName(settings.userId, settings.name)
+    console.log(setting)
+    if(setting.length > 0) {
+      console.log("if")
+      await userService.updateSetting(setting._id, settings.userId, settings)
+    } else {
+      console.log("save")
+      await userService.saveSetting(settings)
+    }
+    return res.status(200).json({ message: `Successfully ${setting.length > 0 ? "Updated!":"Saved!"}`});
+  } catch (error) {
+    res.status(500).json({ message: error.message, errr: "catch" });
+  }
+};
+
+module.exports.updateTempSetting = async (req, res) => {
+  try {
+    const { id, userId } = req.params;
+    userService.updateSetting(id, userId, req.body);
+    return res.status(200).json({ message: "Successfully saved!"});
+  } catch (error) {
+    res.status(500).json({ message: error.message, errr: "catch" });
+  }
+};
+
+module.exports.getTempSetting = async (req, res) => {
+  try {
+    const { id } = req.params;
+    var settings = await userService.getSettingsByUserID(id);
+    return res.status(200).json({ message: "Successfull!", settings: settings || [] });
+  } catch (error) {
+    res.status(500).json({ message: error.message, errr: "catch" });
+  }
+};
+
+module.exports.getPreview = async (req, res) => {
+  try {
+    const { colors, logoUrl, text, name } = req.body.settings;
+    let template = "";
+    if(name === "Spread") {
+      // console.log("Spread", logoUrl)
+      template = await Templates.spreadTheme(false,false, logoUrl, text);
+    }
+    if(name === "Corporate Light") {
+      // console.log("Corporate Light")
+      template = await Templates.corporateLight(false,false, logoUrl, text);
+    }
+    if(name === "Modern Simple") {
+      // console.log("Modern Simple")
+      template = await Templates.modernSimple(false,false, logoUrl, text);
+    }
+    if(name === "Streamlined") {
+      // console.log("Streamlined")
+      template = await Templates.streamlined(false,false, logoUrl, text);
+    }
+    if(name === "Simple Blue") {
+      // console.log("Simple Blue")
+      template = await Templates.simple_blue(false,false, logoUrl, text);
+    }
+    if(name === "Sleek") {
+      // console.log("Sleek")
+      template = await Templates.sleek(false,false, logoUrl, text);
+    }
+    if(name === "Social Business") {
+      // console.log("Social Business")
+      template = await Templates.social_business(false,false, logoUrl, text);
+    }
+    if(name === "Social Impact") {
+      // console.log("Social Impact")
+      template = await Templates.social_impact(false,false, logoUrl, text);
+    }
+    if(name === "Clasic Dark") {
+      // console.log("Clasic Dark")
+      template = await Templates.classic_dark(false,false, logoUrl, text);
+    }
+    if(name === "Ocean") {
+      // console.log("Ocean")
+      template = await Templates.ocean(false,false, logoUrl, text);
+    }
+    return res.status(200).json({ message: "Success", template})
+  } catch (error) {
+    res.status(500).json({ message: error.message, errr: "catch" });
+  }
+}

@@ -12,7 +12,7 @@ module.exports.generateStringTemplate = (id, thumbnail) => {
   <body width="100%" style="margin: 0; font-family: 'Montserrat',Georgia, sans-serif; padding: 0 !important; mso-line-height-rule: exactly; background-color: #F2F2F1;"> <center style="width: 100%; background-color: #F2F2F1;"> <div style="max-width: 600px; margin: 0 auto;padding: 5px" class="email-container"> <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: auto;"> <tr> <td> <h5 style="font-size:16px">vidionPro</h5> </td> <td> <h5 style="text-align: end;font-size: 16px" align="end"> Hello </h5> </td> </tr> </table> </div> <div style="max-width: 600px; margin-top: 0px;margin-bottom: 50px; margin-left: auto; margin-right: auto;background-color: #fff;padding: 10px 10px 30px 10px" class="email-container"> <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: auto;"> <tr> <td> <a href="${process.env.APP_DOMAIN}/watch/${id}"> <div style="width: 100%;background-color:#000;"> <div style="height:280px;background-image:url(${thumbnail});object-fit:contain;background-size: contain;background-repeat:no-repeat;background-position: center"> <img style="width: 80px;margin-left: 44%;margin-top: 18%" src="https://vidionpro-backend.herokuapp.com/video/email/track?id=${id}" /> </div> </div> </td> </tr> <tr> <td> <h5 style="text-align: center;color: #76827F;padding:0px 30px;font-weight: 800" align="center"> Video powered by vidionPro </h5> </td> </tr> <tr> <td style="text-align: center;" align="center"> <a style="cursor: pointer;background-color: #19AF8F;color: #fff;padding:10px 14px;border-radius: 3px;font-weight: 400;text-decoration: none; margin-bottom: 30px" href="${process.env.APP_DOMAIN}/watch/${id}/cta">WATCH VIDEO</a> </td> </tr> </table> </div> </center> </body> </html>`;
 };
 
-module.exports.spreadTheme = (id, thumbnail) => {
+module.exports.spreadTheme = (id=false, thumbnail=false, logo=false, text=false) => {
   return `
   <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
@@ -44,12 +44,13 @@ module.exports.spreadTheme = (id, thumbnail) => {
       background-position: center;
       opacity: 0.9;
     }
-    .thumbnailWrapper {
-      background-image: url(${thumbnail});
+    .emailTemplatethumbnailWrapper {
+      ${thumbnail && "background-image: url(${thumbnail});"}
       width: 100%;
       min-height: 512px;
       max-height: 720px;
       background-position: center;
+      background-color: darkgoldenrod;
     }
     .headerImage {
       width: 120px;
@@ -124,9 +125,9 @@ module.exports.spreadTheme = (id, thumbnail) => {
         <p class="headerP">Join our movement</p>
       </div>
 
-      <a href="${process.env.APP_DOMAIN}/watch/${id}">
-        <div class="thumbnailWrapper">
-          <img style="width: 80px; margin-top: 29%" src="https://vidionpro-backend.herokuapp.com/video/email/track?id=${id}" /> 
+      <a href="${process.env.APP_DOMAIN}/watch/${id && id}">
+        <div class="emailTemplatethumbnailWrapper">
+          <img style="width: 80px; margin-top: 29%" src="https://vidionpro-backend.herokuapp.com/video/email/track?id=${id && id}" /> 
         </div>
       </a>
 
@@ -134,13 +135,13 @@ module.exports.spreadTheme = (id, thumbnail) => {
 
     <div class="footerWrapper w3-row w3-center">
       <div class="w3-third">
-          <a href="${process.env.APP_DOMAIN}/watch/${id}/cta">
+          <a href="${process.env.APP_DOMAIN}/watch/${id && id}/cta">
             <button class="btn watchVideoBtn">Watch this Video</button>
           </a>
         <div class="w3-row w3-center copyRightWrapper">
           <span class="w3-third">
             <a href="videonpro.com">
-              <img style="width: 45px; height: 45px;" src="https://videonpro.s3.amazonaws.com/assets/logo.png">
+              <img style="width: 45px; height: 45px;" src="${logo ? logo : 'https://videonpro.s3.amazonaws.com/assets/logo.png'}">
             </a>
           </span>
           <span class="w3-twothird">
@@ -149,7 +150,12 @@ module.exports.spreadTheme = (id, thumbnail) => {
         </div>
       </div>
       <div class="w3-twothird w3-center">
-        <p style="margin: 1em;">VideonPRO is a video communication platform design for sale and marketing leaders. Learn more at videonpro.com</p>
+        <p style="margin: 1em;">
+            ${
+                text ? text :
+                "VideonPRO is a video communication platform design for sale and marketing leaders. Learn more at videonpro.com"
+            }
+        </p>
         <div>
           <a href="https://www.facebook.com/">
             <button class="fbBtn socialBtn">F</button>
@@ -172,7 +178,7 @@ module.exports.spreadTheme = (id, thumbnail) => {
   `
 }
 
-module.exports.corporateLight = (id, thumbnail) => {
+module.exports.corporateLight = (id=false, thumbnail=false, logo=false, text=false) => {
   return `
   <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
@@ -204,13 +210,17 @@ module.exports.corporateLight = (id, thumbnail) => {
       </div>
       <div class="whiteBody" style="background-color: #FFFFFF; padding-top: 62px; border-radius: 8px; padding-bottom: 20px;">
         <a href="${process.env.APP_DOMAIN}/watch/${id}">
-          <div class="thumbnailWrapper" style="background-image: url(${thumbnail}); width: 592px; min-width: 592px; min-height: 399px; max-height: 399px; background-position: center;">
+          <div class="emailTemplatethumbnailWrapper" style=" ${thumbnail && 'background-image: url(${thumbnail});'} width: 592px; min-width: 592px; min-height: 399px; max-height: 399px; background-position: center;">
             <img style="width: 80px;margin-top: 29%" src="https://vidionpro-backend.herokuapp.com/video/email/track?id=${id}" /> 
           </div>
         </a>
         <div class="footerWrapper w3-row w3-center">
           <div>
-            <p style=" max-width: 512px;">VideonPRO is a video communication platform design for sale and marketing leaders. Learn more at videonpro.com</p>
+            <p style=" max-width: 512px;">
+            ${text ? text :
+            "VideonPRO is a video communication platform design for sale and marketing leaders. Learn more at videonpro.com"
+            }
+            </p>
             <a href="videonpro.com">
               <button class="btn watchVideoBtn" style="color: #FFFFFF; background-color: #3a94d2; border: none; border-radius: 23px; min-height: 40px; min-width: 200px !important; width: 225px; font-weight: bolder; outline: none; font-size: 18px; cursor: pointer !important;">Watch this Video</button>
             </a>
@@ -221,7 +231,7 @@ module.exports.corporateLight = (id, thumbnail) => {
   </div>
       <div class="footer" style="background-color: #FFFFFF; margin-top: 40px; max-width: 720px; width: 720px; min-height: 56px;">
         <div class="sender-wrapper" style="max-width: 320px; width: 320px; display: -webkit-box; -webkit-box-align: center; float: left;">
-          <img style="width: 44px; height: 44px;" src="https://videonpro.s3.amazonaws.com/assets/logo.png" />
+          <img style="width: 44px; height: 44px;" src="${logo ? logo : 'https://videonpro.s3.amazonaws.com/assets/logo.png'}" />
           <p class="footerP" style="margin-left: 10px; font-weight: bold;">Sent using VideonPro</p>
         </div>
         <div class="icon-wrapper" style="max-width: 260px; widht: 260px; float: right;">
@@ -236,7 +246,7 @@ module.exports.corporateLight = (id, thumbnail) => {
   `
 }
 
-module.exports.modernSimple = (id, thumbnail) => {
+module.exports.modernSimple = (id=false, thumbnail=false, logo=false, text=false) => {
   return `
   <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
@@ -251,8 +261,8 @@ module.exports.modernSimple = (id, thumbnail) => {
     <meta name="Generator" content="Cocoa HTML Writer">
     <meta name="CocoaVersion" content="1894.6">
     <style type="text/css">
-        .thumbnailWrapper {
-            background-image: url(${thumbnail});
+        .emailTemplatethumbnailWrapper {
+            ${thumbnail && "background-image: url(${thumbnail});"}
         }
     </style>
 </head>
@@ -297,7 +307,7 @@ module.exports.modernSimple = (id, thumbnail) => {
     </tr>
     <tr align="center">
         <td style="background: #4d4d4d; padding: 100px 0px 100px 0px;max-width: 400px;width: 100%;">
-            <table class="thumbnailWrapper" width="100%" cellspacing="0" cellpadding="0">
+            <table class="emailTemplatethumbnailWrapper" width="100%" cellspacing="0" cellpadding="0">
                 <tr align="center">
                     <td>
                         <img style="width: 80px"
@@ -311,22 +321,14 @@ module.exports.modernSimple = (id, thumbnail) => {
     <tr align="center">
         <td align="center" style="padding: 30px 0px 30px 0px">
             <p style="margin: 0px;color: black;">
-                VideonPRO is a video communication platform design for sale
-            </p>
-            <p style="margin: 0px;color: black;">
-                and marketing leaders. Learn more at
-                <a style="
-                  text-decoration: none;
-                  color: black;
-                  font-weight: bold;
-                  cursor: pointer;
-                ">videonpro.com</a>
+            ${ text ? text :
+                "VideonPRO is a video communication platform design for sale and marketing leaders. Learn more at videonpro.com"
+            }
             </p>
         </td>
     </tr>
     <tr align="center">
         <td align="center">
-
             <a href="${process.env.APP_DOMAIN}/watch/${id}/cta">
                 <p style="margin: 0px;color: black; font-size: 30px;
                 font-weight: bold;
@@ -341,7 +343,6 @@ module.exports.modernSimple = (id, thumbnail) => {
     </tr>
     <tr align="center">
         <td align="center" style="padding: 15px 0px 15px 0px">
-
             <img style="vertical-align: middle;
             width: 50px;
             height: 50px;
@@ -386,7 +387,7 @@ module.exports.modernSimple = (id, thumbnail) => {
                     </td>
                     <td width="33%" align="center"></td>
                     <td width="33%" align="center">
-                        <img src="https://videonpro.s3.amazonaws.com/assets/logo.png" style="
+                        <img src="${ logo ? logo : "https://videonpro.s3.amazonaws.com/assets/logo.png"}" style="
                 width: 20px;
                 opacity: 1;
                 height: 20px;
@@ -405,7 +406,7 @@ module.exports.modernSimple = (id, thumbnail) => {
   `
 }
 
-module.exports.classic_dark = (id, thumbnail) => {
+module.exports.classic_dark = (id=false, thumbnail=false, logo=false, text=false) => {
   return `
   <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
@@ -419,8 +420,8 @@ module.exports.classic_dark = (id, thumbnail) => {
     <meta name="Generator" content="Cocoa HTML Writer">
     <meta name="CocoaVersion" content="1894.6">
     <style type="text/css">
-        .thumbnailWrapper {
-            background-image: url(${thumbnail});
+        .emailTemplatethumbnailWrapper {
+            ${thumbnail && "background-image: url(${thumbnail});"}
         }
         .overlay {
             position: absolute;
@@ -495,7 +496,7 @@ module.exports.classic_dark = (id, thumbnail) => {
         </tr>
         <tr align="center">
             <td>
-                <table class="thumbnailWrapper" width="70%" cellspacing="0" cellpadding="0"
+                <table class="emailTemplatethumbnailWrapper" width="70%" cellspacing="0" cellpadding="0"
                     style="background: #333333; padding: 100px 0px 100px 0px;max-width: 400px;">
                     <tr align="center">
                         <td>
@@ -521,7 +522,9 @@ module.exports.classic_dark = (id, thumbnail) => {
         <tr align="center">
             <td align="center" style="padding: 30px 0px 30px 0px">
                 <p style="margin: 0px;color: white;">
-                    VideonPRO is a video communication platform design for sale
+                ${ text ? text : 
+                    "VideonPRO is a video communication platform design for sale"
+                }
                 </p>
                 <p style="margin: 0px;color: white;">
                     and marketing leaders. Learn more at
@@ -562,7 +565,7 @@ module.exports.classic_dark = (id, thumbnail) => {
                         </td>
                         <td width="20%" align="center"></td>
                         <td width="40%" align="center">
-                            <img src="https://videonpro.s3.amazonaws.com/assets/logo.png" style="
+                            <img src="${logo ? logo : "https://videonpro.s3.amazonaws.com/assets/logo.png"}" style="
                 width: 20px;
                 opacity: 1;
                 height: 20px;
@@ -582,7 +585,7 @@ module.exports.classic_dark = (id, thumbnail) => {
   `
 }
 
-module.exports.sleek = (id, thumbnail) => {
+module.exports.sleek = (id=false, thumbnail=false, logo=false, text=false) => {
   return `
   <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
@@ -596,8 +599,8 @@ module.exports.sleek = (id, thumbnail) => {
     <meta name="Generator" content="Cocoa HTML Writer">
     <meta name="CocoaVersion" content="1894.6">
     <style type="text/css">
-        .thumbnailWrapper {
-            background-image: url(${thumbnail});
+        .emailTemplatethumbnailWrapper {
+            ${thumbnail && "background-image: url(${thumbnail});"}
         }
     </style>
 </head>
@@ -639,7 +642,7 @@ module.exports.sleek = (id, thumbnail) => {
     </tr>
     <tr align="center">
         <td>
-            <table class="thumbnailWrapper" width=" 100%" cellspacing="0" cellpadding="0" width="70%"
+            <table class="emailTemplatethumbnailWrapper" width=" 100%" cellspacing="0" cellpadding="0" width="70%"
                 style="background: #4d4d4d;padding: 100px 0px 100px 0px;max-width: 400px;">
                 <tr align="center">
                     <td>
@@ -748,11 +751,10 @@ module.exports.sleek = (id, thumbnail) => {
   `
 }
 
-module.exports.social_business = (id, thumbnail) => {
+module.exports.social_business = (id=false, thumbnail=false, logo=false, text=false) => {
   return `
   <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
-
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -763,10 +765,9 @@ module.exports.social_business = (id, thumbnail) => {
     <meta name="Generator" content="Cocoa HTML Writer">
     <meta name="CocoaVersion" content="1894.6">
     <style type="text/css">
-        .thumbnailWrapper {
-            background-image: url(${thumbnail});
+        .emailTemplatethumbnailWrapper {
+            ${thumbnail && 'background-image: url(${thumbnail});'}
         }
-
         .overlay {
             position: absolute;
             top: 0;
@@ -781,38 +782,32 @@ module.exports.social_business = (id, thumbnail) => {
         }
     </style>
 </head>
-
 <body>
     <table align=" center" cellpadding="0" cellspacing="0" width="700" style="background-color: white;">
         <tr>
-            <td ">
+            <td>
             <div class=" overlay">
                 </div>
                 <table align="center" cellpadding="0" cellspacing="0" width="100%">
                     <tr align="left">
-
-                        <td align="middle" class="hero bg_white" ">
-
+                        <td align="middle" class="hero bg_white">
                         <table>
                             <tr>
-                                <td style=" padding-left: 20px; display: -webkit-box; -webkit-box-align: center;
-                            -webkit-box-pack: center; min-width: 60%; height: 80%; ">
-
-
+                                <td style=" padding-left: 20px; display: -webkit-box; -webkit-box-align: center; -webkit-box-pack: center; min-width: 60%; height: 80%; ">
                                     <img src=" https://videonpro.s3.amazonaws.com/assets/logo.png"
-                            style="width: 60px; height: 60px; opacity: 1;margin-top: 95%;" />
-                        <p style="color: #3b93d2; padding-bottom: 0px;
+                                        style="width: 60px; height: 60px; opacity: 1;margin-top: 95%;" />
+                                    <p style="color: #3b93d2; padding-bottom: 0px;
                                     margin-left: 3%;
                                     font-weight: bolder;
                                     font-size: 50px;">VideonPRO</p>
+                                </td>
+                            </tr>
+                        </table>
+                        </td>
+                    </tr>
+                </table>
             </td>
         </tr>
-    </table>
-    </td>
-    </tr>
-    </table>
-    </td>
-    </tr>
     <tr align="center">
         <td width=100%>
             <table style="background-color: #3b93d2;" width="80%">
@@ -821,7 +816,7 @@ module.exports.social_business = (id, thumbnail) => {
                 </tr>
                 <tr align="center">
                     <td>
-                        <table class="thumbnailWrapper" width="100%" style="background: #999999; padding: 100px 0px 100px 0px;max-width: 350px;"
+                        <table class="emailTemplatethumbnailWrapper" width="100%" style="background: #999999; padding: 100px 0px 100px 0px;max-width: 350px;"
                             cellspacing="0" cellpadding="0">
                             <tr align="center">
                                 <td>
@@ -836,22 +831,14 @@ module.exports.social_business = (id, thumbnail) => {
                 <tr align="center" ;">
                     <td align="center" style="padding: 30px 0px 30px 0px">
                         <p style="margin: 0px;color: white;">
-                            VideonPRO is a video communication platform design for sale
-                        </p>
-                        <p style="margin: 0px;color: white;">
-                            and marketing leaders. Learn more at
-                            <a style="
-                              text-decoration: none;
-                              color: white;
-                              font-weight: bold;
-                              cursor: pointer;
-                            ">videonpro.com</a>
+                        ${ text ? text :
+                            "VideonPRO is a video communication platform design for sale and marketing leaders. Learn more at videonpro.com"
+                        }
                         </p>
                     </td>
                 </tr>
                 <tr align="center">
                     <td align="center">
-
                         <a href="${process.env.APP_DOMAIN}/watch/${id}/cta" style="text-decoration: none;">
                             <p style="    border: 2px solid white;
                             width: 180px;
@@ -864,22 +851,16 @@ module.exports.social_business = (id, thumbnail) => {
             </table>
         </td>
     </tr>
-
     <tr align="center">
         <td style="padding: 20px 0px 10px 0px;">
             <table width="300px" cellspacing="0" cellpadding="0">
                 <tr align="center">
                     <td width="30%" align="right">
-                        <img style="vertical-align: middle;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;" src="http://placeimg.com/80/80/sport">
+                        <img style="vertical-align: middle; width: 50px; height: 50px; border-radius: 50%;" src="http://placeimg.com/80/80/sport">
                     </td>
-
                     <td width="50%" align="center">
                         <p style="font-size: 20px; margin: 0;color: #3b93d2;">Jenny Willow</p>
                         <p style="font-size: 13px;margin: 0; color: #3b93d2;">Fitness Enthusiast</p>
-
                         <table width="120px" cellspacing="10px" cellpadding="0">
                             <tr>
                                 <td width="25%" align="center" style="background-color:#3b93d2;border-radius: 50%;">
@@ -900,10 +881,7 @@ module.exports.social_business = (id, thumbnail) => {
                                 </td>
                             </tr>
                         </table>
-
                     </td>
-
-
                 </tr>
             </table>
         </td>
@@ -913,15 +891,9 @@ module.exports.social_business = (id, thumbnail) => {
             <table width="250px" cellspacing="0" cellpadding="0">
                 <tr>
                     <td width="20%" align="right">
-                        <img src="https://videonpro.s3.amazonaws.com/assets/logo.png" style="
-                width: 30px;
-                opacity: 1;
-                height: 30px;
-              " />
+                        <img src="${logo ? logo : 'https://videonpro.s3.amazonaws.com/assets/logo.png'}" style="width: 30px;opacity: 1;height: 30px;" />
                     </td>
-
                     <td width="50%" align="center">
-
                         <span style="color: #3b93d2;">Sent using VideonPro</span>
                     </td>
                 </tr>
@@ -940,7 +912,7 @@ module.exports.social_business = (id, thumbnail) => {
   `
 }
 
-module.exports.streamlined = (id, thumbnail) => {
+module.exports.streamlined = (id=false, thumbnail=false, logo=false, text=false) => {
   return `
   <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
@@ -955,10 +927,9 @@ module.exports.streamlined = (id, thumbnail) => {
     <meta name="Generator" content="Cocoa HTML Writer">
     <meta name="CocoaVersion" content="1894.6">
     <style type="text/css">
-        .thumbnailWrapper {
-            background-image: url(${thumbnail});
+        .emailTemplatethumbnailWrapper {
+            ${thumbnail && 'background-image: url(${thumbnail});'}
         }
-
         .overlay {
             position: absolute;
             top: 0;
@@ -984,25 +955,22 @@ module.exports.streamlined = (id, thumbnail) => {
                     <td align="middle" class="hero bg_white" ">
                         <table>
                             <tr>
-                                <td style=" padding-left: 20px; display: -webkit-box; -webkit-box-align: center;
-                        -webkit-box-pack: center; min-width: 60%; height: 80%; ">
-                                    <img src=" https://videonpro.s3.amazonaws.com/assets/logo.png"
-                        style="width: 60px; height: 60px; opacity: 1;margin-top: 95%;" />
-                    <p style="color: #3b93d2; padding-bottom: 0px;
-                                    margin-left: 3%;
-                                    font-weight: bolder;
-                                    font-size: 50px;">VideonPRO</p>
+                                <td style=" padding-left: 20px; display: -webkit-box; -webkit-box-align: center; -webkit-box-pack: center; min-width: 60%; height: 80%; ">
+                                    <img src="${logo ? logo : 'https://videonpro.s3.amazonaws.com/assets/logo.png'}" style="width: 60px; height: 60px; opacity: 1;margin-top: 95%;" />
+                                    <p style="color: #3b93d2; padding-bottom: 0px;margin-left: 3%;font-weight: bolder;font-size: 50px;">
+                                        VideonPRO
+                                    </p>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
         </td>
-    </tr>
-    </table>
-    </td>
-    </tr>
-    </table>
-    </td>
     </tr>
     <tr align="center">
         <td style="background: #f6b415; padding: 100px 0px 100px 0px;max-width: 400px;width: 100%;">
-            <table class="thumbnailWrapper" width="100%" cellspacing="0" cellpadding="0">
+            <table class="emailTemplatethumbnailWrapper" width="100%" cellspacing="0" cellpadding="0">
                 <tr align="center">
                     <td>
                         <img style="width: 80px"
@@ -1016,16 +984,9 @@ module.exports.streamlined = (id, thumbnail) => {
     <tr align="center" style="background-color: #3b93d2;">
         <td align="center" style="padding: 30px 0px 30px 0px">
             <p style="margin: 0px;color: white;">
-                VideonPRO is a video communication platform design for sale
-            </p>
-            <p style="margin: 0px;color: white;">
-                and marketing leaders. Learn more at
-                <a style="
-                  text-decoration: none;
-                  color: white;
-                  font-weight: bold;
-                  cursor: pointer;
-                ">videonpro.com</a>
+                ${text ? text : 
+                    "VideonPRO is a video communication platform design for sale and marketing leaders. Learn more at videonpro.com"
+                }
             </p>
         </td>
     </tr>
@@ -1046,16 +1007,9 @@ module.exports.streamlined = (id, thumbnail) => {
     <tr align="center">
         <td align="center" style="padding: 30px 0px 30px 0px">
             <p style="margin: 0px;color: #3b93d2;">
-                VideonPRO is a video communication platform design for sale
-            </p>
-            <p style="margin: 0px;color: #3b93d2;">
-                and marketing leaders. Learn more at
-                <a style="
-                  text-decoration: none;
-                  color: #3b93d2;
-                  font-weight: bold;
-                  cursor: pointer;
-                ">videonpro.com</a>
+            ${text ? text : 
+                "VideonPRO is a video communication platform design for sale and marketing leaders. Learn more at videonpro.com"
+            }
             </p>
         </td>
     </tr>
@@ -1089,7 +1043,7 @@ module.exports.streamlined = (id, thumbnail) => {
   `
 }
 
-module.exports.simple_blue = (id, thumbnail) => {
+module.exports.simple_blue = (id=false, thumbnail=false, logo=false, text=false) => {
   return `
   <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
@@ -1104,10 +1058,9 @@ module.exports.simple_blue = (id, thumbnail) => {
     <meta name="Generator" content="Cocoa HTML Writer">
     <meta name="CocoaVersion" content="1894.6">
     <style type="text/css">
-        .thumbnailWrapper {
-            background-image: url(${thumbnail});
+        .emailTemplatethumbnailWrapper {
+            ${thumbnail && 'background-image: url(${thumbnail});'}
         }
-
         .overlay {
             position: absolute;
             top: 0;
@@ -1134,29 +1087,25 @@ module.exports.simple_blue = (id, thumbnail) => {
                     <td align="middle" class="hero bg_white" ">
                         <table>
                             <tr>
-                                <td style=" padding-left: 20px; display: -webkit-box; -webkit-box-align: center;
-                        -webkit-box-pack: center; min-width: 60%; height: 80%; ">
-                                    <img src=" https://videonpro.s3.amazonaws.com/assets/logo.png"
-                        style="width: 60px; height: 60px; opacity: 1;margin-top: 95%;" />
-                    <p style="color: white; padding-bottom: 0px;
-                                    margin-left: 3%;
-                                    font-weight: bolder;
-                                    font-size: 50px;">VideonPRO</p>
+                                <td style=" padding-left: 20px; display: -webkit-box; -webkit-box-align: center;-webkit-box-pack: center; min-width: 60%; height: 80%; ">
+                                    <img src=" https://videonpro.s3.amazonaws.com/assets/logo.png" style="width: 60px; height: 60px; opacity: 1;margin-top: 95%;" />
+                                    <p style="color: white; padding-bottom: 0px;margin-left: 3%;font-weight: bolder;font-size: 50px;">
+                                    VideonPRO
+                                    </p>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
         </td>
-    </tr>
-    </table>
-    </td>
-    </tr>
-    </table>
-    </td>
     </tr>
     <tr align="center">
         <p style="color: #3b93d2;font-size: 20px;font-weight: bold;">BE A PART OF OUR GROWING TEAM!</p>
     </tr>
-
     <tr align="center">
         <td>
-            <table class="thumbnailWrapper" width="70%" style="background: #3b93d2; padding: 100px 0px 100px 0px;max-width: 400px;width: 100%;"
+            <table class="emailTemplatethumbnailWrapper" width="70%" style="background: #3b93d2; padding: 100px 0px 100px 0px;max-width: 400px;width: 100%;"
                 cellspacing="0" cellpadding="0">
                 <tr align="center">
                     <td>
@@ -1170,18 +1119,11 @@ module.exports.simple_blue = (id, thumbnail) => {
     </tr>
     <tr align="center" ">
         <td align=" center" style="padding: 30px 0px 30px 0px">
-        <p style="margin: 0px;color: #3b93d2;">
-            VideonPRO is a video communication platform design for sale
-        </p>
-        <p style="margin: 0px;color: #3b93d2;">
-            and marketing leaders. Learn more at
-            <a style="
-                  text-decoration: none;
-                  color: #3b93d2;
-                  font-weight: bold;
-                  cursor: pointer;
-                ">videonpro.com</a>
-        </p>
+            <p style="margin: 0px;color: #3b93d2;">
+                ${text ? text : 
+                    "VideonPRO is a video communication platform design for sale and marketing leaders. Learn more at videonpro.com"
+                }
+            </p>
         </td>
     </tr>
     <tr>
@@ -1189,15 +1131,9 @@ module.exports.simple_blue = (id, thumbnail) => {
             <table width="250px" cellspacing="0" cellpadding="0">
                 <tr>
                     <td width="20%" align="center">
-                        <img src="https://videonpro.s3.amazonaws.com/assets/logo.png" style="
-                width: 30px;
-                opacity: 1;
-                height: 30px;
-              " />
+                        <img src="${logo ? logo : 'https://videonpro.s3.amazonaws.com/assets/logo.png'}" style="width: 30px;opacity: 1;height: 30px;" />
                     </td>
-
                     <td width="50%" align="center">
-
                         <span style="color: #3b93d2;">Sent using VideonPro</span>
                     </td>
                 </tr>
@@ -1233,7 +1169,7 @@ module.exports.simple_blue = (id, thumbnail) => {
   `
 }
 
-module.exports.social_impact = (id, thumbnail) => {
+module.exports.social_impact = (id=false, thumbnail=false, logo=false, text=false) => {
     return `
     <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
@@ -1247,8 +1183,8 @@ module.exports.social_impact = (id, thumbnail) => {
     <meta name="Generator" content="Cocoa HTML Writer">
     <meta name="CocoaVersion" content="1894.6">
     <style type="text/css">
-        .thumbnailWrapper {
-            background-image: url(${thumbnail});
+        .emailTemplatethumbnailWrapper {
+            ${thumbnail && 'background-image: url(${thumbnail});'}
         }
         .overlay {
             position: absolute;
@@ -1268,14 +1204,14 @@ module.exports.social_impact = (id, thumbnail) => {
 <body>
     <table align="center" cellpadding="0" cellspacing="0" width="700">
         <tr align="center">
-            <td align="center" style="background-image: url(https://videonpro.s3.amazonaws.com/assets/IntelicaCRE-BlogPhoto-office-social-gathering.jpg); background-size: cover; height: 200px;box-shadow: inset 2000px 0 0 0 rgba(255, 255, 255, 0.5); border-color:
-    rgba(255, 255, 255, 1); max-width: 200px;">
+            <td align="center" style="background-image: url(https://videonpro.s3.amazonaws.com/assets/IntelicaCRE-BlogPhoto-office-social-gathering.jpg); background-size: cover; height: 200px;box-shadow: inset 2000px 0 0 0 rgba(255, 255, 255, 0.5); border-color:rgba(255, 255, 255, 1); max-width: 200px;">
                 <table align="center" cellpadding="0" cellspacing="0" width="100%">
                     <tr align="center">
                         <td style=" padding-left: 20px; display: -webkit-box; -webkit-box-align: center; -webkit-box-pack: center; min-width: 60%; height: 80%; ">
                             <img src=" https://videonpro.s3.amazonaws.com/assets/logo.png " style=" width: 60px; height: 60px; opacity: 1;margin-top: 50px; margin-left: 100px;" />
                             <p style=" color: #f6b415; padding-bottom: 0px; margin-left: 3%; font-weight: bolder; font-size: 50px; ">
-                                VideonPRO</p>
+                                VideonPRO
+                            </p>
                         </td>
                     </tr>
                 </table>
@@ -1287,7 +1223,7 @@ module.exports.social_impact = (id, thumbnail) => {
         <tr align="center">
             <td>
                 <a style="cursor: pointer;text-decoration: none;" href="${process.env.APP_DOMAIN}/watch/${id}">
-                    <table width="70%" style="background: #f6b415;background-image: url(${thumbnail});background-size: cover; padding: 100px 0px 100px 0px;max-width: 400px;width: 100%; " cellspacing=" 0 " cellpadding=" 0 ">
+                    <table width="70%" style="background: #f6b415;${thumbnail && 'background-image: url(${thumbnail});'}background-size: cover; padding: 100px 0px 100px 0px;max-width: 400px;width: 100%; " cellspacing=" 0 " cellpadding=" 0 ">
                         <tr align=" center ">
                             <td>
                                 <img style=" width: 80px " src=" https://vidionpro-backend.herokuapp.com/video/email/track?id=${id} " />
@@ -1301,17 +1237,14 @@ module.exports.social_impact = (id, thumbnail) => {
         <tr align="center">
             <td align=" center " style=" padding: 30px 0px 30px 0px ">
                 <p style=" margin: 0px;color: #f6b415; ">
-                    VideonPRO is a video communication platform design for sale
-                </p>
-                <p style=" margin: 0px;color: #f6b415; ">
-                    and marketing leaders. Learn more at
-                    <a href="https://app.videonpro.app" style=" text-decoration: none; color: #f6b415; font-weight: bold; cursor: pointer; ">videonpro.com</a>
+                ${text ? text : 
+                    "VideonPRO is a video communication platform design for sale and marketing leaders. Learn more at videonpro.com"
+                }
                 </p>
             </td>
         </tr>
         <tr align="center">
             <td align=" center " style=" padding: 15px 0px 15px 0px ">
-​
                 <img style=" vertical-align: middle; width: 50px; height: 50px; border-radius: 50%; " src=" http://placeimg.com/80/80/sport ">
                 <p style=" margin-bottom: 0; font-size: 16px; font-weight: bold;color: #f6b415; ">Chris Cullen
                 </p>
@@ -1329,7 +1262,7 @@ module.exports.social_impact = (id, thumbnail) => {
                         </td>
                         <td width="33% " align="center"></td>
                         <td width="33% " align="center">
-                            <img src="https://videonpro.s3.amazonaws.com/assets/logo.png " style=" width: 20px; opacity: 1; height: 20px; margin-right: 5px; margin-top: 10px; " />
+                            <img src="${logo ? logo : 'https://videonpro.s3.amazonaws.com/assets/logo.png'}" style=" width: 20px; opacity: 1; height: 20px; margin-right: 5px; margin-top: 10px; " />
                             <span style="color: #f6b415; ">Sent with VideonPro</span>
                         </td>
                     </tr>
@@ -1342,7 +1275,7 @@ module.exports.social_impact = (id, thumbnail) => {
     `
 }
 
-module.exports.ocean = (id, thumbnail) => {
+module.exports.ocean = (id=false, thumbnail=false, logo=false, text=false) => {
   return `
   <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
@@ -1357,8 +1290,8 @@ module.exports.ocean = (id, thumbnail) => {
     <meta name="Generator" content="Cocoa HTML Writer">
     <meta name="CocoaVersion" content="1894.6">
     <style type="text/css">
-        .thumbnailWrapper {
-            background-image: url(${thumbnail});
+        .emailTemplatethumbnailWrapper {
+            ${thumbnail && 'background-image: url(${thumbnail});'}
         }
 ​
         .overlay {
@@ -1375,32 +1308,21 @@ module.exports.ocean = (id, thumbnail) => {
         }
     </style>
 </head>
-​
 <body>
     <table align=" center" cellpadding="0" cellspacing="0" width="700" style="background-color: #3b93d2;">
-​
         <tr>
             <td>
-​
-                <table align="center" cellpadding="0" cellspacing="0" style="background-color: #ffffff;border-top-right-radius: 10px;
-                border-top-left-radius: 10px;margin-bottom: 10px;margin-top: 5%;" width="80%">
+                <table align="center" cellpadding="0" cellspacing="0" style="background-color: #ffffff;border-top-right-radius: 10px; border-top-left-radius: 10px;margin-bottom: 10px;margin-top: 5%;" width="80%">
                     <tr align="left">
-​
-​
                         <td align="center">
-                            <img src=" https://videonpro.s3.amazonaws.com/assets/logo.png"
-                                style="width: 60px; height: 60px; opacity: 1;margin-top: 10%;" />
+                            <img src=" https://videonpro.s3.amazonaws.com/assets/logo.png" style="width: 60px; height: 60px; opacity: 1;margin-top: 10%;" />
                         </td>
                     </tr>
                     <tr align="center">
-                        <p style="color: #3b93d2; padding-bottom: 0px;                            
-                                    font-weight: bolder;
-                                    margin: 0 0 0 3%;
-                                    font-size: 50px;">VideonPRO</p>
+                        <p style="color: #3b93d2; padding-bottom: 0px;font-weight: bolder;margin: 0 0 0 3%;font-size: 50px;">VideonPRO</p>
                     </tr>
                     <tr align="center">
-                        <p style="color: black; margin-bottom: 10px;
-                                    font-size: 14px;">Newsletter Bundle</p>
+                        <p style="color: black; margin-bottom: 10px;font-size: 14px;">Newsletter Bundle</p>
                     </tr>
                 </table>
             </td>
@@ -1414,10 +1336,7 @@ module.exports.ocean = (id, thumbnail) => {
                     </tr>
                     <tr align="center">
                         <td>
-                            <table width="100%"
-                                class="thumbnailWrapper"
-                                style="background: #4d4d4d; padding: 100px 0px 100px 0px;max-width: 350px;"
-                                cellspacing="0" cellpadding="0">
+                            <table width="100%" class="emailTemplatethumbnailWrapper" style="background: #4d4d4d; padding: 100px 0px 100px 0px;max-width: 350px;"cellspacing="0" cellpadding="0">
                                 <tr align="center">
                                     <td>
                                         <img style="width: 80px"
@@ -1428,10 +1347,8 @@ module.exports.ocean = (id, thumbnail) => {
                             </table>
                         </td>
                     </tr>
-​
                     <tr align="center">
                         <td align="center">
-​
                             <a href="${process.env.APP_DOMAIN}/watch/${id}/cta" style="text-decoration: none;">
                                 <p style="width: 180px;
                             color: white;
@@ -1448,30 +1365,17 @@ module.exports.ocean = (id, thumbnail) => {
                 </table>
             </td>
         </tr>
-​
         <tr align="center">
             <td width="100%">
-                <table style="    background-color: #ffffff;
-                margin-top: 10px;
-                margin-bottom: 5%;
-                border-bottom-left-radius: 10px;
-                border-bottom-right-radius: 10px;" width="80%">
+                <table style="background-color: #ffffff;margin-top: 10px;margin-bottom: 5%;border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;" width="80%">
                     <tr align="center">
                         <td align=" center" style="padding: 30px 0px 10px 0px">
                             <p style="margin: 0px;color: #3b93d2;margin: 0;">
-                                VideonPRO is a video communication platform design for sale
-                            </p>
-                            <p style="margin: 0px;color: #3b93d2; margin: 0;">
-                                and marketing leaders. Learn more at
-                                <a style="
-                          text-decoration: none;
-                          color: #3b93d2;
-                          font-weight: bold;
-                          cursor: pointer;
-                        ">videonpro.com</a>
+                            ${text ? text : 
+                                "VideonPRO is a video communication platform design for sale and marketing leaders. Learn more at videonpro.com"
+                            }
                             </p>
                         </td>
-​
                     </tr>
                     <tr align="center">
                         <td align=" center" style="padding: 5px 0px 10px 0px">

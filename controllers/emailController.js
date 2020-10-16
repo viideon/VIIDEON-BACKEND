@@ -4,6 +4,7 @@ const decodeToken = require("jsontokens").decodeToken;
 const { google } = require("googleapis");
 const template = require("../helpers/template");
 const emailService = require("../services/emailService");
+const userService = require("../services/userService");
 const { incrementVideoEmail } = require("../services/videoService");
 const videoService = require("../services/videoService");
 require("dotenv").config();
@@ -79,48 +80,52 @@ module.exports.sendWithGmail = async (req, res) => {
     const video = await videoService.findVideoById(videoId);
     const { thumbnail, eMailTemplate } = video;
     if(eMailTemplate) themeName = eMailTemplate;
+    let settings = {colors: {}, logoUrl: false, text: false}
+    if(themeName) {
+      settings = await userService.getSetttingByUserIDAndName(userId, themeName)
+    }
     var emailList = recieverEmail.split(",");
     await incrementVideoEmail(videoId, emailList.length);
-    let templateString = await template.generateStringTemplate(videoId, thumbnail);
+    let templateString = await template.generateStringTemplate(videoId,thumbnail);
     if(themeName === "Spread") {
       console.log("Spread")
-      templateString = await template.spreadTheme(videoId,thumbnail);
+      templateString = await template.spreadTheme(videoId,thumbnail, settings.logoUrl, settings.text);
     }
     if(themeName === "Corporate Light") {
       console.log("Corporate Light")
-      templateString = await template.corporateLight(videoId,thumbnail);
+      templateString = await template.corporateLight(videoId,thumbnail, settings.logoUrl, settings.text);
     }
     if(themeName === "Modern Simple") {
       console.log("Modern Simple")
-      templateString = await template.modernSimple(videoId,thumbnail);
+      templateString = await template.modernSimple(videoId,thumbnail, settings.logoUrl, settings.text);
     }
     if(themeName === "Streamlined") {
       console.log("Streamlined")
-      templateString = await template.streamlined(videoId,thumbnail);
+      templateString = await template.streamlined(videoId,thumbnail, settings.logoUrl, settings.text);
     }
     if(themeName === "Simple Blue") {
       console.log("Simple Blue")
-      templateString = await template.simple_blue(videoId,thumbnail);
+      templateString = await template.simple_blue(videoId,thumbnail, settings.logoUrl, settings.text);
     }
     if(themeName === "Sleek") {
       console.log("Sleek")
-      templateString = await template.sleek(videoId,thumbnail);
+      templateString = await template.sleek(videoId,thumbnail, settings.logoUrl, settings.text);
     }
     if(themeName === "Social Business") {
       console.log("Social Business")
-      templateString = await template.social_business(videoId,thumbnail);
+      templateString = await template.social_business(videoId,thumbnail, settings.logoUrl, settings.text);
     }
     if(themeName === "Social Impact") {
       console.log("Social Impact")
-      templateString = await template.social_impact(videoId,thumbnail);
+      templateString = await template.social_impact(videoId,thumbnail, settings.logoUrl, settings.text);
     }
     if(themeName === "Clasic Dark") {
       console.log("Clasic Dark")
-      templateString = await template.classic_dark(videoId,thumbnail);
+      templateString = await template.classic_dark(videoId,thumbnail, settings.logoUrl, settings.text);
     }
     if(themeName === "Ocean") {
       console.log("Ocean")
-      templateString = await template.ocean(videoId,thumbnail);
+      templateString = await template.ocean(videoId,thumbnail, settings.logoUrl, settings.text);
     }
     authorize(sendMessage);
     function authorize(callback) {

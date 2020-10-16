@@ -9,4 +9,8 @@ router.route("/verify").post(userController.verify);
 router.route("/resendVerify").post(userController.resend);
 router.route("/forgotPassword").post(userController.forget);
 router.route("/resetPassword").post(userController.reset);
+router.route("/template/").post(userController.addTempSetting);
+router.route("/template/").get(userController.getTempSetting);
+router.route("/template/:id/:userId").patch(userController.updateTempSetting);
+router.route("/preview/").post(userController.getPreview);
 module.exports = router;
