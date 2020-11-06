@@ -13,6 +13,7 @@ const email = require("./routes/email");
 const asset = require("./routes/asset");
 const campaign = require("./routes/campaign");
 const industry = require("./routes/industry");
+const chatvids = require("./routes/chatvid")
 require("dotenv").config();
 const app = express();
 
@@ -52,6 +53,7 @@ app.use("/email", email);
 app.use("/asset", asset);
 app.use("/campaign", campaign);
 app.use("/industry", industry);
+app.use("/chatvid", chatvids);
 
 
 app.get("/", (req, res) => {
