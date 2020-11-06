@@ -55,16 +55,15 @@ const updateChatvidStep = (_id, step) => {
 const getChatvidById = (_id) => {
   return InterActiveMessage.find({ _id })
     .populate("userId")
-    .populate({path: "steps", populate: { path: "videoId" }})
-    .populate("peoples")
+    .populate({ path: "steps", populate: { path: "videoId" } })
     .lean();
-}
-
-const getChatvidByUserId = async (userId) => {
-  return InterActiveMessage.find({userId})
-  .populate("peoples")
-  .populate({path: "steps", populate: { path: "videoId" }})
-  .lean();
+  }
+  
+  const getChatvidByUserId = async (userId) => {
+    return InterActiveMessage.find({ userId })
+    .populate("people")
+    .populate({ path: "steps", populate: [{ path: "videoId" }, { path: "replies", populate: { path: "poepleId" } }] })
+    .lean();
 }
 
 const getStepById = (_id) => {
@@ -72,7 +71,12 @@ const getStepById = (_id) => {
     .populate("videoId")
     .populate("replies")
 }
-
+const updateStepReply = (_id, reply) => {
+  return Step.updateOne({ _id }, { $push: { replies: reply } })
+}
+const updateChatvidPeople = (_id, people) => {
+  return InterActiveMessage.updateOne({_id}, { $push: { people: people}})
+}
 const getReplyById = (_id) => {
   return Reply.find({ _id })
     .populate("peopleId")
@@ -114,5 +118,7 @@ module.exports = {
   saveVideo,
   getChatvidByUserId,
   getStepById,
-  getChatvidById
+  getChatvidById,
+  updateStepReply,
+  updateChatvidPeople
 };

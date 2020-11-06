@@ -1,5 +1,4 @@
 const chatVidServices = require("../services/chatvid")
-const CircularJSON = require('circular-json');
 
 const get = async (req, res) => {
   try {
@@ -77,12 +76,30 @@ const deleteChatvid = async (req, res) => {
     res.status(400).json({ message: error.message })
   }
 };
-
+const addReply = async (req, res) => {
+  try {
+    const { people, reply } = req.body;
+    if(reply.type === "video") {
+      const video = await chatVidServices.saveVideo(reply.ansVideo);
+      reply.videoId = video._id;
+    }
+    const ppl = await chatVidServices.registerPeople(people);
+    reply.poepleId = ppl._id;
+    const rply = await chatVidServices.saveReply(reply);
+    await chatVidServices.updateStepReply(reply.stepId, rply)
+    await chatVidServices.updateChatvidPeople(reply.chatvidId, ppl)
+    res.status(200).json({message: "Replied Successfully!"})
+  } catch (error) {
+    console.log(error.message)
+    res.status(400).json({message: error.message})
+  }
+}
 
 const controller = {
   get,
   save,
   update,
-  deleteChatvid
+  deleteChatvid,
+  addReply
 }
 module.exports = controller;
