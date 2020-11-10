@@ -80,14 +80,24 @@ const addReply = async (req, res) => {
   try {
     const { people, reply } = req.body;
     if(reply.type === "video") {
-      const video = await chatVidServices.saveVideo(reply.ansVideo);
+      const vidObj = {
+        url: reply.url,
+        date: Date.now(),
+        campaign: false,
+      }
+      const video = await chatVidServices.saveVideo(vidObj);
       reply.videoId = video._id;
     }
-    const ppl = await chatVidServices.registerPeople(people);
-    reply.poepleId = ppl._id;
+    let peopleID = await chatVidServices.getPeopleByEmail(people.email)
+    if(peopleID && peopleID.email) {
+      reply.poepleId = peopleID._id;
+    }else {
+      const ppl = await chatVidServices.registerPeople(people);
+      reply.poepleId = ppl._id;
+    }
     const rply = await chatVidServices.saveReply(reply);
     await chatVidServices.updateStepReply(reply.stepId, rply)
-    await chatVidServices.updateChatvidPeople(reply.chatvidId, ppl)
+    !peopleID.email && await chatVidServices.updateChatvidPeople(reply.chatvidId, ppl)
     res.status(200).json({message: "Replied Successfully!"})
   } catch (error) {
     console.log(error.message)

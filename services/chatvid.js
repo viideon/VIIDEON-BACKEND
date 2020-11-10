@@ -77,6 +77,10 @@ const updateStepReply = (_id, reply) => {
 const updateChatvidPeople = (_id, people) => {
   return InterActiveMessage.updateOne({_id}, { $push: { people: people}})
 }
+
+const getPeopleByEmail = (email) => {
+  return People.findOne({email}).lean();
+}
 const getReplyById = (_id) => {
   return Reply.find({ _id })
     .populate("peopleId")
@@ -120,5 +124,6 @@ module.exports = {
   getStepById,
   getChatvidById,
   updateStepReply,
-  updateChatvidPeople
+  updateChatvidPeople,
+  getPeopleByEmail
 };
