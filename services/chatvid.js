@@ -2,6 +2,7 @@ const InterActiveMessage = require("../models/interactive")
 const Reply = require("../models/reply");
 const People = require("../models/people");
 const Step = require("../models/step");
+const Choice = require("../models/choices");
 const Video = require("../models/videos");
 
 const saveVideo = (video) => {
@@ -43,6 +44,14 @@ const saveStep = ({ replies, isFull, isAudio, isVideo, isText, choices, stepNo, 
   return newStep.save();
 }
 
+const saveChoice = (choice) => {
+  let option = new Choice({ ...choice });
+  return option.save();
+}
+
+const updateChoice = (_id, reply) => {
+  return Choice.updateOne({ _id }, { $push: { replies: reply } })
+}
 const saveReply = (reply) => {
   const newReply = new Reply({ ...reply });
   return newReply.save();
@@ -55,14 +64,14 @@ const updateChatvidStep = (_id, step) => {
 const getChatvidById = (_id) => {
   return InterActiveMessage.find({ _id })
     .populate("userId")
-    .populate({ path: "steps", populate: { path: "videoId" } })
+    .populate({ path: "steps", populate: [{ path: "videoId" }, { path: "choices" }] })
     .lean();
-  }
-  
-  const getChatvidByUserId = async (userId) => {
-    return InterActiveMessage.find({ userId })
+}
+
+const getChatvidByUserId = async (userId) => {
+  return InterActiveMessage.find({ userId })
     .populate("people")
-    .populate({ path: "steps", populate: [{ path: "videoId" }, { path: "replies", populate: { path: "poepleId" } }] })
+    .populate({ path: "steps", populate: [{ path: "videoId" }, { path: "replies", populate: { path: "poepleId" } }, { path: "choices" }] })
     .lean();
 }
 
@@ -72,15 +81,25 @@ const getStepById = (_id) => {
     .populate("replies")
 }
 const updateStepReply = (_id, reply) => {
-  return Step.updateOne({ _id }, { $push: { replies: reply } })
+  return Step.updateOne({ _id }, { $push: { replies: reply } });
+}
+const updateStepChoice = (_id, choice) => {
+  return Step.updateOne({ _id }, { $push: { choices: choice } });
+}
+const updateStep = (_id, data) => {
+  return Step.updateOne({ _id }, { ...data });
 }
 const updateChatvidPeople = (_id, people) => {
-  return InterActiveMessage.updateOne({_id}, { $push: { people: people}})
+  return InterActiveMessage.updateOne({ _id }, { $push: { people: people } })
 }
 
 const getPeopleByEmail = (email) => {
-  return People.findOne({email}).lean();
+  return People.findOne({ email }).lean();
 }
+
+
+
+
 const getReplyById = (_id) => {
   return Reply.find({ _id })
     .populate("peopleId")
@@ -125,5 +144,9 @@ module.exports = {
   getChatvidById,
   updateStepReply,
   updateChatvidPeople,
-  getPeopleByEmail
+  getPeopleByEmail,
+  saveChoice,
+  updateChoice,
+  updateStepChoice,
+  updateStep,
 };

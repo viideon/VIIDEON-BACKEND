@@ -5,6 +5,7 @@ const messageSchema = new mongoose.Schema({
   stepId: {type: mongoose.Schema.Types.ObjectId, ref: 'Step'},
   videoId: {type: mongoose.Schema.Types.ObjectId, ref: 'Video'},
   poepleId: {type: mongoose.Schema.Types.ObjectId, ref: 'People'},
+  choiceId: {type: mongoose.Schema.Types.ObjectId, ref: 'Choices'},
   url: {type: String},
   text: {type: String},
   calendar: {type: String},

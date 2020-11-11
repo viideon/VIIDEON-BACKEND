@@ -13,7 +13,7 @@ const stepSchema = new mongoose.Schema({
   text: {type: String},
   calendar: {type: String},
   responseType: {type: String},
-  choices: [{type: String}],
+  choices: [{type: mongoose.Schema.Types.ObjectId, ref: 'Choices'}],
 }, {timestamps: true});
 
 module.exports = mongoose.model("Step", stepSchema);

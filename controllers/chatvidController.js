@@ -1,14 +1,15 @@
+const { array } = require("@hapi/joi");
 const chatVidServices = require("../services/chatvid")
 
 const get = async (req, res) => {
   try {
     const { userId, chatvidId } = req.query;
-    if(!userId && !chatvidId) throw({message: "Invalid Request!"})
+    if (!userId && !chatvidId) throw ({ message: "Invalid Request!" })
     let chatvids = undefined;
-    if(userId) {
+    if (userId) {
       chatvids = await chatVidServices.getChatvidByUserId(userId);
     }
-    if(chatvidId) {
+    if (chatvidId) {
       chatvids = await chatVidServices.getChatvidById(chatvidId)
     }
 
@@ -21,7 +22,7 @@ const get = async (req, res) => {
 const save = async (req, res) => {
   try {
     const { video, fitvideo, responseType, choices, calendar, tittle, isAudio, isVideo, isText, text } = req.body;
-    if(!tittle) throw({message: "now tittle"})
+    if (!tittle) throw ({ message: "now tittle" })
     let vid = await chatVidServices.saveVideo(video);
     if (vid) {
       let chatvid = await {
@@ -33,6 +34,7 @@ const save = async (req, res) => {
         branding: true,
       }
       let room = await chatVidServices.createChatvid(chatvid);
+
       let roomstep = await {
         roomId: room._id,
         stepNo: 1,
@@ -40,7 +42,6 @@ const save = async (req, res) => {
         isFull: fitvideo,
         responseType,
         calendar,
-        choices,
         isVideo,
         isAudio,
         isText,
@@ -48,6 +49,21 @@ const save = async (req, res) => {
         userId: video.userId
       }
       let step = await chatVidServices.saveStep(roomstep);
+      await Promise.all(choices.map(async (choice, ind) => {
+        try {
+          if (responseType !== "Multiple-Choice") return resolve();
+          const option = {
+            text: choice,
+            stepId: step._id,
+            chatvidId: room._id,
+          }
+          const opt = await chatVidServices.saveChoice(option);
+          await chatVidServices.updateStepChoice(step._id, opt._id)
+          return opt;
+        } catch (error) {
+          console.log("error")
+        }
+      }))
       await chatVidServices.updateChatvidStep(room._id, step._id);
       return res.status(200).json({ message: "Successfully created!" })
     }
@@ -79,7 +95,7 @@ const deleteChatvid = async (req, res) => {
 const addReply = async (req, res) => {
   try {
     const { people, reply } = req.body;
-    if(reply.type === "video") {
+    if (reply.type === "video") {
       const vidObj = {
         url: reply.url,
         date: Date.now(),
@@ -89,19 +105,22 @@ const addReply = async (req, res) => {
       reply.videoId = video._id;
     }
     let peopleID = await chatVidServices.getPeopleByEmail(people.email)
-    if(peopleID && peopleID.email) {
+    if (peopleID && peopleID.email) {
       reply.poepleId = peopleID._id;
-    }else {
+    } else {
       const ppl = await chatVidServices.registerPeople(people);
       reply.poepleId = ppl._id;
     }
     const rply = await chatVidServices.saveReply(reply);
-    await chatVidServices.updateStepReply(reply.stepId, rply)
-    !peopleID.email && await chatVidServices.updateChatvidPeople(reply.chatvidId, ppl)
-    res.status(200).json({message: "Replied Successfully!"})
+    if(reply.type === "choice") {
+      await chatVidServices.updateChoice(reply.choiceId, rply._id)
+    }
+    await chatVidServices.updateStepReply(reply.stepId, rply);
+    if(!peopleID && !peopleID.email) await chatVidServices.updateChatvidPeople(reply.chatvidId, ppl)
+    res.status(200).json({ message: "Replied Successfully!" })
   } catch (error) {
-    console.log(error.message)
-    res.status(400).json({message: error.message})
+    console.log(error)
+    res.status(400).json({ message: error.message })
   }
 }
 
