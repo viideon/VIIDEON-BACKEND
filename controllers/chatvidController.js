@@ -119,7 +119,7 @@ const addReply = async (req, res) => {
       await chatVidServices.updateChoice(reply.choiceId, rply._id)
     }
     await chatVidServices.updateStepReply(reply.stepId, rply);
-    if(!peopleID && !peopleID.email) await chatVidServices.updateChatvidPeople(reply.chatvidId, ppl)
+    if(!peopleID && peopleID.email === undefined) await chatVidServices.updateChatvidPeople(reply.chatvidId, ppl)
     res.status(200).json({ message: "Replied Successfully!" })
   } catch (error) {
     console.log(error)
