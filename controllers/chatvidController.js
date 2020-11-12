@@ -95,6 +95,9 @@ const deleteChatvid = async (req, res) => {
 const addReply = async (req, res) => {
   try {
     const { people, reply } = req.body;
+    if(reply.type !== "choice") {
+      delete reply.choiceId
+    }
     if (reply.type === "video") {
       const vidObj = {
         url: reply.url,
