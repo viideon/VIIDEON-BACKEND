@@ -90,7 +90,7 @@ const updateStepChoice = (_id, choice) => {
 const updateStep = (_id, data) => {
   return Step.updateOne({ _id }, { ...data });
 }
-const updateChatvidPeople = (_id, people) => {
+const updateChatvidPeople = async (_id, people) => {
   return InterActiveMessage.updateOne({ _id }, { $push: { people: people } })
 }
 

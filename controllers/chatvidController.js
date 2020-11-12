@@ -95,7 +95,7 @@ const deleteChatvid = async (req, res) => {
 const addReply = async (req, res) => {
   try {
     const { people, reply } = req.body;
-    if(reply.type !== "choice") {
+    if (reply.type !== "choice") {
       delete reply.choiceId
     }
     if (reply.type === "video") {
@@ -111,15 +111,15 @@ const addReply = async (req, res) => {
     if (peopleID && peopleID.email) {
       reply.poepleId = peopleID._id;
     } else {
-      const ppl = await chatVidServices.registerPeople(people);
+      var ppl = await chatVidServices.registerPeople(people);
       reply.poepleId = ppl._id;
     }
     const rply = await chatVidServices.saveReply(reply);
-    if(reply.type === "choice") {
+    if (reply.type === "choice") {
       await chatVidServices.updateChoice(reply.choiceId, rply._id)
     }
     await chatVidServices.updateStepReply(reply.stepId, rply);
-    if(!peopleID && peopleID.email === undefined) await chatVidServices.updateChatvidPeople(reply.chatvidId, ppl)
+    await chatVidServices.updateChatvidPeople(reply.chatvidId, ppl ? ppl : peopleID)
     res.status(200).json({ message: "Replied Successfully!" })
   } catch (error) {
     console.log(error)
