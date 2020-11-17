@@ -27,20 +27,8 @@ const registerPeople = (person) => {
   return regPerson.save();
 }
 
-const saveStep = ({ replies, isFull, isAudio, isVideo, isText, choices, stepNo, videoId, responseType, calendar, text }) => {
-  const newStep = new Step({
-    replies,
-    isFull,
-    isAudio,
-    isVideo,
-    isText,
-    choices,
-    stepNo,
-    videoId,
-    responseType,
-    calendar,
-    text,
-  })
+const saveStep = (step) => {
+  const newStep = new Step({ ...step })
   return newStep.save();
 }
 

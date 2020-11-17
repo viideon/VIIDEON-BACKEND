@@ -49,8 +49,8 @@ const save = async (req, res) => {
         userId: video.userId
       }
       let step = await chatVidServices.saveStep(roomstep);
-      await Promise.all(choices.map(async (choice, ind) => {
-        try {
+      try {
+        await Promise.all(choices.map(async (choice, ind) => {
           if (responseType !== "Multiple-Choice") return resolve();
           const option = {
             text: choice,
@@ -60,10 +60,10 @@ const save = async (req, res) => {
           const opt = await chatVidServices.saveChoice(option);
           await chatVidServices.updateStepChoice(step._id, opt._id)
           return opt;
-        } catch (error) {
-          console.log("error")
-        }
-      }))
+        }))
+      } catch (error) {
+        console.log("error")
+      }
       await chatVidServices.updateChatvidStep(room._id, step._id);
       return res.status(200).json({ message: "Successfully created!" })
     }
@@ -74,11 +74,36 @@ const save = async (req, res) => {
 };
 const update = async (req, res) => {
   try {
-    const { userId } = req.params;
-    let chatvids = [];
+    const { video, userId, chatvidId, fitvideo, responseType, choices, calendar, isAudio, isVideo, isText, text, stepNo } = req.body;
+    let vid = await chatVidServices.saveVideo(video);
+    const newStep = {
+      isFull: fitvideo, responseType, calendar, isAudio, isVideo, isText, text, videoId: vid._id, roomId: chatvidId, userId, stepNo
+    }
+    let step = await chatVidServices.saveStep(newStep);
+    await chatVidServices.updateChatvidStep(chatvidId, step._id);
+    try {
+      console.log(choices)
+      await Promise.all(choices.map(async (choice, ind) => {
+        console.log('choice', choice)
+        if (responseType !== "Multiple-Choice") return resolve();
+        const option = {
+          text: choice,
+          stepId: step._id,
+          chatvidId,
+          userId,
+        }
+        const opt = await chatVidServices.saveChoice(option);
+        await chatVidServices.updateStepChoice(step._id, opt._id)
+        return opt;
+      }))
+    } catch (error) {
+      console.log("error:  <>   ", error)
+    }
+
     console.log('update chat vid called !!!')
-    res.status(200).json({ message: chatvids })
+    res.status(200).json({ message: "Successfully added" })
   } catch (error) {
+    console.log("ERR: ", error)
     res.status(400).json({ message: error.message })
   }
 };
