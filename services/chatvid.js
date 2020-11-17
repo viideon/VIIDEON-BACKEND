@@ -51,8 +51,8 @@ const updateChatvidStep = (_id, step) => {
 
 const getChatvidById = (_id) => {
   return InterActiveMessage.find({ _id })
-    .populate("userId")
     .populate({ path: "steps", populate: [{ path: "videoId" }, { path: "choices" }] })
+    .populate("userId")
     .lean()
 }
 
@@ -60,7 +60,7 @@ const getChatvidByUserId = async (userId) => {
   return InterActiveMessage.find({ userId })
     .sort({ _id: -1 })
     .populate("people")
-    .populate({ path: "steps", populate: [{ path: "videoId" }, { path: "replies", populate: { path: "poepleId" } }, { path: "choices" }] })
+    .populate({ path: "steps", populate: [{ path: "videoId" }, { path: "replies", populate: { path: "peopleId" } }, { path: "choices", populate: { path: "replies", select: "peopleId" } }] })
     .lean();
 }
 

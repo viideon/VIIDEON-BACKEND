@@ -130,7 +130,7 @@ const addReply = async (req, res) => {
     }
     let peopleID = await chatVidServices.getPeopleByEmail(people.email)
     if (peopleID && peopleID.email) {
-      reply.poepleId = peopleID._id;
+      reply.peopleId = peopleID._id;
     } else {
       var ppl = await chatVidServices.registerPeople(people);
       reply.poepleId = ppl._id;
