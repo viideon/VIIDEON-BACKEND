@@ -82,9 +82,7 @@ const update = async (req, res) => {
     let step = await chatVidServices.saveStep(newStep);
     await chatVidServices.updateChatvidStep(chatvidId, step._id);
     try {
-      console.log(choices)
       await Promise.all(choices.map(async (choice, ind) => {
-        console.log('choice', choice)
         if (responseType !== "Multiple-Choice") return resolve();
         const option = {
           text: choice,
@@ -99,8 +97,6 @@ const update = async (req, res) => {
     } catch (error) {
       console.log("error:  <>   ", error)
     }
-
-    console.log('update chat vid called !!!')
     res.status(200).json({ message: "Successfully added" })
   } catch (error) {
     console.log("ERR: ", error)
