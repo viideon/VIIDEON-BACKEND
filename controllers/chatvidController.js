@@ -76,6 +76,7 @@ const update = async (req, res) => {
   try {
     const { video, userId, chatvidId, fitvideo, responseType, choices, calendar, isAudio, isVideo, isText, text, stepNo } = req.body;
     let vid = await chatVidServices.saveVideo(video);
+    if (!vid) throw ({ message: "unabel to store video" });
     const newStep = {
       isFull: fitvideo, responseType, calendar, isAudio, isVideo, isText, text, videoId: vid._id, roomId: chatvidId, userId, stepNo
     }
