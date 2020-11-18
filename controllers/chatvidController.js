@@ -134,7 +134,7 @@ const addReply = async (req, res) => {
       reply.peopleId = peopleID._id;
     } else {
       var ppl = await chatVidServices.registerPeople(people);
-      reply.poepleId = ppl._id;
+      reply.peopleId = ppl._id;
     }
     const rply = await chatVidServices.saveReply(reply);
     if (reply.type === "choice") {
