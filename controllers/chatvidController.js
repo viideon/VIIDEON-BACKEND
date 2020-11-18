@@ -21,12 +21,12 @@ const get = async (req, res) => {
 };
 const save = async (req, res) => {
   try {
-    const { video, fitvideo, responseType, choices, calendar, tittle, isAudio, isVideo, isText, text } = req.body;
-    if (!tittle) throw ({ message: "now tittle" })
+    const { video, fitvideo, responseType, choices, calendar, title, isAudio, isVideo, isText, text } = req.body;
+    if (!title) throw ({ message: "now title" })
     let vid = await chatVidServices.saveVideo(video);
     if (vid) {
       let chatvid = await {
-        name: tittle,
+        name: title,
         userId: video.userId,
         steps: [],
         people: [],
