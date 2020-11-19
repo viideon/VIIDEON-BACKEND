@@ -148,12 +148,32 @@ const addReply = async (req, res) => {
     res.status(400).json({ message: error.message })
   }
 }
+const saveAnalytics = async (req, res) => {
+  try {
+    await chatVidServices.saveMetrics(req.body)
+    res.status(200).json({ message: "successfully save" })
+  } catch (error) {
+    console.log(error)
+    res.status(400).json({ message: error.message })
+  }
+}
+const getMetrics = async (req, res) => {
+  try {
+    const { chatvidId, dateFrom, dateTo, deviceType, isAnswered, isCompleted, isInteracted } = req.body;
+    const allMetrics = await chatVidServices.getMetrics(chatvidId, dateFrom, dateTo, deviceType, isInteracted, isCompleted, isAnswered);
+  } catch (error) {
+    console.log(error)
+    res.status(400).json({ message: error.message })
+  }
+}
 
 const controller = {
   get,
   save,
   update,
   deleteChatvid,
-  addReply
+  addReply,
+  saveAnalytics,
+  getMetrics
 }
 module.exports = controller;

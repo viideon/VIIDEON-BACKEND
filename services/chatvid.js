@@ -4,6 +4,7 @@ const People = require("../models/people");
 const Step = require("../models/step");
 const Choice = require("../models/choices");
 const Video = require("../models/videos");
+const Metrics = require('../models/metrics')
 
 const saveVideo = (video) => {
   let newVideo = new Video({ ...video })
@@ -86,40 +87,13 @@ const getPeopleByEmail = (email) => {
   return People.findOne({ email }).lean();
 }
 
-
-
-
-const getReplyById = (_id) => {
-  return Reply.find({ _id })
-    .populate("peopleId")
-    .populate("stepId")
-    .populate("userId")
-    .populate("videoId")
-    .lean();
+const saveMetrics = (payload) => {
+  let metrics = new Metrics({ ...payload });
+  return metrics.save();
 }
 
-const getReplyByChatvidId = (interActiveId) => {
-  return Reply.find({ interActiveId })
-    .populate("peopleId")
-    .populate("stepId")
-    .populate("userId")
-    .populate("videoId")
-    .lean();
-}
-
-const getReplyByUser = (userId) => {
-  return Reply.find({ userId })
-    .populate("stepId")
-    .populate("videoId")
-    .populate("videoId")
-    .lean();
-}
-
-const getReplyByPeople = (peopleId) => {
-  return Reply.find({ peopleId })
-    .populate("videoId")
-    .populate("stepId")
-    .lean();
+const getMetrics = (chatvidId, deviceType, isInteracted, isAnswered, isCompleted) => {
+  return Metrics.find({ chatvidId }).lean();
 }
 module.exports = {
   createChatvid,
@@ -138,4 +112,6 @@ module.exports = {
   updateChoice,
   updateStepChoice,
   updateStep,
+  saveMetrics,
+  getMetrics,
 };
