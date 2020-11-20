@@ -92,8 +92,16 @@ const saveMetrics = (payload) => {
   return metrics.save();
 }
 
-const getMetrics = (chatvidId, deviceType, isInteracted, isAnswered, isCompleted) => {
-  return Metrics.find({ chatvidId }).lean();
+const getMetrics = (chatvidId, dateFrom, dateTo, deviceType, isInteracted, isCompleted, isAnswered) => {
+  var dateTo = new Date(dateTo)
+  var dateFrom = new Date(dateFrom)
+  dateTo.setDate(dateTo.getDate() +1)
+  dateFrom.setDate(dateTo.dateFrom() -1)
+  if(deviceType === "all") {
+    return Metrics.find({ chatvidId, createdAt: { $gte: dateFrom, $lte: dateTo } }).lean();
+  } else {
+    return Metrics.find({ chatvidId, createdAt: { $gte: dateFrom, $lte: dateTo }, deviceType }).lean();
+  }
 }
 module.exports = {
   createChatvid,

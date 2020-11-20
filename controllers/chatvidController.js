@@ -157,10 +157,29 @@ const saveAnalytics = async (req, res) => {
     res.status(400).json({ message: error.message })
   }
 }
+
 const getMetrics = async (req, res) => {
   try {
     const { chatvidId, dateFrom, dateTo, deviceType, isAnswered, isCompleted, isInteracted } = req.body;
     const allMetrics = await chatVidServices.getMetrics(chatvidId, dateFrom, dateTo, deviceType, isInteracted, isCompleted, isAnswered);
+    var landed = 0, completed = 0, answered = 0, interacted = 0, datasets = { desktop: new Array(), tablet: new Array(), mobile: new Array() };
+    var unique = { desktop: {}, tablet: {}, mobile: {} };
+    await Promise.all(allMetrics.map(async (record, index) => {
+      let date = (new Date(record.createdAt)).toLocaleDateString();
+      if (!record.isInteracted && !record.isCompleted && !record.isAnswered) landed++;
+      if (record.isInteracted) interacted++;
+      if (record.isCompleted) completed++;
+      if (record.isAnswered) answered++;
+      if (!unique[record.deviceType][date]) {
+        unique[record.deviceType][date] = { t: date, y: 1 }
+      } else {
+        unique[record.deviceType][date] = { t: date, y: unique[record.deviceType][date].y + 1 }
+      }
+    }));
+    datasets.desktop = await Object.values(unique.desktop);
+    datasets.tablet = await Object.values(unique.tablet);
+    datasets.mobile = await Object.values(unique.mobile);
+    res.status(200).json({ message: [], stats: { landed, completed, answered, interacted, total: allMetrics.length, datasets } })
   } catch (error) {
     console.log(error)
     res.status(400).json({ message: error.message })
