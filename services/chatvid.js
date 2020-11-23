@@ -96,7 +96,7 @@ const getMetrics = (chatvidId, dateFrom, dateTo, deviceType, isInteracted, isCom
   var dateTo = new Date(dateTo)
   var dateFrom = new Date(dateFrom)
   dateTo.setDate(dateTo.getDate() +1)
-  dateFrom.setDate(dateTo.getDate() -1)
+  dateFrom.setDate(dateFrom.getDate() -1)
   if(deviceType === "all") {
     return Metrics.find({ chatvidId, createdAt: { $gte: dateFrom, $lte: dateTo } }).lean();
   } else {
