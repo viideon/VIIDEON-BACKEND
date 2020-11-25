@@ -1,37 +1,65 @@
 const express = require("express");
-const app = express();
+// const ffmpeg = require("fluent-ffmpeg");
+// const pathToFfmpeg = require("ffmpeg-static");
+// const ffprobe = require("ffprobe-static");
+const path = require("path");
+const fileUpload = require("express-fileupload");
 const mongoose = require("mongoose");
 const cors = require("cors");
-
-//config
-require("dotenv").config();
-// dependencies
 const user = require("./routes/user");
 const videos = require("./routes/videos");
+const contact = require("./routes/contact");
+const email = require("./routes/email");
+const asset = require("./routes/asset");
+const campaign = require("./routes/campaign");
+const industry = require("./routes/industry");
+const chatvids = require("./routes/chatvid")
+require("dotenv").config();
+const app = express();
+
+const port = process.env.PORT || 3008;
 
 mongoose.connect(
-  "mongodb+srv://username:username@myfirstcluster-8ccsm.mongodb.net/test22?retryWrites=true&w=majority",
+  `${process.env.MONGOO_DB}`,
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    useCreateIndex: false
+    useCreateIndex: false,
+    useFindAndModify: false
   },
   () => {
     console.log("connected to db");
   }
 );
 
-//middlewares
 app.use(cors());
 app.use(express.json());
+app.use(
+  fileUpload({ useTempFiles: true, tempFileDir: path.join(__dirname, "temp") })
+);
+
+//configure ffmpeg
+// ffmpeg.setFfmpegPath("ffmpeg");
+// ffmpeg.setFfmpegPath("D:/ff/bin/ffmpeg.exe");
+// ffmpeg.setFfmpegPath(pathToFfmpeg);
+// ffmpeg.setFfprobePath(ffprobe.path);
+// console.log(pathToFfmpeg);
+
 //routes
 app.use("/user", user);
 app.use("/video", videos);
+app.use("/contact", contact);
+app.use("/email", email);
+app.use("/asset", asset);
+app.use("/campaign", campaign);
+app.use("/industry", industry);
+app.use("/chatvid", chatvids);
+
+
 app.get("/", (req, res) => {
   res.send("Root place");
 });
 
-const port = process.env.PORT || 3008;
 app.listen(port, () => {
   console.log(`listening on port ${port}`);
 });
