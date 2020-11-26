@@ -26,7 +26,7 @@ const videoSchema = new mongoose.Schema({
     align: { type: String },
     vAlign: { type: String },
     textColor: { type: String },
-    fontSize: { type: Number }
+    fontSize: { type: String }
   },
   musicProps: {
     url: { type: String },

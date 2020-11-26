@@ -70,9 +70,7 @@ const getChatvidByUserId = async (userId) => {
 }
 
 const getStepById = (_id) => {
-  return Step.find({ _id })
-    .populate("videoId")
-    .populate("replies")
+  return Step.findOne({ _id }).lean();
 }
 const updateStepReply = (_id, reply) => {
   return Step.updateOne({ _id }, { $push: { replies: reply } });

@@ -86,10 +86,10 @@ const update = async (req, res) => {
     steps[stepNo] = step._id;
     var minus = 0;
     await steps.map((stp, index) => {
-      if(isNaN(stp)) {
+      if (isNaN(stp)) {
         minus = 1;
-      }else {
-        steps[index] = chatvid[0].steps[index-minus]._id
+      } else {
+        steps[index] = chatvid[0].steps[index - minus]._id
       }
       return true
     })
@@ -126,11 +126,30 @@ const deleteChatvid = async (req, res) => {
     res.status(400).json({ message: error.message })
   }
 };
+function isEmpty(obj) {
+  for (var key in obj) {
+    if (obj.hasOwnProperty(key))
+      return false;
+  }
+  return true;
+}
 const updateJumps = async (req, res) => {
   try {
-    const { _id } = req.body;
+    const { _id, jumpTo } = req.body;
+    let step = await chatVidServices.getStepById(_id);
+    if (!step) throw ({ message: "no record found" })
     delete req.body._id;
-    await chatVidServices.updateStep(_id, req.body)
+    if (jumpTo) {
+      await chatVidServices.updateStep(_id, req.body)
+    } else {
+      console.log(step)
+      if (!isEmpty(step.jumpChoice)) {
+        let jumpChoice = {...step.jumpChoice, ...req.body.jumpChoice}
+        await chatVidServices.updateStep(_id, {jumpChoice})
+      }else {
+        await chatVidServices.updateStep(_id, req.body)
+      }
+    }
     res.status(200).json({ message: "updated...!", data: req.body })
   } catch (error) {
     res.status(400).json({ message: error.message })
