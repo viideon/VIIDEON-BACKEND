@@ -1,4 +1,3 @@
-const { array } = require("@hapi/joi");
 const chatVidServices = require("../services/chatvid")
 
 const get = async (req, res) => {
@@ -75,13 +74,26 @@ const save = async (req, res) => {
 const update = async (req, res) => {
   try {
     const { video, userId, chatvidId, fitvideo, responseType, choices, calendar, isAudio, isVideo, isText, text, stepNo } = req.body;
+    const chatvid = await chatVidServices.getChatvidById(chatvidId);
+    if (!chatvid && chatvid.length > 0) throw ({ message: "No chatvid found!" });
     let vid = await chatVidServices.saveVideo(video);
     if (!vid) throw ({ message: "unabel to store video" });
     const newStep = {
       isFull: fitvideo, responseType, calendar, isAudio, isVideo, isText, text, videoId: vid._id, roomId: chatvidId, userId, stepNo
     }
     let step = await chatVidServices.saveStep(newStep);
-    await chatVidServices.updateChatvidStep(chatvidId, step._id);
+    let steps = [...Array(chatvid[0].steps.length + 1).keys()];
+    steps[stepNo] = step._id;
+    var minus = 0;
+    await steps.map((stp, index) => {
+      if(isNaN(stp)) {
+        minus = 1;
+      }else {
+        steps[index] = chatvid[0].steps[index-minus]._id
+      }
+      return true
+    })
+    await chatVidServices.updateChatvidSteps(chatvidId, steps);
     try {
       await Promise.all(choices.map(async (choice, ind) => {
         if (responseType !== "Multiple-Choice") return resolve();
@@ -100,7 +112,7 @@ const update = async (req, res) => {
     }
     res.status(200).json({ message: "Successfully added" })
   } catch (error) {
-    console.log("ERR: ", error)
+    // console.log("ERR: ", error)
     res.status(400).json({ message: error.message })
   }
 };
@@ -114,6 +126,16 @@ const deleteChatvid = async (req, res) => {
     res.status(400).json({ message: error.message })
   }
 };
+const updateJumps = async (req, res) => {
+  try {
+    const { _id } = req.body;
+    delete req.body._id;
+    await chatVidServices.updateStep(_id, req.body)
+    res.status(200).json({ message: "updated...!", data: req.body })
+  } catch (error) {
+    res.status(400).json({ message: error.message })
+  }
+}
 const addReply = async (req, res) => {
   try {
     const { people, reply } = req.body;
@@ -157,7 +179,6 @@ const saveAnalytics = async (req, res) => {
     res.status(400).json({ message: error.message })
   }
 }
-
 const getMetrics = async (req, res) => {
   try {
     const { chatvidId, dateFrom, dateTo, deviceType, isAnswered, isCompleted, isInteracted } = req.body;
@@ -192,6 +213,7 @@ const controller = {
   update,
   deleteChatvid,
   addReply,
+  updateJumps,
   saveAnalytics,
   getMetrics
 }

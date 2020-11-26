@@ -50,6 +50,10 @@ const updateChatvidStep = (_id, step) => {
   return InterActiveMessage.updateOne({ _id }, { $push: { steps: step } })
 }
 
+const updateChatvidSteps = (_id, steps) => {
+  return InterActiveMessage.updateOne({_id}, { steps})
+}
+
 const getChatvidById = (_id) => {
   return InterActiveMessage.find({ _id })
     .populate({ path: "steps", populate: [{ path: "videoId" }, { path: "choices" }] })
@@ -107,6 +111,7 @@ module.exports = {
   createChatvid,
   registerPeople,
   updateChatvidStep,
+  updateChatvidSteps,
   saveStep,
   saveReply,
   saveVideo,
