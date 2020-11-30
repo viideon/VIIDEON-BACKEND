@@ -142,7 +142,6 @@ const updateJumps = async (req, res) => {
     if (jumpTo) {
       await chatVidServices.updateStep(_id, req.body)
     } else {
-      console.log(step)
       if (!isEmpty(step.jumpChoice)) {
         let jumpChoice = {...step.jumpChoice, ...req.body.jumpChoice}
         await chatVidServices.updateStep(_id, {jumpChoice})

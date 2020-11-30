@@ -28,6 +28,9 @@ const videoSchema = new mongoose.Schema({
     textColor: { type: String },
     fontSize: { type: String },
     reveal: [],
+    fontWeight: { type: Boolean },
+    textDecoration: { type: Boolean },
+    fontStyle: { type: Boolean },
   },
   musicProps: {
     url: { type: String },
@@ -35,7 +38,7 @@ const videoSchema = new mongoose.Schema({
     musicVolume: { type: Number }
   },
   description: { type: String },
-  eMailTemplate: { type: String}
+  eMailTemplate: { type: String }
 });
 videoSchema.index({ title: "text" });
 module.exports = mongoose.model("Video", videoSchema);
