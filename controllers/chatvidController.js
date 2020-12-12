@@ -118,10 +118,10 @@ const update = async (req, res) => {
 };
 const deleteChatvid = async (req, res) => {
   try {
-    const { userId } = req.params;
-    console.log('delete chat vid called !!!')
-    let chatvids = [];
-    res.status(200).json({ message: chatvids })
+    const { id } = req.params;
+    //console.log('delete chat vid called !!!', id)
+    chatVidServices.deleteChatvid(id);
+    res.status(200).json({ message: "Chatvid deleted succesfully!" })
   } catch (error) {
     res.status(400).json({ message: error.message })
   }

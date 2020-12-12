@@ -93,7 +93,9 @@ const saveMetrics = (payload) => {
   let metrics = new Metrics({ ...payload });
   return metrics.save();
 }
-
+const deleteChatvid = async (id) => {
+  const chatVid = await InterActiveMessage.deleteOne({_id: id});
+}
 const getMetrics = (chatvidId, dateFrom, dateTo, deviceType, isInteracted, isCompleted, isAnswered) => {
   var dateTo = new Date(dateTo)
   var dateFrom = new Date(dateFrom)
@@ -125,4 +127,5 @@ module.exports = {
   updateStep,
   saveMetrics,
   getMetrics,
+  deleteChatvid,
 };
