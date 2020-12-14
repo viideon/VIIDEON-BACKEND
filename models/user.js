@@ -15,6 +15,7 @@ const userSchema = new mongoose.Schema({
   title: { type: String, minlength: 5, required: false },
   affiliateId: { type: String, required: false },
   url: { type: String, required: false },
+  emailConfigure: { type: String, required: false,default: "not_verified_yet" },
   isVerified: {
     type: Boolean,
     default: false
