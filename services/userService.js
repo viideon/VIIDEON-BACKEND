@@ -47,6 +47,7 @@ const getAllUsers = async (pageNo, pageSize) => {
   const skip = pageSize * (pageNo - 1);
   let count = await User.count();
   let users = await User.find().skip(skip).limit(Number(pageSize));
+  console.log(users)
   return {count, users}
 };
 const deleteUser = id => {
