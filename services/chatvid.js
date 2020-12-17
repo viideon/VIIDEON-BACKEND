@@ -60,6 +60,12 @@ const getChatvidById = (_id) => {
     .populate("userId")
     .lean()
 }
+const getSingleChatvidById = (_id) => {
+  return InterActiveMessage.findOne({ _id })
+    .populate({ path: "steps", populate: [{ path: "videoId" }, { path: "choices" }] })
+    .populate("userId")
+    .lean()
+}
 
 const getChatvidByUserId = async (userId) => {
   return InterActiveMessage.find({ userId })
@@ -128,4 +134,5 @@ module.exports = {
   saveMetrics,
   getMetrics,
   deleteChatvid,
+  getSingleChatvidById,
 };

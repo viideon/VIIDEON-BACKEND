@@ -8,6 +8,11 @@ const deleteVideo = videoId => {
   return Video.deleteOne({ _id: videoId });
 };
 
+
+const deleteVideoByThumnail = thumbnail => {
+  return Video.findOneAndDelete({thumbnail});
+};
+
 const findUserVideo = (userId, page) => {
   return Video.find({ userId: userId, campaign: { $ne: true } })
     .sort({ date: -1 })
@@ -112,5 +117,6 @@ module.exports = {
   findUserCampaignVideo,
   getCampaignCount,
   incrementCtaClicks,
-  incrementEmailOpen
+  incrementEmailOpen,
+  deleteVideoByThumnail,
 };

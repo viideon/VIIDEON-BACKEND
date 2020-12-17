@@ -1,4 +1,5 @@
 const chatVidServices = require("../services/chatvid")
+const videoService = require("../services/videoService");
 
 const get = async (req, res) => {
   try {
@@ -119,7 +120,8 @@ const update = async (req, res) => {
 const deleteChatvid = async (req, res) => {
   try {
     const { id } = req.params;
-    //console.log('delete chat vid called !!!', id)
+    const singleChatvid = await chatVidServices.getSingleChatvidById(id);
+    const s = await videoService.deleteVideoByThumnail(singleChatvid.thumbnail)
     chatVidServices.deleteChatvid(id);
     res.status(200).json({ message: "Chatvid deleted succesfully!" })
   } catch (error) {
