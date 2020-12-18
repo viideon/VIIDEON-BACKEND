@@ -51,16 +51,16 @@ const sendForGotEmail = async (user, token) => {
 };
 
 
-const shareVideoInEmail = async (email, videoSrc, videoLink) => {
+const shareVideoInEmail = async (email, videoThumnail, videoLink) => {
   try {
     const mailOptions = {
       to: email,
       from: `videonPro<${process.env.FROM_EMAIL}>`,
       subject: "New Chatvid",
-      html: `<a href="${videoLink}" target="_blank"><video width="320" height="240" autoplay loop muted>  <source src="${videoSrc}" type="video/mp4"></video></a>`
+      html: `<a href="${videoLink}" target="_blank"><img src="${videoThumnail}" alt="New Chatvid"  width=250/>
+      </a>`,
     };
     const response = await transporter.sendMail(mailOptions);
-    console.log("video response", response)
     return true;
   } catch (err) {
     return false;

@@ -1,6 +1,7 @@
 const {hashPassword,comparePassword,generateToken} = require("./../helpers/helper");
 const Token = require("../models/token");
 const userService = require("../services/userService");
+const gifService = require("../services/gifService");
 const { verificationTokenSchema } = require("../schemas/auth");
 const { helpers } = require("../helpers");
 const Templates = require("../helpers/template");
@@ -241,8 +242,10 @@ module.exports.updateTempSetting = async (req, res) => {
 
 module.exports.shareVideoInEmail = async (req, res) => {
   try {
-    const { email, videoSrc, videoLink } = req.body;
-    const mail = await helpers.shareVideoInEmail(email, videoSrc, videoLink);
+    const { email, videoThumnail, videoLink } = req.body;
+    const mail = await helpers.shareVideoInEmail(email, videoThumnail, videoLink);
+    //const gifFromVideo = gifService.saveGif(videoThumnail)
+    //console.log("gifFromVideo", gifFromVideo)
     if(mail){
       return res.status(200).json({ message: "Video shared successfully"});
     }else{

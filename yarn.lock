@@ -785,6 +785,11 @@ got@^6.7.1:
     unzip-response "^2.0.1"
     url-parse-lax "^1.0.0"
 
+grabzit@^3.4.5:
+  version "3.4.5"
+  resolved "https://registry.yarnpkg.com/grabzit/-/grabzit-3.4.5.tgz#6c1ab933d6a543d8116ec1f784a7f4828e28f974"
+  integrity sha512-aA3lFcxLH/stsz1sOGhTzGiOfv8Jb/SEB9IeoSWDVqjNaPZ9dwM6c5k5zrl/X0vKGxK19BSFr9MWxbO3z2bEJA==
+
 graceful-fs@^4.1.11, graceful-fs@^4.1.2, graceful-fs@^4.2.3:
   version "4.2.3"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.3.tgz#4a12ff1b60376ef09862c2093edd908328be8423"

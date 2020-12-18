@@ -20,6 +20,7 @@
     "express-fileupload": "^1.1.7-alpha.3",
     "fluent-ffmpeg": "^2.1.2",
     "googleapis": "^52.1.0",
+    "grabzit": "^3.4.5",
     "jsontokens": "^3.0.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.2",
