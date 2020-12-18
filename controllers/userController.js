@@ -249,7 +249,7 @@ module.exports.shareVideoInEmail = async (req, res) => {
     if(mail){
       return res.status(200).json({ message: "Video shared successfully"});
     }else{
-      return res.status(500).json({message: error.message, error: "Some Error occured while sharing video"});
+      return res.status(200).json({ message: "Some Error occured while sharing video"});
     }
   } catch (error) {
     res.status(500).json({ message: error.message, errr: "Error" });
