@@ -13,4 +13,6 @@ router.route("/template/").post(userController.addTempSetting);
 router.route("/template/").get(userController.getTempSetting);
 router.route("/template/:id/:userId").patch(userController.updateTempSetting);
 router.route("/preview/").post(userController.getPreview);
+router.route("/emailvideo").post(userController.shareVideoInEmail);
+
 module.exports = router;

@@ -239,6 +239,21 @@ module.exports.updateTempSetting = async (req, res) => {
   }
 };
 
+module.exports.shareVideoInEmail = async (req, res) => {
+  try {
+    const { email, videoSrc, videoLink } = req.body;
+    const mail = await helpers.shareVideoInEmail(email, videoSrc, videoLink);
+    if(mail){
+      return res.status(200).json({ message: "Video shared successfully"});
+    }else{
+      return res.status(200).json({ message: "Some Error occured while sharing video"});
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message, errr: "Error" });
+  }
+};
+
+
 module.exports.getTempSetting = async (req, res) => {
   try {
     const { id } = req.params;

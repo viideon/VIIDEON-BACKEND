@@ -1,8 +1,9 @@
-const { sendEmail, sendForGotEmail, sendResetEmail } = require("./email");
+const { sendEmail, sendForGotEmail, sendResetEmail, shareVideoInEmail } = require("./email");
 const helpers = {
   sendEmail,
   sendForGotEmail,
   sendResetEmail,
+  shareVideoInEmail,
 };
 module.exports = {
   helpers,
