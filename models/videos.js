@@ -9,6 +9,7 @@ const videoSchema = new mongoose.Schema({
   recieverEmail: { type: String, required: false },
   campaign: { type: Boolean, required: false },
   isChatvid: { type: Boolean, required: false },
+  isVideo: { type: Boolean, required: false },
   recordingEdit: { type: Boolean, require: false },
   views: { type: Number },
   watch: { type: Number },

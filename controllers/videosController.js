@@ -263,6 +263,8 @@ module.exports.getVideoCount = async (req, res) => {
   let id = req.query.id;
   try {
     let videoCount = await videoService.getVideoCount(id);
+    let ChatvidCount = await videoService.getChatVidCount(id);
+    let totalCount=videoCount+ChatvidCount
     await Video.find({ userId: id }, function(err, userVideos) {
       if (userVideos.length < 1)
         return res.status(200).json({
@@ -285,9 +287,9 @@ module.exports.getVideoCount = async (req, res) => {
       let ctaCount = ctaValues.reduce((a, b) => a + b);
       let watchValues = userVideos.map(x => parseInt(x["watch"]) || 0);
       let watchCount = watchValues.reduce((a, b) => a + b);
-
+// console.log(videoCount,"total",totalCount)
       return res.status(200).json({
-        count: videoCount,
+        count: totalCount,
         viewCount,
         watchCount,
         emailOpenCount,

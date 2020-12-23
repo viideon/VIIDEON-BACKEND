@@ -1,4 +1,5 @@
 const Video = require("../models/videos");
+const Interactives = require("../models/interactive")
 
 const updateVideo = (id, video) => {
   return Video.findByIdAndUpdate(id, video, { new: true });
@@ -69,10 +70,16 @@ const getViewCount = async id => {
   return count;
 };
 const getVideoCount = id => {
-  const count = Video.countDocuments({ userId: id }, function(err, count) {
+  const count = Video.countDocuments({ userId: id,isVideo:true }, function(err, count) {
     return count;
   });
-  return count;
+  return count ;
+};
+const getChatVidCount = id => {
+  const chatVids = Interactives.countDocuments({ userId: id }, function(err, chatvidcount) {
+    return chatvidcount;
+  });
+  return chatVids ;
 };
 const getCampaignCount = id => {
   const count = Video.countDocuments({ userId: id, campaign: true }, function(
@@ -109,6 +116,7 @@ module.exports = {
   findUserVideoByTitle,
   getViewCount,
   getVideoCount,
+  getChatVidCount,
   incrementVideoEmail,
   incrementVideoViews,
   incrementVideoWatch,
