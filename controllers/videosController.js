@@ -265,6 +265,9 @@ module.exports.getVideoCount = async (req, res) => {
     let videoCount = await videoService.getVideoCount(id);
     let ChatvidCount = await videoService.getChatVidCount(id);
     let totalCount=videoCount+ChatvidCount
+    console.log("id",id)
+    console.log("videoCount",videoCount)
+    console.log("chatvidCount",ChatvidCount)
     await Video.find({ userId: id }, function(err, userVideos) {
       if (userVideos.length < 1)
         return res.status(200).json({

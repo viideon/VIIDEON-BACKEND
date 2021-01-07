@@ -242,8 +242,9 @@ module.exports.updateTempSetting = async (req, res) => {
 
 module.exports.shareVideoInEmail = async (req, res) => {
   try {
-    const { email, videoThumnail, videoLink } = req.body;
-    const mail = await helpers.shareVideoInEmail(email, videoThumnail, videoLink);
+    const {senderEmail, email, videoThumnail, videoLink } = req.body;
+    const mail = await helpers.shareVideoInEmail(senderEmail,email, videoThumnail, videoLink);
+    
     //const gifFromVideo = gifService.saveGif(videoThumnail)
     //console.log("gifFromVideo", gifFromVideo)
     if(mail){
