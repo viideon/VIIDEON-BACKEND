@@ -72,6 +72,26 @@ const shareVideoInEmail = async (senderEmail,email, videoThumnail, videoLink) =>
   }
 };
 
+const responseEmail = async (email) => {
+  const mailOptions = {
+    to: email,
+    from: `videonPro<${process.env.FROM_EMAIL}>`,
+    subject: "Thank you for using Viideon's ChatVid to respond ",
+    html: `<p>Thank you for using Viideon's ChatVid to respond to a message from our member.
+     Consider joining Viideon by creating your own account! It's easy 
+    <a href="https://app.viideon.com" target="_blank" >Find out more! </a>
+    
+      </p>`
+  };
+  try {
+    await transporter.sendMail(mailOptions);
+    return true;
+  } catch (err) {
+    return false;
+  }
+};
+
+
 
 
 const sendResetEmail = async (user, req, res) => {
@@ -93,5 +113,6 @@ module.exports = {
   sendEmail,
   sendForGotEmail,
   sendResetEmail,
-  shareVideoInEmail
+  shareVideoInEmail,
+  responseEmail
 };

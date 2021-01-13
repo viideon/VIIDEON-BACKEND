@@ -308,6 +308,7 @@ module.exports.getCampaignCount = async (req, res) => {
   let id = req.query.id;
   try {
     let count = await videoService.getCampaignCount(id);
+    console.log("Campaign count",count)
     res.status(200).json({ count: count });
   } catch (error) {
     res.status(400).json({ error: error.message });

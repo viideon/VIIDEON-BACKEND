@@ -1,5 +1,6 @@
 const chatVidServices = require("../services/chatvid")
 const videoService = require("../services/videoService");
+const { helpers } = require("../helpers");
 
 const get = async (req, res) => {
   try {
@@ -138,10 +139,11 @@ function isEmpty(obj) {
 const updateJumps = async (req, res) => {
   try {
     const { _id, jumpTo } = req.body;
+    console.log(req.body)
     let step = await chatVidServices.getStepById(_id);
     if (!step) throw ({ message: "no record found" })
     delete req.body._id;
-    if (jumpTo) {
+    if (jumpTo || jumpTo=="end") {
       await chatVidServices.updateStep(_id, req.body)
     } else {
       if (!isEmpty(step.jumpChoice)) {
@@ -153,6 +155,7 @@ const updateJumps = async (req, res) => {
     }
     res.status(200).json({ message: "updated...!", data: req.body })
   } catch (error) {
+    console.log(error.message)
     res.status(400).json({ message: error.message })
   }
 }
@@ -182,8 +185,15 @@ const addReply = async (req, res) => {
     if (reply.type === "choice") {
       await chatVidServices.updateChoice(reply.choiceId, rply._id)
     }
+    //Email on responder mail
+    console.log("email",people.email)
+    const mail = await helpers.responseEmail(people.email);
+    console.log("mail sent",mail)
+
+    
+    // console.log(rply,reply.chatvidId,ppl?ppl:peopleID)
     await chatVidServices.updateStepReply(reply.stepId, rply);
-    await chatVidServices.updateChatvidPeople(reply.chatvidId, ppl ? ppl : peopleID)
+    await chatVidServices.updateChatvidPeople(reply.chatvidId, ppl ? ppl : peopleID);
     res.status(200).json({ message: "Replied Successfully!" })
   } catch (error) {
     console.log(error)
