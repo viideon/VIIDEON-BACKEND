@@ -161,10 +161,9 @@ const updateJumps = async (req, res) => {
 }
 const addReply = async (req, res) => {
   try {
-    const { people, reply } = req.body.payload;
+    const { people, reply } = req.body;
     const { logo } = req.body;
-    console.log("req.body is ",req.body.payload)
-    console.log("logo is",req.body.logo)
+    
     if (reply.type !== "choice") {
       delete reply.choiceId
     }
