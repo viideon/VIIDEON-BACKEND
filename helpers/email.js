@@ -70,19 +70,35 @@ const shareVideoInEmail = async (senderEmail,email, videoThumnail, videoLink) =>
   } catch (err) {
     return false;
   }
+
+
 };
 
-const responseEmail = async (email) => {
+const responseEmail = async (email,logo) => {
   const mailOptions = {
     to: email,
     from: `videonPro<${process.env.FROM_EMAIL}>`,
     subject: "Thank you for using Viideon's ChatVid to respond ",
-    html: `<p>Thank you for using Viideon's ChatVid to respond to a message from our member.
-     Consider joining Viideon by creating your own account! It's easy 
-    <a href="https://app.viideon.com" target="_blank" >Find out more! </a>
-    
-      </p>`
-  };
+    html: `<div style="display: flex;">
+    <div style="margin-right: 30px;">
+  <img
+    src="https://videonpro.s3.us-west-1.amazonaws.com/1610954110203logo.jpeg"
+    alt="logo"
+    width="100"
+    height="62px"
+    style="margin-top: 28px;"
+  /></div>
+  <div>
+  <h2>
+  Thank you for using Viideon's ChatVid to respond to a message from our member.
+
+  </h2>
+ <h2> Consider joining Viideon by creating your own account! It's easy
+  <a href="https://viideon.com/" target="_blank">FIND OUT MORE! </a></h2>
+</div>
+</div>
+`
+  }
   try {
     await transporter.sendMail(mailOptions);
     return true;

@@ -161,7 +161,10 @@ const updateJumps = async (req, res) => {
 }
 const addReply = async (req, res) => {
   try {
-    const { people, reply } = req.body;
+    const { people, reply } = req.body.payload;
+    const { logo } = req.body;
+    console.log("req.body is ",req.body.payload)
+    console.log("logo is",req.body.logo)
     if (reply.type !== "choice") {
       delete reply.choiceId
     }
@@ -171,7 +174,7 @@ const addReply = async (req, res) => {
         date: Date.now(),
         campaign: false,
       }
-      const video = await chatVidServices.saveVideo(vidObj);
+      const video = await chatVidServices.saveVideo(vidObj)
       reply.videoId = video._id;
     }
     let peopleID = await chatVidServices.getPeopleByEmail(people.email)
@@ -187,7 +190,7 @@ const addReply = async (req, res) => {
     }
     //Email on responder mail
     console.log("email",people.email)
-    const mail = await helpers.responseEmail(people.email);
+    const mail = await helpers.responseEmail(people.email,logo);
     console.log("mail sent",mail)
 
     
