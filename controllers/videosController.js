@@ -1,12 +1,53 @@
 const Video = require("../models/videos");
 const { sendEmail } = require("../helpers/email");
 const videoService = require("../services/videoService");
+const template = require ("../helpers/template")
+
+
+
+module.exports.getTemplate = async (req, res) => {
+  try {
+    const customTemplate = await template.spreadTheme();
+    const TemplateString = await template.sleek();
+    
+    
+    if (!TemplateString) {
+      console.log("no template")
+      res.status(400).json({ message: "No template Available" });
+    } else {
+      // console.log("template",TemplateString)
+      // console.log("get tem is " ,TemplateString)
+      res.status(200).json({ template: TemplateString });
+      
+    }
+  } catch (error) {
+    res.status(400).json(error);
+  }
+};
+
+module.exports.getAllVideos = async (req, res) => {
+  try {
+    const videos = await videoService.getAllVideos();
+    
+    
+    if (!videos) {
+      res.status(400).json({ message: "No Video Available" });
+    } else {
+      
+      res.status(200).json({ message: videos });
+      
+    }
+  } catch (error) {
+    res.status(400).json(error);
+  }
+};
 
 module.exports.emailVideo = async (req, res) => {
   const { id, recieverEmail } = req.body;
 
   const video = await videoService.findVideoById(id);
   const { thumbnail } = video;
+  // console.log("emailvid",video)
   try {
     if (req.body.recieverEmail === "") {
       return res.status(400).json({ message: "no email provided" });
@@ -59,18 +100,7 @@ module.exports.postVideo = async (req, res) => {
   }
 };
 
-module.exports.getAllVideos = async (req, res) => {
-  try {
-    const videos = await videoService.getAllVideos();
-    if (!videos) {
-      res.status(400).json({ message: "No Video Available" });
-    } else {
-      res.status(200).json({ message: videos });
-    }
-  } catch (error) {
-    res.status(400).json(error);
-  }
-};
+
 
 module.exports.getUserVideos = async (req, res) => {
   let id = req.query.id;
@@ -262,10 +292,13 @@ module.exports.getSingleVideo = async (req, res) => {
 module.exports.getVideoCount = async (req, res) => {
   let id = req.query.id;
   try {
+    const customTemplate = await template.spreadTheme();
+    const TemplateString = await template.sleek();
     let videoCount = await videoService.getVideoCount(id);
     let ChatvidCount = await videoService.getChatVidCount(id);
     let totalCount=videoCount+ChatvidCount
     console.log("id",id)
+    // console.log("template",TemplateString)
     console.log("videoCount",videoCount)
     console.log("chatvidCount",ChatvidCount)
     await Video.find({ userId: id }, function(err, userVideos) {

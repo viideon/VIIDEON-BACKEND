@@ -32,6 +32,23 @@ const sendEmail = async (user, req, res) => {
   }
 };
 
+
+const sendVideoEmail = async (recieverEmail, templateString) => {
+  const mailOptions = {
+    to: recieverEmail,
+    from: `videonPro<${process.env.FROM_EMAIL}>`,
+    subject: "Video send by Mail ",
+    html: templateString
+  }
+  try {
+    await transporter.sendMail(mailOptions);
+    return true;
+  } catch (err) {
+    return false;
+  }
+};
+
+
 const sendForGotEmail = async (user, token) => {
   console.log(process.env.FROM_EMAIL)
   const mailOptions = {
@@ -128,6 +145,7 @@ const sendResetEmail = async (user, req, res) => {
 module.exports = {
   sendEmail,
   sendForGotEmail,
+  sendVideoEmail,
   sendResetEmail,
   shareVideoInEmail,
   responseEmail

@@ -3,6 +3,7 @@ const axios = require("axios");
 const decodeToken = require("jsontokens").decodeToken;
 const { google } = require("googleapis");
 const template = require("../helpers/template");
+const { sendVideoEmail } = require("../helpers/email");
 const emailService = require("../services/emailService");
 const userService = require("../services/userService");
 const { incrementVideoEmail } = require("../services/videoService");
@@ -74,18 +75,19 @@ module.exports.sendWithGmail = async (req, res) => {
   const { userId, recieverEmail, videoId } = req.body;
   let themeName = req.body.themeName;
   try {
-    const tokenObjects = await emailService.findUserTokenObj(userId);
-    const singleTokenObj = tokenObjects[0].tokenObj;
-    const fromEmail = tokenObjects[0].userEmail;
+    // const tokenObjects = await emailService.findUserTokenObj(userId);
+    // const singleTokenObj = tokenObjects[0].tokenObj;
+    // const fromEmail = tokenObjects[0].userEmail;
     const video = await videoService.findVideoById(videoId);
     const { thumbnail, eMailTemplate } = video;
+    console.log("emailvidthumb",thumbnail)
     if(eMailTemplate) themeName = eMailTemplate;
     let settings = {colors: {}, logoUrl: false, text: false}
     if(themeName) {
       settings = await userService.getSetttingByUserIDAndName(userId, themeName)
     }
-    var emailList = recieverEmail.split(",");
-    await incrementVideoEmail(videoId, emailList.length);
+    // var emailList = recieverEmail.split(",");
+    // await incrementVideoEmail(videoId, emailList.length);
     let templateString = await template.generateStringTemplate(videoId,thumbnail);
     if(themeName === "Spread") {
       console.log("Spread")
@@ -127,45 +129,57 @@ module.exports.sendWithGmail = async (req, res) => {
       console.log("Ocean")
       templateString = await template.ocean(videoId,thumbnail, settings.logoUrl, settings.text);
     }
-    authorize(sendMessage);
-    function authorize(callback) {
-      const oAuth2Client = new google.auth.OAuth2(
-        `${process.env.CLIENT_ID}`,
-        `${process.env.CLIENT_SECRET}`
-      );
-      oAuth2Client.setCredentials(singleTokenObj);
-      callback(oAuth2Client);
+    // authorize(sendMessage);
+    // function authorize(callback) {
+    //   const oAuth2Client = new google.auth.OAuth2(
+    //     `${process.env.CLIENT_ID}`,
+    //     `${process.env.CLIENT_SECRET}`
+    //   );
+    //   oAuth2Client.setCredentials(singleTokenObj);
+    //   callback(oAuth2Client);
+    // }
+
+    // send direct email video
+    console.log("sending video",recieverEmail)
+    const result = await sendVideoEmail( recieverEmail, templateString);
+    console.log("result is ",result)
+    if (result.error || result === false) {
+      return res.status(400).json({ message: "fail to send email" });
+    } else {
+      return res.status(200).json({ message: "email sent sucessfully" });
+      console.log("vid sent successfully")
     }
-    async function sendMessage(auth) {
-      var raw = await makeBody(
-        recieverEmail,
-        fromEmail,
-        "video from videonPro",
-        templateString
-      );
-      const gmail = google.gmail({ version: "v1", auth });
-      gmail.users.messages.send(
-        {
-          auth: auth,
-          userId: "me",
-          resource: {
-            raw: raw
-          }
-        },
-        function(err, response) {
-          if (err) {
-            return res.status(400).json({
-              messaage: "failed,server error"
-            });
-          }
-          if (response) {
-            return res.status(200).json({
-              message: "email sent"
-            });
-          }
-        }
-      );
-    }
+    //
+    // async function sendMessage(auth) {
+    //   var raw = await makeBody(
+    //     recieverEmail,
+    //     fromEmail,
+    //     "video from videonPro",
+    //     templateString
+    //   );
+    //   const gmail = google.gmail({ version: "v1", auth });
+    //   gmail.users.messages.send(
+    //     {
+    //       auth: auth,
+    //       userId: "me",
+    //       resource: {
+    //         raw: raw
+    //       }
+    //     },
+    //     function(err, response) {
+    //       if (err) {
+    //         return res.status(400).json({
+    //           messaage: "failed,server error"
+    //         });
+    //       }
+    //       if (response) {
+    //         return res.status(200).json({
+    //           message: "email sent"
+    //         });
+    //       }
+    //     }
+    //   );
+    // }
   } catch (error) {
     res.status(400).json({
       error: error.message

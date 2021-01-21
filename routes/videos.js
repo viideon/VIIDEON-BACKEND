@@ -3,8 +3,11 @@ const videosController = require("../controllers/videosController");
 
 router.route("/").post(videosController.postVideo);
 router.route("/").get(videosController.getAllVideos);
+router.route("/getTemplate").get(videosController.getTemplate);
+
 router.route("/").patch(videosController.updateVideo);
 router.route("/").delete(videosController.deleteVideo);
+
 router.route("/email").post(videosController.emailVideo);
 router.route("/updateViews").post(videosController.updateVideoViews);
 router.route("/updateWatch").post(videosController.updateVideoWatchCount);
