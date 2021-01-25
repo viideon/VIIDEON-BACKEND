@@ -10,7 +10,7 @@
   <meta name="CocoaVersion" content="1894.6">
   <style type="text/css">
     .mainWrapper {
-      text-align: -webkit-center;      
+      text-align: -webkit-center;
       width: 720px;
     }
     .bodyWrapper {
@@ -21,20 +21,20 @@
       background-color: darkgoldenrod;
     }
     .headerWrapper {
-      background-image: url('https://videonpro.s3.amazonaws.com/assets/spreadHeader.jpg');
+      
       width: 100%;
       min-width: 60%;
       height: 240px;
       background-position: center;
       opacity: 0.9;
     }
-    .thumbnailWrapper {
-      background-image: url('https://videonpro.s3.amazonaws.com/assets/spreadHeader.jpg');
+    .emailTemplatethumbnailWrapper {
+      ${thumbnail && "background-image: url(${thumbnail});"}
       width: 100%;
-      min-width: 60%;
       min-height: 512px;
       max-height: 720px;
       background-position: center;
+      background-color: darkgoldenrod;
     }
     .headerImage {
       width: 120px;
@@ -100,31 +100,38 @@
     }
   </style>
 </head>
-<body style="text-align: -webkit-center;">
+<body style="text-align: -webkit-center;" >
   <div class="mainWrapper">
     <div class="bodyWrapper">
       <div class="headerWrapper">
+        <!-- add logo here -->
         <img src="https://videonpro.s3.amazonaws.com/assets/logo.png" class="headerImage"/>
         <h1 class="headerH1">VideonPRO</h1>
         <p class="headerP">Join our movement</p>
       </div>
-      <a href="${process.env.APP_DOMAIN}/watch/${id}">
-        <div class="thumbnailWrapper">
-          <img style="width: 80px;margin-top: 29%" src="https://videonpro.s3.amazonaws.com/assets/logo.png" /> 
+
+      <a href="${process.env.APP_DOMAIN}/watch/${id && id}">
+        <div class="emailTemplatethumbnailWrapper">
+          <!-- add video thumbnail -->
+          <img style="width: 100%; height: 73vh;" src="https://videonpro.s3.us-west-1.amazonaws.com/1611059296063thumbnail.jpeg" /> 
         </div>
       </a>
+
     </div>
 
     <div class="footerWrapper w3-row w3-center">
       <div class="w3-third">
-          <a href="videonpro.com">
+          <a href="${process.env.APP_DOMAIN}/watch/${id && id}/cta">
             <button class="btn watchVideoBtn">Watch this Video</button>
           </a>
         <div class="w3-row w3-center copyRightWrapper">
           <span class="w3-third">
             <a href="videonpro.com">
-              <img style="width: 45px; height: 45px;" src="https://videonpro.s3.amazonaws.com/assets/logo.png">
+              <!-- add user avatar -->
+              <img style="width: 45px; height: 45px;" src="https://videonpro.s3.us-west-1.amazonaws.com/1610430702841">
+              <p>ali</p>
             </a>
+            
           </span>
           <span class="w3-twothird">
             <p>Sent using VideonPRO</p>
@@ -132,7 +139,12 @@
         </div>
       </div>
       <div class="w3-twothird w3-center">
-        <p>VideonPRO is a video communication platform design for sale and marketing leaders. Learn more at videonpro.com</p>
+        <p style="margin: 1em;">
+            
+                
+                "VideonPRO is a video communication platform design for sale and marketing leaders. Learn more at videonpro.com"
+            
+        </p>
         <div>
           <a href="https://www.facebook.com/">
             <button class="fbBtn socialBtn">F</button>
@@ -151,4 +163,4 @@
     </div>
   </div>
 </body>
-</html>
+</html>  

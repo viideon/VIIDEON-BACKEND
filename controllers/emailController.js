@@ -78,9 +78,19 @@ module.exports.sendWithGmail = async (req, res) => {
     // const tokenObjects = await emailService.findUserTokenObj(userId);
     // const singleTokenObj = tokenObjects[0].tokenObj;
     // const fromEmail = tokenObjects[0].userEmail;
+
+    //find video by video id
     const video = await videoService.findVideoById(videoId);
     const { thumbnail, eMailTemplate } = video;
-    console.log("emailvidthumb",thumbnail)
+    // console.log("emailvidthumb",thumbnail)
+
+    // find user by user id
+    const user= await userService.getUserById(userId);
+    const { userName, url } = user;
+    // console.log("userName for video template",userName)
+    // console.log("user avatar",url)
+
+
     if(eMailTemplate) themeName = eMailTemplate;
     let settings = {colors: {}, logoUrl: false, text: false}
     if(themeName) {
@@ -91,35 +101,36 @@ module.exports.sendWithGmail = async (req, res) => {
     let templateString = await template.generateStringTemplate(videoId,thumbnail);
     if(themeName === "Spread") {
       console.log("Spread")
-      templateString = await template.spreadTheme(videoId,thumbnail, settings.logoUrl, settings.text);
+      templateString = await template.spreadTheme(videoId,thumbnail, settings.logoUrl, settings.text,userName,url);
     }
     if(themeName === "Corporate Light") {
       console.log("Corporate Light")
-      templateString = await template.corporateLight(videoId,thumbnail, settings.logoUrl, settings.text);
+      templateString = await template.corporateLight(videoId,thumbnail, settings.logoUrl, settings.text,userName,url);
     }
+    // UI bad
     if(themeName === "Modern Simple") {
       console.log("Modern Simple")
       templateString = await template.modernSimple(videoId,thumbnail, settings.logoUrl, settings.text);
     }
     if(themeName === "Streamlined") {
       console.log("Streamlined")
-      templateString = await template.streamlined(videoId,thumbnail, settings.logoUrl, settings.text);
+      templateString = await template.streamlined(videoId,thumbnail, settings.logoUrl, settings.text,userName,url);
     }
     if(themeName === "Simple Blue") {
       console.log("Simple Blue")
-      templateString = await template.simple_blue(videoId,thumbnail, settings.logoUrl, settings.text);
+      templateString = await template.simple_blue(videoId,thumbnail, settings.logoUrl, settings.text,userName,url);
     }
     if(themeName === "Sleek") {
       console.log("Sleek")
-      templateString = await template.sleek(videoId,thumbnail, settings.logoUrl, settings.text);
+      templateString = await template.sleek(videoId,thumbnail, settings.logoUrl, settings.text,userName,url);
     }
     if(themeName === "Social Business") {
       console.log("Social Business")
-      templateString = await template.social_business(videoId,thumbnail, settings.logoUrl, settings.text);
+      templateString = await template.social_business(videoId,thumbnail, settings.logoUrl, settings.text,userName,url);
     }
     if(themeName === "Social Impact") {
       console.log("Social Impact")
-      templateString = await template.social_impact(videoId,thumbnail, settings.logoUrl, settings.text);
+      templateString = await template.social_impact(videoId,thumbnail, settings.logoUrl, settings.text,userName,url);
     }
     if(themeName === "Clasic Dark") {
       console.log("Clasic Dark")
@@ -140,7 +151,7 @@ module.exports.sendWithGmail = async (req, res) => {
     // }
 
     // send direct email video
-    console.log("sending video",recieverEmail)
+    // console.log("sending video to brodcast",recieverEmail)
     const result = await sendVideoEmail( recieverEmail, templateString);
     console.log("result is ",result)
     if (result.error || result === false) {

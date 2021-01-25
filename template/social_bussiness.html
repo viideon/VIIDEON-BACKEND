@@ -1,6 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
-
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -11,10 +10,9 @@
     <meta name="Generator" content="Cocoa HTML Writer">
     <meta name="CocoaVersion" content="1894.6">
     <style type="text/css">
-        .thumbnailWrapper {
-            background-image: url(${thumbnail});
+        .emailTemplatethumbnailWrapper {
+            ${thumbnail && 'background-image: url(${thumbnail});'}
         }
-
         .overlay {
             position: absolute;
             top: 0;
@@ -29,57 +27,47 @@
         }
     </style>
 </head>
-
 <body>
     <table align=" center" cellpadding="0" cellspacing="0" width="700" style="background-color: white;">
-
         <tr>
-            <td ">
+            <td>
             <div class=" overlay">
                 </div>
                 <table align="center" cellpadding="0" cellspacing="0" width="100%">
                     <tr align="left">
-
-                        <td align="middle" class="hero bg_white" ">
-
+                        <td align="middle" class="hero bg_white">
                         <table>
                             <tr>
-                                <td style=" padding-left: 20px; display: -webkit-box; -webkit-box-align: center;
-                            -webkit-box-pack: center; min-width: 60%; height: 80%; ">
-
-
+                                <td style=" padding-left: 20px; display: -webkit-box; -webkit-box-align: center; -webkit-box-pack: center; min-width: 60%; height: 80%; ">
                                     <img src=" https://videonpro.s3.amazonaws.com/assets/logo.png"
-                            style="width: 60px; height: 60px; opacity: 1;margin-top: 95%;" />
-                        <p style="color: #3b93d2; padding-bottom: 0px;
+                                        style="width: 60px; height: 60px; opacity: 1;margin-top: 95%;" />
+                                    <p style="color: #3b93d2; padding-bottom: 0px;
                                     margin-left: 3%;
                                     font-weight: bolder;
                                     font-size: 50px;">VideonPRO</p>
-
-
+                                </td>
+                            </tr>
+                        </table>
+                        </td>
+                    </tr>
+                </table>
             </td>
         </tr>
-    </table>
-    </td>
-    </tr>
-    </table>
-    </td>
-    </tr>
-
-
     <tr align="center">
         <td width=100%>
             <table style="background-color: #3b93d2;" width="80%">
                 <tr align="left" style="margin-left:100px">
-                    <p style="color: white;font-size: 30px;margin-left: 150px;">Welcome to VideoPro</p>
+                    <p style="color: white;font-size: 30px;margin-left: 150px;">Welcome to Viideon</p>
                 </tr>
                 <tr align="center">
                     <td>
-                        <table width="100%" style="background: #999999; padding: 100px 0px 100px 0px;max-width: 350px;"
+                        <table class="emailTemplatethumbnailWrapper" width="100%" style="background: #999999; padding: 100px 0px 100px 0px;max-width: 350px;"
                             cellspacing="0" cellpadding="0">
                             <tr align="center">
                                 <td>
-                                    <img style="width: 80px"
-                                        src="https://vidionpro-backend.herokuapp.com/video/email/track?id=${id}" />
+                                    <!-- add video thumbnail -->
+                                    <img style="width: 100%"
+                                        src="//videonpro.s3.us-west-1.amazonaws.com/1611059296063thumbnail.jpeg" />
                                     <p style="color: white">VIDEO PLACEHOLDER</p>
                                 </td>
                             </tr>
@@ -89,22 +77,14 @@
                 <tr align="center" ;">
                     <td align="center" style="padding: 30px 0px 30px 0px">
                         <p style="margin: 0px;color: white;">
-                            VideonPRO is a video communication platform design for sale
-                        </p>
-                        <p style="margin: 0px;color: white;">
-                            and marketing leaders. Learn more at
-                            <a style="
-                              text-decoration: none;
-                              color: white;
-                              font-weight: bold;
-                              cursor: pointer;
-                            ">videonpro.com</a>
+                        ${ text ? text :
+                            "VideonPRO is a video communication platform design for sale and marketing leaders. Learn more at videonpro.com"
+                        }
                         </p>
                     </td>
                 </tr>
                 <tr align="center">
                     <td align="center">
-
                         <a href="${process.env.APP_DOMAIN}/watch/${id}/cta" style="text-decoration: none;">
                             <p style="    border: 2px solid white;
                             width: 180px;
@@ -117,22 +97,17 @@
             </table>
         </td>
     </tr>
-
     <tr align="center">
         <td style="padding: 20px 0px 10px 0px;">
             <table width="300px" cellspacing="0" cellpadding="0">
                 <tr align="center">
                     <td width="30%" align="right">
-                        <img style="vertical-align: middle;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;" src="http://placeimg.com/80/80/sport">
+                        <!-- add user avatar -->
+                        <img style="vertical-align: middle; width: 50px; height: 50px; border-radius: 50%;" src="https://videonpro.s3.us-west-1.amazonaws.com/1610430702841">
                     </td>
-
                     <td width="50%" align="center">
-                        <p style="font-size: 20px; margin: 0;color: #3b93d2;">Jenny Willow</p>
+                        <p style="font-size: 20px; margin: 0;color: #3b93d2;">Ali</p>
                         <p style="font-size: 13px;margin: 0; color: #3b93d2;">Fitness Enthusiast</p>
-
                         <table width="120px" cellspacing="10px" cellpadding="0">
                             <tr>
                                 <td width="25%" align="center" style="background-color:#3b93d2;border-radius: 50%;">
@@ -153,10 +128,7 @@
                                 </td>
                             </tr>
                         </table>
-
                     </td>
-
-
                 </tr>
             </table>
         </td>
@@ -166,15 +138,10 @@
             <table width="250px" cellspacing="0" cellpadding="0">
                 <tr>
                     <td width="20%" align="right">
-                        <img src="https://videonpro.s3.amazonaws.com/assets/logo.png" style="
-                width: 30px;
-                opacity: 1;
-                height: 30px;
-              " />
+                        <!-- add logo -->
+                        <img src="${logo ? logo : 'https://videonpro.s3.amazonaws.com/assets/logo.png'}" style="width: 30px;opacity: 1;height: 30px;" />
                     </td>
-
                     <td width="50%" align="center">
-
                         <span style="color: #3b93d2;">Sent using VideonPro</span>
                     </td>
                 </tr>
@@ -186,14 +153,6 @@
             <p style="color: #3b93d2;font-size: 10px;">&copy;2020 VideoPro All Rights Reserved</p>
         </td>
     </tr>
-
-
-
-
-
-
-
-
     </table>
 </body>
 
