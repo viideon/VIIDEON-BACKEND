@@ -214,12 +214,16 @@ module.exports.reset = async (req, res) => {
 module.exports.addTempSetting = async (req, res) => {
   try {
     let { settings } = req.body;
+    // console.log("settings ",settings)
     settings.userId = settings.userId._id;
     let setting = await userService.getSetttingByUserIDAndName(settings.userId, settings.name)
-    console.log(setting)
+    console.log("setting of user ",setting)
+    console.log("setting of userId ",setting[0]._id)
+    console.log("setting of userUserId ",setting[0].userId)
+    
     if(setting.length > 0) {
       console.log("if")
-      await userService.updateSetting(setting._id, settings.userId, settings)
+      await userService.updateSetting(setting[0]._id, setting[0].userId, settings)
     } else {
       console.log("save")
       await userService.saveSetting(settings)
@@ -273,7 +277,7 @@ module.exports.getPreview = async (req, res) => {
     const { colors, logoUrl, text, name } = req.body.settings;
     let template = "";
     if(name === "Spread") {
-      // console.log("Spread", logoUrl)
+      console.log("Spread", text,name)
       template = await Templates.spreadTheme(false,false, logoUrl, text);
     }
     if(name === "Corporate Light") {

@@ -60,6 +60,7 @@ const saveSetting = (setting) => {
 }
 
 const updateSetting = (_id, userId, setting) => {
+  console.log("updateSetting",setting)
   return Setting.updateOne({_id, userId}, {...setting});
 }
 

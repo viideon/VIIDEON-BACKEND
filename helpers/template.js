@@ -14,8 +14,9 @@ module.exports.generateStringTemplate = (id, thumbnail) => {
 
 module.exports.spreadTheme = (id=false, thumbnail=false, logo=false, text=false,userName,url) => {
     // console.log("thumbnail",thumbnail)
-    // console.log("logo",logo)
-    console.log("usrName in template",userName)
+    console.log("logo",logo)
+    console.log("text",text)
+    // console.log("usrName in template",userName)
     // console.log("avatar",url)
   return `
   <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
@@ -159,21 +160,25 @@ module.exports.spreadTheme = (id=false, thumbnail=false, logo=false, text=false,
           <p style="margin: 1em;">
               
                   
-                  "Viideon is a video communication platform design for sale and marketing leaders. Learn more at viideon.com"
+                ${text?text:"Viideon is a video communication platform design for sale and marketing leaders. Learn more at viideon.com"}  
               
           </p>
           <div>
             <a href="https://www.facebook.com/">
-              <button class="fbBtn socialBtn">F</button>
+              <img width="16px" height="16px" style="    margin: 5px;"
+                                          src="https://videonpro.s3.us-west-1.amazonaws.com/1600688680432logo.jpeg" />
             </a>
             <a href="https://twitter.com/">
-              <button class="twitterBtn socialBtn">T</button>
+              <img width="16px" height="16px" style="    margin: 5px;"
+                                          src="https://videonpro.s3.us-west-1.amazonaws.com/1600688680432logo.jpeg" />
             </a>
             <a href="https://youtube.com/">
-              <button class="youTubBtn socialBtn">Y</button>
+              <img width="16px" height="16px" style="    margin: 5px;"
+                                          src="https://videonpro.s3.us-west-1.amazonaws.com/1600688680432logo.jpeg" />
             </a>
             <a href="https://www.linkedin.com/">
-              <button class="linkedInBtn socialBtn">L</button>
+              <img width="16px" height="16px" style="    margin: 5px;"
+                                          src="https://videonpro.s3.us-west-1.amazonaws.com/1600688680432logo.jpeg" />
             </a>
           </div>
         </div>

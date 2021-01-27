@@ -104,16 +104,14 @@
   <div class="mainWrapper">
     <div class="bodyWrapper">
       <div class="headerWrapper">
-        <!-- add logo here -->
-        <img src="https://videonpro.s3.amazonaws.com/assets/logo.png" class="headerImage"/>
-        <h1 class="headerH1">VideonPRO</h1>
+        <img src="${logo?logo:"https://videonpro.s3.amazonaws.com/assets/logo.png"}" class="headerImage"/>
+        <h1 class="headerH1">Viideon</h1>
         <p class="headerP">Join our movement</p>
       </div>
 
       <a href="${process.env.APP_DOMAIN}/watch/${id && id}">
         <div class="emailTemplatethumbnailWrapper">
-          <!-- add video thumbnail -->
-          <img style="width: 100%; height: 73vh;" src="https://videonpro.s3.us-west-1.amazonaws.com/1611059296063thumbnail.jpeg" /> 
+          <img style="width: 100%; height: 73vh;" src="${thumbnail}" /> 
         </div>
       </a>
 
@@ -127,14 +125,13 @@
         <div class="w3-row w3-center copyRightWrapper">
           <span class="w3-third">
             <a href="videonpro.com">
-              <!-- add user avatar -->
-              <img style="width: 45px; height: 45px;" src="https://videonpro.s3.us-west-1.amazonaws.com/1610430702841">
-              <p>ali</p>
+              <img style="width: 45px; height: 45px;" src="${url}">
+              <p>${userName}</p>
             </a>
             
           </span>
           <span class="w3-twothird">
-            <p>Sent using VideonPRO</p>
+            <p>Sent using Viideon</p>
           </span>
         </div>
       </div>
@@ -142,21 +139,25 @@
         <p style="margin: 1em;">
             
                 
-                "VideonPRO is a video communication platform design for sale and marketing leaders. Learn more at videonpro.com"
+              ${text?text:"Viideon is a video communication platform design for sale and marketing leaders. Learn more at viideon.com"}  
             
         </p>
         <div>
           <a href="https://www.facebook.com/">
-            <button class="fbBtn socialBtn">F</button>
+            <img width="16px" height="16px" style="    margin: 5px;"
+                                        src="https://videonpro.s3.us-west-1.amazonaws.com/1600688680432logo.jpeg" />
           </a>
           <a href="https://twitter.com/">
-            <button class="twitterBtn socialBtn">T</button>
+            <img width="16px" height="16px" style="    margin: 5px;"
+                                        src="https://videonpro.s3.us-west-1.amazonaws.com/1600688680432logo.jpeg" />
           </a>
           <a href="https://youtube.com/">
-            <button class="youTubBtn socialBtn">Y</button>
+            <img width="16px" height="16px" style="    margin: 5px;"
+                                        src="https://videonpro.s3.us-west-1.amazonaws.com/1600688680432logo.jpeg" />
           </a>
           <a href="https://www.linkedin.com/">
-            <button class="linkedInBtn socialBtn">L</button>
+            <img width="16px" height="16px" style="    margin: 5px;"
+                                        src="https://videonpro.s3.us-west-1.amazonaws.com/1600688680432logo.jpeg" />
           </a>
         </div>
       </div>

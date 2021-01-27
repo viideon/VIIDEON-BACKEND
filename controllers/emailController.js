@@ -95,13 +95,17 @@ module.exports.sendWithGmail = async (req, res) => {
     let settings = {colors: {}, logoUrl: false, text: false}
     if(themeName) {
       settings = await userService.getSetttingByUserIDAndName(userId, themeName)
+      
     }
+    console.log("spread settings in mail",settings)
+    console.log("spread settings in mail",settings[0].text)
+    console.log("spread settings in mail",settings[0].logoUrl)
     // var emailList = recieverEmail.split(",");
     // await incrementVideoEmail(videoId, emailList.length);
     let templateString = await template.generateStringTemplate(videoId,thumbnail);
     if(themeName === "Spread") {
       console.log("Spread")
-      templateString = await template.spreadTheme(videoId,thumbnail, settings.logoUrl, settings.text,userName,url);
+      templateString = await template.spreadTheme(videoId,thumbnail, settings[0].logoUrl, settings[0].text,userName,url);
     }
     if(themeName === "Corporate Light") {
       console.log("Corporate Light")
