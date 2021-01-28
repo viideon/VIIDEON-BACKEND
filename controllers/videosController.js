@@ -5,8 +5,8 @@ const template = require("../helpers/template");
 const userService = require("../services/userService");
 
 function splitUrl(logo) {
-  if (logo && logo?.indexOf("blob:") !== -1) {
-    return logo?.split("blob:")[1];
+  if (logo && logo.indexOf("blob:") !== -1) {
+    return logo && logo.split("blob:")[1];
   }
   return logo;
 }
