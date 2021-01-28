@@ -11,7 +11,7 @@
   <style type="text/css">
     .mainWrapper {
       text-align: -webkit-center;
-      width: 720px;
+      width: 704px;
     }
     .bodyWrapper {
       width: 100%;
@@ -38,8 +38,10 @@
     }
     .headerImage {
       width: 120px;
-      height: 120px;
+      height: 110px;
       opacity: 1;
+      margin-top: 13px;
+      border-radius: 70px;
     }
     .headerH1 {
       font-weight: bolder;
@@ -101,7 +103,7 @@
   </style>
 </head>
 <body style="text-align: -webkit-center;" >
-  <div class="mainWrapper">
+  <div class="mainWrapper" ${thumbnail ===false && 'style="width: 560px"'}>
     <div class="bodyWrapper">
       <div class="headerWrapper">
         <img src="${logo?logo:"https://videonpro.s3.amazonaws.com/assets/logo.png"}" class="headerImage"/>
@@ -120,22 +122,22 @@
     <div class="footerWrapper w3-row w3-center">
       <div class="w3-third">
           <a href="${process.env.APP_DOMAIN}/watch/${id && id}/cta">
-            <button class="btn watchVideoBtn">Watch this Video</button>
+            <button class="btn watchVideoBtn">Watch This Video</button>
           </a>
         <div class="w3-row w3-center copyRightWrapper">
           <span class="w3-third">
             <a href="videonpro.com">
               <img style="width: 45px; height: 45px;" src="${url}">
-              <p>${userName}</p>
+              <p style="margin-right: 2px;">${userName}</p>
             </a>
             
           </span>
-          <span class="w3-twothird">
-            <p>Sent using Viideon</p>
+          <span class="w3-twothird" >
+            <p style="font-size: 12px">Sent using Viideon</p>
           </span>
         </div>
       </div>
-      <div class="w3-twothird w3-center">
+      <div class="w3-twothird w3-center" ${thumbnail ===false && 'style="margin-top: 30px"'}>
         <p style="margin: 1em;">
             
                 
@@ -143,21 +145,21 @@
             
         </p>
         <div>
-          <a href="https://www.facebook.com/">
+          <a href="${fbUrl?fbUrl:"https://www.facebook.com/"}">
             <img width="16px" height="16px" style="    margin: 5px;"
-                                        src="https://videonpro.s3.us-west-1.amazonaws.com/1600688680432logo.jpeg" />
+                                        src="https://www.flaticon.com/svg/vstatic/svg/124/124010.svg?token=exp=1611748452~hmac=1e255d73a2f1a89d10b3d3b9262edfe7" />
           </a>
-          <a href="https://twitter.com/">
+          <a href="${twitterUrl ? twitterUrl :"https://twitter.com/"}">
             <img width="16px" height="16px" style="    margin: 5px;"
-                                        src="https://videonpro.s3.us-west-1.amazonaws.com/1600688680432logo.jpeg" />
+                                        src="https://cdn2.iconfinder.com/data/icons/metro-uinvert-dock/256/Twitter_NEW.png" />
           </a>
-          <a href="https://youtube.com/">
+          <a href="${youtubeUrl ? youtubeUrl :"https://youtube.com/"}">
             <img width="16px" height="16px" style="    margin: 5px;"
-                                        src="https://videonpro.s3.us-west-1.amazonaws.com/1600688680432logo.jpeg" />
+                                        src="https://cdn.iconscout.com/icon/free/png-64/youtube-85-226402.png" />
           </a>
-          <a href="https://www.linkedin.com/">
+          <a href="${linkedinUrl ? linkedinUrl :"https://www.linkedin.com/"}">
             <img width="16px" height="16px" style="    margin: 5px;"
-                                        src="https://videonpro.s3.us-west-1.amazonaws.com/1600688680432logo.jpeg" />
+                                        src="https://www.flaticon.com/svg/vstatic/svg/174/174857.svg?token=exp=1611748851~hmac=f972fccdc72e4f5deb734ef50004d788" />
           </a>
         </div>
       </div>

@@ -6,13 +6,16 @@ const stepSchema = new mongoose.Schema(
     name: { type: String },
     logoUrl: { type: String },
     text: { type: String },
-    facebook: {
+    fbUrl: {
       type: String,
     },
-    twitter: {
+    twitterUrl: {
       type: String,
     },
-    instagram: {
+    youtubeUrl: {
+      type: String,
+    },
+    linkedinUrl: {
       type: String,
     },
     colors: {},

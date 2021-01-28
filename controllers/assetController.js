@@ -18,6 +18,26 @@ module.exports.addMusicAsset = async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 };
+module.exports.addPublicMusic = async (req, res) => {
+  let { asset } = req.body;
+  
+  try {
+    await assetService.addPublicMusic( asset);
+    return res.status(201).json({ message: "music asset added" });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+module.exports.getPublicMusic = async (req, res) => {
+  try {
+    let asset = await assetService.getAllPublicmusic();
+    return res.status(200).json({assetIs:asset})
+    
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
 module.exports.getAssets = async (req, res) => {
   let userId = req.query.userId;
   try {
@@ -34,11 +54,8 @@ module.exports.getAssets = async (req, res) => {
 module.exports.getAllAssets = async (req, res) => {
   try {
     let asset = await assetService.getAllAssets();
-    if (asset && asset.assets) {
-      let assets = asset.assets;
-      return res.status(200).json({ assets: assets });
-    }
-    res.status(200).json({ assets: [] });
+    return res.status(200).json({allassets:asset})
+    
   } catch (error) {
     res.status(400).json({ message: error.message });
   }

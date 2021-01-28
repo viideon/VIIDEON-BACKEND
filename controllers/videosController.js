@@ -1,41 +1,179 @@
 const Video = require("../models/videos");
 const { sendEmail } = require("../helpers/email");
 const videoService = require("../services/videoService");
-const template = require ("../helpers/template")
+const template = require("../helpers/template");
+const userService = require("../services/userService");
 
-
+function splitUrl(logo) {
+  if (logo?.indexOf("blob:") !== -1) {
+    return logo?.split("blob:")[1];
+  }
+  return logo;
+}
 
 module.exports.getTemplate = async (req, res) => {
   try {
-    const customTemplate = await template.spreadTheme();
-    const TemplateString = await template.sleek();
-    
-    
-    if (!TemplateString) {
-      console.log("no template")
-      res.status(400).json({ message: "No template Available" });
-    } else {
-      // console.log("template",TemplateString)
-      // console.log("get tem is " ,TemplateString)
-      res.status(200).json({ template: TemplateString });
-      
+    const { userId, _id, eMailTemplate } = req.body;
+
+    const video = await videoService.findVideoById(_id);
+    const { thumbnail } = video;
+    let themeName = eMailTemplate;
+    const user = await userService.getUserById(userId);
+    const { userName, url } = user;
+    let settings = { colors: {}, logoUrl: false, text: false };
+    if (eMailTemplate) {
+      settings = await userService.getSetttingByUserIDAndName(
+        userId,
+        eMailTemplate
+      );
     }
+    const logoUrlIs = splitUrl(settings[0].logoUrl);
+
+    // console.log("themename is ",themeName)
+    // console.log("url is",logoUrlIs)
+    // console.log("text",settings[0].text)
+    // console.log("videoid",_id)
+    // console.log("video thumbnail",thumbnail)
+    // console.log("usernmae",userName)
+    // console.log("avatar",url)
+    let {
+      logoUrl,
+      fbUrl,
+      text,
+      twitterUrl,
+      youtubeUrl,
+      linkedinUrl,
+    } = settings[0];
+    console.log("destructure url", fbUrl);
+
+    let templateIs = "";
+    let templateString = "";
+    if (themeName === "Spread") {
+      console.log("Spread in show preview");
+
+      templateIs = await template.spreadTheme(
+        _id,
+        thumbnail,
+        logoUrl,
+        text,
+        userName,
+        url,
+        fbUrl,
+        twitterUrl,
+        youtubeUrl,
+        linkedinUrl
+      );
+    }
+    if (themeName === "Corporate Light") {
+      console.log("Corporate Light");
+      templateString = await template.corporateLight(
+        videoId,
+        thumbnail,
+        settings.logoUrl,
+        settings.text,
+        userName,
+        url
+      );
+    }
+    // UI bad
+    if (themeName === "Modern Simple") {
+      console.log("Modern Simple");
+      templateString = await template.modernSimple(
+        videoId,
+        thumbnail,
+        settings.logoUrl,
+        settings.text
+      );
+    }
+    if (themeName === "Streamlined") {
+      console.log("Streamlined");
+      templateString = await template.streamlined(
+        videoId,
+        thumbnail,
+        settings.logoUrl,
+        settings.text,
+        userName,
+        url
+      );
+    }
+    if (themeName === "Simple Blue") {
+      console.log("Simple Blue");
+      templateString = await template.simple_blue(
+        videoId,
+        thumbnail,
+        settings.logoUrl,
+        settings.text,
+        userName,
+        url
+      );
+    }
+    if (themeName === "Sleek") {
+      console.log("Sleek");
+      templateString = await template.sleek(
+        videoId,
+        thumbnail,
+        settings.logoUrl,
+        settings.text,
+        userName,
+        url
+      );
+    }
+    if (themeName === "Social Business") {
+      console.log("Social Business");
+      templateString = await template.social_business(
+        videoId,
+        thumbnail,
+        settings.logoUrl,
+        settings.text,
+        userName,
+        url
+      );
+    }
+    if (themeName === "Social Impact") {
+      console.log("Social Impact");
+      templateString = await template.social_impact(
+        videoId,
+        thumbnail,
+        settings.logoUrl,
+        settings.text,
+        userName,
+        url
+      );
+    }
+    if (themeName === "Clasic Dark") {
+      console.log("Clasic Dark");
+      templateString = await template.classic_dark(
+        videoId,
+        thumbnail,
+        settings.logoUrl,
+        settings.text
+      );
+    }
+    if (themeName === "Ocean") {
+      console.log("Ocean");
+      templateString = await template.ocean(
+        videoId,
+        thumbnail,
+        settings.logoUrl,
+        settings.text
+      );
+    }
+
+    // console.log("get template is " ,templateIs)
+    return res.status(200).json({ message: "Success", templateIs });
   } catch (error) {
-    res.status(400).json(error);
+    res.status(500).json({ message: error.message, errr: "catch" });
   }
 };
 
 module.exports.getAllVideos = async (req, res) => {
   try {
     const videos = await videoService.getAllVideos();
-    
-    
+
     if (!videos) {
       res.status(400).json({ message: "No Video Available" });
     } else {
-      
       res.status(200).json({ message: videos });
-      
     }
   } catch (error) {
     res.status(400).json(error);
@@ -72,7 +210,7 @@ module.exports.sendMultipleEmail = async (req, res) => {
   try {
     if (emails.lenght === 0) {
       res.status(400).json({
-        message: "no email provided"
+        message: "no email provided",
       });
       return;
     }
@@ -89,7 +227,7 @@ module.exports.sendMultipleEmail = async (req, res) => {
 module.exports.postVideo = async (req, res) => {
   try {
     const video = new Video({
-      ...req.body
+      ...req.body,
     });
     video.save();
     return res
@@ -99,8 +237,6 @@ module.exports.postVideo = async (req, res) => {
     res.status(400).json(error);
   }
 };
-
-
 
 module.exports.getUserVideos = async (req, res) => {
   let id = req.query.id;
@@ -153,14 +289,14 @@ module.exports.updateVideo = async (req, res) => {
   try {
     if (!videoId) {
       return res.status(400).json({
-        message: "video id not provided"
+        message: "video id not provided",
       });
     }
     const video = await videoService.updateVideo(videoId, req.body);
     if (video) {
       return res.status(200).json({
         message: "video updated",
-        video: video
+        video: video,
       });
     }
     res.status(400).json({ message: "video update failed" });
@@ -175,14 +311,14 @@ module.exports.updateVideoViews = async (req, res) => {
   try {
     if (!videoId) {
       return res.status(400).json({
-        message: "video id not provided"
+        message: "video id not provided",
       });
     }
     const isViewUpdated = await videoService.incrementVideoViews(videoId);
     if (isViewUpdated) {
       return res.status(200).json({
         message: "video views updated",
-        video: isViewUpdated
+        video: isViewUpdated,
       });
     }
     return res.status(400).json({ message: "video view update failed" });
@@ -195,14 +331,14 @@ module.exports.updateVideoWatchCount = async (req, res) => {
   try {
     if (!videoId) {
       return res.status(400).json({
-        message: "video id not provided"
+        message: "video id not provided",
       });
     }
     const isWatchUpdated = await videoService.incrementVideoWatch(videoId);
     if (isWatchUpdated) {
       return res.status(200).json({
         message: "video watch updated",
-        video: isWatchUpdated
+        video: isWatchUpdated,
       });
     }
     return res.status(400).json({ message: "video watch update failed" });
@@ -215,14 +351,14 @@ module.exports.updateVideoEmailShare = async (req, res) => {
   try {
     if (!videoId) {
       return res.status(400).json({
-        message: "video id not provided"
+        message: "video id not provided",
       });
     }
     const isEmailShareUpdated = await videoService.incrementVideoEmail(videoId);
     if (isEmailShareUpdated) {
       return res.status(200).json({
         message: "video email share updated",
-        video: isEmailShareUpdated
+        video: isEmailShareUpdated,
       });
     }
     return res.status(400).json({ message: "video email share update failed" });
@@ -257,11 +393,11 @@ module.exports.deleteVideo = async (req, res) => {
       const videos = await videoService.findUserVideo(userId, pageNo);
       return res.status(200).json({
         message: "video deleted",
-        nextVideo: videos[videos.length - 1]
+        nextVideo: videos[videos.length - 1],
       });
     } else {
       return res.status(400).json({
-        message: "No record found"
+        message: "No record found",
       });
     }
   } catch (error) {
@@ -277,11 +413,11 @@ module.exports.getSingleVideo = async (req, res) => {
     if (video) {
       res.status(200).json({
         status: true,
-        video: video
+        video: video,
       });
     } else {
       res.status(404).json({
-        status: false
+        status: false,
       });
     }
   } catch (err) {
@@ -296,12 +432,12 @@ module.exports.getVideoCount = async (req, res) => {
     const TemplateString = await template.sleek();
     let videoCount = await videoService.getVideoCount(id);
     let ChatvidCount = await videoService.getChatVidCount(id);
-    let totalCount=videoCount+ChatvidCount
-    console.log("id",id)
+    let totalCount = videoCount + ChatvidCount;
+    console.log("id", id);
     // console.log("template",TemplateString)
-    console.log("videoCount",videoCount)
-    console.log("chatvidCount",ChatvidCount)
-    await Video.find({ userId: id }, function(err, userVideos) {
+    console.log("videoCount", videoCount);
+    console.log("chatvidCount", ChatvidCount);
+    await Video.find({ userId: id }, function (err, userVideos) {
       if (userVideos.length < 1)
         return res.status(200).json({
           count: 0,
@@ -309,28 +445,30 @@ module.exports.getVideoCount = async (req, res) => {
           emailShareCount: 0,
           emailOpenCount: 0,
           ctaCount: 0,
-          watchCount: 0
+          watchCount: 0,
         });
-      let viewValues = userVideos.map(x => parseInt(x["views"]) || 0);
+      let viewValues = userVideos.map((x) => parseInt(x["views"]) || 0);
       let viewCount = viewValues.reduce((a, b) => a + b);
       let emailShareValues = userVideos.map(
-        x => parseInt(x["emailShareCount"]) || 0
+        (x) => parseInt(x["emailShareCount"]) || 0
       );
       let emailShareCount = emailShareValues.reduce((a, b) => a + b);
-      let emailOpensValue = userVideos.map(x => parseInt(x["emailOpens"]) || 0);
+      let emailOpensValue = userVideos.map(
+        (x) => parseInt(x["emailOpens"]) || 0
+      );
       let emailOpenCount = emailOpensValue.reduce((a, b) => a + b);
-      let ctaValues = userVideos.map(x => parseInt(x["ctaClicks"]) || 0);
+      let ctaValues = userVideos.map((x) => parseInt(x["ctaClicks"]) || 0);
       let ctaCount = ctaValues.reduce((a, b) => a + b);
-      let watchValues = userVideos.map(x => parseInt(x["watch"]) || 0);
+      let watchValues = userVideos.map((x) => parseInt(x["watch"]) || 0);
       let watchCount = watchValues.reduce((a, b) => a + b);
-// console.log(videoCount,"total",totalCount)
+      // console.log(videoCount,"total",totalCount)
       return res.status(200).json({
         count: totalCount,
         viewCount,
         watchCount,
         emailOpenCount,
         ctaCount,
-        emailShareCount
+        emailShareCount,
       });
     });
   } catch (error) {
@@ -341,7 +479,7 @@ module.exports.getCampaignCount = async (req, res) => {
   let id = req.query.id;
   try {
     let count = await videoService.getCampaignCount(id);
-    console.log("Campaign count",count)
+    console.log("Campaign count", count);
     res.status(200).json({ count: count });
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -354,7 +492,7 @@ module.exports.trackEmailOpen = async (req, res) => {
     const path = require("path");
     let filePath = path.join(__dirname, "..", "temp", "icon.png");
     await videoService.incrementEmailOpen(id);
-    fs.readFile(filePath, function(err, data) {
+    fs.readFile(filePath, function (err, data) {
       res.writeHead("200", { "Content-Type": "image/png" });
       res.end(data, "binary");
     });
@@ -367,7 +505,7 @@ module.exports.updateCtaClicks = async (req, res) => {
   try {
     if (!id) {
       return res.status(400).json({
-        message: "video id not provided"
+        message: "video id not provided",
       });
     }
     await videoService.incrementCtaClicks(id);

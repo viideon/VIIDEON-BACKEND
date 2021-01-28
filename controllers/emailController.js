@@ -13,7 +13,9 @@ require("dotenv").config();
 module.exports.sendTemplateWithGmail = async (req, res) => {
   // const { userId, recieverEmail, videoId } = req.body;
   try {
-    const tokenObjects = await emailService.findUserTokenObj("5f5b61ccdd828c1f7f11c09a");
+    const tokenObjects = await emailService.findUserTokenObj(
+      "5f5b61ccdd828c1f7f11c09a"
+    );
     const singleTokenObj = tokenObjects[0].tokenObj;
     const fromEmail = tokenObjects[0].userEmail;
     // const video = await videoService.findVideoById(videoId);
@@ -46,27 +48,27 @@ module.exports.sendTemplateWithGmail = async (req, res) => {
           auth: auth,
           userId: "me",
           resource: {
-            raw: raw
-          }
+            raw: raw,
+          },
         },
-        function(err, response) {
+        function (err, response) {
           if (err) {
             return res.status(400).json({
-              messaage: "failed,server error"
+              messaage: "failed,server error",
             });
           }
           if (response) {
             return res.status(200).json({
-              message: "email sent"
+              message: "email sent",
             });
           }
         }
       );
     }
   } catch (error) {
-    console.log('error', error);
+    console.log("error", error);
     res.status(400).json({
-      error: error.message
+      error: error.message,
     });
   }
 };
@@ -85,64 +87,142 @@ module.exports.sendWithGmail = async (req, res) => {
     // console.log("emailvidthumb",thumbnail)
 
     // find user by user id
-    const user= await userService.getUserById(userId);
+    const user = await userService.getUserById(userId);
     const { userName, url } = user;
     // console.log("userName for video template",userName)
     // console.log("user avatar",url)
 
-
-    if(eMailTemplate) themeName = eMailTemplate;
-    let settings = {colors: {}, logoUrl: false, text: false}
-    if(themeName) {
-      settings = await userService.getSetttingByUserIDAndName(userId, themeName)
-      
+    if (eMailTemplate) themeName = eMailTemplate;
+    let settings = { colors: {}, logoUrl: false, text: false };
+    if (themeName) {
+      settings = await userService.getSetttingByUserIDAndName(
+        userId,
+        themeName
+      );
     }
-    console.log("spread settings in mail",settings)
-    console.log("spread settings in mail",settings[0].text)
-    console.log("spread settings in mail",settings[0].logoUrl)
+    let {
+      logoUrl,
+      fbUrl,
+      text,
+      twitterUrl,
+      youtubeUrl,
+      linkedinUrl,
+    } = settings[0];
     // var emailList = recieverEmail.split(",");
     // await incrementVideoEmail(videoId, emailList.length);
-    let templateString = await template.generateStringTemplate(videoId,thumbnail);
-    if(themeName === "Spread") {
-      console.log("Spread")
-      templateString = await template.spreadTheme(videoId,thumbnail, settings[0].logoUrl, settings[0].text,userName,url);
+    let templateString = await template.generateStringTemplate(
+      videoId,
+      thumbnail
+    );
+    if (themeName === "Spread") {
+      console.log("Spread in email send");
+
+      templateString = await template.spreadTheme(
+        videoId,
+        thumbnail,
+        logoUrl,
+        text,
+        userName,
+        url,
+        fbUrl,
+        twitterUrl,
+        youtubeUrl,
+        linkedinUrl
+      );
     }
-    if(themeName === "Corporate Light") {
-      console.log("Corporate Light")
-      templateString = await template.corporateLight(videoId,thumbnail, settings.logoUrl, settings.text,userName,url);
+    if (themeName === "Corporate Light") {
+      console.log("Corporate Light");
+      templateString = await template.corporateLight(
+        videoId,
+        thumbnail,
+        settings.logoUrl,
+        settings.text,
+        userName,
+        url
+      );
     }
     // UI bad
-    if(themeName === "Modern Simple") {
-      console.log("Modern Simple")
-      templateString = await template.modernSimple(videoId,thumbnail, settings.logoUrl, settings.text);
+    if (themeName === "Modern Simple") {
+      console.log("Modern Simple");
+      templateString = await template.modernSimple(
+        videoId,
+        thumbnail,
+        settings.logoUrl,
+        settings.text
+      );
     }
-    if(themeName === "Streamlined") {
-      console.log("Streamlined")
-      templateString = await template.streamlined(videoId,thumbnail, settings.logoUrl, settings.text,userName,url);
+    if (themeName === "Streamlined") {
+      console.log("Streamlined");
+      templateString = await template.streamlined(
+        videoId,
+        thumbnail,
+        settings.logoUrl,
+        settings.text,
+        userName,
+        url
+      );
     }
-    if(themeName === "Simple Blue") {
-      console.log("Simple Blue")
-      templateString = await template.simple_blue(videoId,thumbnail, settings.logoUrl, settings.text,userName,url);
+    if (themeName === "Simple Blue") {
+      console.log("Simple Blue");
+      templateString = await template.simple_blue(
+        videoId,
+        thumbnail,
+        settings.logoUrl,
+        settings.text,
+        userName,
+        url
+      );
     }
-    if(themeName === "Sleek") {
-      console.log("Sleek")
-      templateString = await template.sleek(videoId,thumbnail, settings.logoUrl, settings.text,userName,url);
+    if (themeName === "Sleek") {
+      console.log("Sleek");
+      templateString = await template.sleek(
+        videoId,
+        thumbnail,
+        settings.logoUrl,
+        settings.text,
+        userName,
+        url
+      );
     }
-    if(themeName === "Social Business") {
-      console.log("Social Business")
-      templateString = await template.social_business(videoId,thumbnail, settings.logoUrl, settings.text,userName,url);
+    if (themeName === "Social Business") {
+      console.log("Social Business");
+      templateString = await template.social_business(
+        videoId,
+        thumbnail,
+        settings.logoUrl,
+        settings.text,
+        userName,
+        url
+      );
     }
-    if(themeName === "Social Impact") {
-      console.log("Social Impact")
-      templateString = await template.social_impact(videoId,thumbnail, settings.logoUrl, settings.text,userName,url);
+    if (themeName === "Social Impact") {
+      console.log("Social Impact");
+      templateString = await template.social_impact(
+        videoId,
+        thumbnail,
+        settings.logoUrl,
+        settings.text,
+        userName,
+        url
+      );
     }
-    if(themeName === "Clasic Dark") {
-      console.log("Clasic Dark")
-      templateString = await template.classic_dark(videoId,thumbnail, settings.logoUrl, settings.text);
+    if (themeName === "Clasic Dark") {
+      console.log("Clasic Dark");
+      templateString = await template.classic_dark(
+        videoId,
+        thumbnail,
+        settings.logoUrl,
+        settings.text
+      );
     }
-    if(themeName === "Ocean") {
-      console.log("Ocean")
-      templateString = await template.ocean(videoId,thumbnail, settings.logoUrl, settings.text);
+    if (themeName === "Ocean") {
+      console.log("Ocean");
+      templateString = await template.ocean(
+        videoId,
+        thumbnail,
+        settings.logoUrl,
+        settings.text
+      );
     }
     // authorize(sendMessage);
     // function authorize(callback) {
@@ -156,13 +236,13 @@ module.exports.sendWithGmail = async (req, res) => {
 
     // send direct email video
     // console.log("sending video to brodcast",recieverEmail)
-    const result = await sendVideoEmail( recieverEmail, templateString);
-    console.log("result is ",result)
+    const result = await sendVideoEmail(recieverEmail, templateString);
+    console.log("result is ", result);
     if (result.error || result === false) {
       return res.status(400).json({ message: "fail to send email" });
     } else {
       return res.status(200).json({ message: "email sent sucessfully" });
-      console.log("vid sent successfully")
+      console.log("vid sent successfully");
     }
     //
     // async function sendMessage(auth) {
@@ -197,7 +277,7 @@ module.exports.sendWithGmail = async (req, res) => {
     // }
   } catch (error) {
     res.status(400).json({
-      error: error.message
+      error: error.message,
     });
   }
 };
@@ -206,7 +286,7 @@ module.exports.getAndSaveConfig = async (req, res) => {
   const { code, userId } = req.body;
   if (code === "") {
     return res.status(400).json({
-      error: "include authorization code"
+      error: "include authorization code",
     });
   }
   try {
@@ -215,7 +295,7 @@ module.exports.getAndSaveConfig = async (req, res) => {
       client_id: `${process.env.CLIENT_ID}`,
       client_secret: `${process.env.CLIENT_SECRET}`,
       grant_type: "authorization_code",
-      redirect_uri: "postmessage"
+      redirect_uri: "postmessage",
     });
     const response = await axios.post(
       `${process.env.TOKEN_OBJECT_PATH}`,
@@ -228,18 +308,18 @@ module.exports.getAndSaveConfig = async (req, res) => {
     const result = await emailService.saveEmailConfig({
       userId,
       userEmail,
-      tokenObj
+      tokenObj,
     });
 
     if (result) {
       res.status(201).json({
         message: "configuration created",
-        emailConfig: result
+        emailConfig: result,
       });
     }
   } catch (error) {
     res.status(400).json({
-      error: error.message
+      error: error.message,
     });
   }
 };
@@ -248,11 +328,11 @@ module.exports.getUserEmailConfig = async (req, res) => {
   try {
     const result = await emailService.findUserConfig(userId);
     res.status(200).json({
-      configurations: result
+      configurations: result,
     });
   } catch (error) {
     res.status(400).json({
-      error: error.message
+      error: error.message,
     });
   }
 };
@@ -263,11 +343,11 @@ module.exports.deleteUserConfig = async (req, res) => {
     if (config) {
       await emailService.deleteConfigById(id);
       return res.status(200).json({
-        message: "config deleted"
+        message: "config deleted",
       });
     } else {
       return res.status(400).json({
-        message: "No such record found"
+        message: "No such record found",
       });
     }
   } catch (error) {
@@ -295,7 +375,7 @@ function makeBody(recieverEmail, from, subject, message) {
     "subject: ",
     subject,
     "\n\n",
-    message
+    message,
   ].join("");
 
   var encodedMail = new Buffer.from(str)

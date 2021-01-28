@@ -1,4 +1,7 @@
+const PublicMusic = require("../models/publicMusicAssets");
 const userAssets = require("../models/userAssets");
+
+
 
 const addAsset = (userId, asset) => {
   return userAssets.findOneAndUpdate(
@@ -14,6 +17,18 @@ const addMusicAsset = (userId, asset) => {
     { upsert: true }
   );
 };
+const addPublicMusic = (asset) => {
+  const newMusic = new PublicMusic({
+    musicAssets:asset
+  });
+  console.log("new music asset",newMusic)
+  return newMusic.save();
+};
+
+const getAllPublicmusic = () => {
+  return PublicMusic.find();
+}
+
 const getAssets = userId => {
   return userAssets.findOne({ userId: userId }, "assets").exec();
 };
@@ -55,6 +70,8 @@ module.exports = {
   getAllAssets,
   removeUserAsset,
   addMusicAsset,
+  getAllPublicmusic,
   getMusicAssets,
+  addPublicMusic,
   removeMusicAsset
 };

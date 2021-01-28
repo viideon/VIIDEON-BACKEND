@@ -12,12 +12,14 @@ module.exports.generateStringTemplate = (id, thumbnail) => {
   <body width="100%" style="margin: 0; font-family: 'Montserrat',Georgia, sans-serif; padding: 0 !important; mso-line-height-rule: exactly; background-color: #F2F2F1;"> <center style="width: 100%; background-color: #F2F2F1;"> <div style="max-width: 600px; margin: 0 auto;padding: 5px" class="email-container"> <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: auto;"> <tr> <td> <h5 style="font-size:16px">vidionPro</h5> </td> <td> <h5 style="text-align: end;font-size: 16px" align="end"> Hello </h5> </td> </tr> </table> </div> <div style="max-width: 600px; margin-top: 0px;margin-bottom: 50px; margin-left: auto; margin-right: auto;background-color: #fff;padding: 10px 10px 30px 10px" class="email-container"> <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: auto;"> <tr> <td> <a href="${process.env.APP_DOMAIN}/watch/${id}"> <div style="width: 100%;background-color:#000;"> <div style="height:280px;background-image:url(${thumbnail});object-fit:contain;background-size: contain;background-repeat:no-repeat;background-position: center"> <img style="width: 80px;margin-left: 44%;margin-top: 18%" src="https://vidionpro-backend.herokuapp.com/video/email/track?id=${id}" /> </div> </div> </td> </tr> <tr> <td> <h5 style="text-align: center;color: #76827F;padding:0px 30px;font-weight: 800" align="center"> Video powered by vidionPro </h5> </td> </tr> <tr> <td style="text-align: center;" align="center"> <a style="cursor: pointer;background-color: #19AF8F;color: #fff;padding:10px 14px;border-radius: 3px;font-weight: 400;text-decoration: none; margin-bottom: 30px" href="${process.env.APP_DOMAIN}/watch/${id}/cta">WATCH VIDEO</a> </td> </tr> </table> </div> </center> </body> </html>`;
 };
 
-module.exports.spreadTheme = (id=false, thumbnail=false, logo=false, text=false,userName,url) => {
-    // console.log("thumbnail",thumbnail)
+module.exports.spreadTheme =async (id=false, thumbnail=false, logo=false, text=false,userName,url,fbUrl,twitterUrl,youtubeUrl,linkedinUrl) => {
+    
     console.log("logo",logo)
+    console.log("url",fbUrl)
     console.log("text",text)
-    // console.log("usrName in template",userName)
-    // console.log("avatar",url)
+    console.log("twitterurl",twitterUrl)
+    
+    
   return `
   <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
   <html>
@@ -32,7 +34,7 @@ module.exports.spreadTheme = (id=false, thumbnail=false, logo=false, text=false,
     <style type="text/css">
       .mainWrapper {
         text-align: -webkit-center;
-        width: 720px;
+        width: 704px;
       }
       .bodyWrapper {
         width: 100%;
@@ -59,8 +61,10 @@ module.exports.spreadTheme = (id=false, thumbnail=false, logo=false, text=false,
       }
       .headerImage {
         width: 120px;
-        height: 120px;
+        height: 110px;
         opacity: 1;
+        margin-top: 13px;
+        border-radius: 70px;
       }
       .headerH1 {
         font-weight: bolder;
@@ -122,7 +126,7 @@ module.exports.spreadTheme = (id=false, thumbnail=false, logo=false, text=false,
     </style>
   </head>
   <body style="text-align: -webkit-center;" >
-    <div class="mainWrapper">
+    <div class="mainWrapper" ${thumbnail ===false && 'style="width: 560px"'}>
       <div class="bodyWrapper">
         <div class="headerWrapper">
           <img src="${logo?logo:"https://videonpro.s3.amazonaws.com/assets/logo.png"}" class="headerImage"/>
@@ -132,7 +136,7 @@ module.exports.spreadTheme = (id=false, thumbnail=false, logo=false, text=false,
   
         <a href="${process.env.APP_DOMAIN}/watch/${id && id}">
           <div class="emailTemplatethumbnailWrapper">
-            <img style="width: 100%; height: 73vh;" src="${thumbnail}" /> 
+            <img style="width: 100%; height: 73vh;" src="${thumbnail ? thumbnail :"https://d33v4339jhl8k0.cloudfront.net/docs/assets/591c8a010428634b4a33375c/images/5ab4866b2c7d3a56d8873f4c/file-MrylO8jADD.png"}" /> 
           </div>
         </a>
   
@@ -141,22 +145,22 @@ module.exports.spreadTheme = (id=false, thumbnail=false, logo=false, text=false,
       <div class="footerWrapper w3-row w3-center">
         <div class="w3-third">
             <a href="${process.env.APP_DOMAIN}/watch/${id && id}/cta">
-              <button class="btn watchVideoBtn">Watch this Video</button>
+              <button class="btn watchVideoBtn">Watch This Video</button>
             </a>
           <div class="w3-row w3-center copyRightWrapper">
             <span class="w3-third">
               <a href="videonpro.com">
-                <img style="width: 45px; height: 45px;" src="${url}">
-                <p>${userName}</p>
+                <img style="width: 45px; height: 45px;" src="${url ? url : "https://img.pngio.com/no-avatar-png-transparent-png-download-for-free-3856300-trzcacak-png-avatar-920_954.png"}">
+                <p style="margin-right: 2px;">${userName ? `Mr.${userName}` :"Mr." }</p>
               </a>
               
             </span>
-            <span class="w3-twothird">
-              <p>Sent using Viideon</p>
+            <span class="w3-twothird" >
+              <p style="font-size: 12px">Sent using Viideon</p>
             </span>
           </div>
         </div>
-        <div class="w3-twothird w3-center">
+        <div class="w3-twothird w3-center" ${thumbnail ===false && 'style="margin-top: 30px"'}>
           <p style="margin: 1em;">
               
                   
@@ -164,21 +168,21 @@ module.exports.spreadTheme = (id=false, thumbnail=false, logo=false, text=false,
               
           </p>
           <div>
-            <a href="https://www.facebook.com/">
+            <a href="${fbUrl?fbUrl:"https://www.facebook.com/"}">
               <img width="16px" height="16px" style="    margin: 5px;"
-                                          src="https://videonpro.s3.us-west-1.amazonaws.com/1600688680432logo.jpeg" />
+                                          src="https://www.flaticon.com/svg/vstatic/svg/124/124010.svg?token=exp=1611748452~hmac=1e255d73a2f1a89d10b3d3b9262edfe7" />
             </a>
-            <a href="https://twitter.com/">
+            <a href="${twitterUrl ? twitterUrl :"https://twitter.com/"}">
               <img width="16px" height="16px" style="    margin: 5px;"
-                                          src="https://videonpro.s3.us-west-1.amazonaws.com/1600688680432logo.jpeg" />
+                                          src="https://cdn2.iconfinder.com/data/icons/metro-uinvert-dock/256/Twitter_NEW.png" />
             </a>
-            <a href="https://youtube.com/">
+            <a href="${youtubeUrl ? youtubeUrl :"https://youtube.com/"}">
               <img width="16px" height="16px" style="    margin: 5px;"
-                                          src="https://videonpro.s3.us-west-1.amazonaws.com/1600688680432logo.jpeg" />
+                                          src="https://cdn.iconscout.com/icon/free/png-64/youtube-85-226402.png" />
             </a>
-            <a href="https://www.linkedin.com/">
+            <a href="${linkedinUrl ? linkedinUrl :"https://www.linkedin.com/"}">
               <img width="16px" height="16px" style="    margin: 5px;"
-                                          src="https://videonpro.s3.us-west-1.amazonaws.com/1600688680432logo.jpeg" />
+                                          src="https://www.flaticon.com/svg/vstatic/svg/174/174857.svg?token=exp=1611748851~hmac=f972fccdc72e4f5deb734ef50004d788" />
             </a>
           </div>
         </div>
