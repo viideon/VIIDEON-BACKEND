@@ -19,7 +19,7 @@ const addMusicAsset = (userId, asset) => {
 };
 const addPublicMusic = (asset) => {
   const newMusic = new PublicMusic({
-    musicAssets:asset
+    ...asset
   });
   console.log("new music asset",newMusic)
   return newMusic.save();

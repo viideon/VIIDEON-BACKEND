@@ -11,18 +11,18 @@ const videoService = require("../services/videoService");
 require("dotenv").config();
 
 module.exports.sendTemplateWithGmail = async (req, res) => {
-  // const { userId, recieverEmail, videoId } = req.body;
+  const { userId, recieverEmail, videoId } = req.body;
   try {
     const tokenObjects = await emailService.findUserTokenObj(
       "5f5b61ccdd828c1f7f11c09a"
     );
     const singleTokenObj = tokenObjects[0].tokenObj;
     const fromEmail = tokenObjects[0].userEmail;
-    // const video = await videoService.findVideoById(videoId);
-    // const { thumbnail } = video;
+    const video = await videoService.findVideoById(videoId);
+    const { thumbnail } = video;
 
-    // const headerImage = require('../template/spreadHeader.jpg')
-    // const logo = require('../template/logo.png')
+    const headerImage = require('../template/spreadHeader.jpg')
+    const logo = require('../template/logo.png')
     const customTemplate = await template.spreadTheme();
 
     authorize(sendMessage);
@@ -77,9 +77,9 @@ module.exports.sendWithGmail = async (req, res) => {
   const { userId, recieverEmail, videoId } = req.body;
   let themeName = req.body.themeName;
   try {
-    // const tokenObjects = await emailService.findUserTokenObj(userId);
-    // const singleTokenObj = tokenObjects[0].tokenObj;
-    // const fromEmail = tokenObjects[0].userEmail;
+    const tokenObjects = await emailService.findUserTokenObj(userId);
+    const singleTokenObj = tokenObjects[0].tokenObj;
+    const fromEmail = tokenObjects[0].userEmail;
 
     //find video by video id
     const video = await videoService.findVideoById(videoId);
@@ -108,8 +108,8 @@ module.exports.sendWithGmail = async (req, res) => {
       youtubeUrl,
       linkedinUrl,
     } = settings[0];
-    // var emailList = recieverEmail.split(",");
-    // await incrementVideoEmail(videoId, emailList.length);
+    var emailList = recieverEmail.split(",");
+    await incrementVideoEmail(videoId, emailList.length);
     let templateString = await template.generateStringTemplate(
       videoId,
       thumbnail
@@ -224,57 +224,58 @@ module.exports.sendWithGmail = async (req, res) => {
         settings.text
       );
     }
-    // authorize(sendMessage);
-    // function authorize(callback) {
-    //   const oAuth2Client = new google.auth.OAuth2(
-    //     `${process.env.CLIENT_ID}`,
-    //     `${process.env.CLIENT_SECRET}`
-    //   );
-    //   oAuth2Client.setCredentials(singleTokenObj);
-    //   callback(oAuth2Client);
-    // }
+    authorize(sendMessage);
+    function authorize(callback) {
+      const oAuth2Client = new google.auth.OAuth2(
+        `${process.env.CLIENT_ID}`,
+        `${process.env.CLIENT_SECRET}`
+      );
+      oAuth2Client.setCredentials(singleTokenObj);
+      callback(oAuth2Client);
+    }
 
     // send direct email video
     // console.log("sending video to brodcast",recieverEmail)
-    const result = await sendVideoEmail(recieverEmail, templateString);
-    console.log("result is ", result);
-    if (result.error || result === false) {
-      return res.status(400).json({ message: "fail to send email" });
-    } else {
-      return res.status(200).json({ message: "email sent sucessfully" });
-      console.log("vid sent successfully");
-    }
-    //
-    // async function sendMessage(auth) {
-    //   var raw = await makeBody(
-    //     recieverEmail,
-    //     fromEmail,
-    //     "video from videonPro",
-    //     templateString
-    //   );
-    //   const gmail = google.gmail({ version: "v1", auth });
-    //   gmail.users.messages.send(
-    //     {
-    //       auth: auth,
-    //       userId: "me",
-    //       resource: {
-    //         raw: raw
-    //       }
-    //     },
-    //     function(err, response) {
-    //       if (err) {
-    //         return res.status(400).json({
-    //           messaage: "failed,server error"
-    //         });
-    //       }
-    //       if (response) {
-    //         return res.status(200).json({
-    //           message: "email sent"
-    //         });
-    //       }
-    //     }
-    //   );
+    // const result = await sendVideoEmail(recieverEmail, templateString);
+    // console.log("result is ", result);
+    // if (result.error || result === false) {
+    //   return res.status(400).json({ message: "fail to send email" });
+    // } else {
+    //   return res.status(200).json({ message: "email sent sucessfully" });
+    //   console.log("vid sent successfully");
     // }
+    //End send direct email video
+    
+    async function sendMessage(auth) {
+      var raw = await makeBody(
+        recieverEmail,
+        fromEmail,
+        "video from videonPro",
+        templateString
+      );
+      const gmail = google.gmail({ version: "v1", auth });
+      gmail.users.messages.send(
+        {
+          auth: auth,
+          userId: "me",
+          resource: {
+            raw: raw
+          }
+        },
+        function(err, response) {
+          if (err) {
+            return res.status(400).json({
+              messaage: "failed,server error"
+            });
+          }
+          if (response) {
+            return res.status(200).json({
+              message: "email sent"
+            });
+          }
+        }
+      );
+    }
   } catch (error) {
     res.status(400).json({
       error: error.message,
@@ -284,6 +285,7 @@ module.exports.sendWithGmail = async (req, res) => {
 
 module.exports.getAndSaveConfig = async (req, res) => {
   const { code, userId } = req.body;
+  
   if (code === "") {
     return res.status(400).json({
       error: "include authorization code",
@@ -297,14 +299,16 @@ module.exports.getAndSaveConfig = async (req, res) => {
       grant_type: "authorization_code",
       redirect_uri: "postmessage",
     });
+    // console.log("user email params",params)
+    // till here working  fine
     const response = await axios.post(
       `${process.env.TOKEN_OBJECT_PATH}`,
       params.toString()
     );
-
+    console.log("user email response",response)
     const tokenObj = response.data;
     const userEmail = await decodeJwtToEmail(tokenObj.id_token);
-
+console.log("user email",userEmail)
     const result = await emailService.saveEmailConfig({
       userId,
       userEmail,
@@ -318,6 +322,7 @@ module.exports.getAndSaveConfig = async (req, res) => {
       });
     }
   } catch (error) {
+    // console.log("error is",error)
     res.status(400).json({
       error: error.message,
     });
