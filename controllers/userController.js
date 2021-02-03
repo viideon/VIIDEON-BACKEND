@@ -224,15 +224,13 @@ module.exports.reset = async (req, res) => {
 module.exports.addTempSetting = async (req, res) => {
   try {
     let { settings } = req.body;
-    // console.log("settings ",settings)
+    console.log("settings ",settings)
     settings.userId = settings.userId._id;
     let setting = await userService.getSetttingByUserIDAndName(
       settings.userId,
       settings.name
     );
     console.log("setting of user ", setting);
-    console.log("setting of userId ", setting[0]._id);
-    console.log("setting of userUserId ", setting[0].userId);
 
     if (setting.length > 0) {
       console.log("if");

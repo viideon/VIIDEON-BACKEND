@@ -90,16 +90,18 @@ module.exports.sendWithGmail = async (req, res) => {
     const user = await userService.getUserById(userId);
     const { userName, url } = user;
     // console.log("userName for video template",userName)
-    // console.log("user avatar",url)
+    // console.log("user avatar",userName)
 
     if (eMailTemplate) themeName = eMailTemplate;
     let settings = { colors: {}, logoUrl: false, text: false };
+    console.log("them is ",themeName,userId)
     if (themeName) {
       settings = await userService.getSetttingByUserIDAndName(
         userId,
         themeName
       );
     }
+    console.log("settings",settings)
     let {
       logoUrl,
       fbUrl,
@@ -108,6 +110,7 @@ module.exports.sendWithGmail = async (req, res) => {
       youtubeUrl,
       linkedinUrl,
     } = settings[0];
+    
     var emailList = recieverEmail.split(",");
     await incrementVideoEmail(videoId, emailList.length);
     let templateString = await template.generateStringTemplate(

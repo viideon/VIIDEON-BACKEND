@@ -47,7 +47,7 @@ module.exports.spreadTheme =async (id=false, thumbnail=false, logo=false, text=f
         
         width: 100%;
         min-width: 60%;
-        height: 240px;
+        height: 260px;
         background-position: center;
         opacity: 0.9;
       }

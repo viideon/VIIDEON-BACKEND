@@ -38,6 +38,18 @@ module.exports.getPublicMusic = async (req, res) => {
   }
 };
 
+module.exports.delPublicMusic = async (req, res) => {
+  try {
+    const { id } = req.params;
+    await assetService.deleteMusicAsset(id);
+    res.status(200).json("Successfully Deleted");
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+
+
 module.exports.getAssets = async (req, res) => {
   let userId = req.query.userId;
   try {
