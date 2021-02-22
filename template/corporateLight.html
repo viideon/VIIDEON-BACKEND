@@ -30,7 +30,8 @@
       -webkit-box-pack: center
     }
     .thumbnailWrapper {
-      
+      position: relative;
+      background-color: white;
       width: 592px;
       min-width: 592px;
       min-height: 399px;
@@ -84,6 +85,7 @@
     }
     .sender-wrapper {
       width: 320px;
+      margin-left: 25px;
       display: -webkit-box;
       -webkit-box-align: center;
       float: left;
@@ -117,7 +119,7 @@
       <div class="bodyWrapper">
         <div class="headerWrapper">
           <!-- add logo here -->
-          <img src="https://videonpro.s3.amazonaws.com/assets/logo.png" class="headerImage"/>
+          <img src="${logo?logo:"https://videonpro.s3.amazonaws.com/assets/logo.png"}" class="headerImage"/>
           <h1 class="headerH1">Viideon</h1>
         </div>
       </div>
@@ -132,7 +134,12 @@
 
         <div class="footerWrapper w3-row w3-center">
           <div class="">
-            <p>Viideon is a video communication platform design for sale and marketing leaders. Learn more at viideon.com</p>
+            <p>${
+              text
+                ? text
+                : "Viideon is a video communication platform design for sale and marketing leaders. Learn more at viideon.com"
+            }</p>
+            
             <a href="videonpro.com">
               <button class="btn watchVideoBtn">Watch this Video</button>
             </a>
@@ -147,10 +154,22 @@
           <p class="footerP">Sent using Viideon</p>
         </div>
         <div class="icon-wrapper">
-          <a href="#" class="fa fa-facebook"></a>
-          <a href="#" class="fa fa-twitter"></a>
-          <a href="#" class="fa fa-google"></a>
-          <a href="#" class="fa fa-linkedin"></a>
+          <a href="${fbUrl?fbUrl:"https://www.facebook.com/"}">
+            <img width="16px" height="16px" style="    margin: 5px;"
+                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Facebook_icon.svg/1200px-Facebook_icon.svg.png"/>
+          </a>
+          <a href="${twitterUrl ? twitterUrl :"https://twitter.com/"}">
+            <img width="16px" height="16px" style="    margin: 5px;"
+                                        src="https://cdn2.iconfinder.com/data/icons/metro-uinvert-dock/256/Twitter_NEW.png" />
+          </a>
+          <a href="${youtubeUrl ? youtubeUrl :"https://youtube.com/"}">
+            <img width="16px" height="16px" style="    margin: 5px;"
+                                        src="https://cdn.iconscout.com/icon/free/png-64/youtube-85-226402.png" />
+          </a>
+          <a href="${linkedinUrl ? linkedinUrl :"https://www.linkedin.com/"}">
+            <img width="16px" height="16px" style="    margin: 5px;"
+                          src="https://image.flaticon.com/icons/png/512/174/174855.png" />
+          </a>
         </div>
       </div>
 </body>

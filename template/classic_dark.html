@@ -31,6 +31,10 @@
             background: #333333;
             position: relative;
             overflow: hidden;
+            margin: auto;
+        }
+        table{
+            border-collapse: unset;
         }
         a {
             color: black;
@@ -40,7 +44,7 @@
         a.left {
             padding: 10px;
             float: left;
-        }
+        }   
         div.right {
             float: right;
             z-index: 1;
@@ -49,6 +53,16 @@
         }
         div.right a {
             color: #FFF
+        }
+        .heAd{
+            font-size: 30px;
+    text-align: center;
+    width: 700px;
+    background: black;
+    color: white;
+    
+    padding: 20px;
+    margin: auto;
         }
         .inner {
             width: 0;
@@ -64,16 +78,22 @@
     </style>
 </head>
 <body>
-    <table align=" center" cellpadding="0" cellspacing="0" width="700" style="background-color: #1a1a1a;">
+    <table align=" center" cellpadding="0" cellspacing="0" width="700" style="background-color: #1a1a1a; margin: auto;">
         <tr>
             <div class="wrapper">
                 <a class="left" href="#1"
                     style=" 
             background-position: center;padding-left: 20px;background-color: #333333;display: -webkit-box;-webkit-box-align: center;-webkit-box-pack: center;    margin-top: 5%;">
-                    <img src=" https://videonpro.s3.amazonaws.com/assets/logo.png"
-                        style="width: 30px; height: 30px; opacity: 1;margin-top: 10%;" />
+                    <img src=" ${
+                      logo
+                        ? logo
+                        : "https://videonpro.s3.amazonaws.com/assets/logo.png"
+                    }"
+                        style="width: 30px; height: 30px; opacity: 1;margin: 10px;" />
                     <p style="color: white; margin: 0px;
                                     margin-left: 3%;
+                                    margin: auto;
+                                    text-align: center;
                                     font-weight: bolder;
                                     font-size: 30px;">Viideon</p>
                 </a>
@@ -82,18 +102,19 @@
             </div>
         </tr>
         <tr align="left" style="margin-left:100px">
-            <p style="font-size: 30px;margin-left: 150px;">Hello John!</p>
+            <p class="heAd" style="font-size: 30px;text-align: center;">Hello ${userName?userName:"John!"}</p>
         </tr>
         <tr align="center">
             <td>
                 <table class="emailTemplatethumbnailWrapper" width="70%" cellspacing="0" cellpadding="0"
-                    style="max-width: 400px;">
+                    style="max-width: 400px; margin:12px">
                     <tr align="center">
                         <td>
-                            <!-- add video thumbnail -->
                             <img style="width: 100%"
-                                src="https://videonpro.s3.us-west-1.amazonaws.com/1611059296063thumbnail.jpeg" />
-                            <p style="color: white">VIDEO PLACEHOLDER</p>
+                                src="https://cdn3.iconfinder.com/data/icons/social-media-2208/64/Youtube-512.png" />
+                            <!-- <img style="width: 100%"
+                                src="${thumbnail}" /> -->
+                            
                         </td>
                     </tr>
                 </table>
@@ -101,10 +122,12 @@
         </tr>
         <tr align="center">
             <td align="center">
-                <a href="${process.env.APP_DOMAIN}/watch/${id}/cta" style="text-decoration: none;">
+                <a href="${
+                  process.env.APP_DOMAIN
+                }/watch/${id}/cta" style="text-decoration: none;">
                     <p style="    border: 2px solid white;
                 width: 180px;
-                color: white;
+                color: rgb(255, 255, 255);
                 font-size: 20px;
                 border-radius: 20px;">Watch this Video!</p>
                 </a>
@@ -113,8 +136,10 @@
         <tr align="center">
             <td align="center" style="padding: 30px 0px 30px 0px">
                 <p style="margin: 0px;color: white;">
-                ${ text ? text : 
-                    "Viideon is a video communication platform design for sale and marketing leaders."
+                ${
+                  text
+                    ? text
+                    : "Viideon is a video communication platform design for sale and marketing leaders."
                 }
                 </p>
                 <p style="margin: 0px;color: white;">
@@ -133,42 +158,58 @@
                 <table width="100%" cellspacing="0" cellpadding="0">
                     <tr>
                         <td width="40%" align="center">
-                            <table width="220px" cellspacing="10px" cellpadding="0">
+                            <table width="100px" cellspacing="10px" cellpadding="0">
                                 <tr>
-                                    <td width="25%" align="center" style="border-radius: 50%;">
-                                        <img width="24px" height="24px" style="    margin: 5px;"
-                                            src="https://videonpro.s3.us-west-1.amazonaws.com/1600688680432logo.jpeg" />
-                                    </td>
-                                    <td style="border-radius: 50%;" width="25%" align="center"><img width="24px"
-                                            height="24px"
-                                            src="https://videonpro.s3.us-west-1.amazonaws.com/1600688680432logo.jpeg" />
-                                    </td>
-                                    <td style="border-radius: 50%;" width="25%" align="center">
-                                        <img width="24px" height="24px" style="    margin: 5px;"
-                                            src="https://videonpro.s3.us-west-1.amazonaws.com/1600688680432logo.jpeg" />
-                                    </td>
-                                    <td width="25%" align="center" style="border-radius: 50%;">
+                                    <td  width="25%" align="center">
+                                        <a href="${fbUrl?fbUrl:"https://www.facebook.com/"}">
                                         <img width="24px" height="24px"
-                                            src="https://videonpro.s3.us-west-1.amazonaws.com/1600688680432logo.jpeg" />
+                                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Facebook_icon.svg/1200px-Facebook_icon.svg.png"/>
+                                    </a>
+                                            </td>
+                                            <td width="25%" align="center">
+                                                <a href="${linkedinUrl ? linkedinUrl :"https://www.linkedin.com/"}">
+                                                <img width="24px" height="24px"
+                                                    src="https://image.flaticon.com/icons/png/512/174/174855.png" /></a>
+                                            </td>
+                                            
+                                    <td  width="25%" align="center">
+                                        <a href="${twitterUrl ? twitterUrl :"https://twitter.com/"}">
+                                        <img width="24px" height="24px"
+                                            src="https://videonpro.s3.us-west-1.amazonaws.com/1600681828680logo.jpeg" /></a>
                                     </td>
+                                    <td width="25%" align="center">
+                                        <a href="${youtubeUrl ? youtubeUrl :"https://youtube.com/"}">
+                                            <img width="24px" height="24px"
+                                            src="https://cdn.iconscout.com/icon/free/png-64/youtube-85-226402.png" />
+                                        </a>
+                
+                                    </td>
+                                    
+                                    
                                 </tr>
                             </table>
                         </td>
                         <td width="20%" align="center"></td>
-                        <td width="40%" align="center">
-                            <img src="${logo ? logo : " https://videonpro.s3.us-west-1.amazonaws.com/1610430702841"}" style="
+                        <td width="40%" align="center" style="padding: 5px;">
+                            <img src="${
+                              logo
+                                ? logo
+                                : "https://videonpro.s3.us-west-1.amazonaws.com/1610430702841"
+                            }" style="
                 width: 20px;
                 opacity: 1;
                 height: 20px;
                 margin-right: 5px;
-                margin-top: 5%;
+                
               " />
                             <span style="color: white;margin-bottom: 5%;">Sent with Viideon</span>
                         </td>
                     </tr>
+                    
                 </table>
             </td>
         </tr>
+        
     </table>
 </body>
 

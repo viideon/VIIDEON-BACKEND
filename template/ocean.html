@@ -12,7 +12,7 @@
     <meta name="CocoaVersion" content="1894.6">
     <style type="text/css">
         .emailTemplatethumbnailWrapper {
-            ${thumbnail && 'background-image: url(${thumbnail});'}
+            ${thumbnail && "background-image: url(${thumbnail});"}
         }
 ​
         .overlay {
@@ -27,6 +27,9 @@
             z-index: -1;
             opacity: .3;
         }
+        table{
+            border-collapse: unset;
+        }
     </style>
 </head>
 <body>
@@ -36,7 +39,11 @@
                 <table align="center" cellpadding="0" cellspacing="0" style="background-color: #ffffff;border-top-right-radius: 10px; border-top-left-radius: 10px;margin-bottom: 10px;margin-top: 5%;" width="80%">
                     <tr align="left">
                         <td align="center">
-                            <img src="https://videonpro.s3.amazonaws.com/assets/logo.png" style="width: 60px; height: 60px; opacity: 1;margin-top: 5%; margin-bottom: 20px;" />
+                            <img src="${
+                              logo
+                                ? logo
+                                : "https://videonpro.s3.amazonaws.com/assets/logo.png"
+                            }" style="width: 60px; height: 60px; opacity: 1;margin-top: 5%; margin-bottom: 20px;" />
                         </td>
                     </tr>
                     <tr align="center">
@@ -50,7 +57,7 @@
         </tr>
         <tr align="center">
             <td width=100%>
-                <table style="" width="80%">
+                <table  width="80%">
                     <tr align="center" style="margin-left:100px">
                         <p style="font-size: 24px;margin-left: 10px;">Create & Send Campaigns Simplified
                         </p>
@@ -60,10 +67,10 @@
                             <table width="100%" class="emailTemplatethumbnailWrapper" style="background: #4d4d4d;max-width: 350px;"cellspacing="0" cellpadding="0">
                                 <tr align="center">
                                     <td>
-                                        <!-- add video thumbnail -->
+                                        
                                         <img style="width: 100%"
-                                            src="https://videonpro.s3.us-west-1.amazonaws.com/1611059296063thumbnail.jpeg" />
-                                        <p style="color: white">VIDEO PLACEHOLDER</p>
+                                            src="${thumbnail}" />
+                                        <!-- <p style="color: white">VIDEO PLACEHOLDER</p> -->
                                     </td>
                                 </tr>
                             </table>
@@ -71,7 +78,9 @@
                     </tr>
                     <tr align="center">
                         <td align="center">
-                            <a href="${process.env.APP_DOMAIN}/watch/${id}/cta" style="text-decoration: none;">
+                            <a href="${
+                              process.env.APP_DOMAIN
+                            }/watch/${id}/cta" style="text-decoration: none;">
                                 <p style="width: 190px;
                             color: white;
                             font-size: 20px;
@@ -93,8 +102,10 @@
                     <tr align="center">
                         <td align=" center" style="padding: 30px 0px 10px 0px">
                             <p style="margin: 0px;color: #3b93d2;margin: 0;">
-                            ${text ? text : 
-                                "Viideon is a video communication platform design for sale and marketing leaders. Learn more at viideon.com"
+                            ${
+                              text
+                                ? text
+                                : "Viideon is a video communication platform design for sale and marketing leaders. Learn more at viideon.com"
                             }
                             </p>
                         </td>

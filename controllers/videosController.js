@@ -21,16 +21,18 @@ module.exports.getTemplate = async (req, res) => {
     const user = await userService.getUserById(userId);
     const { userName, url } = user;
     let settings = { colors: {}, logoUrl: false, text: false };
+
     if (eMailTemplate) {
       settings = await userService.getSetttingByUserIDAndName(
         userId,
         eMailTemplate
       );
     }
+    console.log("seting is ", settings);
     const logoUrlIs = splitUrl(settings[0].logoUrl);
 
-    // console.log("themename is ",themeName)
-    // console.log("url is",logoUrlIs)
+    // console.log("themename is ", themeName);
+    // console.log("url is", logoUrlIs);
     // console.log("text",settings[0].text)
     // console.log("videoid",_id)
     // console.log("video thumbnail",thumbnail)
@@ -66,96 +68,138 @@ module.exports.getTemplate = async (req, res) => {
     }
     if (themeName === "Corporate Light") {
       console.log("Corporate Light");
-      templateString = await template.corporateLight(
-        videoId,
+      templateIs = await template.corporateLight(
+        _id,
         thumbnail,
-        settings.logoUrl,
-        settings.text,
+        logoUrl,
+        text,
         userName,
-        url
+        url,
+        fbUrl,
+        twitterUrl,
+        youtubeUrl,
+        linkedinUrl
       );
     }
     // UI bad
     if (themeName === "Modern Simple") {
       console.log("Modern Simple");
-      templateString = await template.modernSimple(
-        videoId,
+      templateIs = await template.modernSimple(
+        _id,
         thumbnail,
-        settings.logoUrl,
-        settings.text
+        logoUrl,
+        text,
+        userName,
+        url,
+        fbUrl,
+        twitterUrl,
+        youtubeUrl,
+        linkedinUrl
       );
     }
     if (themeName === "Streamlined") {
       console.log("Streamlined");
-      templateString = await template.streamlined(
-        videoId,
+      templateIs = await template.streamlined(
+        _id,
         thumbnail,
-        settings.logoUrl,
-        settings.text,
+        logoUrl,
+        text,
         userName,
-        url
+        url,
+        fbUrl,
+        twitterUrl,
+        youtubeUrl,
+        linkedinUrl
       );
     }
     if (themeName === "Simple Blue") {
       console.log("Simple Blue");
-      templateString = await template.simple_blue(
-        videoId,
+      templateIs = await template.simple_blue(
+        _id,
         thumbnail,
-        settings.logoUrl,
-        settings.text,
+        logoUrl,
+        text,
         userName,
-        url
+        url,
+        fbUrl,
+        twitterUrl,
+        youtubeUrl,
+        linkedinUrl
       );
     }
     if (themeName === "Sleek") {
-      console.log("Sleek");
-      templateString = await template.sleek(
-        videoId,
+      console.log("Sleek is here");
+      templateIs = await template.sleek(
+        _id,
         thumbnail,
-        settings.logoUrl,
-        settings.text,
+        logoUrl,
+        text,
         userName,
-        url
+        url,
+        fbUrl,
+        twitterUrl,
+        youtubeUrl,
+        linkedinUrl
       );
     }
     if (themeName === "Social Business") {
       console.log("Social Business");
-      templateString = await template.social_business(
-        videoId,
+      templateIs = await template.social_business(
+        _id,
         thumbnail,
-        settings.logoUrl,
-        settings.text,
+        logoUrl,
+        text,
         userName,
-        url
+        url,
+        fbUrl,
+        twitterUrl,
+        youtubeUrl,
+        linkedinUrl
       );
     }
     if (themeName === "Social Impact") {
       console.log("Social Impact");
-      templateString = await template.social_impact(
-        videoId,
+      templateIs = await template.social_impact(
+        _id,
         thumbnail,
-        settings.logoUrl,
-        settings.text,
+        logoUrl,
+        text,
         userName,
-        url
+        url,
+        fbUrl,
+        twitterUrl,
+        youtubeUrl,
+        linkedinUrl
       );
     }
     if (themeName === "Clasic Dark") {
       console.log("Clasic Dark");
-      templateString = await template.classic_dark(
-        videoId,
+      templateIs = await template.classic_dark(
+        _id,
         thumbnail,
-        settings.logoUrl,
-        settings.text
+        logoUrl,
+        text,
+        userName,
+        url,
+        fbUrl,
+        twitterUrl,
+        youtubeUrl,
+        linkedinUrl
       );
     }
     if (themeName === "Ocean") {
       console.log("Ocean");
-      templateString = await template.ocean(
-        videoId,
+      templateIs = await template.ocean(
+        _id,
         thumbnail,
-        settings.logoUrl,
-        settings.text
+        logoUrl,
+        text,
+        userName,
+        url,
+        fbUrl,
+        twitterUrl,
+        youtubeUrl,
+        linkedinUrl
       );
     }
 

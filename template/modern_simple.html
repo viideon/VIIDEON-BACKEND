@@ -1,6 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
-
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -11,17 +10,19 @@
     <meta name="Generator" content="Cocoa HTML Writer">
     <meta name="CocoaVersion" content="1894.6">
     <style type="text/css">
-        .thumbnailWrapper {
-            background-image: url(${thumbnail});
+        .emailTemplatethumbnailWrapper {
+            ${thumbnail && "background-image: url(${thumbnail});"}
+        }
+        table{
+            border-collapse: unset;
         }
     </style>
 </head>
 
 <body ">
     <table align=" center" cellpadding="0" cellspacing="0" width="700">
-
     <tr>
-        <td align="center" style="background-image: url(images/bg_1.jpg); background-size: cover; ">
+        <td>
             <table align="center" cellpadding="0" cellspacing="0" width="100%">
                 <tr align="left">
                     <td style="
@@ -31,12 +32,11 @@
                           -webkit-box-align: center;
                           -webkit-box-pack: center;
                           min-width: 60%;
-                          height: 80%;
-            
-                           border-bottom: 2px solid black;
+            height: 80%;
+            border-bottom: 2px solid black;
                         ">
-                        <img src=" https://videonpro.s3.amazonaws.com/assets/logo.png"
-                            style="width: 40px; height: 40px; opacity: 1;margin-top: 50%;" />
+                        <img src="${logo ? logo : "https://videonpro.s3.amazonaws.com/assets/logo.png"}"
+                            style="width: 40px; height: 40px; opacity: 1;" />
                         <h1 style="
                             padding-bottom: 0px;
                             margin-left: 3%;
@@ -51,18 +51,18 @@
             </table>
         </td>
     </tr>
-
     <tr align="center">
         <p style="color: black;">Be a part of our growing team!</p>
     </tr>
     <tr align="center">
-        <td style="background: #4d4d4d;max-width: 400px;width: 100%;">
-            <table width="100%" cellspacing="0" cellpadding="0">
+        <td>
+            <table class="emailTemplatethumbnailWrapper" width=" 100%" cellspacing="0" cellpadding="0" width="70%"
+                style="background: #4d4d4d;max-width: 400px;">
                 <tr align="center">
                     <td>
-                        <img style="width: 100%"
-                            src="https://videonpro.s3.us-west-1.amazonaws.com/1611059296063thumbnail.jpeg" />
-                        <p style="color: white">VIDEO PLACEHOLDER</p>
+                        <img style="width: 100%; height:30vh"
+                            src="${thumbnail}" />
+                        
                     </td>
                 </tr>
             </table>
@@ -71,7 +71,7 @@
     <tr align="center">
         <td align="center" style="padding: 30px 0px 30px 0px">
             <p style="margin: 0px;color: black;">
-                Viideon is a video communication platform design for sale and marketing leaders.
+                ${text ? text :"Viideon is a video communication platform design for sale and marketing leaders."}
             </p>
             <p style="margin: 0px;color: black;">
                  Learn more at
@@ -105,10 +105,10 @@
             <img style="vertical-align: middle;
             width: 50px;
             height: 50px;
-            border-radius: 50%;" src="http://placeimg.com/80/80/sport">
+            border-radius: 50%;" src="${url}">
             <p style="margin-bottom: 0;
             font-size: 16px;
-            font-weight: bold;color: black;">Chris Cullen</p>
+            font-weight: bold;color: black;">${userName}</p>
             <p style=" margin-top: 0;
             font-size: 14px;color: black;">Nature Lover</p>
         </td>
@@ -118,18 +118,27 @@
             <table width="180px" cellspacing="0" cellpadding="0">
                 <tr>
                     <td width="25%" align="center" style="border-right: 1.5px solid">
-                        <img width="24px" height="24px"
-                            src="https://videonpro.s3.us-west-1.amazonaws.com/1600681828680logo.jpeg" />
+                        <a href="${youtubeUrl ? youtubeUrl :"https://youtube.com/"}">
+                            <img width="24px" height="24px"
+                            src="https://cdn.iconscout.com/icon/free/png-64/youtube-85-226402.png" />
+                        </a>
+
                     </td>
-                    <td style="border-right: 1.5px solid" width="25%" align="center"><img width="24px" height="24px"
-                            src="https://videonpro.s3.us-west-1.amazonaws.com/1600681828680logo.jpeg" /></td>
                     <td style="border-right: 1.5px solid" width="25%" align="center">
+                        <a href="${fbUrl?fbUrl:"https://www.facebook.com/"}">
                         <img width="24px" height="24px"
-                            src="https://videonpro.s3.us-west-1.amazonaws.com/1600681828680logo.jpeg" />
+                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Facebook_icon.svg/1200px-Facebook_icon.svg.png"/>
+                    </a>
+                            </td>
+                    <td style="border-right: 1.5px solid" width="25%" align="center">
+                        <a href="${twitterUrl ? twitterUrl :"https://twitter.com/"}">
+                        <img width="24px" height="24px"
+                            src="https://videonpro.s3.us-west-1.amazonaws.com/1600681828680logo.jpeg" /></a>
                     </td>
                     <td width="25%" align="center">
+                        <a href="${linkedinUrl ? linkedinUrl :"https://www.linkedin.com/"}">
                         <img width="24px" height="24px"
-                            src="https://videonpro.s3.us-west-1.amazonaws.com/1600681828680logo.jpeg" />
+                            src="https://image.flaticon.com/icons/png/512/174/174855.png" /></a>
                     </td>
                 </tr>
             </table>
@@ -146,22 +155,18 @@
                     </td>
                     <td width="33%" align="center"></td>
                     <td width="33%" align="center">
-                        <img src="https://videonpro.s3.amazonaws.com/assets/logo.png" style="
+                        <img src="${logo ? logo :"https://videonpro.s3.amazonaws.com/assets/logo.png"}" style="
                 width: 20px;
                 opacity: 1;
                 height: 20px;
                 margin-right: 5px;
               " />
-                        <span style="color: black;">Sent with Viideon</span>
+                        <span style="color: black;">Sent with VideonPro</span>
                     </td>
                 </tr>
             </table>
         </td>
     </tr>
-
-
-
-
     </table>
 </body>
 
