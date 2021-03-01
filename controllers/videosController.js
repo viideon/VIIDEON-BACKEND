@@ -28,16 +28,164 @@ module.exports.getTemplate = async (req, res) => {
         eMailTemplate
       );
     }
-    console.log("seting is ", settings);
-    const logoUrlIs = splitUrl(settings[0].logoUrl);
+    let templateIs = "";
+    console.log("seting is ", settings.length);
+    if (settings.length === 0) {
+      console.log("lenght is zero");
+      if (themeName === "Spread") {
+        console.log("Spread in show preview");
 
-    // console.log("themename is ", themeName);
-    // console.log("url is", logoUrlIs);
-    // console.log("text",settings[0].text)
-    // console.log("videoid",_id)
-    // console.log("video thumbnail",thumbnail)
-    // console.log("usernmae",userName)
-    // console.log("avatar",url)
+        templateIs = await template.spreadTheme(
+          _id,
+          thumbnail,
+          false,
+          false,
+          userName,
+          url,
+          false,
+          false,
+          false,
+          false
+        );
+      }
+      if (themeName === "Corporate Light") {
+        console.log("Corporate Light");
+        templateIs = await template.corporateLight(
+          _id,
+          thumbnail,
+          false,
+          false,
+          userName,
+          url,
+          false,
+          false,
+          false,
+          false
+        );
+      }
+      // UI bad
+      if (themeName === "Modern Simple") {
+        console.log("Modern Simple");
+        templateIs = await template.modernSimple(
+          _id,
+          thumbnail,
+          false,
+          false,
+          userName,
+          url,
+          false,
+          false,
+          false,
+          false
+        );
+      }
+      if (themeName === "Streamlined") {
+        console.log("Streamlined");
+        templateIs = await template.streamlined(
+          _id,
+          thumbnail,
+          false,
+          false,
+          userName,
+          url,
+          false,
+          false,
+          false,
+          false
+        );
+      }
+      if (themeName === "Simple Blue") {
+        console.log("Simple Blue");
+        templateIs = await template.simple_blue(
+          _id,
+          thumbnail,
+          false,
+          false,
+          userName,
+          url,
+          false,
+          false,
+          false,
+          false
+        );
+      }
+      if (themeName === "Sleek") {
+        console.log("Sleek is here");
+        templateIs = await template.sleek(
+          _id,
+          thumbnail,
+          false,
+          false,
+          userName,
+          url,
+          false,
+          false,
+          false,
+          false
+        );
+      }
+      if (themeName === "Social Business") {
+        console.log("Social Business");
+        templateIs = await template.social_business(
+          _id,
+          thumbnail,
+          false,
+          false,
+          userName,
+          url,
+          false,
+          false,
+          false,
+          false
+        );
+      }
+      if (themeName === "Social Impact") {
+        console.log("Social Impact");
+        templateIs = await template.social_impact(
+          _id,
+          thumbnail,
+          false,
+          false,
+          userName,
+          url,
+          false,
+          false,
+          false,
+          false
+        );
+      }
+      if (themeName === "Clasic Dark") {
+        console.log("Clasic Dark");
+        templateIs = await template.classic_dark(
+          _id,
+          thumbnail,
+          false,
+          false,
+          userName,
+          url,
+          false,
+          false,
+          false,
+          false
+        );
+      }
+      if (themeName === "Ocean") {
+        console.log("Ocean");
+        templateIs = await template.ocean(
+          _id,
+          thumbnail,
+          false,
+          false,
+          userName,
+          url,
+          false,
+          false,
+          false,
+          false
+        );
+      }
+      return res.status(200).json({ message: "Success", templateIs });
+    }
     let {
       logoUrl,
       fbUrl,
@@ -46,10 +194,9 @@ module.exports.getTemplate = async (req, res) => {
       youtubeUrl,
       linkedinUrl,
     } = settings[0];
+
     console.log("destructure url", fbUrl);
 
-    let templateIs = "";
-    let templateString = "";
     if (themeName === "Spread") {
       console.log("Spread in show preview");
 

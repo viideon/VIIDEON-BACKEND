@@ -637,12 +637,12 @@ module.exports.classic_dark = (
   thumbnail = false,
   logo = false,
   text = false,
-  userName,
-  url,
-  fbUrl,
-  twitterUrl,
-  youtubeUrl,
-  linkedinUrl
+  userName = false,
+  url = false,
+  fbUrl = false,
+  twitterUrl = false,
+  youtubeUrl = false,
+  linkedinUrl = false
 ) => {
   return `
   <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
