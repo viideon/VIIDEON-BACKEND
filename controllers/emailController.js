@@ -108,7 +108,7 @@ module.exports.sendWithGmail = async (req, res) => {
         console.log("Spread in show preview");
 
         templateString = await template.spreadTheme(
-          _id,
+          videoId,
           thumbnail,
           false,
           false,
@@ -123,7 +123,7 @@ module.exports.sendWithGmail = async (req, res) => {
       if (themeName === "Corporate Light") {
         console.log("Corporate Light");
         templateString = await template.corporateLight(
-          _id,
+          videoId,
           thumbnail,
           false,
           false,
@@ -139,7 +139,7 @@ module.exports.sendWithGmail = async (req, res) => {
       if (themeName === "Modern Simple") {
         console.log("Modern Simple");
         templateString = await template.modernSimple(
-          _id,
+          videoId,
           thumbnail,
           false,
           false,
@@ -154,7 +154,7 @@ module.exports.sendWithGmail = async (req, res) => {
       if (themeName === "Streamlined") {
         console.log(" is Streamlined", thumbnail);
         templateString = await template.streamlined(
-          _id,
+          videoId,
           thumbnail,
           false,
           false,
@@ -169,7 +169,7 @@ module.exports.sendWithGmail = async (req, res) => {
       if (themeName === "Simple Blue") {
         console.log("Simple Blue");
         templateString = await template.simple_blue(
-          _id,
+          videoId,
           thumbnail,
           false,
           false,
@@ -184,7 +184,7 @@ module.exports.sendWithGmail = async (req, res) => {
       if (themeName === "Sleek") {
         console.log("Sleek is here");
         templateString = await template.sleek(
-          _id,
+          videoId,
           thumbnail,
           false,
           false,
@@ -199,7 +199,7 @@ module.exports.sendWithGmail = async (req, res) => {
       if (themeName === "Social Business") {
         console.log("Social Business");
         templateString = await template.social_business(
-          _id,
+          videoId,
           thumbnail,
           false,
           false,
@@ -214,7 +214,7 @@ module.exports.sendWithGmail = async (req, res) => {
       if (themeName === "Social Impact") {
         console.log("Social Impact");
         templateString = await template.social_impact(
-          _id,
+          videoId,
           thumbnail,
           false,
           false,
@@ -229,7 +229,7 @@ module.exports.sendWithGmail = async (req, res) => {
       if (themeName === "Clasic Dark") {
         console.log("Clasic Dark");
         templateString = await template.classic_dark(
-          _id,
+          videoId,
           thumbnail,
           false,
           false,
@@ -244,7 +244,7 @@ module.exports.sendWithGmail = async (req, res) => {
       if (themeName === "Ocean") {
         console.log("Ocean");
         templateString = await template.ocean(
-          _id,
+          videoId,
           thumbnail,
           false,
           false,
