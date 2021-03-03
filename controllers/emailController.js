@@ -21,8 +21,8 @@ module.exports.sendTemplateWithGmail = async (req, res) => {
     const video = await videoService.findVideoById(videoId);
     const { thumbnail } = video;
 
-    const headerImage = require('../template/spreadHeader.jpg')
-    const logo = require('../template/logo.png')
+    const headerImage = require("../template/spreadHeader.jpg");
+    const logo = require("../template/logo.png");
     const customTemplate = await template.spreadTheme();
 
     authorize(sendMessage);
@@ -94,14 +94,200 @@ module.exports.sendWithGmail = async (req, res) => {
 
     if (eMailTemplate) themeName = eMailTemplate;
     let settings = { colors: {}, logoUrl: false, text: false };
-    console.log("them is ",themeName,userId)
+    console.log("them is ", themeName, userId);
     if (themeName) {
       settings = await userService.getSetttingByUserIDAndName(
         userId,
         themeName
       );
     }
-    console.log("settings",settings)
+    let templateString;
+    if (settings.length === 0) {
+      console.log("lenght is zero");
+      if (themeName === "Spread") {
+        console.log("Spread in show preview");
+
+        templateString = await template.spreadTheme(
+          _id,
+          thumbnail,
+          false,
+          false,
+          userName,
+          url,
+          false,
+          false,
+          false,
+          false
+        );
+      }
+      if (themeName === "Corporate Light") {
+        console.log("Corporate Light");
+        templateString = await template.corporateLight(
+          _id,
+          thumbnail,
+          false,
+          false,
+          userName,
+          url,
+          false,
+          false,
+          false,
+          false
+        );
+      }
+      // UI bad
+      if (themeName === "Modern Simple") {
+        console.log("Modern Simple");
+        templateString = await template.modernSimple(
+          _id,
+          thumbnail,
+          false,
+          false,
+          userName,
+          url,
+          false,
+          false,
+          false,
+          false
+        );
+      }
+      if (themeName === "Streamlined") {
+        console.log(" is Streamlined", thumbnail);
+        templateString = await template.streamlined(
+          _id,
+          thumbnail,
+          false,
+          false,
+          userName,
+          url,
+          false,
+          false,
+          false,
+          false
+        );
+      }
+      if (themeName === "Simple Blue") {
+        console.log("Simple Blue");
+        templateString = await template.simple_blue(
+          _id,
+          thumbnail,
+          false,
+          false,
+          userName,
+          url,
+          false,
+          false,
+          false,
+          false
+        );
+      }
+      if (themeName === "Sleek") {
+        console.log("Sleek is here");
+        templateString = await template.sleek(
+          _id,
+          thumbnail,
+          false,
+          false,
+          userName,
+          url,
+          false,
+          false,
+          false,
+          false
+        );
+      }
+      if (themeName === "Social Business") {
+        console.log("Social Business");
+        templateString = await template.social_business(
+          _id,
+          thumbnail,
+          false,
+          false,
+          userName,
+          url,
+          false,
+          false,
+          false,
+          false
+        );
+      }
+      if (themeName === "Social Impact") {
+        console.log("Social Impact");
+        templateString = await template.social_impact(
+          _id,
+          thumbnail,
+          false,
+          false,
+          userName,
+          url,
+          false,
+          false,
+          false,
+          false
+        );
+      }
+      if (themeName === "Clasic Dark") {
+        console.log("Clasic Dark");
+        templateString = await template.classic_dark(
+          _id,
+          thumbnail,
+          false,
+          false,
+          userName,
+          url,
+          false,
+          false,
+          false,
+          false
+        );
+      }
+      if (themeName === "Ocean") {
+        console.log("Ocean");
+        templateString = await template.ocean(
+          _id,
+          thumbnail,
+          false,
+          false,
+          userName,
+          url,
+          false,
+          false,
+          false,
+          false
+        );
+      }
+      async function sendMessage(auth) {
+        var raw = await makeBody(
+          recieverEmail,
+          fromEmail,
+          "video from videonPro",
+          templateString
+        );
+        const gmail = google.gmail({ version: "v1", auth });
+        gmail.users.messages.send(
+          {
+            auth: auth,
+            userId: "me",
+            resource: {
+              raw: raw,
+            },
+          },
+          function (err, response) {
+            if (err) {
+              return res.status(400).json({
+                messaage: "failed,server error",
+              });
+            }
+            if (response) {
+              return res.status(200).json({
+                message: "email sent",
+              });
+            }
+          }
+        );
+      }
+    }
+    // console.log("setings",settings)
     let {
       logoUrl,
       fbUrl,
@@ -110,13 +296,10 @@ module.exports.sendWithGmail = async (req, res) => {
       youtubeUrl,
       linkedinUrl,
     } = settings[0];
-    
+
     var emailList = recieverEmail.split(",");
     await incrementVideoEmail(videoId, emailList.length);
-    let templateString = await template.generateStringTemplate(
-      videoId,
-      thumbnail
-    );
+    templateString = await template.generateStringTemplate(videoId, thumbnail);
     if (themeName === "Spread") {
       console.log("Spread in email send");
 
@@ -248,7 +431,7 @@ module.exports.sendWithGmail = async (req, res) => {
     //   console.log("vid sent successfully");
     // }
     //End send direct email video
-    
+
     async function sendMessage(auth) {
       var raw = await makeBody(
         recieverEmail,
@@ -262,18 +445,18 @@ module.exports.sendWithGmail = async (req, res) => {
           auth: auth,
           userId: "me",
           resource: {
-            raw: raw
-          }
+            raw: raw,
+          },
         },
-        function(err, response) {
+        function (err, response) {
           if (err) {
             return res.status(400).json({
-              messaage: "failed,server error"
+              messaage: "failed,server error",
             });
           }
           if (response) {
             return res.status(200).json({
-              message: "email sent"
+              message: "email sent",
             });
           }
         }
@@ -288,7 +471,7 @@ module.exports.sendWithGmail = async (req, res) => {
 
 module.exports.getAndSaveConfig = async (req, res) => {
   const { code, userId } = req.body;
-  
+
   if (code === "") {
     return res.status(400).json({
       error: "include authorization code",
@@ -308,10 +491,10 @@ module.exports.getAndSaveConfig = async (req, res) => {
       `${process.env.TOKEN_OBJECT_PATH}`,
       params.toString()
     );
-    console.log("user email response",response)
+    console.log("user email response", response);
     const tokenObj = response.data;
     const userEmail = await decodeJwtToEmail(tokenObj.id_token);
-console.log("user email",userEmail)
+    console.log("user email", userEmail);
     const result = await emailService.saveEmailConfig({
       userId,
       userEmail,

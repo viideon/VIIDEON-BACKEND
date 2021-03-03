@@ -369,7 +369,12 @@ module.exports.corporateLight = (
           <a href="${process.env.APP_DOMAIN}/watch/${id}">
             <div class="thumbnailWrapper">
               <!-- add video thumbnail -->
-              <img style="width: 100%" src="https://videonpro.s3.us-west-1.amazonaws.com/1611059296063thumbnail.jpeg" /> 
+              
+              <img style="width: 100%" src="${
+                thumbnail
+                  ? thumbnail
+                  : "https://d33v4339jhl8k0.cloudfront.net/docs/assets/591c8a010428634b4a33375c/images/5ab4866b2c7d3a56d8873f4c/file-MrylO8jADD.png"
+              }" />
             </div>
           </a>
   
@@ -1353,6 +1358,8 @@ module.exports.streamlined = (
                                 <td style=" padding-left: 20px; display: -webkit-box; -webkit-box-align: center; -webkit-box-pack: center; min-width: 60%; height: 80%; ">
                                     <!-- add logo -->
                                     <img src="https://videonpro.s3.amazonaws.com/assets/logo.png" style="width: 60px; height: 60px; opacity: 1;" />
+
+
                                     <p style="color: #3b93d2; padding-bottom: 0px;margin-left: 3%;font-weight: bolder;font-size: 50px;">
                                         Viideon
                                     </p>
@@ -1370,8 +1377,13 @@ module.exports.streamlined = (
                 <tr align="center">
                     <td>
                         <!-- add video thumbnail -->
-                        <img style="width: 60%"
-                            src="https://videonpro.s3.us-west-1.amazonaws.com/1611059296063thumbnail.jpeg" />
+                        
+
+                            <img style="width: 60%" src="${
+                              thumbnail
+                                ? thumbnail
+                                : "https://d33v4339jhl8k0.cloudfront.net/docs/assets/591c8a010428634b4a33375c/images/5ab4866b2c7d3a56d8873f4c/file-MrylO8jADD.png"
+                            }" />
                         <p style="color: white"></p>
                     </td>
                 </tr>
@@ -1550,8 +1562,11 @@ module.exports.simple_blue = (
                 <tr align="center">
                     <td>
                         <!-- add video thumbnail -->
-                        <img style="width: 60%"
-                            src="https://videonpro.s3.us-west-1.amazonaws.com/1611059296063thumbnail.jpeg" />
+                            <img style="width: 60%" src="${
+                              thumbnail
+                                ? thumbnail
+                                : "https://d33v4339jhl8k0.cloudfront.net/docs/assets/591c8a010428634b4a33375c/images/5ab4866b2c7d3a56d8873f4c/file-MrylO8jADD.png"
+                            }" />
                         <p style="color: white"></p>
                     </td>
                 </tr>
@@ -1797,7 +1812,41 @@ module.exports.social_impact = (
                               } " style=" width: 20px; opacity: 1; height: 20px; margin-right: 5px; margin-top: 10px; " />
                               <span style="color: #f6b415; ">Sent with Viideon</span>
                           </td>
+                          <td style="padding: 10px" width="25%" align="center">
+                        <a href="${
+                          youtubeUrl ? youtubeUrl : "https://youtube.com/"
+                        }">
+                            <img width="24px" height="24px"
+                            src="https://cdn.iconscout.com/icon/free/png-64/youtube-85-226402.png" />
+                        </a>
+
+                    </td>
+                    <td style="padding: 10px" width="25%" align="center">
+                        <a href="${
+                          fbUrl ? fbUrl : "https://www.facebook.com/"
+                        }">
+                        <img width="24px" height="24px"
+                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Facebook_icon.svg/1200px-Facebook_icon.svg.png"/>
+                    </a>
+                            </td>
+                    <td style="padding: 10px" width="25%" align="center">
+                        <a href="${
+                          twitterUrl ? twitterUrl : "https://twitter.com/"
+                        }">
+                        <img width="24px" height="24px"
+                            src="https://videonpro.s3.us-west-1.amazonaws.com/1600681828680logo.jpeg" /></a>
+                    </td>
+                    <td style="padding: 10px" width="25%" align="center">
+                        <a href="${
+                          linkedinUrl
+                            ? linkedinUrl
+                            : "https://www.linkedin.com/"
+                        }">
+                        <img width="24px" height="24px"
+                            src="https://image.flaticon.com/icons/png/512/174/174855.png" /></a>
+                    </td>
                       </tr>
+                      
                   </table>
               </td>
           </tr>
@@ -1946,6 +1995,43 @@ module.exports.ocean = (
                   </table>
               </td>
           </tr>
+          <table style="margin:auto" width="220px" cellspacing="10px" cellpadding="0">
+                <tr>
+                    <td width="25%" align="center" style="border-right: 1.5px solid">
+                        <a href="${
+                          youtubeUrl ? youtubeUrl : "https://youtube.com/"
+                        }">
+                            <img width="24px" height="24px"
+                            src="https://cdn.iconscout.com/icon/free/png-64/youtube-85-226402.png" />
+                        </a>
+
+                    </td>
+                    <td style="border-right: 1.5px solid" width="25%" align="center">
+                        <a href="${
+                          fbUrl ? fbUrl : "https://www.facebook.com/"
+                        }">
+                        <img width="24px" height="24px"
+                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Facebook_icon.svg/1200px-Facebook_icon.svg.png"/>
+                    </a>
+                            </td>
+                    <td style="border-right: 1.5px solid" width="25%" align="center">
+                        <a href="${
+                          twitterUrl ? twitterUrl : "https://twitter.com/"
+                        }">
+                        <img width="24px" height="24px"
+                            src="https://videonpro.s3.us-west-1.amazonaws.com/1600681828680logo.jpeg" /></a>
+                    </td>
+                    <td width="25%" align="center">
+                        <a href="${
+                          linkedinUrl
+                            ? linkedinUrl
+                            : "https://www.linkedin.com/"
+                        }">
+                        <img width="24px" height="24px"
+                            src="https://image.flaticon.com/icons/png/512/174/174855.png" /></a>
+                    </td>
+                </tr>
+            </table>
       </table>
   </body>
   ​
