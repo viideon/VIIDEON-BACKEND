@@ -102,8 +102,9 @@ module.exports.sendWithGmail = async (req, res) => {
       );
     }
     let templateString;
-    if (settings.length === 0) {
-      console.log("lenght is zero");
+    console.log("setting length ", settings);
+    console.log("in video send just id", videoId);
+    if (settings.length === 0 || !themeName) {
       if (themeName === "Spread") {
         console.log("Spread in show preview");
 
@@ -256,6 +257,15 @@ module.exports.sendWithGmail = async (req, res) => {
           false
         );
       }
+      authorize(sendMessage);
+      function authorize(callback) {
+        const oAuth2Client = new google.auth.OAuth2(
+          `${process.env.CLIENT_ID}`,
+          `${process.env.CLIENT_SECRET}`
+        );
+        oAuth2Client.setCredentials(singleTokenObj);
+        callback(oAuth2Client);
+      }
       async function sendMessage(auth) {
         var raw = await makeBody(
           recieverEmail,
@@ -286,181 +296,185 @@ module.exports.sendWithGmail = async (req, res) => {
           }
         );
       }
-    }
-    // console.log("setings",settings)
-    let {
-      logoUrl,
-      fbUrl,
-      text,
-      twitterUrl,
-      youtubeUrl,
-      linkedinUrl,
-    } = settings[0];
-
-    var emailList = recieverEmail.split(",");
-    await incrementVideoEmail(videoId, emailList.length);
-    templateString = await template.generateStringTemplate(videoId, thumbnail);
-    if (themeName === "Spread") {
-      console.log("Spread in email send");
-
-      templateString = await template.spreadTheme(
-        videoId,
-        thumbnail,
+    } else {
+      console.log("in else setings in mail", settings);
+      let {
         logoUrl,
-        text,
-        userName,
-        url,
         fbUrl,
+        text,
         twitterUrl,
         youtubeUrl,
-        linkedinUrl
-      );
-    }
-    if (themeName === "Corporate Light") {
-      console.log("Corporate Light");
-      templateString = await template.corporateLight(
-        videoId,
-        thumbnail,
-        settings.logoUrl,
-        settings.text,
-        userName,
-        url
-      );
-    }
-    // UI bad
-    if (themeName === "Modern Simple") {
-      console.log("Modern Simple");
-      templateString = await template.modernSimple(
-        videoId,
-        thumbnail,
-        settings.logoUrl,
-        settings.text
-      );
-    }
-    if (themeName === "Streamlined") {
-      console.log("Streamlined");
-      templateString = await template.streamlined(
-        videoId,
-        thumbnail,
-        settings.logoUrl,
-        settings.text,
-        userName,
-        url
-      );
-    }
-    if (themeName === "Simple Blue") {
-      console.log("Simple Blue");
-      templateString = await template.simple_blue(
-        videoId,
-        thumbnail,
-        settings.logoUrl,
-        settings.text,
-        userName,
-        url
-      );
-    }
-    if (themeName === "Sleek") {
-      console.log("Sleek");
-      templateString = await template.sleek(
-        videoId,
-        thumbnail,
-        settings.logoUrl,
-        settings.text,
-        userName,
-        url
-      );
-    }
-    if (themeName === "Social Business") {
-      console.log("Social Business");
-      templateString = await template.social_business(
-        videoId,
-        thumbnail,
-        settings.logoUrl,
-        settings.text,
-        userName,
-        url
-      );
-    }
-    if (themeName === "Social Impact") {
-      console.log("Social Impact");
-      templateString = await template.social_impact(
-        videoId,
-        thumbnail,
-        settings.logoUrl,
-        settings.text,
-        userName,
-        url
-      );
-    }
-    if (themeName === "Clasic Dark") {
-      console.log("Clasic Dark");
-      templateString = await template.classic_dark(
-        videoId,
-        thumbnail,
-        settings.logoUrl,
-        settings.text
-      );
-    }
-    if (themeName === "Ocean") {
-      console.log("Ocean");
-      templateString = await template.ocean(
-        videoId,
-        thumbnail,
-        settings.logoUrl,
-        settings.text
-      );
-    }
-    authorize(sendMessage);
-    function authorize(callback) {
-      const oAuth2Client = new google.auth.OAuth2(
-        `${process.env.CLIENT_ID}`,
-        `${process.env.CLIENT_SECRET}`
-      );
-      oAuth2Client.setCredentials(singleTokenObj);
-      callback(oAuth2Client);
-    }
+        linkedinUrl,
+      } = settings[0];
 
-    // send direct email video
-    // console.log("sending video to brodcast",recieverEmail)
-    // const result = await sendVideoEmail(recieverEmail, templateString);
-    // console.log("result is ", result);
-    // if (result.error || result === false) {
-    //   return res.status(400).json({ message: "fail to send email" });
-    // } else {
-    //   return res.status(200).json({ message: "email sent sucessfully" });
-    //   console.log("vid sent successfully");
-    // }
-    //End send direct email video
-
-    async function sendMessage(auth) {
-      var raw = await makeBody(
-        recieverEmail,
-        fromEmail,
-        "video from videonPro",
-        templateString
+      var emailList = recieverEmail.split(",");
+      await incrementVideoEmail(videoId, emailList.length);
+      templateString = await template.generateStringTemplate(
+        videoId,
+        thumbnail
       );
-      const gmail = google.gmail({ version: "v1", auth });
-      gmail.users.messages.send(
-        {
-          auth: auth,
-          userId: "me",
-          resource: {
-            raw: raw,
+      if (themeName === "Spread") {
+        console.log("Spread in email send");
+
+        templateString = await template.spreadTheme(
+          videoId,
+          thumbnail,
+          logoUrl,
+          text,
+          userName,
+          url,
+          fbUrl,
+          twitterUrl,
+          youtubeUrl,
+          linkedinUrl
+        );
+      }
+      if (themeName === "Corporate Light") {
+        console.log("Corporate Light");
+        templateString = await template.corporateLight(
+          videoId,
+          thumbnail,
+          settings.logoUrl,
+          settings.text,
+          userName,
+          url
+        );
+      }
+      // UI bad
+      if (themeName === "Modern Simple") {
+        console.log("Modern Simple");
+        templateString = await template.modernSimple(
+          videoId,
+          thumbnail,
+          settings.logoUrl,
+          settings.text
+        );
+      }
+      if (themeName === "Streamlined") {
+        console.log("Streamlined");
+        templateString = await template.streamlined(
+          videoId,
+          thumbnail,
+          settings.logoUrl,
+          settings.text,
+          userName,
+          url
+        );
+      }
+      if (themeName === "Simple Blue") {
+        console.log("Simple Blue");
+        templateString = await template.simple_blue(
+          videoId,
+          thumbnail,
+          settings.logoUrl,
+          settings.text,
+          userName,
+          url
+        );
+      }
+      if (themeName === "Sleek") {
+        console.log("Sleek");
+        templateString = await template.sleek(
+          videoId,
+          thumbnail,
+          settings.logoUrl,
+          settings.text,
+          userName,
+          url
+        );
+      }
+      if (themeName === "Social Business") {
+        console.log("Social Business");
+        templateString = await template.social_business(
+          videoId,
+          thumbnail,
+          settings.logoUrl,
+          settings.text,
+          userName,
+          url
+        );
+      }
+      if (themeName === "Social Impact") {
+        console.log("Social Impact");
+        templateString = await template.social_impact(
+          videoId,
+          thumbnail,
+          settings.logoUrl,
+          settings.text,
+          userName,
+          url
+        );
+      }
+      if (themeName === "Clasic Dark") {
+        console.log("Clasic Dark");
+        templateString = await template.classic_dark(
+          videoId,
+          thumbnail,
+          settings.logoUrl,
+          settings.text
+        );
+      }
+      if (themeName === "Ocean") {
+        console.log("Ocean");
+        templateString = await template.ocean(
+          videoId,
+          thumbnail,
+          settings.logoUrl,
+          settings.text
+        );
+      }
+      authorize(sendMessage);
+      function authorize(callback) {
+        const oAuth2Client = new google.auth.OAuth2(
+          `${process.env.CLIENT_ID}`,
+          `${process.env.CLIENT_SECRET}`
+        );
+        oAuth2Client.setCredentials(singleTokenObj);
+        callback(oAuth2Client);
+      }
+
+      // send direct email video
+      // console.log("sending video to brodcast",recieverEmail)
+      // const result = await sendVideoEmail(recieverEmail, templateString);
+      // console.log("result is ", result);
+      // if (result.error || result === false) {
+      //   return res.status(400).json({ message: "fail to send email" });
+      // } else {
+      //   return res.status(200).json({ message: "email sent sucessfully" });
+      //   console.log("vid sent successfully");
+      // }
+      //End send direct email video
+
+      async function sendMessage(auth) {
+        var raw = await makeBody(
+          recieverEmail,
+          fromEmail,
+          "video from videonPro",
+          templateString
+        );
+        const gmail = google.gmail({ version: "v1", auth });
+        gmail.users.messages.send(
+          {
+            auth: auth,
+            userId: "me",
+            resource: {
+              raw: raw,
+            },
           },
-        },
-        function (err, response) {
-          if (err) {
-            return res.status(400).json({
-              messaage: "failed,server error",
-            });
+          function (err, response) {
+            if (err) {
+              return res.status(400).json({
+                messaage: "failed,server error",
+              });
+            }
+            if (response) {
+              return res.status(200).json({
+                message: "email sent",
+              });
+            }
           }
-          if (response) {
-            return res.status(200).json({
-              message: "email sent",
-            });
-          }
-        }
-      );
+        );
+      }
     }
   } catch (error) {
     res.status(400).json({
