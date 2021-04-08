@@ -102,9 +102,25 @@ module.exports.sendWithGmail = async (req, res) => {
       );
     }
     let templateString;
-    console.log("setting length ", settings);
-    console.log("in video send just id", videoId);
+
     if (settings.length === 0 || !themeName) {
+      
+      if (themeName === undefined) {
+        console.log("undefind in show preview");
+
+        templateString = await template.sleek2(
+          videoId,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        );
+      }
       if (themeName === "Spread") {
         console.log("Spread in show preview");
 
@@ -257,6 +273,7 @@ module.exports.sendWithGmail = async (req, res) => {
           false
         );
       }
+      console.log("temp", templateString);
       authorize(sendMessage);
       function authorize(callback) {
         const oAuth2Client = new google.auth.OAuth2(
