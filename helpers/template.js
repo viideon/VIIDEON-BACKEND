@@ -139,7 +139,7 @@ module.exports.spreadTheme = async (
       <div class="bodyWrapper">
         <div class="headerWrapper">
           <img src="${
-            logo ? logo : "https://videonpro.s3.amazonaws.com/assets/logo.png"
+            logo ? logo : "https://videonpro.s3.us-west-1.amazonaws.com/1617972064558logo.jpeg"
           }" class="headerImage"/>
           <h1 class="headerH1">Viideon</h1>
           <p class="headerP">Join our movement</p>
@@ -168,7 +168,7 @@ module.exports.spreadTheme = async (
                 <img style="width: 45px; height: 45px;" src="${
                   url
                     ? url
-                    : "https://img.pngio.com/no-avatar-png-transparent-png-download-for-free-3856300-trzcacak-png-avatar-920_954.png"
+                    : "https://videonpro.s3.us-west-1.amazonaws.com/1617972064558logo.jpeg"
                 }">
                 <p style="margin-right: 2px;">${
                   userName ? `Mr.${userName}` : "Mr."
@@ -190,7 +190,7 @@ module.exports.spreadTheme = async (
                 ${
                   text
                     ? text
-                    : "Viideon is a video communication platform design for sale and marketing leaders. Learn more at viideon.com"
+                    : "Viideon is a video communication platform designed for sale and marketing leaders. Learn more at viideon.com"
                 }  
               
           </p>
@@ -212,7 +212,7 @@ module.exports.spreadTheme = async (
               linkedinUrl ? linkedinUrl : "https://www.linkedin.com/"
             }">
             <img width="16px" height="16px" style="    margin: 5px;"
-                                          src="https://image.flaticon.com/icons/png/512/174/174855.png" />
+                                          src="https://videonpro.s3.us-west-1.amazonaws.com/1617967455922logo.jpeg" />
             
             </a>
           </div>
@@ -359,7 +359,7 @@ module.exports.corporateLight = (
           <div class="headerWrapper">
             <!-- add logo here -->
             <img src="${
-              logo ? logo : "https://videonpro.s3.amazonaws.com/assets/logo.png"
+              logo ? logo : "https://videonpro.s3.us-west-1.amazonaws.com/1617972064558logo.jpeg"
             }" class="headerImage"/>
             <h1 class="headerH1">Viideon</h1>
           </div>
@@ -383,7 +383,7 @@ module.exports.corporateLight = (
               <p>${
                 text
                   ? text
-                  : "Viideon is a video communication platform design for sale and marketing leaders. Learn more at viideon.com"
+                  : "Viideon is a video communication platform designed for sale and marketing leaders. Learn more at viideon.com"
               }</p>
               
               <a href="videonpro.com">
@@ -396,7 +396,7 @@ module.exports.corporateLight = (
     </div>
         <div class="footer">
           <div class="sender-wrapper">
-            <img style="width: 44px; height: 44px;" src="https://videonpro.s3.amazonaws.com/assets/logo.png" />
+            <img style="width: 44px; height: 44px;" src="https://videonpro.s3.us-west-1.amazonaws.com/1617972064558logo.jpeg" />
             <p class="footerP">Sent using Viideon</p>
           </div>
           <div class="icon-wrapper">
@@ -416,7 +416,7 @@ module.exports.corporateLight = (
               linkedinUrl ? linkedinUrl : "https://www.linkedin.com/"
             }">
               <img width="16px" height="16px" style="    margin: 5px;"
-                            src="https://image.flaticon.com/icons/png/512/174/174855.png" />
+                            src="https://videonpro.s3.us-west-1.amazonaws.com/1617967455922logo.jpeg" />
             </a>
           </div>
         </div>
@@ -479,7 +479,7 @@ module.exports.modernSimple = (
                           <img src="${
                             logo
                               ? logo
-                              : "https://videonpro.s3.amazonaws.com/assets/logo.png"
+                              : "https://videonpro.s3.us-west-1.amazonaws.com/1617972064558logo.jpeg"
                           }"
                               style="width: 40px; height: 40px; opacity: 1;" />
                           <h1 style="
@@ -519,7 +519,7 @@ module.exports.modernSimple = (
                   ${
                     text
                       ? text
-                      : "Viideon is a video communication platform design for sale and marketing leaders."
+                      : "Viideon is a video communication platform designed for sale and marketing leaders."
                   }
               </p>
               <p style="margin: 0px;color: black;">
@@ -558,8 +558,7 @@ module.exports.modernSimple = (
               <p style="margin-bottom: 0;
               font-size: 16px;
               font-weight: bold;color: black;">${userName}</p>
-              <p style=" margin-top: 0;
-              font-size: 14px;color: black;">Nature Lover</p>
+              
           </td>
       </tr>
       <tr align="center">
@@ -597,7 +596,7 @@ module.exports.modernSimple = (
                               : "https://www.linkedin.com/"
                           }">
                           <img width="24px" height="24px"
-                              src="https://image.flaticon.com/icons/png/512/174/174855.png" /></a>
+                              src="https://videonpro.s3.us-west-1.amazonaws.com/1617967455922logo.jpeg" /></a>
                       </td>
                   </tr>
               </table>
@@ -609,7 +608,7 @@ module.exports.modernSimple = (
                   <tr>
                       <td width="33%" align="center">
                           <p style=" font-size: 12px; padding-left: 5px;color: black;">
-                              &copy; 2020 VideonPro All Rights Reserved
+                              &copy; 2021 VideonPro All Rights Reserved
                           </p>
                       </td>
                       <td width="33%" align="center"></td>
@@ -617,7 +616,7 @@ module.exports.modernSimple = (
                           <img src="${
                             logo
                               ? logo
-                              : "https://videonpro.s3.amazonaws.com/assets/logo.png"
+                              : "https://videonpro.s3.us-west-1.amazonaws.com/1617972064558logo.jpeg"
                           }" style="
                   width: 20px;
                   opacity: 1;
@@ -739,7 +738,7 @@ module.exports.classic_dark = (
                       <img src=" ${
                         logo
                           ? logo
-                          : "https://videonpro.s3.amazonaws.com/assets/logo.png"
+                          : "https://videonpro.s3.us-west-1.amazonaws.com/1617972064558logo.jpeg"
                       }"
                           style="width: 30px; height: 30px; opacity: 1;margin: 10px;" />
                       <p style="color: white; margin: 0px;
@@ -792,7 +791,7 @@ module.exports.classic_dark = (
                   ${
                     text
                       ? text
-                      : "Viideon is a video communication platform design for sale and marketing leaders."
+                      : "Viideon is a video communication platform designed for sale and marketing leaders."
                   }
                   </p>
                   <p style="margin: 0px;color: white;">
@@ -828,7 +827,7 @@ module.exports.classic_dark = (
                                               : "https://www.linkedin.com/"
                                           }">
                                           <img width="24px" height="24px"
-                                              src="https://image.flaticon.com/icons/png/512/174/174855.png" /></a>
+                                              src="https://videonpro.s3.us-west-1.amazonaws.com/1617967455922logo.jpeg" /></a>
                                       </td>
                                       
                               <td  width="25%" align="center">
@@ -859,7 +858,7 @@ module.exports.classic_dark = (
                               <img src="${
                                 logo
                                   ? logo
-                                  : "https://videonpro.s3.us-west-1.amazonaws.com/1610430702841"
+                                  : "https://videonpro.s3.us-west-1.amazonaws.com/1617972064558logo.jpeg"
                               }" style="
                   width: 20px;
                   opacity: 1;
@@ -934,7 +933,7 @@ module.exports.sleek = (
                           <img src="${
                             logo
                               ? logo
-                              : "https://videonpro.s3.amazonaws.com/assets/logo.png"
+                              : "https://videonpro.s3.us-west-1.amazonaws.com/1617972064558logo.jpeg"
                           }"
                               style="width: 40px; height: 40px; opacity: 1;" />
                           <h1 style="
@@ -974,7 +973,7 @@ module.exports.sleek = (
                   ${
                     text
                       ? text
-                      : "Viideon is a video communication platform design for sale and marketing leaders."
+                      : "Viideon is a video communication platform designed for sale and marketing leaders."
                   }
               </p>
               <p style="margin: 0px;color: black;">
@@ -1013,8 +1012,8 @@ module.exports.sleek = (
               <p style="margin-bottom: 0;
               font-size: 16px;
               font-weight: bold;color: black;">${userName}</p>
-              <p style=" margin-top: 0;
-              font-size: 14px;color: black;">Nature Lover</p>
+              <!-- <p style=" margin-top: 0;
+              font-size: 14px;color: black;">Nature Lover</p> -->
           </td>
       </tr>
       <tr align="center">
@@ -1052,7 +1051,7 @@ module.exports.sleek = (
                               : "https://www.linkedin.com/"
                           }">
                           <img width="24px" height="24px"
-                              src="https://image.flaticon.com/icons/png/512/174/174855.png" /></a>
+                              src="https://videonpro.s3.us-west-1.amazonaws.com/1617967455922logo.jpeg" /></a>
                       </td>
                   </tr>
               </table>
@@ -1064,7 +1063,7 @@ module.exports.sleek = (
                   <tr>
                       <td width="33%" align="center">
                           <p style=" font-size: 12px; padding-left: 5px;color: black;">
-                              &copy; 2020 Videon All Rights Reserved
+                              &copy; 2021 Videon All Rights Reserved
                           </p>
                       </td>
                       <td width="33%" align="center"></td>
@@ -1072,7 +1071,7 @@ module.exports.sleek = (
                           <img src="${
                             logo
                               ? logo
-                              : "https://videonpro.s3.amazonaws.com/assets/logo.png"
+                              : "https://videonpro.s3.us-west-1.amazonaws.com/1617972064558logo.jpeg"
                           }" style="
                   width: 20px;
                   opacity: 1;
@@ -1227,7 +1226,7 @@ module.exports.social_business = (
                                       <img src=" ${
                                         logo
                                           ? logo
-                                          : "https://videonpro.s3.amazonaws.com/assets/logo.png"
+                                          : "https://videonpro.s3.us-west-1.amazonaws.com/1617972064558logo.jpeg"
                                       }"
                                           style="width: 60px; height: 60px; opacity: 1;" />
                                       <p style="color: #3b93d2; padding-bottom: 0px;
@@ -1269,7 +1268,7 @@ module.exports.social_business = (
                           ${
                             text
                               ? text
-                              : "Viideon is a video communication platform design for sale and marketing leaders. Learn more at viideon.com"
+                              : "Viideon is a video communication platform designed for sale and marketing leaders. Learn more at viideon.com"
                           }
                           </p>
                       </td>
@@ -1312,7 +1311,7 @@ module.exports.social_business = (
                           <img src="${
                             logo
                               ? logo
-                              : "https://videonpro.s3.amazonaws.com/assets/logo.png"
+                              : "https://videonpro.s3.us-west-1.amazonaws.com/1617972064558logo.jpeg"
                           }" style="width: 30px;opacity: 1;height: 30px;" />
                       </td>
                       <td width="50%" align="center">
@@ -1353,7 +1352,7 @@ module.exports.social_business = (
                               : "https://www.linkedin.com/"
                           }">
                           <img width="24px" height="24px"
-                              src="https://image.flaticon.com/icons/png/512/174/174855.png" /></a>
+                              src="https://videonpro.s3.us-west-1.amazonaws.com/1617967455922logo.jpeg" /></a>
                       </td>
                   </tr>
               </table>
@@ -1361,7 +1360,7 @@ module.exports.social_business = (
       </tr>
       <tr>
           <td align="center">
-              <p style="color: #3b93d2;font-size: 10px;">&copy;2020 Viideo All Rights Reserved</p>
+              <p style="color: #3b93d2;font-size: 10px;">&copy;2021 Viideo All Rights Reserved</p>
           </td>
       </tr>
       </table>
@@ -1386,171 +1385,171 @@ module.exports.streamlined = (
 ) => {
   return `
   <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
-
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta http-equiv="Content-Style-Type" content="text/css">
-    <title></title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <meta name="Generator" content="Cocoa HTML Writer">
-    <meta name="CocoaVersion" content="1894.6">
-    <style type="text/css">
-        .emailTemplatethumbnailWrapper {
-            ${thumbnail && "background-image: url(${thumbnail});"}
-        }
-        .overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            content: '';
-            width: 100%;
-            background: #000000;
-            z-index: -1;
-            opacity: .3;
-        }
-        .table td, tr {
-    border: 0px solid #ddd;
-}
-    </style>
-</head>
-<body ">
-    <table align=" center" cellpadding="0" cellspacing="0" width="700" style="width:75%;margin-left: auto;margin-right: auto;">
-        <tbody align="center">
-    <tr>
-        <td style="background-image: url(https://videonpro.s3.amazonaws.com/assets/IntelicaCRE-BlogPhoto-office-social-gathering.jpg); background-size: cover; height: 200px;box-shadow: inset 2000px 0 0 0 rgba(255, 255, 255, 0.5);
-            border-color: rgba(255, 255, 255, 1);">
-            <div class="overlay"></div>
-            <table align="center" cellpadding="0" cellspacing="0" width="100%">
-                <tr align="left">
-                    <td align="middle" class="hero bg_white" ">
-                        <table>
-                            <tr>
-                                <td style=" padding-left: 20px; display: -webkit-box; -webkit-box-align: center; -webkit-box-pack: center; min-width: 60%; height: 80%; ">
-                                    <!-- add logo -->
-                                    <img src="https://videonpro.s3.amazonaws.com/assets/logo.png" style="width: 60px; height: 60px; opacity: 1;" />
-
-
-                                    <p style="color: #3b93d2; padding-bottom: 0px;margin-left: 3%;font-weight: bolder;font-size: 50px;">
-                                        Viideon
-                                    </p>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-    <tr align="center">
-        <td style="background: #dad5cb; padding: 5px 0px 5px ;max-width: 400px;width: 100%;">
-            <table class="emailTemplatethumbnailWrapper" width="100%" cellspacing="0" cellpadding="0">
-                <tr align="center">
-                    <td>
-                        <!-- add video thumbnail -->
-                        
-
-                            <img style="width: 60%" src="${
-                              thumbnail
-                                ? thumbnail
-                                : "https://d33v4339jhl8k0.cloudfront.net/docs/assets/591c8a010428634b4a33375c/images/5ab4866b2c7d3a56d8873f4c/file-MrylO8jADD.png"
-                            }" />
-                        <p style="color: white"></p>
-                    </td>
-                </tr>
-                <tr align="center" >
-                    <td align="center">
-                        <a href="${
-                          process.env.APP_DOMAIN
-                        }/watch/${id}/cta" style="text-decoration: none;">
-                            <p style="    border: 2px solid white;
-                            width: 180px;
-                            color: white;
-                            font-size: 20px;
-                            border-radius: 20px;">Watch this Video!</p>
-                        </a>
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-    
-    <tr align="center" style="background-color: #3b93d2;">
-        <td align="center" style="padding: 30px 0px 30px 0px">
-            <p style="margin: 0px;color: white;">
-                ${
-                  text
-                    ? text
-                    : "Viideon is a video communication platform design for sale and marketing leaders. Learn more at viideon.com"
-                }
-            </p>
-        </td>
-    </tr>
-    
-    <tr align="center">
-        <p style="color: #3b93d2;font-size: 30px; text-align: center;">Get To Know Us!</p>
-    </tr>
-    <tr align="center">
-        <td align="center" style="padding: 30px 0px 30px 0px">
-            <p style="margin: 0px;color: #3b93d2;">
-            ${
-              text
-                ? text
-                : "Viideon is a video communication platform design for sale and marketing leaders. Learn more at viideon.com"
-            }
-            </p>
-        </td>
-    </tr>
-    <tr align="center">
-        <td style="padding: 10px 0px 20px 0px;">
-            <table width="220px" cellspacing="10px" cellpadding="0">
-                <tr>
-                    <td width="25%" align="center" style="border-right: 1.5px solid">
-                        <a href="${
-                          youtubeUrl ? youtubeUrl : "https://youtube.com/"
-                        }">
-                            <img width="24px" height="24px"
-                            src="https://cdn.iconscout.com/icon/free/png-64/youtube-85-226402.png" />
-                        </a>
-
-                    </td>
-                    <td style="border-right: 1.5px solid" width="25%" align="center">
-                        <a href="${
-                          fbUrl ? fbUrl : "https://www.facebook.com/"
-                        }">
-                        <img width="24px" height="24px"
-                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Facebook_icon.svg/1200px-Facebook_icon.svg.png"/>
-                    </a>
-                            </td>
-                    <td style="border-right: 1.5px solid" width="25%" align="center">
-                        <a href="${
-                          twitterUrl ? twitterUrl : "https://twitter.com/"
-                        }">
-                        <img width="24px" height="24px"
-                            src="https://videonpro.s3.us-west-1.amazonaws.com/1600681828680logo.jpeg" /></a>
-                    </td>
-                    <td width="25%" align="center">
-                        <a href="${
-                          linkedinUrl
-                            ? linkedinUrl
-                            : "https://www.linkedin.com/"
-                        }">
-                        <img width="24px" height="24px"
-                            src="https://image.flaticon.com/icons/png/512/174/174855.png" /></a>
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-</tbody>
-    </table>
-</body>
-
-</html>
+  <html>
+  
+  <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta http-equiv="Content-Style-Type" content="text/css">
+      <title></title>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <meta name="Generator" content="Cocoa HTML Writer">
+      <meta name="CocoaVersion" content="1894.6">
+      <style type="text/css">
+          .emailTemplatethumbnailWrapper {
+              ${thumbnail && "background-image: url(${thumbnail});"}
+          }
+          .overlay {
+              position: absolute;
+              top: 0;
+              left: 0;
+              right: 0;
+              bottom: 0;
+              content: '';
+              width: 100%;
+              background: #000000;
+              z-index: -1;
+              opacity: .3;
+          }
+          .table td, tr {
+      border: 0px solid #ddd;
+  }
+      </style>
+  </head>
+  <body ">
+      <table align=" center" cellpadding="0" cellspacing="0" width="700" style="width:75%;margin-left: auto;margin-right: auto;">
+          <tbody align="center">
+      <tr>
+          <td style="background-image: url(https://videonpro.s3.amazonaws.com/assets/IntelicaCRE-BlogPhoto-office-social-gathering.jpg); background-size: cover; height: 200px;box-shadow: inset 2000px 0 0 0 rgba(255, 255, 255, 0.5);
+              border-color: rgba(255, 255, 255, 1);">
+              <div class="overlay"></div>
+              <table align="center" cellpadding="0" cellspacing="0" width="100%">
+                  <tr align="left">
+                      <td align="middle" class="hero bg_white" ">
+                          <table>
+                              <tr>
+                                  <td style=" padding-left: 20px; display: -webkit-box; -webkit-box-align: center; -webkit-box-pack: center; min-width: 60%; height: 80%; ">
+                                      <!-- add logo -->
+                                      <img src="https://videonpro.s3.us-west-1.amazonaws.com/1617972064558logo.jpeg" style="width: 60px; height: 60px; opacity: 1;" />
+  
+  
+                                      <p style="color: #3b93d2; padding-bottom: 0px;margin-left: 3%;font-weight: bolder;font-size: 50px;">
+                                          Viideon
+                                      </p>
+                                  </td>
+                              </tr>
+                          </table>
+                      </td>
+                  </tr>
+              </table>
+          </td>
+      </tr>
+      <tr align="center">
+          <td style="background: #dad5cb; padding: 5px 0px 5px ;max-width: 400px;width: 100%;">
+              <table class="emailTemplatethumbnailWrapper" width="100%" cellspacing="0" cellpadding="0">
+                  <tr align="center">
+                      <td>
+                          <!-- add video thumbnail -->
+                          
+  
+                              <img style="width: 60%" src="${
+                                thumbnail
+                                  ? thumbnail
+                                  : "https://d33v4339jhl8k0.cloudfront.net/docs/assets/591c8a010428634b4a33375c/images/5ab4866b2c7d3a56d8873f4c/file-MrylO8jADD.png"
+                              }" />
+                          <p style="color: white"></p>
+                      </td>
+                  </tr>
+                  <tr align="center" >
+                      <td align="center">
+                          <a href="${
+                            process.env.APP_DOMAIN
+                          }/watch/${id}/cta" style="text-decoration: none;">
+                              <p style="    border: 2px solid white;
+                              width: 180px;
+                              color: white;
+                              font-size: 20px;
+                              border-radius: 20px;">Watch this Video!</p>
+                          </a>
+                      </td>
+                  </tr>
+              </table>
+          </td>
+      </tr>
+      
+      <tr align="center" style="background-color: #3b93d2;">
+          <td align="center" style="padding: 30px 0px 30px 0px">
+              <p style="margin: 0px;color: white;">
+                  ${
+                    text
+                      ? text
+                      : "Viideon is a video communication platform designed for sale and marketing leaders. Learn more at viideon.com"
+                  }
+              </p>
+          </td>
+      </tr>
+      
+      <tr align="center">
+          <p style="color: #3b93d2;font-size: 30px; text-align: center;">Get To Know Us!</p>
+      </tr>
+      <tr align="center">
+          <td align="center" style="padding: 30px 0px 30px 0px">
+              <p style="margin: 0px;color: #3b93d2;">
+              ${
+                text
+                  ? text
+                  : "Viideon is a video communication platform designed for sale and marketing leaders. Learn more at viideon.com"
+              }
+              </p>
+          </td>
+      </tr>
+      <tr align="center">
+          <td style="padding: 10px 0px 20px 0px;">
+              <table width="220px" cellspacing="10px" cellpadding="0">
+                  <tr>
+                      <td width="25%" align="center" style="border-right: 1.5px solid">
+                          <a href="${
+                            youtubeUrl ? youtubeUrl : "https://youtube.com/"
+                          }">
+                              <img width="24px" height="24px"
+                              src="https://cdn.iconscout.com/icon/free/png-64/youtube-85-226402.png" />
+                          </a>
+  
+                      </td>
+                      <td style="border-right: 1.5px solid" width="25%" align="center">
+                          <a href="${
+                            fbUrl ? fbUrl : "https://www.facebook.com/"
+                          }">
+                          <img width="24px" height="24px"
+                          src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Facebook_icon.svg/1200px-Facebook_icon.svg.png"/>
+                      </a>
+                              </td>
+                      <td style="border-right: 1.5px solid" width="25%" align="center">
+                          <a href="${
+                            twitterUrl ? twitterUrl : "https://twitter.com/"
+                          }">
+                          <img width="24px" height="24px"
+                              src="https://videonpro.s3.us-west-1.amazonaws.com/1600681828680logo.jpeg" /></a>
+                      </td>
+                      <td width="25%" align="center">
+                          <a href="${
+                            linkedinUrl
+                              ? linkedinUrl
+                              : "https://www.linkedin.com/"
+                          }">
+                          <img width="24px" height="24px"
+                              src="https://videonpro.s3.us-west-1.amazonaws.com/1617967455922logo.jpeg" /></a>
+                      </td>
+                  </tr>
+              </table>
+          </td>
+      </tr>
+  </tbody>
+      </table>
+  </body>
+  
+  </html>
   `;
 };
 
@@ -1614,7 +1613,7 @@ module.exports.simple_blue = (
                             <tr>
                                 <td style=" padding-left: 20px; display: -webkit-box; -webkit-box-align: center; -webkit-box-pack: center; min-width: 60%; height: 80%; ">
                                     <!-- add logo -->
-                                    <img src="https://videonpro.s3.amazonaws.com/assets/logo.png" style="width: 60px; height: 60px; opacity: 1;" />
+                                    <img src="https://videonpro.s3.us-west-1.amazonaws.com/1617972064558logo.jpeg" style="width: 60px; height: 60px; opacity: 1;" />
                                     <p style="color: #3b93d2; padding-bottom: 0px;margin-left: 3%;font-weight: bolder;font-size: 50px;">
                                         Viideon
                                     </p>
@@ -1670,7 +1669,7 @@ module.exports.simple_blue = (
                 ${
                   text
                     ? text
-                    : "Viideon is a video communication platform design for sale and marketing leaders. Learn more at viideon.com"
+                    : "Viideon is a video communication platform designed for sale and marketing leaders. Learn more at viideon.com"
                 }
             </p>
         </td>
@@ -1683,7 +1682,7 @@ module.exports.simple_blue = (
             ${
               text
                 ? text
-                : "Viideon is a video communication platform design for sale and marketing leaders. Learn more at viideon.com"
+                : "Viideon is a video communication platform designed for sale and marketing leaders. Learn more at viideon.com"
             }
             </p>
         </td>
@@ -1723,7 +1722,7 @@ module.exports.simple_blue = (
                             : "https://www.linkedin.com/"
                         }">
                         <img width="24px" height="24px"
-                            src="https://image.flaticon.com/icons/png/512/174/174855.png" /></a>
+                            src="https://videonpro.s3.us-west-1.amazonaws.com/1617967455922logo.jpeg" /></a>
                     </td>
                 </tr>
             </table>
@@ -1797,7 +1796,7 @@ module.exports.social_impact = (
                               <img src=" ${
                                 logo
                                   ? logo
-                                  : "https://videonpro.s3.amazonaws.com/assets/logo.png"
+                                  : "https://videonpro.s3.us-west-1.amazonaws.com/1617972064558logo.jpeg"
                               } " style=" width: 60px; height: 60px; opacity: 1; " />
                               <p style=" color: #f6b415; padding-bottom: 0px; margin-left: 3%; font-weight: bolder; font-size: 50px; ">
                                   Viideon</p>
@@ -1845,7 +1844,7 @@ module.exports.social_impact = (
                      ${
                        text
                          ? text
-                         : "Viideon is a video communication platform design for sale and marketing leaders."
+                         : "Viideon is a video communication platform designed for sale and marketing leaders."
                      } 
                   </p>
                   <p style=" margin: 0px;color: #f6b415; ">
@@ -1865,7 +1864,7 @@ module.exports.social_impact = (
                   }">
                   <p style=" margin-bottom: 0; font-size: 16px; font-weight: bold;color: #f6b415; ">${userName}
                   </p>
-                  <p style=" margin-top: 0; font-size: 14px;color: #f6b415; ">Nature Lover</p>
+                 
               </td>
           </tr>
           
@@ -1875,7 +1874,7 @@ module.exports.social_impact = (
                       <tr>
                           <td width="33% " align="center ">
                               <p style=" font-size: 12px; padding-left: 5px;color: #f6b415; ">
-                                  &copy; 2020 Viideon All Rights Reserved
+                                  &copy; 2021 Viideon All Rights Reserved
                               </p>
                           </td>
                           <td width="33% " align="center"></td>
@@ -1883,7 +1882,7 @@ module.exports.social_impact = (
                               <img src="${
                                 logo
                                   ? logo
-                                  : "https://videonpro.s3.amazonaws.com/assets/logo.png"
+                                  : "https://videonpro.s3.us-west-1.amazonaws.com/1617972064558logo.jpeg"
                               } " style=" width: 20px; opacity: 1; height: 20px; margin-right: 5px; margin-top: 10px; " />
                               <span style="color: #f6b415; ">Sent with Viideon</span>
                           </td>
@@ -1918,7 +1917,7 @@ module.exports.social_impact = (
                             : "https://www.linkedin.com/"
                         }">
                         <img width="24px" height="24px"
-                            src="https://image.flaticon.com/icons/png/512/174/174855.png" /></a>
+                            src="https://videonpro.s3.us-west-1.amazonaws.com/1617967455922logo.jpeg" /></a>
                     </td>
                       </tr>
                       
@@ -1991,7 +1990,7 @@ module.exports.ocean = (
                               <img src="${
                                 logo
                                   ? logo
-                                  : "https://videonpro.s3.amazonaws.com/assets/logo.png"
+                                  : "https://videonpro.s3.us-west-1.amazonaws.com/1617972064558logo.jpeg"
                               }" style="width: 60px; height: 60px; opacity: 1;margin-top: 5%; margin-bottom: 20px;" />
                           </td>
                       </tr>
@@ -2054,7 +2053,7 @@ module.exports.ocean = (
                               ${
                                 text
                                   ? text
-                                  : "Viideon is a video communication platform design for sale and marketing leaders. Learn more at viideon.com"
+                                  : "Viideon is a video communication platform designed for sale and marketing leaders. Learn more at viideon.com"
                               }
                               </p>
                           </td>
@@ -2103,7 +2102,7 @@ module.exports.ocean = (
                             : "https://www.linkedin.com/"
                         }">
                         <img width="24px" height="24px"
-                            src="https://image.flaticon.com/icons/png/512/174/174855.png" /></a>
+                            src="https://videonpro.s3.us-west-1.amazonaws.com/1617967455922logo.jpeg" /></a>
                     </td>
                 </tr>
             </table>

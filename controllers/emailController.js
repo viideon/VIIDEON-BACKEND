@@ -287,7 +287,7 @@ module.exports.sendWithGmail = async (req, res) => {
         var raw = await makeBody(
           recieverEmail,
           fromEmail,
-          "video from videonPro",
+          "message from viideon member",
           templateString
         );
         const gmail = google.gmail({ version: "v1", auth });
@@ -588,7 +588,7 @@ function makeBody(recieverEmail, from, subject, message) {
     'Content-Type: text/html; charset="UTF-8"\n',
     "MIME-Version: 1.0\n",
     "Content-Transfer-Encoding: 7bit\n",
-    "bcc: ",
+    "to: ",
     recieverEmail,
     "\n",
     "from: ",

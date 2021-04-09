@@ -12,7 +12,7 @@
     <meta name="CocoaVersion" content="1894.6">
     <style type="text/css">
         .emailTemplatethumbnailWrapper {
-            ${thumbnail && 'background-image: url(${thumbnail});'}
+            ${thumbnail && "background-image: url(${thumbnail});"}
         }
         .overlay {
             position: absolute;
@@ -45,7 +45,9 @@
                             <tr>
                                 <td style=" padding-left: 20px; display: -webkit-box; -webkit-box-align: center; -webkit-box-pack: center; min-width: 60%; height: 80%; ">
                                     <!-- add logo -->
-                                    <img src="https://videonpro.s3.amazonaws.com/assets/logo.png" style="width: 60px; height: 60px; opacity: 1;" />
+                                    <img src="https://videonpro.s3.us-west-1.amazonaws.com/1617972064558logo.jpeg" style="width: 60px; height: 60px; opacity: 1;" />
+
+
                                     <p style="color: #3b93d2; padding-bottom: 0px;margin-left: 3%;font-weight: bolder;font-size: 50px;">
                                         Viideon
                                     </p>
@@ -63,19 +65,24 @@
                 <tr align="center">
                     <td>
                         <!-- add video thumbnail -->
-                        <img style="width: 60%"
-                            src="https://videonpro.s3.us-west-1.amazonaws.com/1611059296063thumbnail.jpeg" />
+                        
+
+                            <img style="width: 60%" src="${
+                              thumbnail
+                                ? thumbnail
+                                : "https://d33v4339jhl8k0.cloudfront.net/docs/assets/591c8a010428634b4a33375c/images/5ab4866b2c7d3a56d8873f4c/file-MrylO8jADD.png"
+                            }" />
                         <p style="color: white"></p>
                     </td>
                 </tr>
                 <tr align="center" >
                     <td align="center">
-                        <a href="${process.env.APP_DOMAIN}/watch/${id}/cta" style="text-decoration: none; ">
+                        <a href="${
+                          process.env.APP_DOMAIN
+                        }/watch/${id}/cta" style="text-decoration: none;">
                             <p style="    border: 2px solid white;
                             width: 180px;
                             color: white;
-                            padding: 0px;
-                            background-color:#3b93d2 ;
                             font-size: 20px;
                             border-radius: 20px;">Watch this Video!</p>
                         </a>
@@ -88,8 +95,10 @@
     <tr align="center" style="background-color: #3b93d2;">
         <td align="center" style="padding: 30px 0px 30px 0px">
             <p style="margin: 0px;color: white;">
-                ${text ? text : 
-                    "Viideon is a video communication platform design for sale and marketing leaders. Learn more at viideon.com"
+                ${
+                  text
+                    ? text
+                    : "Viideon is a video communication platform designed for sale and marketing leaders. Learn more at viideon.com"
                 }
             </p>
         </td>
@@ -101,8 +110,10 @@
     <tr align="center">
         <td align="center" style="padding: 30px 0px 30px 0px">
             <p style="margin: 0px;color: #3b93d2;">
-            ${text ? text : 
-                "Viideon is a video communication platform design for sale and marketing leaders. Learn more at viideon.com"
+            ${
+              text
+                ? text
+                : "Viideon is a video communication platform designed for sale and marketing leaders. Learn more at viideon.com"
             }
             </p>
         </td>
@@ -112,27 +123,37 @@
             <table width="220px" cellspacing="10px" cellpadding="0">
                 <tr>
                     <td width="25%" align="center" style="border-right: 1.5px solid">
-                        <a href="${youtubeUrl ? youtubeUrl :"https://youtube.com/"}">
+                        <a href="${
+                          youtubeUrl ? youtubeUrl : "https://youtube.com/"
+                        }">
                             <img width="24px" height="24px"
                             src="https://cdn.iconscout.com/icon/free/png-64/youtube-85-226402.png" />
                         </a>
 
                     </td>
                     <td style="border-right: 1.5px solid" width="25%" align="center">
-                        <a href="${fbUrl?fbUrl:"https://www.facebook.com/"}">
+                        <a href="${
+                          fbUrl ? fbUrl : "https://www.facebook.com/"
+                        }">
                         <img width="24px" height="24px"
                         src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Facebook_icon.svg/1200px-Facebook_icon.svg.png"/>
                     </a>
                             </td>
                     <td style="border-right: 1.5px solid" width="25%" align="center">
-                        <a href="${twitterUrl ? twitterUrl :"https://twitter.com/"}">
+                        <a href="${
+                          twitterUrl ? twitterUrl : "https://twitter.com/"
+                        }">
                         <img width="24px" height="24px"
                             src="https://videonpro.s3.us-west-1.amazonaws.com/1600681828680logo.jpeg" /></a>
                     </td>
                     <td width="25%" align="center">
-                        <a href="${linkedinUrl ? linkedinUrl :"https://www.linkedin.com/"}">
+                        <a href="${
+                          linkedinUrl
+                            ? linkedinUrl
+                            : "https://www.linkedin.com/"
+                        }">
                         <img width="24px" height="24px"
-                            src="https://image.flaticon.com/icons/png/512/174/174855.png" /></a>
+                            src="https://videonpro.s3.us-west-1.amazonaws.com/1617967455922logo.jpeg" /></a>
                     </td>
                 </tr>
             </table>
