@@ -12,7 +12,7 @@ module.exports.generateStringTemplate = (id, thumbnail) => {
   <body width="100%" style="margin: 0; font-family: 'Montserrat',Georgia, sans-serif; padding: 0 !important; mso-line-height-rule: exactly; background-color: #F2F2F1;"> <center style="width: 100%; background-color: #F2F2F1;"> <div style="max-width: 600px; margin: 0 auto;padding: 5px" class="email-container"> <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: auto;"> <tr> <td> <h5 style="font-size:16px">vidionPro</h5> </td> <td> <h5 style="text-align: end;font-size: 16px" align="end"> Hello </h5> </td> </tr> </table> </div> <div style="max-width: 600px; margin-top: 0px;margin-bottom: 50px; margin-left: auto; margin-right: auto;background-color: #fff;padding: 10px 10px 30px 10px" class="email-container"> <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: auto;"> <tr> <td> <a href="${process.env.APP_DOMAIN}/watch/${id}"> <div style="width: 100%;background-color:#000;"> <div style="height:280px;background-image:url(${thumbnail});object-fit:contain;background-size: contain;background-repeat:no-repeat;background-position: center"> <img style="width: 80px;margin-left: 44%;margin-top: 18%" src="https://vidionpro-backend.herokuapp.com/video/email/track?id=${id}" /> </div> </div> </td> </tr> <tr> <td> <h5 style="text-align: center;color: #76827F;padding:0px 30px;font-weight: 800" align="center"> Video powered by vidionPro </h5> </td> </tr> <tr> <td style="text-align: center;" align="center"> <a style="cursor: pointer;background-color: #19AF8F;color: #fff;padding:10px 14px;border-radius: 3px;font-weight: 400;text-decoration: none; margin-bottom: 30px" href="${process.env.APP_DOMAIN}/watch/${id}/cta">WATCH VIDEO</a> </td> </tr> </table> </div> </center> </body> </html>`;
 };
 
-module.exports.spreadTheme = async (
+module.exports.spreadTheme = (
   id = false,
   thumbnail = false,
   logo = false,
@@ -22,13 +22,12 @@ module.exports.spreadTheme = async (
   fbUrl,
   twitterUrl,
   youtubeUrl,
-  linkedinUrl
+  linkedinUrl,
+  description = false
 ) => {
-  console.log("logo", logo);
-  console.log("url", fbUrl);
-  console.log("text", text);
-  console.log("twitterurl", twitterUrl);
 
+console.log('description in spread theme', description);
+  
   return `
   <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
   <html>
@@ -144,7 +143,7 @@ module.exports.spreadTheme = async (
           <h1 class="headerH1">Viideon</h1>
           <p class="headerP">Join our movement</p>
         </div>
-  
+        
         <a href="${process.env.APP_DOMAIN}/watch/${id && id}">
           <div class="emailTemplatethumbnailWrapper">
             <img style="width: 100%; height: 73vh;" src="${
@@ -156,11 +155,10 @@ module.exports.spreadTheme = async (
         </a>
   
       </div>
-  
       <div class="footerWrapper w3-row w3-center">
         <div class="w3-third">
             <a href="${process.env.APP_DOMAIN}/watch/${id && id}/cta">
-              <button class="btn watchVideoBtn">Watch This Video</button>
+              <button class="btn watchVideoBtn">${description}</button>
             </a>
           <div class="w3-row w3-center copyRightWrapper">
             <span class="w3-third">
@@ -194,6 +192,7 @@ module.exports.spreadTheme = async (
                 }  
               
           </p>
+          
           <div>
             <a href="${fbUrl ? fbUrl : "https://www.facebook.com/"}">
             <img width="16px" height="16px" style="    margin: 5px;"
@@ -233,7 +232,8 @@ module.exports.corporateLight = (
   fbUrl,
   twitterUrl,
   youtubeUrl,
-  linkedinUrl
+  linkedinUrl,
+  description = false
 ) => {
   console.log("usrName in template", userName);
   return `
@@ -387,7 +387,7 @@ module.exports.corporateLight = (
               }</p>
               
               <a href="videonpro.com">
-                <button class="btn watchVideoBtn">Watch this Video</button>
+                <button class="btn watchVideoBtn">${description}</button>
               </a>
           </div>
         </div>
@@ -436,7 +436,8 @@ module.exports.modernSimple = (
   fbUrl,
   twitterUrl,
   youtubeUrl,
-  linkedinUrl
+  linkedinUrl,
+  description = false
 ) => {
   return `
   <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
@@ -533,6 +534,7 @@ module.exports.modernSimple = (
               </p>
           </td>
       </tr>
+      
       <tr align="center">
           <td align="center">
   
@@ -544,7 +546,7 @@ module.exports.modernSimple = (
                   width: 100%;
                   border-top: 1.5px solid black;
                   border-bottom: 1.5px solid black;
-                  cursor: pointer;">Watch this Video!</p>
+                  cursor: pointer;">${description}</p>
               </a>
           </td>
       </tr>
@@ -646,7 +648,8 @@ module.exports.classic_dark = (
   fbUrl = false,
   twitterUrl = false,
   youtubeUrl = false,
-  linkedinUrl = false
+  linkedinUrl = false,
+  description = false
 ) => {
   return `
   <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
@@ -781,7 +784,7 @@ module.exports.classic_dark = (
                   width: 180px;
                   color: white;
                   font-size: 20px;
-                  border-radius: 20px;">Watch this Video!</p>
+                  border-radius: 20px;">${description}</p>
                   </a>
               </td>
           </tr>
@@ -793,6 +796,7 @@ module.exports.classic_dark = (
                       ? text
                       : "Viideon is a video communication platform designed for sale and marketing leaders."
                   }
+                  
                   </p>
                   <p style="margin: 0px;color: white;">
                        Learn more at
@@ -805,6 +809,7 @@ module.exports.classic_dark = (
                   </p>
               </td>
           </tr>
+          
           <tr>
               <td style="padding: 20px 0px 20px 0px;border-top: 2px solid black;">
                   <table width="100%" cellspacing="0" cellpadding="0">
@@ -889,12 +894,14 @@ module.exports.sleek = (
   fbUrl,
   twitterUrl,
   youtubeUrl,
-  linkedinUrl
+  linkedinUrl,
+  description = false,
 ) => {
   // console.log("thumbnail",thumbnail)
   // console.log("logo",logo)
-  console.log("usrName in template", userName);
+//   console.log("usrName in template", userName);
   // console.log("avatar",url)
+  console.log('sleek description', description)
   return `
   <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
   <html>
@@ -987,6 +994,7 @@ module.exports.sleek = (
               </p>
           </td>
       </tr>
+      
       <tr align="center">
           <td align="center">
   
@@ -998,7 +1006,7 @@ module.exports.sleek = (
                   width: 100%;
                   border-top: 1.5px solid black;
                   border-bottom: 1.5px solid black;
-                  cursor: pointer;">Watch this Video!</p>
+                  cursor: pointer;">${description}</p>
               </a>
           </td>
       </tr>
@@ -1176,7 +1184,8 @@ module.exports.social_business = (
   fbUrl,
   twitterUrl,
   youtubeUrl,
-  linkedinUrl
+  linkedinUrl,
+  description = false
 ) => {
   return `
   <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
@@ -1273,6 +1282,7 @@ module.exports.social_business = (
                           </p>
                       </td>
                   </tr>
+                  
                   <tr align="center">
                       <td align="center">
                           <a href="${
@@ -1282,7 +1292,7 @@ module.exports.social_business = (
                               width: 180px;
                               color: white;
                               font-size: 20px;
-                              border-radius: 20px;">Watch this Video!</p>
+                              border-radius: 20px;">${description}</p>
                           </a>
                       </td>
                   </tr>
@@ -1381,7 +1391,8 @@ module.exports.streamlined = (
   fbUrl,
   twitterUrl,
   youtubeUrl,
-  linkedinUrl
+  linkedinUrl,
+  description = false
 ) => {
   return `
   <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
@@ -1470,7 +1481,7 @@ module.exports.streamlined = (
                               width: 180px;
                               color: white;
                               font-size: 20px;
-                              border-radius: 20px;">Watch this Video!</p>
+                              border-radius: 20px;">${description}</p>
                           </a>
                       </td>
                   </tr>
@@ -1563,7 +1574,8 @@ module.exports.simple_blue = (
   fbUrl,
   twitterUrl,
   youtubeUrl,
-  linkedinUrl
+  linkedinUrl,
+  description = false
 ) => {
   return `
   <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
@@ -1655,7 +1667,7 @@ module.exports.simple_blue = (
                             padding: 0px;
                             background-color:#3b93d2 ;
                             font-size: 20px;
-                            border-radius: 20px;">Watch this Video!</p>
+                            border-radius: 20px;">${description}</p>
                         </a>
                     </td>
                 </tr>
@@ -1687,6 +1699,7 @@ module.exports.simple_blue = (
             </p>
         </td>
     </tr>
+    
     <tr align="center">
         <td style="padding: 10px 0px 20px 0px;">
             <table width="220px" cellspacing="10px" cellpadding="0">
@@ -1746,7 +1759,8 @@ module.exports.social_impact = (
   fbUrl,
   twitterUrl,
   youtubeUrl,
-  linkedinUrl
+  linkedinUrl,
+  description = false
 ) => {
   return `
   <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
@@ -1828,7 +1842,7 @@ module.exports.social_impact = (
                                   margin:10px;
                                   color: rgb(8, 8, 8);
                                   font-size: 20px;
-                                  border-radius: 20px;">Watch this Video!</p>
+                                  border-radius: 20px;">${description}</p>
                               </a>
                           </td>
                       </tr>
@@ -1853,7 +1867,7 @@ module.exports.social_impact = (
                   </p>
               </td>
           </tr>
-  ​​
+  ​​        
           <tr align="center">
               <td align=" center " style=" padding: 15px 0px 15px 0px ">
   
@@ -1943,7 +1957,8 @@ module.exports.ocean = (
   fbUrl,
   twitterUrl,
   youtubeUrl,
-  linkedinUrl
+  linkedinUrl,
+  description = false
 ) => {
   return `
   <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
@@ -2034,7 +2049,7 @@ module.exports.ocean = (
                               font-size: 20px;
                               border-radius: 20px;
                               background-color: #3b93d2;
-                              padding: 5px;">Watch this Video!</p>
+                              padding: 5px;">${description}</p>
                               </a>
                           </td>
                       </tr>
@@ -2058,6 +2073,7 @@ module.exports.ocean = (
                               </p>
                           </td>
                       </tr>
+                      
                       <tr align="center">
                           <td align=" center" style="padding: 5px 0px 10px 0px">
                               <p style="margin: 0px;color: black;">

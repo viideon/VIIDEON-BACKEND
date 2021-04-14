@@ -50,6 +50,7 @@ module.exports.registerUser = async (req, res) => {
 module.exports.login = async (req, res) => {
   try {
     const user = await userService.findUserByEmail(req.body.email);
+    
     if (!user)
       return res.status(404).send({ message: "Email is not registered!" });
     const passwordCheck = await comparePassword(
@@ -367,5 +368,17 @@ module.exports.getPreview = async (req, res) => {
     return res.status(200).json({ message: "Success", template });
   } catch (error) {
     res.status(500).json({ message: error.message, errr: "catch" });
+  }
+};
+
+
+module.exports.removeUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    console.log('remove 378', req.params)
+    await userService.removeUserById(id);
+    res.status(200).json("Successfully Deleted");
+  } catch (error) {
+    res.status(400).json({ message: error.message });
   }
 };

@@ -83,7 +83,8 @@ module.exports.sendWithGmail = async (req, res) => {
 
     //find video by video id
     const video = await videoService.findVideoById(videoId);
-    const { thumbnail, eMailTemplate } = video;
+    const { thumbnail, eMailTemplate, description } = video;
+
     // console.log("emailvidthumb",thumbnail)
 
     // find user by user id
@@ -94,7 +95,7 @@ module.exports.sendWithGmail = async (req, res) => {
 
     if (eMailTemplate) themeName = eMailTemplate;
     let settings = { colors: {}, logoUrl: false, text: false };
-    console.log("them is ", themeName, userId);
+    
     if (themeName) {
       settings = await userService.getSetttingByUserIDAndName(
         userId,
@@ -122,8 +123,7 @@ module.exports.sendWithGmail = async (req, res) => {
         );
       }
       if (themeName === "Spread") {
-        console.log("Spread in show preview");
-
+        console.log("Spread line 127");
         templateString = await template.spreadTheme(
           videoId,
           thumbnail,
@@ -134,11 +134,12 @@ module.exports.sendWithGmail = async (req, res) => {
           false,
           false,
           false,
-          false
+          false,
+          description,
         );
       }
       if (themeName === "Corporate Light") {
-        console.log("Corporate Light");
+        console.log("Corporate Light line 143");
         templateString = await template.corporateLight(
           videoId,
           thumbnail,
@@ -149,7 +150,8 @@ module.exports.sendWithGmail = async (req, res) => {
           false,
           false,
           false,
-          false
+          false,
+          description,
         );
       }
       // UI bad
@@ -165,7 +167,8 @@ module.exports.sendWithGmail = async (req, res) => {
           false,
           false,
           false,
-          false
+          false,
+          description,
         );
       }
       if (themeName === "Streamlined") {
@@ -180,7 +183,8 @@ module.exports.sendWithGmail = async (req, res) => {
           false,
           false,
           false,
-          false
+          false,
+          description,
         );
       }
       if (themeName === "Simple Blue") {
@@ -195,7 +199,8 @@ module.exports.sendWithGmail = async (req, res) => {
           false,
           false,
           false,
-          false
+          false,
+          description,
         );
       }
       if (themeName === "Sleek") {
@@ -210,7 +215,8 @@ module.exports.sendWithGmail = async (req, res) => {
           false,
           false,
           false,
-          false
+          false,
+          description,
         );
       }
       if (themeName === "Social Business") {
@@ -225,7 +231,8 @@ module.exports.sendWithGmail = async (req, res) => {
           false,
           false,
           false,
-          false
+          false,
+          description,
         );
       }
       if (themeName === "Social Impact") {
@@ -240,7 +247,8 @@ module.exports.sendWithGmail = async (req, res) => {
           false,
           false,
           false,
-          false
+          false,
+          description,
         );
       }
       if (themeName === "Clasic Dark") {
@@ -255,7 +263,8 @@ module.exports.sendWithGmail = async (req, res) => {
           false,
           false,
           false,
-          false
+          false,
+          description,
         );
       }
       if (themeName === "Ocean") {
@@ -270,10 +279,11 @@ module.exports.sendWithGmail = async (req, res) => {
           false,
           false,
           false,
-          false
+          false,
+          description,
         );
       }
-      console.log("temp", templateString);
+      // console.log("temp", templateString);
       authorize(sendMessage);
       function authorize(callback) {
         const oAuth2Client = new google.auth.OAuth2(
@@ -314,7 +324,7 @@ module.exports.sendWithGmail = async (req, res) => {
         );
       }
     } else {
-      console.log("in else setings in mail", settings);
+      // console.log("in else setings in mail", settings);
       let {
         logoUrl,
         fbUrl,
@@ -331,7 +341,7 @@ module.exports.sendWithGmail = async (req, res) => {
         thumbnail
       );
       if (themeName === "Spread") {
-        console.log("Spread in email send");
+        console.log("Spread in email send line 345");
 
         templateString = await template.spreadTheme(
           videoId,
@@ -343,7 +353,8 @@ module.exports.sendWithGmail = async (req, res) => {
           fbUrl,
           twitterUrl,
           youtubeUrl,
-          linkedinUrl
+          linkedinUrl,
+          description
         );
       }
       if (themeName === "Corporate Light") {
@@ -466,7 +477,7 @@ module.exports.sendWithGmail = async (req, res) => {
         var raw = await makeBody(
           recieverEmail,
           fromEmail,
-          "video from videonPro",
+          "message from viideon member",
           templateString
         );
         const gmail = google.gmail({ version: "v1", auth });

@@ -14,6 +14,7 @@ const getUserById = id => {
 const verifyUser = _id => {
   return User.updateOne({ _id }, { $set: { isVerified: true } });
 };
+
 const createNewUser = (email, firstName, lastName, userName, hash) => {
   const user = new User({
     email: email,
@@ -75,6 +76,12 @@ const getSettingsByID = (_id) => {
 const getSetttingByUserIDAndName = (userId, name) => {
   return Setting.find({userId, name});
 }
+
+const removeUserById = async (id) => {
+  const user = await User.findById(id)
+  console.log('service',user);
+  return user.remove()
+}
 module.exports = {
   findUserByEmail,
   updateUser,
@@ -89,5 +96,6 @@ module.exports = {
   updateSetting,
   getSettingsByUserID,
   getSettingsByID,
-  getSetttingByUserIDAndName
+  getSetttingByUserIDAndName,
+  removeUserById
 };
