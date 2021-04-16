@@ -21,7 +21,6 @@ const addPublicMusic = (asset) => {
   const newMusic = new PublicMusic({
     ...asset
   });
-  console.log("new music asset",newMusic)
   return newMusic.save();
 };
 
@@ -29,7 +28,6 @@ const getAllPublicmusic = () => {
   return PublicMusic.find();
 }
 const deleteMusicAsset = (id) => {
-  console.log("music id",id)
   return PublicMusic.deleteOne({_id: id})
 }
 
@@ -43,7 +41,6 @@ const getMusicAssets = userId => {
   return userAssets.findOne({ userId: userId }, "musicAssets").exec();
 };
 const removeUserAsset = (userId, assetId, res) => {
-  console.log(userId,assetId)
   return userAssets.updateOne(
     { userId: userId },
     { $pull: { assets: { _id: assetId } } },

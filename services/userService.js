@@ -48,7 +48,6 @@ const getAllUsers = async (pageNo, pageSize) => {
   const skip = pageSize * (pageNo - 1);
   let count = await User.count();
   let users = await User.find().skip(skip).limit(Number(pageSize));
-  console.log(users)
   return {count, users}
 };
 const deleteUser = id => {
@@ -61,7 +60,6 @@ const saveSetting = (setting) => {
 }
 
 const updateSetting = (_id, userId, setting) => {
-  console.log("updateSetting",setting)
   return Setting.updateOne({_id, userId}, {...setting});
 }
 
@@ -79,7 +77,6 @@ const getSetttingByUserIDAndName = (userId, name) => {
 
 const removeUserById = async (id) => {
   const user = await User.findById(id)
-  console.log('service',user);
   return user.remove()
 }
 module.exports = {

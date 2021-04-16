@@ -28,8 +28,6 @@ const findUserVideoByTitle = (userId, page, search) => {
       { title: { $regex: new RegExp(".*" + search + ".*"), $options: "i" } }
     ]
   }).sort({ date: -1 });
-  // .skip((page - 1) * 9)
-  // .limit(9);
 };
 
 const findUserCampaignVideo = (userId, page) => {

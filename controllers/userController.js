@@ -176,7 +176,6 @@ module.exports.forget = async (req, res) => {
       });
     }
     const token = user.generateVerificationToken();
-    // Send the mail
     const mail = await helpers.sendForGotEmail(user, token);
     if (mail) {
       return res.status(201).json({
@@ -225,23 +224,19 @@ module.exports.reset = async (req, res) => {
 module.exports.addTempSetting = async (req, res) => {
   try {
     let { settings } = req.body;
-    console.log("settings ",settings)
     settings.userId = settings.userId._id;
     let setting = await userService.getSetttingByUserIDAndName(
       settings.userId,
       settings.name
     );
-    console.log("setting of user ", setting);
 
     if (setting.length > 0) {
-      console.log("if");
       await userService.updateSetting(
         setting[0]._id,
         setting[0].userId,
         settings
       );
     } else {
-      console.log("save");
       await userService.saveSetting(settings);
     }
     return res
@@ -274,8 +269,7 @@ module.exports.shareVideoInEmail = async (req, res) => {
       videoLink
     );
 
-    //const gifFromVideo = gifService.saveGif(videoThumnail)
-    //console.log("gifFromVideo", gifFromVideo)
+    
     if (mail) {
       return res.status(200).json({ message: "Video shared successfully" });
     } else {
@@ -314,7 +308,6 @@ module.exports.getPreview = async (req, res) => {
     } = req.body.settings;
     let template = "";
     if (name === "Spread") {
-      console.log("Spread in edit preview");
 
       template = await Templates.spreadTheme(
         false,
@@ -330,39 +323,39 @@ module.exports.getPreview = async (req, res) => {
       );
     }
     if (name === "Corporate Light") {
-      // console.log("Corporate Light")
+      
       template = await Templates.corporateLight(false, false, logoUrl, text);
     }
     if (name === "Modern Simple") {
-      // console.log("Modern Simple")
+      
       template = await Templates.modernSimple(false, false, logoUrl, text);
     }
     if (name === "Streamlined") {
-      // console.log("Streamlined")
+      
       template = await Templates.streamlined(false, false, logoUrl, text);
     }
     if (name === "Simple Blue") {
-      // console.log("Simple Blue")
+      
       template = await Templates.simple_blue(false, false, logoUrl, text);
     }
     if (name === "Sleek") {
-      // console.log("Sleek")
+      
       template = await Templates.sleek(false, false, logoUrl, text);
     }
     if (name === "Social Business") {
-      // console.log("Social Business")
+      
       template = await Templates.social_business(false, false, logoUrl, text);
     }
     if (name === "Social Impact") {
-      // console.log("Social Impact")
+      
       template = await Templates.social_impact(false, false, logoUrl, text);
     }
     if (name === "Clasic Dark") {
-      // console.log("Clasic Dark")
+    
       template = await Templates.classic_dark(false, false, logoUrl, text);
     }
     if (name === "Ocean") {
-      // console.log("Ocean")
+     
       template = await Templates.ocean(false, false, logoUrl, text);
     }
     return res.status(200).json({ message: "Success", template });
@@ -375,7 +368,6 @@ module.exports.getPreview = async (req, res) => {
 module.exports.removeUser = async (req, res) => {
   try {
     const { id } = req.params;
-    console.log('remove 378', req.params)
     await userService.removeUserById(id);
     res.status(200).json("Successfully Deleted");
   } catch (error) {

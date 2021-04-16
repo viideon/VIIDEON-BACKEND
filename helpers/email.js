@@ -48,7 +48,6 @@ const sendVideoEmail = async (recieverEmail, templateString) => {
 };
 
 const sendForGotEmail = async (user, token) => {
-  console.log(process.env.FROM_EMAIL);
   const mailOptions = {
     to: user.email,
     from: `videonPro<${process.env.FROM_EMAIL}>`,
@@ -83,7 +82,6 @@ const shareVideoInEmail = async (
       email
     );
     const mailOptions = {
-      //    from: "asfi.official@gmail.com",
       to: email,
       from: `videonPro<${process.env.FROM_EMAIL}>`,
       subject: "New Chatvid",

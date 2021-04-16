@@ -16,7 +16,6 @@ const get = async (req, res) => {
 
     res.status(200).json({ message: chatvids })
   } catch (error) {
-    console.log("Error message: ", error.message)
     res.status(400).json({ message: error.message })
   }
 };
@@ -114,7 +113,6 @@ const update = async (req, res) => {
     }
     res.status(200).json({ message: "Successfully added" })
   } catch (error) {
-    // console.log("ERR: ", error)
     res.status(400).json({ message: error.message })
   }
 };
@@ -139,7 +137,6 @@ function isEmpty(obj) {
 const updateJumps = async (req, res) => {
   try {
     const { _id, jumpTo } = req.body;
-    console.log(req.body)
     let step = await chatVidServices.getStepById(_id);
     if (!step) throw ({ message: "no record found" })
     delete req.body._id;
@@ -155,7 +152,6 @@ const updateJumps = async (req, res) => {
     }
     res.status(200).json({ message: "updated...!", data: req.body })
   } catch (error) {
-    console.log(error.message)
     res.status(400).json({ message: error.message })
   }
 }
@@ -187,18 +183,15 @@ const addReply = async (req, res) => {
     if (reply.type === "choice") {
       await chatVidServices.updateChoice(reply.choiceId, rply._id)
     }
-    //Email on responder mail
-    console.log("email",people.email)
+  
     const mail = await helpers.responseEmail(people.email,logo);
-    console.log("mail sent",mail)
-
     
-    // console.log(rply,reply.chatvidId,ppl?ppl:peopleID)
+
     await chatVidServices.updateStepReply(reply.stepId, rply);
     await chatVidServices.updateChatvidPeople(reply.chatvidId, ppl ? ppl : peopleID);
     res.status(200).json({ message: "Replied Successfully!" })
   } catch (error) {
-    console.log(error)
+   
     res.status(400).json({ message: error.message })
   }
 }
@@ -207,7 +200,6 @@ const saveAnalytics = async (req, res) => {
     await chatVidServices.saveMetrics(req.body)
     res.status(200).json({ message: "successfully save" })
   } catch (error) {
-    console.log(error)
     res.status(400).json({ message: error.message })
   }
 }
@@ -234,7 +226,6 @@ const getMetrics = async (req, res) => {
     datasets.mobile = await Object.values(unique.mobile);
     res.status(200).json({ message: [], stats: { landed, completed, answered, interacted, total: allMetrics.length, datasets } })
   } catch (error) {
-    console.log(error)
     res.status(400).json({ message: error.message })
   }
 }

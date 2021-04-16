@@ -29,11 +29,8 @@ module.exports.getTemplate = async (req, res) => {
       );
     }
     let templateIs = "";
-    console.log("seting is ", settings.length);
     if (settings.length === 0) {
-      console.log("lenght is zero");
       if (themeName === "Spread") {
-        console.log("Spread in show preview");
 
         templateIs = await template.spreadTheme(
           _id,
@@ -49,7 +46,6 @@ module.exports.getTemplate = async (req, res) => {
         );
       }
       if (themeName === "Corporate Light") {
-        console.log("Corporate Light");
         templateIs = await template.corporateLight(
           _id,
           thumbnail,
@@ -63,9 +59,8 @@ module.exports.getTemplate = async (req, res) => {
           false
         );
       }
-      // UI bad
+     
       if (themeName === "Modern Simple") {
-        console.log("Modern Simple");
         templateIs = await template.modernSimple(
           _id,
           thumbnail,
@@ -80,7 +75,6 @@ module.exports.getTemplate = async (req, res) => {
         );
       }
       if (themeName === "Streamlined") {
-        console.log(" is Streamlined", thumbnail);
         templateIs = await template.streamlined(
           _id,
           thumbnail,
@@ -95,7 +89,6 @@ module.exports.getTemplate = async (req, res) => {
         );
       }
       if (themeName === "Simple Blue") {
-        console.log("Simple Blue");
         templateIs = await template.simple_blue(
           _id,
           thumbnail,
@@ -110,7 +103,6 @@ module.exports.getTemplate = async (req, res) => {
         );
       }
       if (themeName === "Sleek") {
-        console.log("Sleek is here");
         templateIs = await template.sleek(
           _id,
           thumbnail,
@@ -125,7 +117,6 @@ module.exports.getTemplate = async (req, res) => {
         );
       }
       if (themeName === "Social Business") {
-        console.log("Social Business");
         templateIs = await template.social_business(
           _id,
           thumbnail,
@@ -140,7 +131,6 @@ module.exports.getTemplate = async (req, res) => {
         );
       }
       if (themeName === "Social Impact") {
-        console.log("Social Impact");
         templateIs = await template.social_impact(
           _id,
           thumbnail,
@@ -155,7 +145,6 @@ module.exports.getTemplate = async (req, res) => {
         );
       }
       if (themeName === "Clasic Dark") {
-        console.log("Clasic Dark");
         templateIs = await template.classic_dark(
           _id,
           thumbnail,
@@ -170,7 +159,6 @@ module.exports.getTemplate = async (req, res) => {
         );
       }
       if (themeName === "Ocean") {
-        console.log("Ocean");
         templateIs = await template.ocean(
           _id,
           thumbnail,
@@ -195,10 +183,7 @@ module.exports.getTemplate = async (req, res) => {
       linkedinUrl,
     } = settings[0];
 
-    console.log("destructure url", fbUrl);
-
     if (themeName === "Spread") {
-      console.log("Spread in show preview");
 
       templateIs = await template.spreadTheme(
         _id,
@@ -214,7 +199,6 @@ module.exports.getTemplate = async (req, res) => {
       );
     }
     if (themeName === "Corporate Light") {
-      console.log("Corporate Light");
       templateIs = await template.corporateLight(
         _id,
         thumbnail,
@@ -228,9 +212,9 @@ module.exports.getTemplate = async (req, res) => {
         linkedinUrl
       );
     }
-    // UI bad
+   
     if (themeName === "Modern Simple") {
-      console.log("Modern Simple");
+     
       templateIs = await template.modernSimple(
         _id,
         thumbnail,
@@ -245,7 +229,7 @@ module.exports.getTemplate = async (req, res) => {
       );
     }
     if (themeName === "Streamlined") {
-      console.log("Streamlined");
+      
       templateIs = await template.streamlined(
         _id,
         thumbnail,
@@ -260,7 +244,6 @@ module.exports.getTemplate = async (req, res) => {
       );
     }
     if (themeName === "Simple Blue") {
-      console.log("Simple Blue");
       templateIs = await template.simple_blue(
         _id,
         thumbnail,
@@ -275,7 +258,6 @@ module.exports.getTemplate = async (req, res) => {
       );
     }
     if (themeName === "Sleek") {
-      console.log("Sleek is here");
       templateIs = await template.sleek(
         _id,
         thumbnail,
@@ -290,7 +272,6 @@ module.exports.getTemplate = async (req, res) => {
       );
     }
     if (themeName === "Social Business") {
-      console.log("Social Business");
       templateIs = await template.social_business(
         _id,
         thumbnail,
@@ -305,7 +286,6 @@ module.exports.getTemplate = async (req, res) => {
       );
     }
     if (themeName === "Social Impact") {
-      console.log("Social Impact");
       templateIs = await template.social_impact(
         _id,
         thumbnail,
@@ -320,7 +300,6 @@ module.exports.getTemplate = async (req, res) => {
       );
     }
     if (themeName === "Clasic Dark") {
-      console.log("Clasic Dark");
       templateIs = await template.classic_dark(
         _id,
         thumbnail,
@@ -335,7 +314,7 @@ module.exports.getTemplate = async (req, res) => {
       );
     }
     if (themeName === "Ocean") {
-      console.log("Ocean");
+      
       templateIs = await template.ocean(
         _id,
         thumbnail,
@@ -350,7 +329,7 @@ module.exports.getTemplate = async (req, res) => {
       );
     }
 
-    // console.log("get template is " ,templateIs)
+    
     return res.status(200).json({ message: "Success", templateIs });
   } catch (error) {
     res.status(500).json({ message: error.message, errr: "catch" });
@@ -376,7 +355,6 @@ module.exports.emailVideo = async (req, res) => {
 
   const video = await videoService.findVideoById(id);
   const { thumbnail } = video;
-  // console.log("emailvid",video)
   try {
     if (req.body.recieverEmail === "") {
       return res.status(400).json({ message: "no email provided" });
@@ -557,22 +535,7 @@ module.exports.updateVideoEmailShare = async (req, res) => {
     return res.status(400).json({ message: error });
   }
 };
-// module.exports.getCampaignVideos = async (req, res) => {
-//   let { id } = req.query;
-//   try {
-//     const videos = await videoService.getCampaignVideos(id);
 
-//     if (videos) {
-//       return res.status(200).json({
-//         message: "success",
-//         video: videos,
-//       });
-//     }
-//     return res.status(400).json({ message: "get campaign videos failed" });
-//   } catch (error) {
-//     return res.status(400).json({ message: error });
-//   }
-// };
 
 module.exports.deleteVideo = async (req, res) => {
   let { id, pageNo } = req.query;
@@ -624,10 +587,7 @@ module.exports.getVideoCount = async (req, res) => {
     let videoCount = await videoService.getVideoCount(id);
     let ChatvidCount = await videoService.getChatVidCount(id);
     let totalCount = videoCount + ChatvidCount;
-    console.log("id", id);
-    // console.log("template",TemplateString)
-    console.log("videoCount", videoCount);
-    console.log("chatvidCount", ChatvidCount);
+    
     await Video.find({ userId: id }, function (err, userVideos) {
       if (userVideos.length < 1)
         return res.status(200).json({
@@ -652,7 +612,7 @@ module.exports.getVideoCount = async (req, res) => {
       let ctaCount = ctaValues.reduce((a, b) => a + b);
       let watchValues = userVideos.map((x) => parseInt(x["watch"]) || 0);
       let watchCount = watchValues.reduce((a, b) => a + b);
-      // console.log(videoCount,"total",totalCount)
+      
       return res.status(200).json({
         count: totalCount,
         viewCount,
@@ -670,7 +630,6 @@ module.exports.getCampaignCount = async (req, res) => {
   let id = req.query.id;
   try {
     let count = await videoService.getCampaignCount(id);
-    // console.log("Campaign count", count);
     res.status(200).json({ count: count });
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -702,7 +661,6 @@ module.exports.updateCtaClicks = async (req, res) => {
     await videoService.incrementCtaClicks(id);
     res.status(200).json({ message: "incremented" });
   } catch (error) {
-    console.log("error", error);
     res.status(400).json({ message: "failed" });
   }
 };

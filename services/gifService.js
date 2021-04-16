@@ -8,7 +8,6 @@ const saveGif = (videoUrl) => {
             throw error;
         }
     });
-    console.log("gif here", gif)
   };
   module.exports = {
     saveGif

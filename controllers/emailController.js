@@ -37,7 +37,7 @@ module.exports.sendTemplateWithGmail = async (req, res) => {
     async function sendMessage(auth) {
       var raw = await makeBody(
         "hafiz.quraishi.official@gmail.com",
-        // "ehtisham.asghar.pak@gmail.com",
+       
         fromEmail,
         "video from videonPro",
         customTemplate
@@ -66,7 +66,6 @@ module.exports.sendTemplateWithGmail = async (req, res) => {
       );
     }
   } catch (error) {
-    console.log("error", error);
     res.status(400).json({
       error: error.message,
     });
@@ -81,18 +80,13 @@ module.exports.sendWithGmail = async (req, res) => {
     const singleTokenObj = tokenObjects[0].tokenObj;
     const fromEmail = tokenObjects[0].userEmail;
 
-    //find video by video id
     const video = await videoService.findVideoById(videoId);
     const { thumbnail, eMailTemplate, description } = video;
 
-    // console.log("emailvidthumb",thumbnail)
-
-    // find user by user id
+  
     const user = await userService.getUserById(userId);
     const { userName, url } = user;
-    // console.log("userName for video template",userName)
-    // console.log("user avatar",userName)
-
+    
     if (eMailTemplate) themeName = eMailTemplate;
     let settings = { colors: {}, logoUrl: false, text: false };
     
@@ -107,7 +101,6 @@ module.exports.sendWithGmail = async (req, res) => {
     if (settings.length === 0 || !themeName) {
       
       if (themeName === undefined) {
-        console.log("undefind in show preview");
 
         templateString = await template.sleek2(
           videoId,
@@ -123,7 +116,6 @@ module.exports.sendWithGmail = async (req, res) => {
         );
       }
       if (themeName === "Spread") {
-        console.log("Spread line 127");
         templateString = await template.spreadTheme(
           videoId,
           thumbnail,
@@ -139,7 +131,6 @@ module.exports.sendWithGmail = async (req, res) => {
         );
       }
       if (themeName === "Corporate Light") {
-        console.log("Corporate Light line 143");
         templateString = await template.corporateLight(
           videoId,
           thumbnail,
@@ -154,9 +145,8 @@ module.exports.sendWithGmail = async (req, res) => {
           description,
         );
       }
-      // UI bad
+      
       if (themeName === "Modern Simple") {
-        console.log("Modern Simple");
         templateString = await template.modernSimple(
           videoId,
           thumbnail,
@@ -172,7 +162,6 @@ module.exports.sendWithGmail = async (req, res) => {
         );
       }
       if (themeName === "Streamlined") {
-        console.log(" is Streamlined", thumbnail);
         templateString = await template.streamlined(
           videoId,
           thumbnail,
@@ -188,7 +177,6 @@ module.exports.sendWithGmail = async (req, res) => {
         );
       }
       if (themeName === "Simple Blue") {
-        console.log("Simple Blue");
         templateString = await template.simple_blue(
           videoId,
           thumbnail,
@@ -204,7 +192,6 @@ module.exports.sendWithGmail = async (req, res) => {
         );
       }
       if (themeName === "Sleek") {
-        console.log("Sleek is here");
         templateString = await template.sleek(
           videoId,
           thumbnail,
@@ -220,7 +207,6 @@ module.exports.sendWithGmail = async (req, res) => {
         );
       }
       if (themeName === "Social Business") {
-        console.log("Social Business");
         templateString = await template.social_business(
           videoId,
           thumbnail,
@@ -236,7 +222,6 @@ module.exports.sendWithGmail = async (req, res) => {
         );
       }
       if (themeName === "Social Impact") {
-        console.log("Social Impact");
         templateString = await template.social_impact(
           videoId,
           thumbnail,
@@ -252,7 +237,6 @@ module.exports.sendWithGmail = async (req, res) => {
         );
       }
       if (themeName === "Clasic Dark") {
-        console.log("Clasic Dark");
         templateString = await template.classic_dark(
           videoId,
           thumbnail,
@@ -268,7 +252,6 @@ module.exports.sendWithGmail = async (req, res) => {
         );
       }
       if (themeName === "Ocean") {
-        console.log("Ocean");
         templateString = await template.ocean(
           videoId,
           thumbnail,
@@ -283,7 +266,6 @@ module.exports.sendWithGmail = async (req, res) => {
           description,
         );
       }
-      // console.log("temp", templateString);
       authorize(sendMessage);
       function authorize(callback) {
         const oAuth2Client = new google.auth.OAuth2(
@@ -324,7 +306,6 @@ module.exports.sendWithGmail = async (req, res) => {
         );
       }
     } else {
-      // console.log("in else setings in mail", settings);
       let {
         logoUrl,
         fbUrl,
@@ -341,7 +322,6 @@ module.exports.sendWithGmail = async (req, res) => {
         thumbnail
       );
       if (themeName === "Spread") {
-        console.log("Spread in email send line 345");
 
         templateString = await template.spreadTheme(
           videoId,
@@ -358,7 +338,6 @@ module.exports.sendWithGmail = async (req, res) => {
         );
       }
       if (themeName === "Corporate Light") {
-        console.log("Corporate Light");
         templateString = await template.corporateLight(
           videoId,
           thumbnail,
@@ -368,9 +347,7 @@ module.exports.sendWithGmail = async (req, res) => {
           url
         );
       }
-      // UI bad
       if (themeName === "Modern Simple") {
-        console.log("Modern Simple");
         templateString = await template.modernSimple(
           videoId,
           thumbnail,
@@ -379,7 +356,6 @@ module.exports.sendWithGmail = async (req, res) => {
         );
       }
       if (themeName === "Streamlined") {
-        console.log("Streamlined");
         templateString = await template.streamlined(
           videoId,
           thumbnail,
@@ -390,7 +366,6 @@ module.exports.sendWithGmail = async (req, res) => {
         );
       }
       if (themeName === "Simple Blue") {
-        console.log("Simple Blue");
         templateString = await template.simple_blue(
           videoId,
           thumbnail,
@@ -401,7 +376,6 @@ module.exports.sendWithGmail = async (req, res) => {
         );
       }
       if (themeName === "Sleek") {
-        console.log("Sleek");
         templateString = await template.sleek(
           videoId,
           thumbnail,
@@ -412,7 +386,6 @@ module.exports.sendWithGmail = async (req, res) => {
         );
       }
       if (themeName === "Social Business") {
-        console.log("Social Business");
         templateString = await template.social_business(
           videoId,
           thumbnail,
@@ -423,7 +396,6 @@ module.exports.sendWithGmail = async (req, res) => {
         );
       }
       if (themeName === "Social Impact") {
-        console.log("Social Impact");
         templateString = await template.social_impact(
           videoId,
           thumbnail,
@@ -434,7 +406,6 @@ module.exports.sendWithGmail = async (req, res) => {
         );
       }
       if (themeName === "Clasic Dark") {
-        console.log("Clasic Dark");
         templateString = await template.classic_dark(
           videoId,
           thumbnail,
@@ -443,7 +414,6 @@ module.exports.sendWithGmail = async (req, res) => {
         );
       }
       if (themeName === "Ocean") {
-        console.log("Ocean");
         templateString = await template.ocean(
           videoId,
           thumbnail,
@@ -460,18 +430,6 @@ module.exports.sendWithGmail = async (req, res) => {
         oAuth2Client.setCredentials(singleTokenObj);
         callback(oAuth2Client);
       }
-
-      // send direct email video
-      // console.log("sending video to brodcast",recieverEmail)
-      // const result = await sendVideoEmail(recieverEmail, templateString);
-      // console.log("result is ", result);
-      // if (result.error || result === false) {
-      //   return res.status(400).json({ message: "fail to send email" });
-      // } else {
-      //   return res.status(200).json({ message: "email sent sucessfully" });
-      //   console.log("vid sent successfully");
-      // }
-      //End send direct email video
 
       async function sendMessage(auth) {
         var raw = await makeBody(
@@ -527,16 +485,14 @@ module.exports.getAndSaveConfig = async (req, res) => {
       grant_type: "authorization_code",
       redirect_uri: "postmessage",
     });
-    // console.log("user email params",params)
-    // till here working  fine
+
     const response = await axios.post(
       `${process.env.TOKEN_OBJECT_PATH}`,
       params.toString()
     );
-    console.log("user email response", response);
+    
     const tokenObj = response.data;
     const userEmail = await decodeJwtToEmail(tokenObj.id_token);
-    console.log("user email", userEmail);
     const result = await emailService.saveEmailConfig({
       userId,
       userEmail,
@@ -550,7 +506,6 @@ module.exports.getAndSaveConfig = async (req, res) => {
       });
     }
   } catch (error) {
-    // console.log("error is",error)
     res.status(400).json({
       error: error.message,
     });
@@ -584,7 +539,6 @@ module.exports.deleteUserConfig = async (req, res) => {
       });
     }
   } catch (error) {
-    console.log("error", error.message);
     res.status(400).json({ message: error.message });
   }
 };
@@ -593,7 +547,6 @@ function decodeJwtToEmail(idToken) {
   return tokenData.payload.email;
 }
 function makeBody(recieverEmail, from, subject, message) {
-  // console.log(typeof messaage);
 
   var str = [
     'Content-Type: text/html; charset="UTF-8"\n',

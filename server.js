@@ -1,7 +1,4 @@
 const express = require("express");
-// const ffmpeg = require("fluent-ffmpeg");
-// const pathToFfmpeg = require("ffmpeg-static");
-// const ffprobe = require("ffprobe-static");
 const path = require("path");
 const fileUpload = require("express-fileupload");
 const mongoose = require("mongoose");
@@ -38,14 +35,9 @@ app.use(
   fileUpload({ useTempFiles: true, tempFileDir: path.join(__dirname, "temp") })
 );
 
-//configure ffmpeg
-// ffmpeg.setFfmpegPath("ffmpeg");
-// ffmpeg.setFfmpegPath("D:/ff/bin/ffmpeg.exe" );
-// ffmpeg.setFfmpegPath(pathToFfmpeg);
-// ffmpeg.setFfprobePath(ffprobe.path);
-// console.log(pathToFfmpeg);
 
-//routes
+
+
 app.use("/user", user);
 app.use("/video", videos);
 app.use("/contact", contact);

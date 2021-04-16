@@ -25,8 +25,6 @@ module.exports.spreadTheme = (
   linkedinUrl,
   description = false
 ) => {
-
-console.log('description in spread theme', description);
   
   return `
   <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
@@ -235,7 +233,6 @@ module.exports.corporateLight = (
   linkedinUrl,
   description = false
 ) => {
-  console.log("usrName in template", userName);
   return `
   <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
   <html>
@@ -897,11 +894,7 @@ module.exports.sleek = (
   linkedinUrl,
   description = false,
 ) => {
-  // console.log("thumbnail",thumbnail)
-  // console.log("logo",logo)
-//   console.log("usrName in template", userName);
-  // console.log("avatar",url)
-  console.log('sleek description', description)
+ 
   return `
   <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
   <html>
@@ -1110,10 +1103,6 @@ module.exports.sleek2 = (
   youtubeUrl,
   linkedinUrl
 ) => {
-  // console.log("thumbnail",thumbnail)
-  // console.log("logo",logo)
-  console.log("usrName in template", userName);
-  // console.log("avatar",url)
   return `
     <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
     <html>

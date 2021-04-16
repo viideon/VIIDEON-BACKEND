@@ -20,7 +20,6 @@ module.exports.addMusicAsset = async (req, res) => {
 };
 module.exports.addPublicMusic = async (req, res) => {
   let { asset } = req.body;
-  console.log(asset)
   try {
     await assetService.addPublicMusic( asset);
     return res.status(201).json({ message: "music asset added" });

@@ -18,7 +18,6 @@ const deleteTemplate = (id) => {
 }
 const getIndustries = () => {
   return Industries.find()
-  // .populate("styles")
 }
 const addIndustry = (industry) => {
   const newIndustry = new Industries({...industry})
