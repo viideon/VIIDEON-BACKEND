@@ -16,17 +16,15 @@ const app = express();
 
 const port = process.env.PORT || 3008;
 
-mongoose.connect(
-  `${process.env.MONGOO_DB}`,
-  {
+mongoose.connect(`${process.env.MONGO_DB}`, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: false,
-    useFindAndModify: false,
-  },
-  () => {
-    console.log("connected to db");
+    useFindAndModify: false
   }
+).then(
+  () => { console.log("DB Connected") },
+  err => { console.error(err) }
 );
 
 app.use(cors());
