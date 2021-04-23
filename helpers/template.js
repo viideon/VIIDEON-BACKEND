@@ -136,7 +136,7 @@ module.exports.spreadTheme = (
       <div class="bodyWrapper">
         <div class="headerWrapper">
           <img src="${
-            logo ? logo : "https://videonpro.s3.us-west-1.amazonaws.com/1617972064558logo.jpeg"
+            logo ? logo : "https://viideon.s3.us-west-1.amazonaws.com/1617972064558logo.jpeg"
           }" class="headerImage"/>
           <h1 class="headerH1">Viideon</h1>
           <p class="headerP">Join our movement</p>
@@ -160,11 +160,11 @@ module.exports.spreadTheme = (
             </a>
           <div class="w3-row w3-center copyRightWrapper">
             <span class="w3-third">
-              <a href="videonpro.com">
+              <a href="viideon.com">
                 <img style="width: 45px; height: 45px;" src="${
                   url
                     ? url
-                    : "https://videonpro.s3.us-west-1.amazonaws.com/1617972064558logo.jpeg"
+                    : "https://viideon.s3.us-west-1.amazonaws.com/1617972064558logo.jpeg"
                 }">
                 <p style="margin-right: 2px;">${
                   userName ? `Mr.${userName}` : "Mr."
@@ -209,7 +209,7 @@ module.exports.spreadTheme = (
               linkedinUrl ? linkedinUrl : "https://www.linkedin.com/"
             }">
             <img width="16px" height="16px" style="    margin: 5px;"
-                                          src="https://videonpro.s3.us-west-1.amazonaws.com/1617967455922logo.jpeg" />
+                                          src="https://viideon.s3.us-west-1.amazonaws.com/1617967455922logo.jpeg" />
             
             </a>
           </div>
@@ -356,7 +356,7 @@ module.exports.corporateLight = (
           <div class="headerWrapper">
             <!-- add logo here -->
             <img src="${
-              logo ? logo : "https://videonpro.s3.us-west-1.amazonaws.com/1617972064558logo.jpeg"
+              logo ? logo : "https://viideon.s3.us-west-1.amazonaws.com/1617972064558logo.jpeg"
             }" class="headerImage"/>
             <h1 class="headerH1">Viideon</h1>
           </div>
@@ -383,7 +383,7 @@ module.exports.corporateLight = (
                   : "Viideon is a video communication platform designed for sale and marketing leaders. Learn more at viideon.com"
               }</p>
               
-              <a href="videonpro.com">
+              <a href="viideon.com">
                 <button class="btn watchVideoBtn">${description}</button>
               </a>
           </div>
@@ -393,7 +393,7 @@ module.exports.corporateLight = (
     </div>
         <div class="footer">
           <div class="sender-wrapper">
-            <img style="width: 44px; height: 44px;" src="https://videonpro.s3.us-west-1.amazonaws.com/1617972064558logo.jpeg" />
+            <img style="width: 44px; height: 44px;" src="https://viideon.s3.us-west-1.amazonaws.com/1617972064558logo.jpeg" />
             <p class="footerP">Sent using Viideon</p>
           </div>
           <div class="icon-wrapper">
@@ -413,7 +413,7 @@ module.exports.corporateLight = (
               linkedinUrl ? linkedinUrl : "https://www.linkedin.com/"
             }">
               <img width="16px" height="16px" style="    margin: 5px;"
-                            src="https://videonpro.s3.us-west-1.amazonaws.com/1617967455922logo.jpeg" />
+                            src="https://viideon.s3.us-west-1.amazonaws.com/1617967455922logo.jpeg" />
             </a>
           </div>
         </div>
@@ -477,7 +477,7 @@ module.exports.modernSimple = (
                           <img src="${
                             logo
                               ? logo
-                              : "https://videonpro.s3.us-west-1.amazonaws.com/1617972064558logo.jpeg"
+                              : "https://viideon.s3.us-west-1.amazonaws.com/1617972064558logo.jpeg"
                           }"
                               style="width: 40px; height: 40px; opacity: 1;" />
                           <h1 style="
@@ -586,7 +586,7 @@ module.exports.modernSimple = (
                             twitterUrl ? twitterUrl : "https://twitter.com/"
                           }">
                           <img width="24px" height="24px"
-                              src="https://videonpro.s3.us-west-1.amazonaws.com/1600681828680logo.jpeg" /></a>
+                              src="https://viideon.s3.us-west-1.amazonaws.com/1600681828680logo.jpeg" /></a>
                       </td>
                       <td width="25%" align="center">
                           <a href="${
@@ -595,7 +595,7 @@ module.exports.modernSimple = (
                               : "https://www.linkedin.com/"
                           }">
                           <img width="24px" height="24px"
-                              src="https://videonpro.s3.us-west-1.amazonaws.com/1617967455922logo.jpeg" /></a>
+                              src="https://viideon.s3.us-west-1.amazonaws.com/1617967455922logo.jpeg" /></a>
                       </td>
                   </tr>
               </table>
@@ -607,7 +607,7 @@ module.exports.modernSimple = (
                   <tr>
                       <td width="33%" align="center">
                           <p style=" font-size: 12px; padding-left: 5px;color: black;">
-                              &copy; 2021 VideonPro All Rights Reserved
+                              &copy; 2021 Viideon All Rights Reserved
                           </p>
                       </td>
                       <td width="33%" align="center"></td>
@@ -615,7 +615,7 @@ module.exports.modernSimple = (
                           <img src="${
                             logo
                               ? logo
-                              : "https://videonpro.s3.us-west-1.amazonaws.com/1617972064558logo.jpeg"
+                              : "https://viideon.s3.us-west-1.amazonaws.com/1617972064558logo.jpeg"
                           }" style="
                   width: 20px;
                   opacity: 1;
@@ -738,7 +738,7 @@ module.exports.classic_dark = (
                       <img src=" ${
                         logo
                           ? logo
-                          : "https://videonpro.s3.us-west-1.amazonaws.com/1617972064558logo.jpeg"
+                          : "https://viideon.s3.us-west-1.amazonaws.com/1617972064558logo.jpeg"
                       }"
                           style="width: 30px; height: 30px; opacity: 1;margin: 10px;" />
                       <p style="color: white; margin: 0px;
@@ -829,7 +829,7 @@ module.exports.classic_dark = (
                                               : "https://www.linkedin.com/"
                                           }">
                                           <img width="24px" height="24px"
-                                              src="https://videonpro.s3.us-west-1.amazonaws.com/1617967455922logo.jpeg" /></a>
+                                              src="https://viideon.s3.us-west-1.amazonaws.com/1617967455922logo.jpeg" /></a>
                                       </td>
                                       
                               <td  width="25%" align="center">
@@ -839,7 +839,7 @@ module.exports.classic_dark = (
                                       : "https://twitter.com/"
                                   }">
                                   <img width="24px" height="24px"
-                                      src="https://videonpro.s3.us-west-1.amazonaws.com/1600681828680logo.jpeg" /></a>
+                                      src="https://viideon.s3.us-west-1.amazonaws.com/1600681828680logo.jpeg" /></a>
                               </td>
                               <td width="25%" align="center">
                                   <a href="${
@@ -860,7 +860,7 @@ module.exports.classic_dark = (
                               <img src="${
                                 logo
                                   ? logo
-                                  : "https://videonpro.s3.us-west-1.amazonaws.com/1617972064558logo.jpeg"
+                                  : "https://viideon.s3.us-west-1.amazonaws.com/1617972064558logo.jpeg"
                               }" style="
                   width: 20px;
                   opacity: 1;
@@ -933,7 +933,7 @@ module.exports.sleek = (
                           <img src="${
                             logo
                               ? logo
-                              : "https://videonpro.s3.us-west-1.amazonaws.com/1617972064558logo.jpeg"
+                              : "https://viideon.s3.us-west-1.amazonaws.com/1617972064558logo.jpeg"
                           }"
                               style="width: 40px; height: 40px; opacity: 1;" />
                           <h1 style="
@@ -1043,7 +1043,7 @@ module.exports.sleek = (
                             twitterUrl ? twitterUrl : "https://twitter.com/"
                           }">
                           <img width="24px" height="24px"
-                              src="https://videonpro.s3.us-west-1.amazonaws.com/1600681828680logo.jpeg" /></a>
+                              src="https://viideon.s3.us-west-1.amazonaws.com/1600681828680logo.jpeg" /></a>
                       </td>
                       <td width="25%" align="center">
                           <a href="${
@@ -1052,7 +1052,7 @@ module.exports.sleek = (
                               : "https://www.linkedin.com/"
                           }">
                           <img width="24px" height="24px"
-                              src="https://videonpro.s3.us-west-1.amazonaws.com/1617967455922logo.jpeg" /></a>
+                              src="https://viideon.s3.us-west-1.amazonaws.com/1617967455922logo.jpeg" /></a>
                       </td>
                   </tr>
               </table>
@@ -1072,7 +1072,7 @@ module.exports.sleek = (
                           <img src="${
                             logo
                               ? logo
-                              : "https://videonpro.s3.us-west-1.amazonaws.com/1617972064558logo.jpeg"
+                              : "https://viideon.s3.us-west-1.amazonaws.com/1617972064558logo.jpeg"
                           }" style="
                   width: 20px;
                   opacity: 1;
@@ -1133,7 +1133,7 @@ module.exports.sleek2 = (
                     <tr align="center">
                         <td>
                             <img style="width: 50%; height:30vh"
-                                src="https://videonpro.s3.us-west-1.amazonaws.com/1617884192165logo.jpeg" />
+                                src="https://viideon.s3.us-west-1.amazonaws.com/1617884192165logo.jpeg" />
                             
                         </td>
                     </tr>
@@ -1224,7 +1224,7 @@ module.exports.social_business = (
                                       <img src=" ${
                                         logo
                                           ? logo
-                                          : "https://videonpro.s3.us-west-1.amazonaws.com/1617972064558logo.jpeg"
+                                          : "https://viideon.s3.us-west-1.amazonaws.com/1617972064558logo.jpeg"
                                       }"
                                           style="width: 60px; height: 60px; opacity: 1;" />
                                       <p style="color: #3b93d2; padding-bottom: 0px;
@@ -1310,7 +1310,7 @@ module.exports.social_business = (
                           <img src="${
                             logo
                               ? logo
-                              : "https://videonpro.s3.us-west-1.amazonaws.com/1617972064558logo.jpeg"
+                              : "https://viideon.s3.us-west-1.amazonaws.com/1617972064558logo.jpeg"
                           }" style="width: 30px;opacity: 1;height: 30px;" />
                       </td>
                       <td width="50%" align="center">
@@ -1342,7 +1342,7 @@ module.exports.social_business = (
                             twitterUrl ? twitterUrl : "https://twitter.com/"
                           }">
                           <img width="24px" height="24px"
-                              src="https://videonpro.s3.us-west-1.amazonaws.com/1600681828680logo.jpeg" /></a>
+                              src="https://viideon.s3.us-west-1.amazonaws.com/1600681828680logo.jpeg" /></a>
                       </td>
                       <td width="25%" align="center">
                           <a href="${
@@ -1351,7 +1351,7 @@ module.exports.social_business = (
                               : "https://www.linkedin.com/"
                           }">
                           <img width="24px" height="24px"
-                              src="https://videonpro.s3.us-west-1.amazonaws.com/1617967455922logo.jpeg" /></a>
+                              src="https://viideon.s3.us-west-1.amazonaws.com/1617967455922logo.jpeg" /></a>
                       </td>
                   </tr>
               </table>
@@ -1421,7 +1421,7 @@ module.exports.streamlined = (
       <table align=" center" cellpadding="0" cellspacing="0" width="700" style="width:75%;margin-left: auto;margin-right: auto;">
           <tbody align="center">
       <tr>
-          <td style="background-image: url(https://videonpro.s3.amazonaws.com/assets/IntelicaCRE-BlogPhoto-office-social-gathering.jpg); background-size: cover; height: 200px;box-shadow: inset 2000px 0 0 0 rgba(255, 255, 255, 0.5);
+          <td style="background-image: url(https://viideon.s3.amazonaws.com/assets/IntelicaCRE-BlogPhoto-office-social-gathering.jpg); background-size: cover; height: 200px;box-shadow: inset 2000px 0 0 0 rgba(255, 255, 255, 0.5);
               border-color: rgba(255, 255, 255, 1);">
               <div class="overlay"></div>
               <table align="center" cellpadding="0" cellspacing="0" width="100%">
@@ -1431,7 +1431,7 @@ module.exports.streamlined = (
                               <tr>
                                   <td style=" padding-left: 20px; display: -webkit-box; -webkit-box-align: center; -webkit-box-pack: center; min-width: 60%; height: 80%; ">
                                       <!-- add logo -->
-                                      <img src="https://videonpro.s3.us-west-1.amazonaws.com/1617972064558logo.jpeg" style="width: 60px; height: 60px; opacity: 1;" />
+                                      <img src="https://viideon.s3.us-west-1.amazonaws.com/1617972064558logo.jpeg" style="width: 60px; height: 60px; opacity: 1;" />
   
   
                                       <p style="color: #3b93d2; padding-bottom: 0px;margin-left: 3%;font-weight: bolder;font-size: 50px;">
@@ -1530,7 +1530,7 @@ module.exports.streamlined = (
                             twitterUrl ? twitterUrl : "https://twitter.com/"
                           }">
                           <img width="24px" height="24px"
-                              src="https://videonpro.s3.us-west-1.amazonaws.com/1600681828680logo.jpeg" /></a>
+                              src="https://viideon.s3.us-west-1.amazonaws.com/1600681828680logo.jpeg" /></a>
                       </td>
                       <td width="25%" align="center">
                           <a href="${
@@ -1539,7 +1539,7 @@ module.exports.streamlined = (
                               : "https://www.linkedin.com/"
                           }">
                           <img width="24px" height="24px"
-                              src="https://videonpro.s3.us-west-1.amazonaws.com/1617967455922logo.jpeg" /></a>
+                              src="https://viideon.s3.us-west-1.amazonaws.com/1617967455922logo.jpeg" /></a>
                       </td>
                   </tr>
               </table>
@@ -1604,7 +1604,7 @@ module.exports.simple_blue = (
     <table align=" center" cellpadding="0" cellspacing="0" width="700" style="width:75%;margin-left: auto;margin-right: auto;">
         <tbody align="center">
     <tr>
-        <td style="background-image: url(https://videonpro.s3.amazonaws.com/assets/IntelicaCRE-BlogPhoto-office-social-gathering.jpg); background-size: cover; height: 200px;box-shadow: inset 2000px 0 0 0 rgba(255, 255, 255, 0.5);
+        <td style="background-image: url(https://viideon.s3.amazonaws.com/assets/IntelicaCRE-BlogPhoto-office-social-gathering.jpg); background-size: cover; height: 200px;box-shadow: inset 2000px 0 0 0 rgba(255, 255, 255, 0.5);
             border-color: rgba(255, 255, 255, 1);">
             <div class="overlay"></div>
             <table align="center" cellpadding="0" cellspacing="0" width="100%">
@@ -1614,7 +1614,7 @@ module.exports.simple_blue = (
                             <tr>
                                 <td style=" padding-left: 20px; display: -webkit-box; -webkit-box-align: center; -webkit-box-pack: center; min-width: 60%; height: 80%; ">
                                     <!-- add logo -->
-                                    <img src="https://videonpro.s3.us-west-1.amazonaws.com/1617972064558logo.jpeg" style="width: 60px; height: 60px; opacity: 1;" />
+                                    <img src="https://viideon.s3.us-west-1.amazonaws.com/1617972064558logo.jpeg" style="width: 60px; height: 60px; opacity: 1;" />
                                     <p style="color: #3b93d2; padding-bottom: 0px;margin-left: 3%;font-weight: bolder;font-size: 50px;">
                                         Viideon
                                     </p>
@@ -1715,7 +1715,7 @@ module.exports.simple_blue = (
                           twitterUrl ? twitterUrl : "https://twitter.com/"
                         }">
                         <img width="24px" height="24px"
-                            src="https://videonpro.s3.us-west-1.amazonaws.com/1600681828680logo.jpeg" /></a>
+                            src="https://viideon.s3.us-west-1.amazonaws.com/1600681828680logo.jpeg" /></a>
                     </td>
                     <td width="25%" align="center">
                         <a href="${
@@ -1724,7 +1724,7 @@ module.exports.simple_blue = (
                             : "https://www.linkedin.com/"
                         }">
                         <img width="24px" height="24px"
-                            src="https://videonpro.s3.us-west-1.amazonaws.com/1617967455922logo.jpeg" /></a>
+                            src="https://viideon.s3.us-west-1.amazonaws.com/1617967455922logo.jpeg" /></a>
                     </td>
                 </tr>
             </table>
@@ -1789,7 +1789,7 @@ module.exports.social_impact = (
       <table align="center" cellpadding="0" cellspacing="0" width="700">
   ​
           <tr align="center">
-              <td align="center" style="background-image: url(https://videonpro.s3.amazonaws.com/assets/IntelicaCRE-BlogPhoto-office-social-gathering.jpg); background-size: cover; height: 200px;box-shadow: inset 2000px 0 0 0 rgba(255, 255, 255, 0.5); border-color:
+              <td align="center" style="background-image: url(https://viideon.s3.amazonaws.com/assets/IntelicaCRE-BlogPhoto-office-social-gathering.jpg); background-size: cover; height: 200px;box-shadow: inset 2000px 0 0 0 rgba(255, 255, 255, 0.5); border-color:
       rgba(255, 255, 255, 1); max-width: 200px;">
   ​
                   <table align="center" cellpadding="0" cellspacing="0" width="100%">
@@ -1799,7 +1799,7 @@ module.exports.social_impact = (
                               <img src=" ${
                                 logo
                                   ? logo
-                                  : "https://videonpro.s3.us-west-1.amazonaws.com/1617972064558logo.jpeg"
+                                  : "https://viideon.s3.us-west-1.amazonaws.com/1617972064558logo.jpeg"
                               } " style=" width: 60px; height: 60px; opacity: 1; " />
                               <p style=" color: #f6b415; padding-bottom: 0px; margin-left: 3%; font-weight: bolder; font-size: 50px; ">
                                   Viideon</p>
@@ -1863,7 +1863,7 @@ module.exports.social_impact = (
                   <img style=" vertical-align: middle; width: 50px; height: 50px; border-radius: 50%; " src="${
                     url
                       ? url
-                      : "https://videonpro.s3.us-west-1.amazonaws.com/1610430702841"
+                      : "https://viideon.s3.us-west-1.amazonaws.com/1610430702841"
                   }">
                   <p style=" margin-bottom: 0; font-size: 16px; font-weight: bold;color: #f6b415; ">${userName}
                   </p>
@@ -1885,7 +1885,7 @@ module.exports.social_impact = (
                               <img src="${
                                 logo
                                   ? logo
-                                  : "https://videonpro.s3.us-west-1.amazonaws.com/1617972064558logo.jpeg"
+                                  : "https://viideon.s3.us-west-1.amazonaws.com/1617972064558logo.jpeg"
                               } " style=" width: 20px; opacity: 1; height: 20px; margin-right: 5px; margin-top: 10px; " />
                               <span style="color: #f6b415; ">Sent with Viideon</span>
                           </td>
@@ -1911,7 +1911,7 @@ module.exports.social_impact = (
                           twitterUrl ? twitterUrl : "https://twitter.com/"
                         }">
                         <img width="24px" height="24px"
-                            src="https://videonpro.s3.us-west-1.amazonaws.com/1600681828680logo.jpeg" /></a>
+                            src="https://viideon.s3.us-west-1.amazonaws.com/1600681828680logo.jpeg" /></a>
                     </td>
                     <td style="padding: 10px" width="25%" align="center">
                         <a href="${
@@ -1920,7 +1920,7 @@ module.exports.social_impact = (
                             : "https://www.linkedin.com/"
                         }">
                         <img width="24px" height="24px"
-                            src="https://videonpro.s3.us-west-1.amazonaws.com/1617967455922logo.jpeg" /></a>
+                            src="https://viideon.s3.us-west-1.amazonaws.com/1617967455922logo.jpeg" /></a>
                     </td>
                       </tr>
                       
@@ -1994,7 +1994,7 @@ module.exports.ocean = (
                               <img src="${
                                 logo
                                   ? logo
-                                  : "https://videonpro.s3.us-west-1.amazonaws.com/1617972064558logo.jpeg"
+                                  : "https://viideon.s3.us-west-1.amazonaws.com/1617972064558logo.jpeg"
                               }" style="width: 60px; height: 60px; opacity: 1;margin-top: 5%; margin-bottom: 20px;" />
                           </td>
                       </tr>
@@ -2098,7 +2098,7 @@ module.exports.ocean = (
                           twitterUrl ? twitterUrl : "https://twitter.com/"
                         }">
                         <img width="24px" height="24px"
-                            src="https://videonpro.s3.us-west-1.amazonaws.com/1600681828680logo.jpeg" /></a>
+                            src="https://viideon.s3.us-west-1.amazonaws.com/1600681828680logo.jpeg" /></a>
                     </td>
                     <td width="25%" align="center">
                         <a href="${
@@ -2107,7 +2107,7 @@ module.exports.ocean = (
                             : "https://www.linkedin.com/"
                         }">
                         <img width="24px" height="24px"
-                            src="https://videonpro.s3.us-west-1.amazonaws.com/1617967455922logo.jpeg" /></a>
+                            src="https://viideon.s3.us-west-1.amazonaws.com/1617967455922logo.jpeg" /></a>
                     </td>
                 </tr>
             </table>

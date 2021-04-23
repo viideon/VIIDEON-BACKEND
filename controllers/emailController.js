@@ -39,7 +39,7 @@ module.exports.sendTemplateWithGmail = async (req, res) => {
         "hafiz.quraishi.official@gmail.com",
        
         fromEmail,
-        "video from videonPro",
+        "video from viideon",
         customTemplate
       );
       const gmail = google.gmail({ version: "v1", auth });

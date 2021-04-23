@@ -47,7 +47,7 @@ function getTemplate(templateName, logo, usenrame, primaryColor, secondaryColor,
                                 font-size: 30px;
                                 color: black;
                               ">
-                                VideonPRO
+                                Viideon
                             </h1>
                         </td>
                     </tr>
@@ -75,7 +75,7 @@ function getTemplate(templateName, logo, usenrame, primaryColor, secondaryColor,
         <tr align="center">
             <td align="center" style="padding: 30px 0px 30px 0px">
                 <p style="margin: 0px;color: black;">
-                    VideonPRO is a video communication platform design for sale
+                    Viideon is a video communication platform design for sale
                 </p>
                 <p style="margin: 0px;color: black;">
                     and marketing leaders. Learn more at
@@ -84,7 +84,7 @@ function getTemplate(templateName, logo, usenrame, primaryColor, secondaryColor,
                       color: black;
                       font-weight: bold;
                       cursor: pointer;
-                    ">videonpro.com</a>
+                    ">viideon.com</a>
                 </p>
             </td>
         </tr>
@@ -123,17 +123,17 @@ function getTemplate(templateName, logo, usenrame, primaryColor, secondaryColor,
                     <tr>
                         <td width="25%" align="center" style="border-right: 1.5px solid">
                             <img width="24px" height="24px"
-                                src="https://videonpro.s3.us-west-1.amazonaws.com/1600681828680logo.jpeg" />
+                                src="https://viideon.s3.us-west-1.amazonaws.com/1600681828680logo.jpeg" />
                         </td>
                         <td style="border-right: 1.5px solid" width="25%" align="center"><img width="24px" height="24px"
-                                src="https://videonpro.s3.us-west-1.amazonaws.com/1600681828680logo.jpeg" /></td>
+                                src="https://viideon.s3.us-west-1.amazonaws.com/1600681828680logo.jpeg" /></td>
                         <td style="border-right: 1.5px solid" width="25%" align="center">
                             <img width="24px" height="24px"
-                                src="https://videonpro.s3.us-west-1.amazonaws.com/1600681828680logo.jpeg" />
+                                src="https://viideon.s3.us-west-1.amazonaws.com/1600681828680logo.jpeg" />
                         </td>
                         <td width="25%" align="center">
                             <img width="24px" height="24px"
-                                src="https://videonpro.s3.us-west-1.amazonaws.com/1600681828680logo.jpeg" />
+                                src="https://viideon.s3.us-west-1.amazonaws.com/1600681828680logo.jpeg" />
                         </td>
                     </tr>
                 </table>
@@ -145,18 +145,18 @@ function getTemplate(templateName, logo, usenrame, primaryColor, secondaryColor,
                     <tr>
                         <td width="33%" align="center">
                             <p style=" font-size: 12px; padding-left: 5px;color: black;">
-                                &copy; 2020 VideonPro All Rights Reserved
+                                &copy; 2020 Viideon All Rights Reserved
                             </p>
                         </td>
                         <td width="33%" align="center"></td>
                         <td width="33%" align="center">
-                            <img src="https://videonpro.s3.amazonaws.com/assets/logo.png" style="
+                            <img src="https://viideon.s3.amazonaws.com/assets/logo.png" style="
                     width: 20px;
                     opacity: 1;
                     height: 20px;
                     margin-right: 5px;
                   " />
-                            <span style="color: black;">Sent with VideonPro</span>
+                            <span style="color: black;">Sent with Viideon</span>
                         </td>
                     </tr>
                 </table>
