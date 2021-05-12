@@ -997,13 +997,13 @@ module.exports.sleek = (
                                 <table align="center" style="border-spacing: 0; border-collapse: unset; display: inline-block;">
                                     <tr>
                                         <td style="width:22px; height:22px; padding-left:5px; padding-right:5px; border-right:1px solid #000;" width="38" height="22">
-                                            <a href="${youtubeUrl ? youtubeUrl : "https://youtube.com/" }"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/sleek/facebook.jpg" alt="facebook"></a>
+                                            <a href="${fbUrl ? fbUrl : "https://www.facebook.com/" }"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/sleek/facebook.jpg" alt="facebook"></a>
                                         </td>
                                         <td style="width:22px; height:22px; padding-left:5px; padding-right:5px; border-right:1px solid #000;" width="38" height="22">
-                                            <a href="${fbUrl ? fbUrl : "https://www.facebook.com/" }"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/sleek/twitter.jpg" alt="twitter"></a>
+                                            <a href="${twitterUrl ? twitterUrl : "https://twitter.com/" }"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/sleek/twitter.jpg" alt="twitter"></a>
                                         </td>
                                         <td style="width:22px; height:22px; padding-left:5px; padding-right:5px;" width="38" height="22">
-                                            <a href="${twitterUrl ? twitterUrl : "https://twitter.com/" }"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/sleek/linkedin.jpg" alt="linkedin"></a>
+                                            <a href="${linkedinUrl ? linkedinUrl : "https://www.linkedin.com/"}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/sleek/linkedin.jpg" alt="linkedin"></a>
                                         </td>
                                     </tr>
                                 </table>
@@ -1419,13 +1419,13 @@ module.exports.streamlined = (
                                     <table align="center" style="border-spacing: 0; display: inline-block;border-collapse: unset;">
                                         <tr>
                                             <td style="width:22px; height:22px; padding-left:5px; padding-right:5px;" width="38" height="22">
-                                                <a href="${ youtubeUrl ? youtubeUrl : "https://youtube.com/" }"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/streamlined/facebook.jpg" alt="facebook"></a>
+                                                <a href="${ fbUrl ? fbUrl : "https://www.facebook.com/" }"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/streamlined/facebook.jpg" alt="facebook"></a>
                                             </td>
                                             <td style="width:22px; height:22px; padding-left:5px; padding-right:5px;" width="38" height="22">
-                                                <a href="${ fbUrl ? fbUrl : "https://www.facebook.com/" }"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/streamlined/twitter.jpg" alt="twitter"></a>
+                                                <a href="${ twitterUrl ? twitterUrl : "https://twitter.com/" }"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/streamlined/twitter.jpg" alt="twitter"></a>
                                             </td>
                                             <td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
-                                                <a href="${ twitterUrl ? twitterUrl : "https://twitter.com/" }"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/streamlined/youtube.jpg" alt="youtube"></a>
+                                                <a href="${ youtubeUrl ? youtubeUrl : "https://youtube.com/" }"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/streamlined/youtube.jpg" alt="youtube"></a>
                                             </td>
                                             <td style="width:22px; height:22px; padding-left:5px; padding-right:5px;" width="38" height="22">
                                                 <a href="${ linkedinUrl ? linkedinUrl : "https://www.linkedin.com/" }"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/streamlined/linkedin.jpg" alt="linkedin"></a>
@@ -1584,13 +1584,13 @@ module.exports.simple_blue = (
                                 <table align="center" style="border-spacing: 0;border-collapse: unset;display: inline-block;">
                                     <tr>
                                         <td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
-                                            <a href="${youtubeUrl ? youtubeUrl : "https://youtube.com/"}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/simple-blue/facebook.jpg" alt="facebook"></a>
+                                            <a href="${fbUrl ? fbUrl : "https://www.facebook.com/"}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/simple-blue/facebook.jpg" alt="facebook"></a>
                                         </td>
                                         <td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
-                                            <a href="${fbUrl ? fbUrl : "https://www.facebook.com/"}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/simple-blue/twitter.jpg" alt="twitter"></a>
+                                            <a href="${twitterUrl ? twitterUrl : "https://twitter.com/"}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/simple-blue/twitter.jpg" alt="twitter"></a>
                                         </td>
                                         <td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
-                                            <a href="${twitterUrl ? twitterUrl : "https://twitter.com/"}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/simple-blue/youtube.jpg" alt="youtube"></a>
+                                            <a href="${youtubeUrl ? youtubeUrl : "https://youtube.com/"}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/simple-blue/youtube.jpg" alt="youtube"></a>
                                         </td>
                                         <td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
                                             <a href="${linkedinUrl ? linkedinUrl : "https://www.linkedin.com/"}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/simple-blue/linkedin.jpg" alt="linkedin"></a>
