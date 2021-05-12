@@ -1042,62 +1042,49 @@ module.exports.sleek2 = (
   linkedinUrl
 ) => {
   return `
-    <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-    <html>
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <meta http-equiv="Content-Style-Type" content="text/css">
-        <title></title>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <meta name="Generator" content="Cocoa HTML Writer">
-        <meta name="CocoaVersion" content="1894.6">
-        <style type="text/css">
-            .emailTemplatethumbnailWrapper {
-                ${thumbnail && "background-image: url(${thumbnail});"}
-            }
-        </style>
-    </head>
-    
-    <body ">
-        <table align=" center" cellpadding="0" cellspacing="0" width="700">
-        
-       
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="Content-Style-Type" content="text/css">
+    <title></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta name="Generator" content="Cocoa HTML Writer">
+    <meta name="CocoaVersion" content="1894.6">
+    <style type="text/css">
+        .emailTemplatethumbnailWrapper {
+            ${thumbnail && "background-image: url(${thumbnail});"}
+        }
+    </style>
+</head>
+
+<body>
+    <table align="center" cellpadding="0" cellspacing="0" width="600">
         <tr align="center">
             <td>
                 <table class="emailTemplatethumbnailWrapper" width=" 100%" cellspacing="0" cellpadding="0" width="70%"
                     style="background: #4d4d4d;max-width: 400px;">
                     <tr align="center">
                         <td>
-                            <img style="width: 50%; height:30vh"
-                                src="https://viideon.s3.us-west-1.amazonaws.com/1617884192165logo.jpeg" />
-                            
+                            <img style="width: 50%; height:30vh" src="https://viideon.s3.us-west-1.amazonaws.com/1617884192165logo.jpeg" />
                         </td>
                     </tr>
                 </table>
             </td>
         </tr>
-       
+    
         <tr align="center">
             <td align="center">
-    
                 <a href="${process.env.APP_DOMAIN}/watch/${id}/cta">
-                    <p style="margin: 0px;color: black; font-size: 30px;
-                    font-weight: bold;
-                    margin-bottom: 5px;
-                    max-width: 300px;
-                    width: 100%;
-                    
-                    cursor: pointer;">Watch this Video!</p>
+                    <p style="margin: 0px;color: black; font-size: 30px; font-weight: bold; margin-bottom: 5px; max-width: 300px; width: 100%; cursor: pointer;">Watch this Video!</p>
                 </a>
             </td>
         </tr>
-        
-        </table>
-    </body>
-    
-    </html>
+    </table>
+</body>
+</html>
     `;
 };
 
