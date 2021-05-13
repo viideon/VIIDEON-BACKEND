@@ -362,201 +362,161 @@ module.exports.modernSimple = (
   description = false
 ) => {
   return `
-  <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-  <html>
-  <head>
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-      <meta http-equiv="Content-Style-Type" content="text/css">
-      <title></title>
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-      <meta name="Generator" content="Cocoa HTML Writer">
-      <meta name="CocoaVersion" content="1894.6">
-      <style type="text/css">
-          .emailTemplatethumbnailWrapper {
-              ${thumbnail && "background-image: url(${thumbnail});"}
-          }
-          table{
-              border-collapse: unset;
-          }
-      </style>
-  </head>
-  
-  <body ">
-      <table align=" center" cellpadding="0" cellspacing="0" width="700">
-      <tr>
-          <td>
-              <table align="center" cellpadding="0" cellspacing="0" width="100%">
-                  <tr align="left">
-                      <td style="
-                            padding-left: 20px;
-                            background-color: white;
-                            display: -webkit-box;
-                            -webkit-box-align: center;
-                            -webkit-box-pack: center;
-                            min-width: 60%;
-              height: 80%;
-              border-bottom: 2px solid black;
-                          ">
-                          <img src="${
-                            logo
-                              ? logo
-                              : "https://viideon.s3.us-west-1.amazonaws.com/1617972064558logo.jpeg"
-                          }"
-                              style="width: 40px; height: 40px; opacity: 1;" />
-                          <h1 style="
-                              padding-bottom: 0px;
-                              margin-left: 3%;
-                              font-weight: bolder;
-                              font-size: 30px;
-                              color: black;
-                            ">
-                              Viideon
-                          </h1>
-                      </td>
-                  </tr>
-              </table>
-          </td>
-      </tr>
-      <tr align="center">
-          <p style="color: black;">Be a part of our growing team!</p>
-      </tr>
-      <tr align="center">
-          <td>
-              <table class="emailTemplatethumbnailWrapper" width=" 100%" cellspacing="0" cellpadding="0" width="70%"
-                  style="background: #4d4d4d;max-width: 400px;">
-                  <tr align="center">
-                      <td>
-                          <img style="width: 100%; height:30vh"
-                              src="${thumbnail}" />
-                          
-                      </td>
-                  </tr>
-              </table>
-          </td>
-      </tr>
-      <tr align="center">
-          <td align="center" style="padding: 30px 0px 30px 0px">
-              <p style="margin: 0px;color: black;">
-                  ${
-                    text
-                      ? text
-                      : "Viideon is a video communication platform designed for sale and marketing leaders."
-                  }
-              </p>
-              <p style="margin: 0px;color: black;">
-                   Learn more at
-                  <a style="
-                    text-decoration: none;
-                    color: black;
-                    font-weight: bold;
-                    cursor: pointer;
-                  ">viideon.com</a>
-              </p>
-          </td>
-      </tr>
-      
-      <tr align="center">
-          <td align="center">
-  
-              <a href="${process.env.APP_DOMAIN}/watch/${id}/cta">
-                  <p style="margin: 0px;color: black; font-size: 30px;
-                  font-weight: bold;
-                  margin-bottom: 5px;
-                  max-width: 300px;
-                  width: 100%;
-                  border-top: 1.5px solid black;
-                  border-bottom: 1.5px solid black;
-                  cursor: pointer;">${description}</p>
-              </a>
-          </td>
-      </tr>
-      <tr align="center">
-          <td align="center" style="padding: 15px 0px 15px 0px">
-  
-              <img style="vertical-align: middle;
-              width: 50px;
-              height: 50px;
-              border-radius: 50%;" src="${url}">
-              <p style="margin-bottom: 0;
-              font-size: 16px;
-              font-weight: bold;color: black;">${userName}</p>
-              
-          </td>
-      </tr>
-      <tr align="center">
-          <td style="padding: 10px 0px 20px 0px;">
-              <table width="180px" cellspacing="0" cellpadding="0">
-                  <tr>
-                      <td width="25%" align="center" style="border-right: 1.5px solid">
-                          <a href="${
-                            youtubeUrl ? youtubeUrl : "https://youtube.com/"
-                          }">
-                              <img width="24px" height="24px"
-                              src="https://cdn.iconscout.com/icon/free/png-64/youtube-85-226402.png" />
-                          </a>
-  
-                      </td>
-                      <td style="border-right: 1.5px solid" width="25%" align="center">
-                          <a href="${
-                            fbUrl ? fbUrl : "https://www.facebook.com/"
-                          }">
-                          <img width="24px" height="24px"
-                          src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Facebook_icon.svg/1200px-Facebook_icon.svg.png"/>
-                      </a>
-                              </td>
-                      <td style="border-right: 1.5px solid" width="25%" align="center">
-                          <a href="${
-                            twitterUrl ? twitterUrl : "https://twitter.com/"
-                          }">
-                          <img width="24px" height="24px"
-                              src="https://viideon.s3.us-west-1.amazonaws.com/1600681828680logo.jpeg" /></a>
-                      </td>
-                      <td width="25%" align="center">
-                          <a href="${
-                            linkedinUrl
-                              ? linkedinUrl
-                              : "https://www.linkedin.com/"
-                          }">
-                          <img width="24px" height="24px"
-                              src="https://viideon.s3.us-west-1.amazonaws.com/1617967455922logo.jpeg" /></a>
-                      </td>
-                  </tr>
-              </table>
-          </td>
-      </tr>
-      <tr>
-          <td style="padding: 20px 0px 20px 0px;border-top: 2px solid black;">
-              <table width="100%" cellspacing="0" cellpadding="0">
-                  <tr>
-                      <td width="33%" align="center">
-                          <p style=" font-size: 12px; padding-left: 5px;color: black;">
-                              &copy; 2021 Viideon All Rights Reserved
-                          </p>
-                      </td>
-                      <td width="33%" align="center"></td>
-                      <td width="33%" align="center">
-                          <img src="${
-                            logo
-                              ? logo
-                              : "https://viideon.s3.us-west-1.amazonaws.com/1617972064558logo.jpeg"
-                          }" style="
-                  width: 20px;
-                  opacity: 1;
-                  height: 20px;
-                  margin-right: 5px;
-                " />
-                          <span style="color: black;">Sent with Videon</span>
-                      </td>
-                  </tr>
-              </table>
-          </td>
-      </tr>
-      </table>
-  </body>
-  
-  </html>
+<!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Trransitional//EN”   “http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd”>
+<html xmlns=”http://www.w3.org/1999/xhtml”>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            margin:0;
+            padding:0;
+            background: #ffffff;
+
+        }
+        table{
+            border-spacing: 0;
+        }
+        td{
+            padding:0;
+            font-size: 0px;
+        }
+        a{
+            font-size: 0px;
+        }
+        img{
+            border:0;
+        }
+        .wrapper{
+            width: 100%;
+            table-layout: fixed;
+            padding-bottom:0px;
+        }
+        .webkit{
+            max-width:600px;
+            background-color: #ffffff;
+        }
+        .outer{
+            Margin:0 auto;
+            width:100%;
+            max-width:600px;
+            border-spacing: 0;
+            font-family:sans-serif;
+            background-color: #ffffff;
+        }
+        .padding{
+            padding:40px;
+        }
+
+        @media screen and (max-width:600px){
+
+        }
+        @media screen and (max-width:400px){
+            .padding{
+                padding-left:10px!important;
+                padding-right:10px!important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <center class="wrapper">
+        <div class="webkit">
+            <table class="outer" align="center" width="100%" style="border-spacing: 0;border-collapse:unset;">
+                <tr>
+                    <td style="background: #fff;" align="center">
+                        <a href=""><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/modern-simple/header.jpg" alt="" width="100%" style="width:100%; max-width:100%;"></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="">
+                            <img src="${ thumbnail ?
+                                         thumbnail :
+                                         'https://viideon.s3-us-west-1.amazonaws.com/email-templates/modern-simple/video.jpg' }" alt="" width="600" style="max-width:600px; width:100%;" >
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center" style="background: #ffffff;">
+                        <table width="100%" style=" border-spacing: 0;border-collapse:unset;" class="padding">
+                            <tr>
+                                <td>
+                                    <table width="100%" style="max-width:100%; border-spacing: 0; border-collapse:unset;">
+                                      <tr>
+                                            <td>
+                                                <p style="font-size:12px; color:#333333; text-align: center; padding-bottom:30px;">
+                                                    ${ text ?
+                                                       text :
+                                                       "Viideon is a video communication platform designed for sale and marketing leaders."
+                                                    }
+                                                </p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td align="center" style="text-align: center; padding-bottom:30px;">
+                                                <a href="${process.env.APP_DOMAIN}/watch/${id}/cta"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/modern-simple/watch-btn.jpg" alt=""></a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td align="center" height="2" width="100%" style="border-top:2px solid #4d4d4d ">/td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            
+                        </table>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td width="100%" align="center" style="background: #ffffff; padding-bottom:30px; width:100%" >
+                        <table width="100%" style="border-spacing:0; border-collapse:unset;" >
+                            <tr>
+                                <td>
+                                    <p style="font-size:11px; color:#333333; text-align: center; padding-bottom:10px; font-weight:bold;">Connect with me on</p>
+                                </td>
+                            </tr>
+                            <tr>
+                            <td style="padding-bottom:50px;" align="center">
+                                <table align="center" style="border-spacing: 0; display: inline-block; border-collapse:unset;">
+                                    <tr>
+                                        <td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
+                                            <a href="${ fbUrl ? fbUrl : "https://www.facebook.com/" }"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/modern-simple/facebook.jpg" alt="facebook"></a>
+                                        </td>
+                                        <td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
+                                            <a href="${ twitterUrl ? twitterUrl : "https://twitter.com/" }"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/modern-simple/twitter.jpg" alt="twitter"></a>
+                                        </td>
+                                        <td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
+                                            <a href="${ youtubeUrl ? youtubeUrl : "https://youtube.com/" }"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/modern-simple/youtube.jpg" alt="youtube"></a>
+                                        </td>
+                                        <td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
+                                            <a href="${ linkedinUrl ? linkedinUrl : "https://www.linkedin.com/" }"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/modern-simple/linkedin.jpg" alt="linkedin"></a>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: center; padding-bottom:6px;">
+                                    <a href=""><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/modern-simple/logo-footer.jpg" alt=""></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="font-size:9px; color:#333333; text-align: center;">© 2021 VideonPro All Rights Reserved</p>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </center>
+</body>
+</html>
   `;
 };
 
