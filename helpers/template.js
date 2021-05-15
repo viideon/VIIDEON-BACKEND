@@ -786,7 +786,9 @@ module.exports.sleek = (
                         <table width="" style="border-spacing: 0;border-collapse: unset;">
                             <tr>
                                 <td>
-                                    <img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/sleek/person.jpg" alt="" width="61" style="width:61px; max-width:61px;">
+                                    <img src="${ url ?
+                                                 url : 
+                                                 'https://viideon.s3-us-west-1.amazonaws.com/user-avatar.png'}" alt="" width="61" style="width:61px; max-width:61px;">
                                 </td>
                                 <td align="left" valign="middle" style="padding-left:10px;">
                                     <h3 style="color:#000000; font-size:20px; margin:0px;">${userName}</h3>
@@ -1040,7 +1042,9 @@ module.exports.social_business = (
                         <table width="" style="border-spacing: 0;border-collapse: unset;">
                             <tr>
                                 <td>
-                                    <img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/social-business/person.jpg" alt="" width="77" style="width:77px; max-width:77px;">
+                                    <img src="${ url ?
+                                                 url : 
+                                                 'https://viideon.s3-us-west-1.amazonaws.com/user-avatar.png'}" alt="" width="77" style="width:77px; max-width:77px;">
                                 </td>
                                 <td align="left" valign="middle" style="padding-left:10px;">
                                     <h3 style="color:#3a94d2; font-size:24px; margin:0px;">${userName}</h3>
@@ -1594,7 +1598,9 @@ module.exports.social_impact = (
                                     <table width="" style="border-spacing: 0;border-collapse: unset;">
                                         <tr>
                                             <td>
-                                                <img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/social-impact/person.jpg" alt="" width="83" style="width:83px; max-width:83px;">
+                                                <img src="${ url ?
+                                                             url : 
+                                                             'https://viideon.s3-us-west-1.amazonaws.com/user-avatar.png'}" alt="" width="83" style="width:83px; max-width:83px;">
                                             </td>
                                             <td align="left" valign="middle" style="padding-left:10px;">
                                                 <h3 style="color:#fdb415; font-size:24px; margin:0px;">${userName}</h3>
