@@ -23,9 +23,10 @@ module.exports.spreadTheme = (
   twitterUrl,
   youtubeUrl,
   linkedinUrl,
+  title = false,
   description = false
 ) => {
-  
+  console.log(description)
   return `
 <!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Trransitional//EN”   “http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd”>
 <html xmlns=”http://www.w3.org/1999/xhtml”>
@@ -105,6 +106,13 @@ module.exports.spreadTheme = (
                     </td>
                 </tr>
                 <tr>
+                    <td>
+                        <div>
+                            <h4 style="color:#000000; font-size:24px; font-weight:600; text-align: center; padding-top:10px; padding-bottom:10px; margin: 0;">${title}</h4>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
                     <td style="padding-bottom:13px">
                         <a href="javascript:;">
                             <img src="${ thumbnail ? 
@@ -119,8 +127,8 @@ module.exports.spreadTheme = (
                            <tr>
                                 <td>
                                     <p style="font-size:12px; color:#333333; text-align: center; padding-bottom:30px;">
-                                    ${ text ? 
-                                       text : 
+                                    ${ description ? 
+                                       description : 
                                        "Viideon is a video communication platform designed for sale and marketing leaders. Learn more at viideon.com"
                                     }
                                     </p>
@@ -196,6 +204,7 @@ module.exports.corporateLight = (
   twitterUrl,
   youtubeUrl,
   linkedinUrl,
+  title = false,
   description = false
 ) => {
   return `
@@ -270,6 +279,13 @@ module.exports.corporateLight = (
                     <td align="center" style="background: #eff3f4; padding:20px 0;">
                         <table width="100%" style="max-width:468px; background-color: #ffffff; border-spacing: 0;border-collapse: unset;">
                             <tr>
+                                <td>
+                                    <div>
+                                        <h4 style="color:#3a94d2; font-size:24px; font-weight:600; text-align: center; padding-top:10px; padding-bottom:10px; margin: 0;">${title}</h4>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
                                 <td style="padding: 15px 30px;">
                                     <a href="">
                                         <img src="${ thumbnail ?
@@ -281,8 +297,8 @@ module.exports.corporateLight = (
                             <tr>
                                 <td style="padding: 0 30px;">
                                     <p style="font-size:12px; color:#333333; text-align: center; padding-bottom:30px;">
-                                        ${ text ?
-                                           text :
+                                        ${ description ?
+                                           description :
                                            "Viideon is a video communication platform designed for sale and marketing leaders. Learn more at viideon.com"
                                         }
                                     </p>
@@ -359,6 +375,7 @@ module.exports.modernSimple = (
   twitterUrl,
   youtubeUrl,
   linkedinUrl,
+  title = false,
   description = false
 ) => {
   return `
@@ -432,6 +449,13 @@ module.exports.modernSimple = (
                 </tr>
                 <tr>
                     <td>
+                        <div>
+                            <h4 style="color:#ffffff; background: #333333; font-size:24px; font-weight:600; text-align: center; padding-top:10px; padding-bottom:10px; margin: 0;">${title}</h4>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
                         <a href="">
                             <img src="${ thumbnail ?
                                          thumbnail :
@@ -445,11 +469,11 @@ module.exports.modernSimple = (
                             <tr>
                                 <td>
                                     <table width="100%" style="max-width:100%; border-spacing: 0; border-collapse:unset;">
-                                      <tr>
+                                        <tr>
                                             <td>
                                                 <p style="font-size:12px; color:#333333; text-align: center; padding-bottom:30px;">
-                                                    ${ text ?
-                                                       text :
+                                                    ${ description ?
+                                                       description :
                                                        "Viideon is a video communication platform designed for sale and marketing leaders."
                                                     }
                                                 </p>
@@ -461,12 +485,11 @@ module.exports.modernSimple = (
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td align="center" height="2" width="100%" style="border-top:2px solid #4d4d4d ">/td>
+                                            <td align="center" height="2" width="100%" style="border-top:2px solid #4d4d4d "></td>
                                         </tr>
                                     </table>
                                 </td>
                             </tr>
-                            
                         </table>
                     </td>
                 </tr>
@@ -480,24 +503,24 @@ module.exports.modernSimple = (
                                 </td>
                             </tr>
                             <tr>
-                            <td style="padding-bottom:50px;" align="center">
-                                <table align="center" style="border-spacing: 0; display: inline-block; border-collapse:unset;">
-                                    <tr>
-                                        <td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
-                                            <a href="${ fbUrl ? fbUrl : "https://www.facebook.com/" }"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/modern-simple/facebook.jpg" alt="facebook"></a>
-                                        </td>
-                                        <td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
-                                            <a href="${ twitterUrl ? twitterUrl : "https://twitter.com/" }"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/modern-simple/twitter.jpg" alt="twitter"></a>
-                                        </td>
-                                        <td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
-                                            <a href="${ youtubeUrl ? youtubeUrl : "https://youtube.com/" }"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/modern-simple/youtube.jpg" alt="youtube"></a>
-                                        </td>
-                                        <td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
-                                            <a href="${ linkedinUrl ? linkedinUrl : "https://www.linkedin.com/" }"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/modern-simple/linkedin.jpg" alt="linkedin"></a>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
+                                <td style="padding-bottom:50px;" align="center">
+                                    <table align="center" style="border-spacing: 0; display: inline-block; border-collapse:unset;">
+                                        <tr>
+                                            <td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
+                                                <a href="${ fbUrl ? fbUrl : "https://www.facebook.com/" }"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/modern-simple/facebook.jpg" alt="facebook"></a>
+                                            </td>
+                                            <td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
+                                                <a href="${ twitterUrl ? twitterUrl : "https://twitter.com/" }"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/modern-simple/twitter.jpg" alt="twitter"></a>
+                                            </td>
+                                            <td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
+                                                <a href="${ youtubeUrl ? youtubeUrl : "https://youtube.com/" }"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/modern-simple/youtube.jpg" alt="youtube"></a>
+                                            </td>
+                                            <td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
+                                                <a href="${ linkedinUrl ? linkedinUrl : "https://www.linkedin.com/" }"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/modern-simple/linkedin.jpg" alt="linkedin"></a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
                             </tr>
                             <tr>
                                 <td style="text-align: center; padding-bottom:6px;">
@@ -531,6 +554,7 @@ module.exports.classic_dark = (
   twitterUrl = false,
   youtubeUrl = false,
   linkedinUrl = false,
+  title = false,
   description = false
 ) => {
   return `
@@ -596,6 +620,13 @@ module.exports.classic_dark = (
                     <td align="center" style="background: #1a1a1a; padding-bottom:30px;">
                         <table width="" style="max-width:408px;border-collapse: unset;">
                             <tr>
+                                <td>
+                                    <div>
+                                        <h4 style="color:#ffffff; font-size:24px; font-weight:600; text-align: center; padding-top:10px; padding-bottom:10px; margin: 0;">${title}</h4>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
                                 <td style="padding-bottom:13px">
                                     <a href="">
                                         <img src="${ thumbnail ?
@@ -607,8 +638,8 @@ module.exports.classic_dark = (
                             <tr>
                                 <td class="padding">
                                     <p style="font-size:12px; color:#ffffff; text-align: center; padding-bottom:30px;">
-                                        ${ text ?
-                                           text :
+                                        ${ description ?
+                                           description :
                                            "Viideon is a video communication platform designed for sale and marketing leaders."
                                         }
                                     </p>
@@ -676,6 +707,7 @@ module.exports.sleek = (
   twitterUrl,
   youtubeUrl,
   linkedinUrl,
+  title = false,
   description = false,
 ) => {
  
@@ -776,6 +808,13 @@ module.exports.sleek = (
                     <td align="center" style="background: #ffffff;">
                         <table align="center" style="max-width:408px; background-color: #ffffff; border-spacing: 0; border-collapse: unset;">
                             <tr>
+                                <td>
+                                    <div>
+                                    <h4 style="color:#000000; font-size:24px; font-weight:600; text-align: center; padding-top:10px; padding-bottom:10px; margin: 0;">${title}</h4>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
                                 <td style="padding-bottom:13px">
                                     <a href="javascript:;">
                                         <img src="${ thumbnail ?
@@ -787,8 +826,8 @@ module.exports.sleek = (
                             <tr>
                                 <td>
                                     <p style="font-size:12px; color:#333333; text-align: center; padding-bottom:30px;">
-                                        ${ text ?
-                                           text :
+                                        ${ description ?
+                                           description :
                                            "Viideon is a video communication platform designed for sale and marketing leaders."
                                         }
                                     </p>
@@ -918,6 +957,7 @@ module.exports.social_business = (
   twitterUrl,
   youtubeUrl,
   linkedinUrl,
+  title = false,
   description = false
 ) => {
   return `
@@ -1018,8 +1058,15 @@ module.exports.social_business = (
                                 </td>
                             </tr>
                             <tr>
-                                <td align="center" style="background:#3a94d2; border-left:2px solid #999999; border-right:2px solid #999999;" class="padding">
+                                <td align="center" style="background:#3a94d2; border-left:2px solid #999999; border-right:2px solid #999999; padding: 0 40px 20px;">
                                     <table width="100%" style="max-width:408px; border-spacing: 0; border-collapse: unset;">
+                                        <tr>
+                                            <td>
+                                                <div>
+                                                    <h4 style="color:#ffffff; font-size:24px; font-weight:600; text-align: center; padding-top:10px; padding-bottom:10px; margin: 0;">${title}</h4>
+                                                </div>
+                                            </td>
+                                        </tr>
                                         <tr>
                                             <td style="padding-bottom:13px">
                                                 <a href="">
@@ -1032,8 +1079,8 @@ module.exports.social_business = (
                                         <tr>
                                             <td>
                                                 <p style="font-size:12px; color:#ffffff; text-align: center; padding-bottom:30px;">
-                                                    ${ text ? 
-                                                       text :
+                                                    ${ description ? 
+                                                       description :
                                                        "Viideon is a video communication platform designed for sale and marketing leaders. Learn more at viideon.com"
                                                     }
                                                 </p>
@@ -1115,6 +1162,7 @@ module.exports.streamlined = (
   twitterUrl,
   youtubeUrl,
   linkedinUrl,
+  title = false,
   description = false
 ) => {
   return `
@@ -1195,6 +1243,13 @@ module.exports.streamlined = (
                 </tr>
                 <tr>
                     <td>
+                        <div>
+                            <h4 style="color:#ffffff; font-size:24px; font-weight:600; text-align: center; padding-top:10px; padding-bottom:10px; margin: 0; background: #3a94d2;">${title}</h4>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
                         <a href="javascript:;">
                             <img src="${ thumbnail ?
                                          thumbnail :
@@ -1208,8 +1263,8 @@ module.exports.streamlined = (
                            <tr>
                                 <td>
                                     <p style="font-size:12px; color:#ffffff; text-align: center; padding-bottom:30px;">
-                                        ${ text ?
-                                           text :
+                                        ${ description ?
+                                           description :
                                            "Viideon is a video communication platform designed for sale and marketing leaders. Learn more at viideon.com."
                                         }
                                     </p>
@@ -1285,6 +1340,7 @@ module.exports.simple_blue = (
   twitterUrl,
   youtubeUrl,
   linkedinUrl,
+  title = false,
   description = false
 ) => {
   return `
@@ -1358,8 +1414,15 @@ module.exports.simple_blue = (
                     </td>
                 </tr>
                 <tr>
-                    <td align="center" style="background: #ffffff; padding: 40px;">
+                    <td align="center" style="background: #ffffff; padding: 0 40px 40px;">
                         <table width="100%" style="max-width:408px; background-color: #ffffff; border-spacing: 0;border-collapse: unset;">
+                            <tr>
+                                <td>
+                                    <div>
+                                        <h4 style="color:#3a94d2; font-size:24px; font-weight: 600; text-align: center; padding-top:10px; padding-bottom:10px; margin: 0;">${title}</h4>
+                                    </div>
+                                </td>
+                            </tr>
                             <tr>
                                 <td style="padding-bottom:13px">
                                     <a href="javascript:;">
@@ -1372,8 +1435,8 @@ module.exports.simple_blue = (
                             <tr>
                                 <td>
                                     <p style="font-size:12px; color:#333333; text-align: center; padding-bottom:30px;">
-                                        ${ text ?
-                                           text : 
+                                        ${ description ?
+                                           description : 
                                            "Viideon is a video communication platform designed for sale and marketing leaders. Learn more at viideon.com"
                                         }
                                     </p>
@@ -1450,6 +1513,7 @@ module.exports.social_impact = (
   twitterUrl,
   youtubeUrl,
   linkedinUrl,
+  title = false,
   description = false
 ) => {
   return `
@@ -1540,6 +1604,13 @@ module.exports.social_impact = (
                                 </td>
                             </tr>
                             <tr>
+                                <td>
+                                    <div>
+                                        <h4 style="color:#fdb515; font-size:24px; font-weight:600; text-align: center; padding-top:10px; padding-bottom:10px; margin: 0;">${title}</h4>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
                                 <td style="padding-bottom:13px">
                                     <a href="">
                                         <img src="${ thumbnail ?
@@ -1551,8 +1622,8 @@ module.exports.social_impact = (
                             <tr>
                                 <td>
                                     <p style="font-size:12px; color:#fdb415; text-align: center; padding-bottom:30px; font-weight:bold;">
-                                        ${ text ? 
-                                           text :
+                                        ${ description ? 
+                                           description :
                                            "Viideon is a video communication platform designed for sale and marketing leaders."
                                         }
                                     </p>
@@ -1627,6 +1698,7 @@ module.exports.ocean = (
   twitterUrl,
   youtubeUrl,
   linkedinUrl,
+  title = false,
   description = false
 ) => {
   return `
@@ -1712,8 +1784,15 @@ module.exports.ocean = (
                                 </td>
                             </tr>
                             <tr>
-                                <td align="center" style="background:#e6e6e6;" class="padding">
+                                <td align="center" style="background:#e6e6e6; padding: 0 40px;">
                                     <table width="100%" style="max-width:408px; border-spacing: 0;border-collapse: unset;">
+                                        <tr>
+                                            <td>
+                                                <div>
+                                                    <h4 style="color:#0096bb; font-size:24px; font-weight:600; text-align: center; padding-top:10px; padding-bottom:10px; margin: 0;">${title}</h4>
+                                                </div>
+                                            </td>
+                                        </tr>
                                         <tr>
                                             <td style="padding-bottom:13px">
                                                 <a href="">
@@ -1725,9 +1804,9 @@ module.exports.ocean = (
                                         </tr>
                                         <tr>
                                             <td>
-                                                <p style="font-size:12px; color:#333333; text-align: justify; padding-bottom:30px;">
-                                                    ${ text ?
-                                                       text :
+                                                <p style="font-size:12px; color:#333333; text-align: center; padding-bottom:30px;">
+                                                    ${ description ?
+                                                       description :
                                                        "Viideon is a video communication platform designed for sale and marketing leaders. Learn more at viideon.com"
                                                   }
                                                 </p>

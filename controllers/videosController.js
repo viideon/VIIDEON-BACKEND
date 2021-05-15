@@ -16,7 +16,7 @@ module.exports.getTemplate = async (req, res) => {
     const { userId, _id, eMailTemplate } = req.body;
 
     const video = await videoService.findVideoById(_id);
-    const { thumbnail } = video;
+    const { thumbnail, title, description } = video;
     let themeName = eMailTemplate;
     const user = await userService.getUserById(userId);
     const { userName, url } = user;
@@ -29,6 +29,7 @@ module.exports.getTemplate = async (req, res) => {
       );
     }
     let templateIs = "";
+    
     if (settings.length === 0) {
       if (themeName === "Spread") {
 
@@ -42,7 +43,9 @@ module.exports.getTemplate = async (req, res) => {
           false,
           false,
           false,
-          false
+          false,
+          title,
+          description
         );
       }
       if (themeName === "Corporate Light") {
@@ -56,7 +59,9 @@ module.exports.getTemplate = async (req, res) => {
           false,
           false,
           false,
-          false
+          false,
+          title,
+          description
         );
       }
      
@@ -71,7 +76,9 @@ module.exports.getTemplate = async (req, res) => {
           false,
           false,
           false,
-          false
+          false,
+          title,
+          description
         );
       }
       if (themeName === "Streamlined") {
@@ -85,7 +92,9 @@ module.exports.getTemplate = async (req, res) => {
           false,
           false,
           false,
-          false
+          false,
+          title,
+          description
         );
       }
       if (themeName === "Simple Blue") {
@@ -99,7 +108,9 @@ module.exports.getTemplate = async (req, res) => {
           false,
           false,
           false,
-          false
+          false,
+          title,
+          description
         );
       }
       if (themeName === "Sleek") {
@@ -113,7 +124,9 @@ module.exports.getTemplate = async (req, res) => {
           false,
           false,
           false,
-          false
+          false,
+          title,
+          description
         );
       }
       if (themeName === "Social Business") {
@@ -127,7 +140,9 @@ module.exports.getTemplate = async (req, res) => {
           false,
           false,
           false,
-          false
+          false,
+          title,
+          description
         );
       }
       if (themeName === "Social Impact") {
@@ -141,7 +156,9 @@ module.exports.getTemplate = async (req, res) => {
           false,
           false,
           false,
-          false
+          false,
+          title,
+          description
         );
       }
       if (themeName === "Clasic Dark") {
@@ -155,7 +172,9 @@ module.exports.getTemplate = async (req, res) => {
           false,
           false,
           false,
-          false
+          false,
+          title,
+          description
         );
       }
       if (themeName === "Ocean") {
@@ -169,9 +188,12 @@ module.exports.getTemplate = async (req, res) => {
           false,
           false,
           false,
-          false
+          false,
+          title,
+          description
         );
       }
+      
       return res.status(200).json({ message: "Success", templateIs });
     }
     let {
@@ -182,6 +204,8 @@ module.exports.getTemplate = async (req, res) => {
       youtubeUrl,
       linkedinUrl,
     } = settings[0];
+
+    console.log(text)
 
     if (themeName === "Spread") {
 
@@ -195,7 +219,9 @@ module.exports.getTemplate = async (req, res) => {
         fbUrl,
         twitterUrl,
         youtubeUrl,
-        linkedinUrl
+        linkedinUrl,
+        title,
+        description
       );
     }
     if (themeName === "Corporate Light") {
@@ -209,7 +235,9 @@ module.exports.getTemplate = async (req, res) => {
         fbUrl,
         twitterUrl,
         youtubeUrl,
-        linkedinUrl
+        linkedinUrl,
+        title,
+        description
       );
     }
    
@@ -225,7 +253,9 @@ module.exports.getTemplate = async (req, res) => {
         fbUrl,
         twitterUrl,
         youtubeUrl,
-        linkedinUrl
+        linkedinUrl,
+        title,
+        description
       );
     }
     if (themeName === "Streamlined") {
@@ -240,7 +270,9 @@ module.exports.getTemplate = async (req, res) => {
         fbUrl,
         twitterUrl,
         youtubeUrl,
-        linkedinUrl
+        linkedinUrl,
+        title,
+        description
       );
     }
     if (themeName === "Simple Blue") {
@@ -254,7 +286,9 @@ module.exports.getTemplate = async (req, res) => {
         fbUrl,
         twitterUrl,
         youtubeUrl,
-        linkedinUrl
+        linkedinUrl,
+        title,
+        description
       );
     }
     if (themeName === "Sleek") {
@@ -268,7 +302,9 @@ module.exports.getTemplate = async (req, res) => {
         fbUrl,
         twitterUrl,
         youtubeUrl,
-        linkedinUrl
+        linkedinUrl,
+        title,
+        description
       );
     }
     if (themeName === "Social Business") {
@@ -282,7 +318,9 @@ module.exports.getTemplate = async (req, res) => {
         fbUrl,
         twitterUrl,
         youtubeUrl,
-        linkedinUrl
+        linkedinUrl,
+        title,
+        description
       );
     }
     if (themeName === "Social Impact") {
@@ -296,7 +334,9 @@ module.exports.getTemplate = async (req, res) => {
         fbUrl,
         twitterUrl,
         youtubeUrl,
-        linkedinUrl
+        linkedinUrl,
+        title,
+        description
       );
     }
     if (themeName === "Clasic Dark") {
@@ -310,7 +350,9 @@ module.exports.getTemplate = async (req, res) => {
         fbUrl,
         twitterUrl,
         youtubeUrl,
-        linkedinUrl
+        linkedinUrl,
+        title,
+        description
       );
     }
     if (themeName === "Ocean") {
@@ -325,7 +367,9 @@ module.exports.getTemplate = async (req, res) => {
         fbUrl,
         twitterUrl,
         youtubeUrl,
-        linkedinUrl
+        linkedinUrl,
+        title,
+        description
       );
     }
 

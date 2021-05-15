@@ -81,9 +81,8 @@ module.exports.sendWithGmail = async (req, res) => {
     const fromEmail = tokenObjects[0].userEmail;
 
     const video = await videoService.findVideoById(videoId);
-    const { thumbnail, eMailTemplate, description } = video;
+    const { thumbnail, eMailTemplate, title, description } = video;
 
-  
     const user = await userService.getUserById(userId);
     const { userName, url } = user;
     
@@ -112,10 +111,13 @@ module.exports.sendWithGmail = async (req, res) => {
           false,
           false,
           false,
+          false,
+          false,
           false
         );
       }
       if (themeName === "Spread") {
+        console.log('123')
         templateString = await template.spreadTheme(
           videoId,
           thumbnail,
@@ -127,6 +129,7 @@ module.exports.sendWithGmail = async (req, res) => {
           false,
           false,
           false,
+          title,
           description,
         );
       }
@@ -142,6 +145,7 @@ module.exports.sendWithGmail = async (req, res) => {
           false,
           false,
           false,
+          title,
           description,
         );
       }
@@ -158,6 +162,7 @@ module.exports.sendWithGmail = async (req, res) => {
           false,
           false,
           false,
+          title,
           description,
         );
       }
@@ -173,6 +178,7 @@ module.exports.sendWithGmail = async (req, res) => {
           false,
           false,
           false,
+          title,
           description,
         );
       }
@@ -188,6 +194,7 @@ module.exports.sendWithGmail = async (req, res) => {
           false,
           false,
           false,
+          title,
           description,
         );
       }
@@ -203,6 +210,7 @@ module.exports.sendWithGmail = async (req, res) => {
           false,
           false,
           false,
+          title,
           description,
         );
       }
@@ -218,6 +226,7 @@ module.exports.sendWithGmail = async (req, res) => {
           false,
           false,
           false,
+          title,
           description,
         );
       }
@@ -233,6 +242,7 @@ module.exports.sendWithGmail = async (req, res) => {
           false,
           false,
           false,
+          title,
           description,
         );
       }
@@ -248,6 +258,7 @@ module.exports.sendWithGmail = async (req, res) => {
           false,
           false,
           false,
+          title,
           description,
         );
       }
@@ -263,6 +274,7 @@ module.exports.sendWithGmail = async (req, res) => {
           false,
           false,
           false,
+          title,
           description,
         );
       }
@@ -334,6 +346,7 @@ module.exports.sendWithGmail = async (req, res) => {
           twitterUrl,
           youtubeUrl,
           linkedinUrl,
+          title,
           description
         );
       }
@@ -344,7 +357,13 @@ module.exports.sendWithGmail = async (req, res) => {
           settings.logoUrl,
           settings.text,
           userName,
-          url
+          url,
+          false,
+          false,
+          false,
+          false,
+          title,
+          description
         );
       }
       if (themeName === "Modern Simple") {
@@ -352,7 +371,15 @@ module.exports.sendWithGmail = async (req, res) => {
           videoId,
           thumbnail,
           settings.logoUrl,
-          settings.text
+          settings.text,
+          userName,
+          url,
+          false,
+          false,
+          false,
+          false,
+          title,
+          description
         );
       }
       if (themeName === "Streamlined") {
@@ -362,7 +389,13 @@ module.exports.sendWithGmail = async (req, res) => {
           settings.logoUrl,
           settings.text,
           userName,
-          url
+          url,
+          false,
+          false,
+          false,
+          false,
+          title,
+          description
         );
       }
       if (themeName === "Simple Blue") {
@@ -372,7 +405,13 @@ module.exports.sendWithGmail = async (req, res) => {
           settings.logoUrl,
           settings.text,
           userName,
-          url
+          url,
+          false,
+          false,
+          false,
+          false,
+          title,
+          description
         );
       }
       if (themeName === "Sleek") {
@@ -382,7 +421,13 @@ module.exports.sendWithGmail = async (req, res) => {
           settings.logoUrl,
           settings.text,
           userName,
-          url
+          url,
+          false,
+          false,
+          false,
+          false,
+          title,
+          description
         );
       }
       if (themeName === "Social Business") {
@@ -392,7 +437,13 @@ module.exports.sendWithGmail = async (req, res) => {
           settings.logoUrl,
           settings.text,
           userName,
-          url
+          url,
+          false,
+          false,
+          false,
+          false,
+          title,
+          description
         );
       }
       if (themeName === "Social Impact") {
@@ -402,7 +453,13 @@ module.exports.sendWithGmail = async (req, res) => {
           settings.logoUrl,
           settings.text,
           userName,
-          url
+          url,
+          false,
+          false,
+          false,
+          false,
+          title,
+          description
         );
       }
       if (themeName === "Clasic Dark") {
@@ -410,7 +467,15 @@ module.exports.sendWithGmail = async (req, res) => {
           videoId,
           thumbnail,
           settings.logoUrl,
-          settings.text
+          settings.text,
+          userName,
+          url,
+          false,
+          false,
+          false,
+          false,
+          title,
+          description
         );
       }
       if (themeName === "Ocean") {
@@ -418,7 +483,15 @@ module.exports.sendWithGmail = async (req, res) => {
           videoId,
           thumbnail,
           settings.logoUrl,
-          settings.text
+          settings.text,
+          userName,
+          url,
+          false,
+          false,
+          false,
+          false,
+          title,
+          description
         );
       }
       authorize(sendMessage);
