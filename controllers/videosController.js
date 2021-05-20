@@ -19,8 +19,7 @@ module.exports.getTemplate = async (req, res) => {
     const { thumbnail, title, description } = video;
     let themeName = eMailTemplate;
     const user = await userService.getUserById(userId);
-    const { userName, url } = user;
-    let settings = { colors: {}, logoUrl: false, text: false };
+    const { userName, url, email, mobileNumber, businessPhone, webAddress, facebookAddress, twitterAddress, youtubeAddress, linkedinAddress, address } = user;
 
     if (eMailTemplate) {
       settings = await userService.getSetttingByUserIDAndName(
@@ -30,350 +29,217 @@ module.exports.getTemplate = async (req, res) => {
     }
     let templateIs = "";
     
-    if (settings.length === 0) {
-      if (themeName === "Spread") {
-
-        templateIs = await template.spreadTheme(
-          _id,
-          thumbnail,
-          false,
-          false,
-          userName,
-          url,
-          false,
-          false,
-          false,
-          false,
-          title,
-          description
-        );
-      }
-      if (themeName === "Corporate Light") {
-        templateIs = await template.corporateLight(
-          _id,
-          thumbnail,
-          false,
-          false,
-          userName,
-          url,
-          false,
-          false,
-          false,
-          false,
-          title,
-          description
-        );
-      }
-     
-      if (themeName === "Modern Simple") {
-        templateIs = await template.modernSimple(
-          _id,
-          thumbnail,
-          false,
-          false,
-          userName,
-          url,
-          false,
-          false,
-          false,
-          false,
-          title,
-          description
-        );
-      }
-      if (themeName === "Streamlined") {
-        templateIs = await template.streamlined(
-          _id,
-          thumbnail,
-          false,
-          false,
-          userName,
-          url,
-          false,
-          false,
-          false,
-          false,
-          title,
-          description
-        );
-      }
-      if (themeName === "Simple Blue") {
-        templateIs = await template.simple_blue(
-          _id,
-          thumbnail,
-          false,
-          false,
-          userName,
-          url,
-          false,
-          false,
-          false,
-          false,
-          title,
-          description
-        );
-      }
-      if (themeName === "Sleek") {
-        templateIs = await template.sleek(
-          _id,
-          thumbnail,
-          false,
-          false,
-          userName,
-          url,
-          false,
-          false,
-          false,
-          false,
-          title,
-          description
-        );
-      }
-      if (themeName === "Social Business") {
-        templateIs = await template.social_business(
-          _id,
-          thumbnail,
-          false,
-          false,
-          userName,
-          url,
-          false,
-          false,
-          false,
-          false,
-          title,
-          description
-        );
-      }
-      if (themeName === "Social Impact") {
-        templateIs = await template.social_impact(
-          _id,
-          thumbnail,
-          false,
-          false,
-          userName,
-          url,
-          false,
-          false,
-          false,
-          false,
-          title,
-          description
-        );
-      }
-      if (themeName === "Clasic Dark") {
-        templateIs = await template.classic_dark(
-          _id,
-          thumbnail,
-          false,
-          false,
-          userName,
-          url,
-          false,
-          false,
-          false,
-          false,
-          title,
-          description
-        );
-      }
-      if (themeName === "Ocean") {
-        templateIs = await template.ocean(
-          _id,
-          thumbnail,
-          false,
-          false,
-          userName,
-          url,
-          false,
-          false,
-          false,
-          false,
-          title,
-          description
-        );
-      }
-      
-      return res.status(200).json({ message: "Success", templateIs });
-    }
-    let {
-      logoUrl,
-      fbUrl,
-      text,
-      twitterUrl,
-      youtubeUrl,
-      linkedinUrl,
-    } = settings[0];
-
-    console.log(text)
-
     if (themeName === "Spread") {
-
       templateIs = await template.spreadTheme(
         _id,
         thumbnail,
-        logoUrl,
-        text,
+        title,
+        description,
+        false,
+        false,
         userName,
         url,
-        fbUrl,
-        twitterUrl,
-        youtubeUrl,
-        linkedinUrl,
-        title,
-        description
+        facebookAddress,
+        twitterAddress,
+        youtubeAddress,
+        linkedinAddress,
+        mobileNumber,
+        businessPhone,
+        email,
+        webAddress,
+        address
       );
     }
     if (themeName === "Corporate Light") {
       templateIs = await template.corporateLight(
         _id,
         thumbnail,
-        logoUrl,
-        text,
+        title,
+        description,
+        false,
+        false,
         userName,
         url,
-        fbUrl,
-        twitterUrl,
-        youtubeUrl,
-        linkedinUrl,
-        title,
-        description
+        facebookAddress,
+        twitterAddress,
+        youtubeAddress,
+        linkedinAddress,
+        mobileNumber,
+        businessPhone,
+        email,
+        webAddress,
+        address
       );
     }
-   
+    
     if (themeName === "Modern Simple") {
-     
       templateIs = await template.modernSimple(
         _id,
         thumbnail,
-        logoUrl,
-        text,
+        title,
+        description,
+        false,
+        false,
         userName,
         url,
-        fbUrl,
-        twitterUrl,
-        youtubeUrl,
-        linkedinUrl,
-        title,
-        description
+        facebookAddress,
+        twitterAddress,
+        youtubeAddress,
+        linkedinAddress,
+        mobileNumber,
+        businessPhone,
+        email,
+        webAddress,
+        address
       );
     }
     if (themeName === "Streamlined") {
-      
       templateIs = await template.streamlined(
         _id,
         thumbnail,
-        logoUrl,
-        text,
+        title,
+        description,
+        false,
+        false,
         userName,
         url,
-        fbUrl,
-        twitterUrl,
-        youtubeUrl,
-        linkedinUrl,
-        title,
-        description
+        facebookAddress,
+        twitterAddress,
+        youtubeAddress,
+        linkedinAddress,
+        mobileNumber,
+        businessPhone,
+        email,
+        webAddress,
+        address
       );
     }
     if (themeName === "Simple Blue") {
       templateIs = await template.simple_blue(
         _id,
         thumbnail,
-        logoUrl,
-        text,
+        title,
+        description,
+        false,
+        false,
         userName,
         url,
-        fbUrl,
-        twitterUrl,
-        youtubeUrl,
-        linkedinUrl,
-        title,
-        description
+        facebookAddress,
+        twitterAddress,
+        youtubeAddress,
+        linkedinAddress,
+        mobileNumber,
+        businessPhone,
+        email,
+        webAddress,
+        address
       );
     }
     if (themeName === "Sleek") {
       templateIs = await template.sleek(
         _id,
         thumbnail,
-        logoUrl,
-        text,
+        title,
+        description,
+        false,
+        false,
         userName,
         url,
-        fbUrl,
-        twitterUrl,
-        youtubeUrl,
-        linkedinUrl,
-        title,
-        description
+        facebookAddress,
+        twitterAddress,
+        youtubeAddress,
+        linkedinAddress,
+        mobileNumber,
+        businessPhone,
+        email,
+        webAddress,
+        address
       );
     }
     if (themeName === "Social Business") {
       templateIs = await template.social_business(
         _id,
         thumbnail,
-        logoUrl,
-        text,
+        title,
+        description,
+        false,
+        false,
         userName,
         url,
-        fbUrl,
-        twitterUrl,
-        youtubeUrl,
-        linkedinUrl,
-        title,
-        description
+        facebookAddress,
+        twitterAddress,
+        youtubeAddress,
+        linkedinAddress,
+        mobileNumber,
+        businessPhone,
+        email,
+        webAddress,
+        address
       );
     }
     if (themeName === "Social Impact") {
       templateIs = await template.social_impact(
         _id,
         thumbnail,
-        logoUrl,
-        text,
+        title,
+        description,
+        false,
+        false,
         userName,
         url,
-        fbUrl,
-        twitterUrl,
-        youtubeUrl,
-        linkedinUrl,
-        title,
-        description
+        facebookAddress,
+        twitterAddress,
+        youtubeAddress,
+        linkedinAddress,
+        mobileNumber,
+        businessPhone,
+        email,
+        webAddress,
+        address
       );
     }
     if (themeName === "Clasic Dark") {
       templateIs = await template.classic_dark(
         _id,
         thumbnail,
-        logoUrl,
-        text,
+        title,
+        description,
+        false,
+        false,
         userName,
         url,
-        fbUrl,
-        twitterUrl,
-        youtubeUrl,
-        linkedinUrl,
-        title,
-        description
+        facebookAddress,
+        twitterAddress,
+        youtubeAddress,
+        linkedinAddress,
+        mobileNumber,
+        businessPhone,
+        email,
+        webAddress,
+        address
       );
     }
     if (themeName === "Ocean") {
-      
       templateIs = await template.ocean(
         _id,
         thumbnail,
-        logoUrl,
-        text,
+        title,
+        description,
+        false,
+        false,
         userName,
         url,
-        fbUrl,
-        twitterUrl,
-        youtubeUrl,
-        linkedinUrl,
-        title,
-        description
+        facebookAddress,
+        twitterAddress,
+        youtubeAddress,
+        linkedinAddress,
+        mobileNumber,
+        businessPhone,
+        email,
+        webAddress,
+        address
       );
-    }
-
-    
+    } 
     return res.status(200).json({ message: "Success", templateIs });
   } catch (error) {
     res.status(500).json({ message: error.message, errr: "catch" });

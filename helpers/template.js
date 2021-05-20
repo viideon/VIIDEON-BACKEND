@@ -15,6 +15,8 @@ module.exports.generateStringTemplate = (id, thumbnail) => {
 module.exports.spreadTheme = (
   id = false,
   thumbnail = false,
+  title,
+  description,
   logo = false,
   text = false,
   userName,
@@ -23,10 +25,12 @@ module.exports.spreadTheme = (
   twitterUrl,
   youtubeUrl,
   linkedinUrl,
-  title = false,
-  description = false
+  mobileNumber,
+  businessPhone,
+  email,
+  webAddress,
+  address
 ) => {
-  console.log(description)
   return `
 <!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Trransitional//EN”   “http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd”>
 <html xmlns=”http://www.w3.org/1999/xhtml”>
@@ -79,7 +83,11 @@ module.exports.spreadTheme = (
         .paddingright{
             padding-right:40px;
         }
-
+        p > a {
+            font-size: 15px;
+            text-decoration: none;
+            color: #fdb415 !important;
+        }
         @media screen and (max-width:600px){
 
         }
@@ -147,40 +155,74 @@ module.exports.spreadTheme = (
                 <tr>
                     <td width="100%" align="center" style="background: #ffffff; padding-bottom:30px; width:100%" >
                         <table width="100%" style="border-spacing:0;border-collapse: unset;" >
+                            ${(fbUrl || twitterUrl || youtubeUrl || linkedinUrl) &&
+                                `<tr>
+                                    <td>
+                                        <p style="font-size:10px; color:#333333; text-align: center; padding-bottom:10px; font-weight:bold;">Connect with me on</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-bottom:30px;" align="center">
+                                        <table align="center" style="border-spacing: 0;border-collapse: unset;display: inline-block;">
+                                            <tr>
+                                                ${fbUrl && 
+                                                    `<td style="width:22px; height:22px; padding-left:5px; padding-right:5px; " width="38" height="22">
+                                                        <a href="${fbUrl}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/spread/facebook.jpg" alt="facebook"></a>
+                                                    </td>`}
+                                                ${twitterUrl && 
+                                                    `<td style="width:22px; height:22px; padding-left:5px; padding-right:5px; " width="38" height="22">
+                                                        <a href="${twitterUrl ? twitterUrl : "https://twitter.com/"}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/spread/twitter.jpg" alt="twitter"></a>
+                                                    </td>`}
+                                                ${youtubeUrl && 
+                                                    `<td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
+                                                        <a href="${youtubeUrl ? youtubeUrl : "https://youtube.com/"}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/spread/youtube.jpg" alt="youtube"></a>
+                                                    </td>`}
+                                                ${linkedinUrl &&
+                                                    `<td style="width:22px; height:22px; padding-left:5px; padding-right:5px;" width="38" height="22">
+                                                        <a href="${linkedinUrl ? linkedinUrl : "https://www.linkedin.com/"}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/spread/linkedin.jpg" alt="linkedin"></a>
+                                                    </td>`}
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>`}
+                            ${mobileNumber && 
+                                `<tr>
+                                    <td>
+                                        <p style="font-size:15px; color:#fdb415; text-align: center; margin: 5px 0;">Mobile Phone: ${mobileNumber}</p>
+                                    </td>
+                                </tr>`}
+                            ${businessPhone && 
+                                `<tr>
+                                    <td>
+                                        <p style="font-size:15px; color:#fdb415; text-align: center; margin: 5px 0;">Business Phone: ${businessPhone}</p>
+                                    </td>
+                                </tr>`}
+                            ${email && 
+                                `<tr>
+                                    <td>
+                                        <p style="font-size:15px; color:#fdb415; text-align: center; margin: 5px 0;">Email: ${email}</p>
+                                    </td>
+                                </tr>`}
+                            ${webAddress && 
+                                `<tr>
+                                    <td>
+                                        <p style="font-size:15px; color:#fdb415; text-align: center; margin: 5px 0;">Website: ${webAddress}</p>
+                                    </td>
+                                </tr>`}
+                            ${address && 
+                                `<tr>
+                                    <td>
+                                        <p style="font-size:15px; color:#fdb415; text-align: center; margin: 5px 0;">Office Address: ${address}</p>
+                                    </td>
+                                </tr>`}
                             <tr>
-                                <td>
-                                    <p style="font-size:10px; color:#333333; text-align: center; padding-bottom:10px; font-weight:bold;">Connect with me on</p>
-                                </td>
-                            </tr>
-                            <tr>
-                            <td style="padding-bottom:50px;" align="center">
-                                <table align="center" style="border-spacing: 0;border-collapse: unset;display: inline-block;">
-                                    <tr>
-                                        <td style="width:22px; height:22px; padding-left:5px; padding-right:5px; " width="38" height="22">
-                                            <a href="${fbUrl ? fbUrl : "https://www.facebook.com/"}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/spread/facebook.jpg" alt="facebook"></a>
-                                        </td>
-                                        <td style="width:22px; height:22px; padding-left:5px; padding-right:5px; " width="38" height="22">
-                                            <a href="${twitterUrl ? twitterUrl : "https://twitter.com/"}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/spread/twitter.jpg" alt="twitter"></a>
-                                        </td>
-                                        <td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
-                                            <a href="${youtubeUrl ? youtubeUrl : "https://youtube.com/"}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/spread/youtube.jpg" alt="youtube"></a>
-                                        </td>
-                                        <td style="width:22px; height:22px; padding-left:5px; padding-right:5px;" width="38" height="22">
-                                            <a href="${linkedinUrl ? linkedinUrl : "https://www.linkedin.com/"}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/spread/linkedin.jpg" alt="linkedin"></a>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                            </tr>
-                            <tr>
-                                <td style="text-align: center; padding-bottom:6px;">
+                                <td style="text-align: center; padding-top: 20px; padding-bottom:6px;">
                                     <a href=""><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/spread/logo-footer.jpg" alt=""></a>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <p style="font-size:9px; color:#fdb415; text-align: center;">© 2021 VideonPro All Rights Reserved</p>
-                                    
                                 </td>
                             </tr>
                         </table>
@@ -196,6 +238,8 @@ module.exports.spreadTheme = (
 module.exports.corporateLight = (
   id = false,
   thumbnail = false,
+  title,
+  description,
   logo = false,
   text = false,
   userName,
@@ -204,8 +248,11 @@ module.exports.corporateLight = (
   twitterUrl,
   youtubeUrl,
   linkedinUrl,
-  title = false,
-  description = false
+  mobileNumber,
+  businessPhone,
+  email,
+  webAddress,
+  address
 ) => {
   return `
 <!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Trransitional//EN”   “http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd”>
@@ -254,7 +301,11 @@ module.exports.corporateLight = (
         .padding{
             padding:40px;
         }
-
+        p > a {
+            font-size: 15px;
+            text-decoration: none;
+            color: #333333 !important;
+        }
         @media screen and (max-width:600px){
 
         }
@@ -316,40 +367,75 @@ module.exports.corporateLight = (
                 <tr>
                     <td width="100%" align="center" style="background: #eff3f4; padding-bottom:30px; width:100%" >
                         <table width="100%" style="border-spacing:0;border-collapse: unset;" >
+                            ${(fbUrl || twitterUrl || youtubeUrl || linkedinUrl) &&
+                                `<tr>
+                                    <td>
+                                        <p style="font-size:10px; color:#333333; text-align: center; padding-bottom:10px;">Connect with me on</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-bottom:30px;" align="center">
+                                        <table align="center" style="border-spacing: 0; display: inline-block; border-collapse: unset;" >
+                                            <tr>
+                                                ${fbUrl && 
+                                                    `<td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
+                                                        <a href="${fbUrl}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/corporate-light/facebook.jpg" alt="facebook"></a>
+                                                    </td>`}
+                                                ${twitterUrl && 
+                                                    `<td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
+                                                        <a href="${twitterUrl}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/corporate-light/twitter.jpg" alt="twitter"></a>
+                                                    </td>`}
+                                                ${youtubeUrl && 
+                                                    `<td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
+                                                        <a href="${youtubeUrl}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/corporate-light/youtube.jpg" alt="youtube"></a>
+                                                    </td>`}
+                                                ${linkedinUrl && 
+                                                    `<td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
+                                                        <a href="${linkedinUrl}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/corporate-light/linkedin.jpg" alt="linkedin"></a>
+                                                    </td>`}
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>`
+                            }
+                            ${mobileNumber && 
+                                `<tr>
+                                    <td>
+                                        <p style="font-size:15px; color:#333333; text-align: center; margin: 5px 0;">Mobile Phone: ${mobileNumber}</p>
+                                    </td>
+                                </tr>`}
+                            ${businessPhone && 
+                                `<tr>
+                                    <td>
+                                        <p style="font-size:15px; color:#333333; text-align: center; margin: 5px 0;">Business Phone: ${businessPhone}</p>
+                                    </td>
+                                </tr>`}
+                            ${email && 
+                                `<tr>
+                                    <td>
+                                        <p style="font-size:15px; color:#333333; text-align: center; margin: 5px 0;">Email: ${email}</p>
+                                    </td>
+                                </tr>`}
+                            ${webAddress && 
+                                `<tr>
+                                    <td>
+                                        <p style="font-size:15px; color:#333333; text-align: center; margin: 5px 0;">Website: ${webAddress}</p>
+                                    </td>
+                                </tr>`}
+                            ${address && 
+                                `<tr>
+                                    <td>
+                                        <p style="font-size:15px; color:#333333; text-align: center; margin: 5px 0;">Office Address: ${address}</p>
+                                    </td>
+                                </tr>`}
                             <tr>
-                                <td>
-                                    <p style="font-size:10px; color:#333333; text-align: center; padding-bottom:10px;">Connect with me on</p>
-                                </td>
-                            </tr>
-                            <tr>
-                            <td style="padding-bottom:50px;" align="center">
-                                <table align="center" style="border-spacing: 0; display: inline-block; border-collapse: unset;" >
-                                    <tr>
-                                        <td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
-                                            <a href="${fbUrl ? fbUrl : "https://www.facebook.com/"}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/corporate-light/facebook.jpg" alt="facebook"></a>
-                                        </td>
-                                        <td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
-                                            <a href="${twitterUrl ? twitterUrl : "https://twitter.com/"}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/corporate-light/twitter.jpg" alt="twitter"></a>
-                                        </td>
-                                        <td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
-                                            <a href="${youtubeUrl ? youtubeUrl : "https://youtube.com/"}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/corporate-light/youtube.jpg" alt="youtube"></a>
-                                        </td>
-                                        <td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
-                                            <a href="${linkedinUrl ? linkedinUrl : "https://www.linkedin.com/"}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/corporate-light/linkedin.jpg" alt="linkedin"></a>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                            </tr>
-                            <tr>
-                                <td style="text-align: center; padding-bottom:6px;">
+                                <td style="text-align: center; padding-top: 20px; padding-bottom:6px;">
                                     <a href=""><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/corporate-light/logo-footer.jpg" alt=""></a>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <p style="font-size:9px; color:#333333; text-align: center;">© 2021 VideonPro All Rights Reserved</p>
-                                    
                                 </td>
                             </tr>
                         </table>
@@ -367,6 +453,8 @@ module.exports.corporateLight = (
 module.exports.modernSimple = (
   id = false,
   thumbnail = false,
+  title,
+  description,
   logo = false,
   text = false,
   userName,
@@ -375,8 +463,11 @@ module.exports.modernSimple = (
   twitterUrl,
   youtubeUrl,
   linkedinUrl,
-  title = false,
-  description = false
+  mobileNumber,
+  businessPhone,
+  email,
+  webAddress,
+  address
 ) => {
   return `
 <!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Trransitional//EN”   “http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd”>
@@ -426,7 +517,11 @@ module.exports.modernSimple = (
         .padding{
             padding:40px;
         }
-
+        p > a {
+            font-size: 15px;
+            text-decoration: none;
+            color: #333333 !important;
+        }
         @media screen and (max-width:600px){
 
         }
@@ -497,33 +592,68 @@ module.exports.modernSimple = (
                 <tr>
                     <td width="100%" align="center" style="background: #ffffff; padding-bottom:30px; width:100%" >
                         <table width="100%" style="border-spacing:0; border-collapse:unset;" >
+                            ${(fbUrl || twitterUrl || youtubeUrl || linkedinUrl) &&
+                                `<tr>
+                                    <td>
+                                        <p style="font-size:11px; color:#333333; text-align: center; padding-bottom:10px; font-weight:bold;">Connect with me on</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-bottom:30px;" align="center">
+                                        <table align="center" style="border-spacing: 0; display: inline-block; border-collapse:unset;">
+                                            <tr>
+                                                ${fbUrl && 
+                                                    `<td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
+                                                        <a href="${ fbUrl }"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/modern-simple/facebook.jpg" alt="facebook"></a>
+                                                    </td>`}
+                                                ${twitterUrl && 
+                                                    `<td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
+                                                        <a href="${ twitterUrl }"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/modern-simple/twitter.jpg" alt="twitter"></a>
+                                                    </td>`}
+                                                ${youtubeUrl && 
+                                                    `<td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
+                                                        <a href="${ youtubeUrl }"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/modern-simple/youtube.jpg" alt="youtube"></a>
+                                                    </td>`}
+                                                ${linkedinUrl && 
+                                                    `<td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
+                                                        <a href="${ linkedinUrl }"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/modern-simple/linkedin.jpg" alt="linkedin"></a>
+                                                    </td>`}
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>` }
+                            ${mobileNumber && 
+                                `<tr>
+                                    <td>
+                                        <p style="font-size:15px; color:#333333; text-align: center; margin: 5px 0;">Mobile Phone: ${mobileNumber}</p>
+                                    </td>
+                                </tr>`}
+                            ${businessPhone && 
+                                `<tr>
+                                    <td>
+                                        <p style="font-size:15px; color:#333333; text-align: center; margin: 5px 0;">Business Phone: ${businessPhone}</p>
+                                    </td>
+                                </tr>`}
+                            ${email && 
+                                `<tr>
+                                    <td>
+                                        <p style="font-size:15px; color:#333333; text-align: center; margin: 5px 0;">Email: ${email}</p>
+                                    </td>
+                                </tr>`}
+                            ${webAddress && 
+                                `<tr>
+                                    <td>
+                                        <p style="font-size:15px; color:#333333; text-align: center; margin: 5px 0;">Website: ${webAddress}</p>
+                                    </td>
+                                </tr>`}
+                            ${address && 
+                                `<tr>
+                                    <td>
+                                        <p style="font-size:15px; color:#333333; text-align: center; margin: 5px 0;">Office Address: ${address}</p>
+                                    </td>
+                                </tr>`}
                             <tr>
-                                <td>
-                                    <p style="font-size:11px; color:#333333; text-align: center; padding-bottom:10px; font-weight:bold;">Connect with me on</p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding-bottom:50px;" align="center">
-                                    <table align="center" style="border-spacing: 0; display: inline-block; border-collapse:unset;">
-                                        <tr>
-                                            <td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
-                                                <a href="${ fbUrl ? fbUrl : "https://www.facebook.com/" }"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/modern-simple/facebook.jpg" alt="facebook"></a>
-                                            </td>
-                                            <td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
-                                                <a href="${ twitterUrl ? twitterUrl : "https://twitter.com/" }"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/modern-simple/twitter.jpg" alt="twitter"></a>
-                                            </td>
-                                            <td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
-                                                <a href="${ youtubeUrl ? youtubeUrl : "https://youtube.com/" }"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/modern-simple/youtube.jpg" alt="youtube"></a>
-                                            </td>
-                                            <td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
-                                                <a href="${ linkedinUrl ? linkedinUrl : "https://www.linkedin.com/" }"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/modern-simple/linkedin.jpg" alt="linkedin"></a>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="text-align: center; padding-bottom:6px;">
+                                <td style="text-align: center; padding-top: 20px; padding-bottom:6px;">
                                     <a href=""><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/modern-simple/logo-footer.jpg" alt=""></a>
                                 </td>
                             </tr>
@@ -546,16 +676,21 @@ module.exports.modernSimple = (
 module.exports.classic_dark = (
   id = false,
   thumbnail = false,
+  title,
+  description,
   logo = false,
   text = false,
-  userName = false,
-  url = false,
-  fbUrl = false,
-  twitterUrl = false,
-  youtubeUrl = false,
-  linkedinUrl = false,
-  title = false,
-  description = false
+  userName,
+  url,
+  fbUrl,
+  twitterUrl,
+  youtubeUrl,
+  linkedinUrl,
+  mobileNumber,
+  businessPhone,
+  email,
+  webAddress,
+  address
 ) => {
   return `
 <!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Trransitional//EN”   “http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd”>
@@ -595,6 +730,11 @@ module.exports.classic_dark = (
             border-spacing: 0;
             font-family:sans-serif;
             color:#444444;
+        }
+        p > a {
+            font-size: 15px;
+            text-decoration: none;
+            color: #ffffff !important;
         }
         @media screen and (max-width:600px){
 
@@ -650,33 +790,68 @@ module.exports.classic_dark = (
                                     <a href="${process.env.APP_DOMAIN}/watch/${id}/cta"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/classic-dark/watch-btn.jpg" alt=""></a>
                                 </td>
                             </tr>
+                            ${(fbUrl || twitterUrl || youtubeUrl || linkedinUrl) &&
+                                `<tr>
+                                    <td>
+                                        <p style="font-size:10px; color:#ffffff; text-align: center; padding-bottom:10px;">Connect with me on</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-bottom:30px;" align="center">
+                                        <table align="center" style="border-spacing: 0; display: inline-block;border-collapse: unset;">
+                                            <tr>
+                                                ${fbUrl && 
+                                                    `<td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
+                                                        <a href="${fbUrl}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/classic-dark/facebook.jpg" alt="facebook"></a>
+                                                    </td>`}
+                                                ${twitterUrl && 
+                                                    `<td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
+                                                        <a href="${twitterUrl}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/classic-dark/twitter.jpg" alt="twitter"></a>
+                                                    </td>`}
+                                                ${youtubeUrl && 
+                                                    `<td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
+                                                        <a href="${youtubeUrl}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/classic-dark/youtube.jpg" alt="youtube"></a>
+                                                    </td>`}
+                                                ${linkedinUrl && 
+                                                    `<td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
+                                                        <a href="${linkedinUrl}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/classic-dark/linkedin.jpg" alt="linkedin"></a>
+                                                    </td>`}
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>`}
+                                ${mobileNumber && 
+                                    `<tr>
+                                        <td>
+                                            <p style="font-size:15px; color:#ffffff; text-align: center; margin: 5px 0;">Mobile Phone: ${mobileNumber}</p>
+                                        </td>
+                                    </tr>`}
+                                ${businessPhone && 
+                                    `<tr>
+                                        <td>
+                                            <p style="font-size:15px; color:#ffffff; text-align: center; margin: 5px 0;">Business Phone: ${businessPhone}</p>
+                                        </td>
+                                    </tr>`}
+                                ${email && 
+                                    `<tr>
+                                        <td>
+                                            <p style="font-size:15px; color:#ffffff; text-align: center; margin: 5px 0;">Email: ${email}</p>
+                                        </td>
+                                    </tr>`}
+                                ${webAddress && 
+                                    `<tr>
+                                        <td>
+                                            <p style="font-size:15px; color:#ffffff; text-align: center; margin: 5px 0;">Website: ${webAddress}</p>
+                                        </td>
+                                    </tr>`}
+                                ${address && 
+                                    `<tr>
+                                        <td>
+                                            <p style="font-size:15px; color:#ffffff; text-align: center; margin: 5px 0;">Office Address: ${address}</p>
+                                        </td>
+                                    </tr>`}
                             <tr>
-                                <td>
-                                    <p style="font-size:10px; color:#ffffff; text-align: center; padding-bottom:10px;">Connect with me on</p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding-bottom:50px;" align="center">
-                                    <table align="center" style="border-spacing: 0; display: inline-block;border-collapse: unset;">
-                                        <tr>
-                                            <td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
-                                                <a href="${fbUrl ? fbUrl : "https://www.facebook.com/"}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/classic-dark/facebook.jpg" alt="facebook"></a>
-                                            </td>
-                                            <td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
-                                                <a href="${twitterUrl ? twitterUrl : "https://twitter.com/"}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/classic-dark/twitter.jpg" alt="twitter"></a>
-                                            </td>
-                                            <td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
-                                                <a href="${youtubeUrl ? youtubeUrl : "https://youtube.com/"}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/classic-dark/youtube.jpg" alt="youtube"></a>
-                                            </td>
-                                            <td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
-                                                <a href="${linkedinUrl ? linkedinUrl : "https://www.linkedin.com/"}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/classic-dark/linkedin.jpg" alt="linkedin"></a>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="text-align: center; padding-bottom:6px;">
+                                <td style="text-align: center; padding-top: 20px; padding-bottom:6px;">
                                     <a href=""><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/classic-dark/logo-footer.jpg" alt=""></a>
                                 </td>
                             </tr>
@@ -699,6 +874,8 @@ module.exports.classic_dark = (
 module.exports.sleek = (
   id = false,
   thumbnail = false,
+  title,
+  description,
   logo = false,
   text = false,
   userName,
@@ -707,8 +884,11 @@ module.exports.sleek = (
   twitterUrl,
   youtubeUrl,
   linkedinUrl,
-  title = false,
-  description = false,
+  mobileNumber,
+  businessPhone,
+  email,
+  webAddress,
+  address
 ) => {
  
   return `
@@ -760,7 +940,11 @@ module.exports.sleek = (
         .padding{
             padding:40px;
         }
-
+        p > a {
+            font-size: 15px;
+            text-decoration: none;
+            color: #333333 !important;
+        }
         @media screen and (max-width:600px){
 
         }
@@ -847,30 +1031,69 @@ module.exports.sleek = (
                 <tr>
                     <td width="100%" align="center" style="background: #ffffff; padding-bottom:30px; width:100%" >
                         <table width="100%" style="border-spacing:0;border-collapse: unset;">
+                            ${(fbUrl || twitterUrl || youtubeUrl || linkedinUrl) &&
+                                `<tr>
+                                    <td>
+                                        <p style="font-size:10px; color:#333333; text-align: center; padding-top:1rem;">Connect with me on</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-bottom:30px;" align="center">
+                                        <table align="center" style="border-spacing: 0; border-collapse: unset; display: inline-block;">
+                                            <tr>
+                                                ${fbUrl && 
+                                                    `<td style="width:22px; height:22px; padding-left:5px; padding-right:5px;" width="38" height="22">
+                                                        <a href="${fbUrl}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/sleek/facebook.jpg" alt="facebook"></a>
+                                                    </td>`}
+                                                ${twitterUrl && 
+                                                    `<td style="width:22px; height:22px; padding-left:5px; padding-right:5px;" width="38" height="22">
+                                                        <a href="${twitterUrl}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/sleek/twitter.jpg" alt="twitter"></a>
+                                                    </td>`
+                                                }
+                                                ${youtubeUrl && 
+                                                    `<td style="width:22px; height:22px; padding-left:5px; padding-right:5px;" width="38" height="22">
+                                                        <a href="${youtubeUrl}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/sleek/youtube.jpg" alt="twitter"></a>
+                                                    </td>`}
+                                                ${linkedinUrl && 
+                                                    `<td style="width:22px; height:22px; padding-left:5px; padding-right:5px;" width="38" height="22">
+                                                        <a href="${linkedinUrl}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/sleek/linkedin.jpg" alt="linkedin"></a>
+                                                    </td>`}
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>`}
+                            ${mobileNumber && 
+                                `<tr>
+                                    <td>
+                                        <p style="font-size:15px; color:#333333; text-align: center; margin: 5px 0;">Mobile Phone: ${mobileNumber}</p>
+                                    </td>
+                                </tr>`}
+                            ${businessPhone && 
+                                `<tr>
+                                    <td>
+                                        <p style="font-size:15px; color:#333333; text-align: center; margin: 5px 0;">Business Phone: ${businessPhone}</p>
+                                    </td>
+                                </tr>`}
+                            ${email && 
+                                `<tr>
+                                    <td>
+                                        <p style="font-size:15px; color:#333333; text-align: center; margin: 5px 0;">Email: ${email}</p>
+                                    </td>
+                                </tr>`}
+                            ${webAddress && 
+                                `<tr>
+                                    <td>
+                                        <p style="font-size:15px; color:#333333; text-align: center; margin: 5px 0;">Website: ${webAddress}</p>
+                                    </td>
+                                </tr>`}
+                            ${address && 
+                                `<tr>
+                                    <td>
+                                        <p style="font-size:15px; color:#333333; text-align: center; margin: 5px 0;">Office Address: ${address}</p>
+                                    </td>
+                                </tr>`}    
                             <tr>
-                                <td>
-                                    <p style="font-size:10px; color:#333333; text-align: center; padding-top:1rem;">Connect with me on</p>
-                                </td>
-                            </tr>
-                            <tr>
-                            <td style="padding-bottom:50px;" align="center">
-                                <table align="center" style="border-spacing: 0; border-collapse: unset; display: inline-block;">
-                                    <tr>
-                                        <td style="width:22px; height:22px; padding-left:5px; padding-right:5px; border-right:1px solid #000;" width="38" height="22">
-                                            <a href="${fbUrl ? fbUrl : "https://www.facebook.com/" }"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/sleek/facebook.jpg" alt="facebook"></a>
-                                        </td>
-                                        <td style="width:22px; height:22px; padding-left:5px; padding-right:5px; border-right:1px solid #000;" width="38" height="22">
-                                            <a href="${twitterUrl ? twitterUrl : "https://twitter.com/" }"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/sleek/twitter.jpg" alt="twitter"></a>
-                                        </td>
-                                        <td style="width:22px; height:22px; padding-left:5px; padding-right:5px;" width="38" height="22">
-                                            <a href="${linkedinUrl ? linkedinUrl : "https://www.linkedin.com/"}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/sleek/linkedin.jpg" alt="linkedin"></a>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                            </tr>
-                            <tr>
-                                <td style="text-align: center; padding-bottom:6px;">
+                                <td style="text-align: center; padding-top: 20px; padding-bottom:6px;">
                                     <a href=""><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/sleek/logo-footer.jpg" alt=""></a>
                                 </td>
                             </tr>
@@ -892,6 +1115,8 @@ module.exports.sleek = (
 module.exports.sleek2 = (
   id = false,
   thumbnail = false,
+  title,
+  description,
   logo = false,
   text = false,
   userName,
@@ -899,7 +1124,12 @@ module.exports.sleek2 = (
   fbUrl,
   twitterUrl,
   youtubeUrl,
-  linkedinUrl
+  linkedinUrl,
+  mobileNumber,
+  businessPhone,
+  email,
+  webAddress,
+  address
 ) => {
   return `
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
@@ -951,6 +1181,8 @@ module.exports.sleek2 = (
 module.exports.social_business = (
   id = false,
   thumbnail = false,
+  title,
+  description,
   logo = false,
   text = false,
   userName,
@@ -959,8 +1191,11 @@ module.exports.social_business = (
   twitterUrl,
   youtubeUrl,
   linkedinUrl,
-  title = false,
-  description = false
+  mobileNumber,
+  businessPhone,
+  email,
+  webAddress,
+  address
 ) => {
   return `
 <!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Trransitional//EN”   “http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd”>
@@ -1016,7 +1251,11 @@ module.exports.social_business = (
         .paddingbottom{
             padding-bottom: 40px;
         }
-
+        p > a {
+            font-size: 15px;
+            text-decoration: none;
+            color: #3a94d2 !important;
+        }
         @media screen and (max-width:600px){
 
         }
@@ -1109,33 +1348,68 @@ module.exports.social_business = (
                 <tr>
                     <td width="100%" align="center" style="background: #ffffff; padding-bottom:30px; width:100%" >
                         <table width="100%" style="border-spacing:0;border-collapse: unset;">
+                            ${(fbUrl || twitterUrl || youtubeUrl || linkedinUrl) &&
+                                `<tr>
+                                    <td>
+                                        <p style="font-size:10px; color:#3a94d2; text-align: center; padding-bottom:11px; font-weight:bold;">Connect with me on</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-bottom:30px;" align="center">
+                                        <table align="center" style="border-spacing: 0; display: inline-block; border-collapse: unset;">
+                                            <tr>
+                                                ${fbUrl && 
+                                                    `<td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
+                                                        <a href="${ fbUrl }"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/social-business/facebook.jpg" alt="facebook"></a>
+                                                    </td>`}
+                                                ${twitterUrl && 
+                                                    `<td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
+                                                        <a href="${ twitterUrl }"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/social-business/twitter.jpg" alt="twitter"></a>
+                                                    </td>`}
+                                                ${youtubeUrl && 
+                                                    `<td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
+                                                        <a href="${ youtubeUrl }"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/social-business/youtube.jpg" alt="youtube"></a>
+                                                    </td>`}
+                                                ${linkedinUrl && 
+                                                    `<td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
+                                                        <a href="${ linkedinUrl }"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/social-business/linkedin.jpg" alt="linkedin"></a>
+                                                    </td>`}
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>`}
+                            ${mobileNumber && 
+                                `<tr>
+                                    <td>
+                                        <p style="font-size:15px; color:#3a94d2; text-align: center; margin: 5px 0;">Mobile Phone: ${mobileNumber}</p>
+                                    </td>
+                                </tr>`}
+                            ${businessPhone && 
+                                `<tr>
+                                    <td>
+                                        <p style="font-size:15px; color:#3a94d2; text-align: center; margin: 5px 0;">Business Phone: ${businessPhone}</p>
+                                    </td>
+                                </tr>`}
+                            ${email && 
+                                `<tr>
+                                    <td>
+                                        <p style="font-size:15px; color:#3a94d2; text-align: center; margin: 5px 0;">Email: ${email}</p>
+                                    </td>
+                                </tr>`}
+                            ${webAddress && 
+                                `<tr>
+                                    <td>
+                                        <p style="font-size:15px; color:#3a94d2; text-align: center; margin: 5px 0;">Website: ${webAddress}</p>
+                                    </td>
+                                </tr>`}
+                            ${address && 
+                                `<tr>
+                                    <td>
+                                        <p style="font-size:15px; color:#3a94d2; text-align: center; margin: 5px 0;">Office Address: ${address}</p>
+                                    </td>
+                                </tr>`}
                             <tr>
-                                <td>
-                                    <p style="font-size:10px; color:#3a94d2; text-align: center; padding-bottom:11px; font-weight:bold;">Connect with me on</p>
-                                </td>
-                            </tr>
-                            <tr>
-                            <td style="padding-bottom:30px;" align="center">
-                                <table align="center" style="border-spacing: 0; display: inline-block; border-collapse: unset;">
-                                    <tr>
-                                        <td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
-                                            <a href="${ fbUrl ? fbUrl : "https://www.facebook.com/" }"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/social-business/facebook.jpg" alt="facebook"></a>
-                                        </td>
-                                        <td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
-                                            <a href="${ twitterUrl ? twitterUrl : "https://twitter.com/" }"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/social-business/twitter.jpg" alt="twitter"></a>
-                                        </td>
-                                        <td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
-                                            <a href="${ youtubeUrl ? youtubeUrl : "https://youtube.com/" }"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/social-business/youtube.jpg" alt="youtube"></a>
-                                        </td>
-                                        <td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
-                                            <a href="${ linkedinUrl ? linkedinUrl : "https://www.linkedin.com/" }"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/social-business/linkedin.jpg" alt="linkedin"></a>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                            </tr>
-                            <tr>
-                                <td style="text-align: center; padding-bottom:6px;">
+                                <td style="text-align: center; padding-top: 20px; padding-bottom:6px;">
                                     <a href=""><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/social-business/logo-footer.jpg" alt=""></a>
                                 </td>
                             </tr>
@@ -1158,6 +1432,8 @@ module.exports.social_business = (
 module.exports.streamlined = (
   id = false,
   thumbnail = false,
+  title,
+  description,
   logo = false,
   text = false,
   userName,
@@ -1166,8 +1442,11 @@ module.exports.streamlined = (
   twitterUrl,
   youtubeUrl,
   linkedinUrl,
-  title = false,
-  description = false
+  mobileNumber,
+  businessPhone,
+  email,
+  webAddress,
+  address
 ) => {
   return `
 <!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Trransitional//EN”   “http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd”>
@@ -1221,7 +1500,11 @@ module.exports.streamlined = (
         .paddingright{
             padding-right:40px;
         }
-
+        p > a {
+            font-size: 15px;
+            text-decoration: none;
+            color: #3a94d2 !important;
+        }
         @media screen and (max-width:600px){
 
         }
@@ -1287,33 +1570,70 @@ module.exports.streamlined = (
                 <tr>
                     <td width="100%" align="center" style="background: #ffffff; padding-bottom:30px; padding-top:30px; width:100%" >
                         <table width="100%" style="border-spacing:0;border-collapse: unset;">
+                            ${(fbUrl || twitterUrl || youtubeUrl || linkedinUrl) &&
+                                `<tr>
+                                    <td>
+                                        <p style="font-size:10px; color:#333333; text-align: center; padding-bottom:10px; font-weight:bold;">Connect with me on</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-bottom:30px;" align="center">
+                                        <table align="center" style="border-spacing: 0; display: inline-block;border-collapse: unset;">
+                                            <tr>
+                                                ${fbUrl && 
+                                                    `<td style="width:22px; height:22px; padding-left:5px; padding-right:5px;" width="38" height="22">
+                                                        <a href="${ fbUrl }"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/streamlined/facebook.jpg" alt="facebook"></a>
+                                                    </td>`}
+                                                ${twitterUrl && 
+                                                    `<td style="width:22px; height:22px; padding-left:5px; padding-right:5px;" width="38" height="22">
+                                                        <a href="${ twitterUrl }"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/streamlined/twitter.jpg" alt="twitter"></a>
+                                                    </td>`}
+                                                
+                                                ${youtubeUrl && 
+                                                    `<td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
+                                                        <a href="${ youtubeUrl }"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/streamlined/youtube.jpg" alt="youtube"></a>
+                                                    </td>`}
+                                                
+                                                ${linkedinUrl && 
+                                                    `<td style="width:22px; height:22px; padding-left:5px; padding-right:5px;" width="38" height="22">
+                                                        <a href="${ linkedinUrl }"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/streamlined/linkedin.jpg" alt="linkedin"></a>
+                                                    </td>`}
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>`}
+                            ${mobileNumber && 
+                                `<tr>
+                                    <td>
+                                        <p style="font-size:15px; color:#3a94d2; text-align: center; margin: 5px 0;">Mobile Phone: ${mobileNumber}</p>
+                                    </td>
+                                </tr>`}
+                            ${businessPhone && 
+                                `<tr>
+                                    <td>
+                                        <p style="font-size:15px; color:#3a94d2; text-align: center; margin: 5px 0;">Business Phone: ${businessPhone}</p>
+                                    </td>
+                                </tr>`}
+                            ${email && 
+                                `<tr>
+                                    <td>
+                                        <p style="font-size:15px; color:#3a94d2; text-align: center; margin: 5px 0;">Email: ${email}</p>
+                                    </td>
+                                </tr>`}
+                            ${webAddress && 
+                                `<tr>
+                                    <td>
+                                        <p style="font-size:15px; color:#3a94d2; text-align: center; margin: 5px 0;">Website: ${webAddress}</p>
+                                    </td>
+                                </tr>`}
+                            ${address && 
+                                `<tr>
+                                    <td>
+                                        <p style="font-size:15px; color:#3a94d2; text-align: center; margin: 5px 0;">Office Address: ${address}</p>
+                                    </td>
+                                </tr>`}
                             <tr>
-                                <td>
-                                    <p style="font-size:10px; color:#333333; text-align: center; padding-bottom:10px; font-weight:bold;">Connect with me on</p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding-bottom:50px;" align="center">
-                                    <table align="center" style="border-spacing: 0; display: inline-block;border-collapse: unset;">
-                                        <tr>
-                                            <td style="width:22px; height:22px; padding-left:5px; padding-right:5px;" width="38" height="22">
-                                                <a href="${ fbUrl ? fbUrl : "https://www.facebook.com/" }"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/streamlined/facebook.jpg" alt="facebook"></a>
-                                            </td>
-                                            <td style="width:22px; height:22px; padding-left:5px; padding-right:5px;" width="38" height="22">
-                                                <a href="${ twitterUrl ? twitterUrl : "https://twitter.com/" }"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/streamlined/twitter.jpg" alt="twitter"></a>
-                                            </td>
-                                            <td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
-                                                <a href="${ youtubeUrl ? youtubeUrl : "https://youtube.com/" }"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/streamlined/youtube.jpg" alt="youtube"></a>
-                                            </td>
-                                            <td style="width:22px; height:22px; padding-left:5px; padding-right:5px;" width="38" height="22">
-                                                <a href="${ linkedinUrl ? linkedinUrl : "https://www.linkedin.com/" }"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/streamlined/linkedin.jpg" alt="linkedin"></a>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="text-align: center; padding-bottom:6px;">
+                                <td style="text-align: center; padding-top:20px; padding-bottom:6px;">
                                     <a href=""><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/streamlined/logo-footer.jpg" alt=""></a>
                                 </td>
                             </tr>
@@ -1336,6 +1656,8 @@ module.exports.streamlined = (
 module.exports.simple_blue = (
   id = false,
   thumbnail = false,
+  title,
+  description,
   logo = false,
   text = false,
   userName,
@@ -1344,8 +1666,11 @@ module.exports.simple_blue = (
   twitterUrl,
   youtubeUrl,
   linkedinUrl,
-  title = false,
-  description = false
+  mobileNumber,
+  businessPhone,
+  email,
+  webAddress,
+  address
 ) => {
   return `
 <!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Trransitional//EN”   “http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd”>
@@ -1396,7 +1721,11 @@ module.exports.simple_blue = (
         .padding{
             padding:40px;
         }
-
+        p > a {
+            font-size: 15px;
+            text-decoration: none;
+            color: #333333 !important;
+        }
         @media screen and (max-width:600px){
 
         }
@@ -1460,33 +1789,68 @@ module.exports.simple_blue = (
                 <tr>
                     <td width="100%" align="center" style="background: #ffffff; padding-bottom:30px; width:100%" >
                         <table width="100%" style="border-spacing:0;border-collapse: unset;" >
+                            ${(fbUrl || twitterUrl || youtubeUrl || linkedinUrl) &&
+                                `<tr>
+                                    <td>
+                                        <p style="font-size:10px; color:#333333; text-align: center; padding-bottom:10px; font-weight: bold;">Connect with me on</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-bottom:30px;" align="center">
+                                        <table align="center" style="border-spacing: 0;border-collapse: unset;display: inline-block;">
+                                            <tr>
+                                                ${fbUrl && 
+                                                    `<td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
+                                                        <a href="${fbUrl}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/simple-blue/facebook.jpg" alt="facebook"></a>
+                                                    </td>`}
+                                                ${twitterUrl && 
+                                                    `<td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
+                                                        <a href="${twitterUrl}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/simple-blue/twitter.jpg" alt="twitter"></a>
+                                                    </td>`}
+                                                ${youtubeUrl && 
+                                                    `<td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
+                                                        <a href="${youtubeUrl}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/simple-blue/youtube.jpg" alt="youtube"></a>
+                                                    </td>`}
+                                                ${linkedinUrl && 
+                                                    `<td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
+                                                        <a href="${linkedinUrl}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/simple-blue/linkedin.jpg" alt="linkedin"></a>
+                                                    </td>`}
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>`}
+                            ${mobileNumber && 
+                                `<tr>
+                                    <td>
+                                        <p style="font-size:15px; color:#333333; text-align: center; margin-bottom: 5px 0;">Mobile Phone: ${mobileNumber}</p>
+                                    </td>
+                                </tr>`}
+                            ${businessPhone && 
+                                `<tr>
+                                    <td>
+                                        <p style="font-size:15px; color:#333333; text-align: center; margin: 5px 0;">Business Phone: ${businessPhone}</p>
+                                    </td>
+                                </tr>`}
+                            ${email && 
+                                `<tr>
+                                    <td>
+                                        <p style="font-size:15px; color:#333333; text-align: center; margin: 5px 0;">Email: ${email}</p>
+                                    </td>
+                                </tr>`}
+                            ${webAddress && 
+                                `<tr>
+                                    <td>
+                                        <p style="font-size:15px; color:#333333; text-align: center; margin: 5px 0;">Website: ${webAddress}</p>
+                                    </td>
+                                </tr>`}
+                            ${address && 
+                                `<tr>
+                                    <td>
+                                        <p style="font-size:15px; color:#333333; text-align: center; margin: 5px 0;">Office Address: ${address}</p>
+                                    </td>
+                                </tr>`}
                             <tr>
-                                <td>
-                                    <p style="font-size:10px; color:#333333; text-align: center; padding-bottom:10px;">Connect with me on</p>
-                                </td>
-                            </tr>
-                            <tr>
-                            <td style="padding-bottom:50px;" align="center">
-                                <table align="center" style="border-spacing: 0;border-collapse: unset;display: inline-block;">
-                                    <tr>
-                                        <td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
-                                            <a href="${fbUrl ? fbUrl : "https://www.facebook.com/"}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/simple-blue/facebook.jpg" alt="facebook"></a>
-                                        </td>
-                                        <td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
-                                            <a href="${twitterUrl ? twitterUrl : "https://twitter.com/"}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/simple-blue/twitter.jpg" alt="twitter"></a>
-                                        </td>
-                                        <td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
-                                            <a href="${youtubeUrl ? youtubeUrl : "https://youtube.com/"}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/simple-blue/youtube.jpg" alt="youtube"></a>
-                                        </td>
-                                        <td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
-                                            <a href="${linkedinUrl ? linkedinUrl : "https://www.linkedin.com/"}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/simple-blue/linkedin.jpg" alt="linkedin"></a>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                            </tr>
-                            <tr>
-                                <td style="text-align: center; padding-bottom:6px;">
+                                <td style="text-align: center; padding-top: 20px; padding-bottom:6px;">
                                     <a href=""><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/simple-blue/logo-footer.jpg" alt=""></a>
                                 </td>
                             </tr>
@@ -1509,6 +1873,8 @@ module.exports.simple_blue = (
 module.exports.social_impact = (
   id = false,
   thumbnail = false,
+  title,
+  description,
   logo = false,
   text = false,
   userName,
@@ -1517,8 +1883,11 @@ module.exports.social_impact = (
   twitterUrl,
   youtubeUrl,
   linkedinUrl,
-  title = false,
-  description = false
+  mobileNumber,
+  businessPhone,
+  email,
+  webAddress,
+  address
 ) => {
   return `
 <!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Trransitional//EN”   “http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd”>
@@ -1569,7 +1938,11 @@ module.exports.social_impact = (
         .padding{
             padding:40px;
         }
-
+        p > a {
+            font-size: 15px;
+            text-decoration: none;
+            color: #fdb415 !important;
+        }
         @media screen and (max-width:600px){
 
         }
@@ -1647,33 +2020,68 @@ module.exports.social_impact = (
                 <tr>
                     <td width="100%" align="center" style="background: #ffffff; padding-bottom:30px; width:100%" >
                         <table width="100%" style="border-spacing:0;border-collapse: unset;" >
+                            ${(fbUrl || twitterUrl || youtubeUrl || linkedinUrl) &&
+                                `<tr>
+                                    <td>
+                                        <p style="font-size:10px; color:#fdb415; text-align: center; padding-top:1rem;">Connect with me on</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-bottom:30px;" align="center">
+                                        <table align="center" style="border-spacing: 0; display: inline-block;border-collapse: unset;">
+                                            <tr>
+                                                ${fbUrl && 
+                                                    `<td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
+                                                        <a href="${fbUrl}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/social-impact/facebook.jpg" alt="facebook"></a>
+                                                    </td>`}
+                                                ${twitterUrl && 
+                                                    `<td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
+                                                        <a href="${twitterUrl}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/social-impact/twitter.jpg" alt="twitter"></a>
+                                                    </td>`}
+                                                ${youtubeUrl && 
+                                                    `<td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
+                                                        <a href="${youtubeUrl}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/social-impact/youtube.jpg" alt="youtube"></a>
+                                                    </td>`}
+                                                ${linkedinUrl && 
+                                                    `<td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
+                                                        <a href="${linkedinUrl}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/social-impact/linkedin.jpg" alt="linkedin"></a>
+                                                    </td>`}
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>`}
+                            ${mobileNumber && 
+                                `<tr>
+                                    <td>
+                                        <p style="font-size:15px; color:#fdb415; text-align: center; margin: 5px 0;">Mobile Phone: ${mobileNumber}</p>
+                                    </td>
+                                </tr>`}
+                            ${businessPhone && 
+                                `<tr>
+                                    <td>
+                                        <p style="font-size:15px; color:#fdb415; text-align: center; margin: 5px 0;">Business Phone: ${businessPhone}</p>
+                                    </td>
+                                </tr>`}
+                            ${email && 
+                                `<tr>
+                                    <td>
+                                        <p style="font-size:15px; color:#fdb415; text-align: center; margin: 5px 0;">Email: ${email}</p>
+                                    </td>
+                                </tr>`}
+                            ${webAddress && 
+                                `<tr>
+                                    <td>
+                                        <p style="font-size:15px; color:#fdb415; text-align: center; margin: 5px 0;">Website: ${webAddress}</p>
+                                    </td>
+                                </tr>`}
+                            ${address && 
+                                `<tr>
+                                    <td>
+                                        <p style="font-size:15px; color:#fdb415; text-align: center; margin: 5px 0;">Office Address: ${address}</p>
+                                    </td>
+                                </tr>`}
                             <tr>
-                                <td>
-                                    <p style="font-size:10px; color:#fdb415; text-align: center; padding-top:1rem;">Connect with me on</p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding-bottom:50px;" align="center">
-                                    <table align="center" style="border-spacing: 0; display: inline-block;border-collapse: unset;">
-                                        <tr>
-                                            <td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
-                                                <a href="${fbUrl ? fbUrl : "https://www.facebook.com/"}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/social-impact/facebook.jpg" alt="facebook"></a>
-                                            </td>
-                                            <td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
-                                                <a href="${twitterUrl ? twitterUrl : "https://twitter.com/"}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/social-impact/twitter.jpg" alt="twitter"></a>
-                                            </td>
-                                            <td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
-                                                <a href="${youtubeUrl ? youtubeUrl : "https://youtube.com/"}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/social-impact/youtube.jpg" alt="youtube"></a>
-                                            </td>
-                                            <td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
-                                                <a href="${linkedinUrl ? linkedinUrl : "https://www.linkedin.com/"}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/social-impact/linkedin.jpg" alt="linkedin"></a>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="text-align: center; padding-bottom:6px;">
+                                <td style="text-align: center; padding-top: 20px; padding-bottom:6px;">
                                     <a href=""><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/social-impact/logo-footer.jpg" alt=""></a>
                                 </td>
                             </tr>
@@ -1696,6 +2104,8 @@ module.exports.social_impact = (
 module.exports.ocean = (
   id = false,
   thumbnail = false,
+  title,
+  description,
   logo = false,
   text = false,
   userName,
@@ -1704,8 +2114,11 @@ module.exports.ocean = (
   twitterUrl,
   youtubeUrl,
   linkedinUrl,
-  title = false,
-  description = false
+  mobileNumber,
+  businessPhone,
+  email,
+  webAddress,
+  address
 ) => {
   return `
 <!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Trransitional//EN”   “http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd”>
@@ -1755,7 +2168,11 @@ module.exports.ocean = (
         .padding{
             padding:40px;
         }
-
+        p > a {
+            font-size: 15px;
+            text-decoration: none;
+            color: #ffffff !important;
+        }
         @media screen and (max-width:600px){
 
         }
@@ -1838,33 +2255,68 @@ module.exports.ocean = (
                 <tr>
                     <td width="100%" align="center" style="background: #0096bb; padding-bottom:30px; width:100%" >
                         <table width="100%" style="border-spacing:0;border-collapse: unset;">
+                            ${(fbUrl || twitterUrl || youtubeUrl || linkedinUrl) &&
+                                `<tr>
+                                    <td>
+                                        <p style="font-size:10px; color:#ffffff; text-align: center; padding-bottom:10px;">Connect with me on</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-bottom:30px;" align="center">
+                                        <table align="center" style="border-spacing: 0; display: inline-block;border-collapse: unset;">
+                                            <tr>
+                                                ${fbUrl && 
+                                                    `<td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
+                                                        <a href="${fbUrl}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/ocean/facebook.jpg" alt="facebook"></a>
+                                                    </td>`}
+                                                ${twitterUrl && 
+                                                    `<td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
+                                                        <a href="${twitterUrl}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/ocean/twitter.jpg" alt="twitter"></a>
+                                                    </td>`}
+                                                ${youtubeUrl && 
+                                                    `<td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
+                                                        <a href="${youtubeUrl}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/ocean/youtube.jpg" alt="youtube"></a>
+                                                    </td>`}
+                                                ${linkedinUrl && 
+                                                    `<td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
+                                                        <a href="${linkedinUrl}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/ocean/linkedin.jpg" alt="linkedin"></a>
+                                                    </td>`}
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>`}
+                            ${mobileNumber && 
+                                `<tr>
+                                    <td>
+                                        <p style="font-size:15px; color:#ffffff; text-align: center; margin: 5px 0;">Mobile Phone: ${mobileNumber}</p>
+                                    </td>
+                                </tr>`}
+                            ${businessPhone && 
+                                `<tr>
+                                    <td>
+                                        <p style="font-size:15px; color:#ffffff; text-align: center; margin: 5px 0;">Business Phone: ${businessPhone}</p>
+                                    </td>
+                                </tr>`}
+                            ${email && 
+                                `<tr>
+                                    <td>
+                                        <p style="font-size:15px; color:#ffffff; text-align: center; margin: 5px 0;">Email: ${email}</p>
+                                    </td>
+                                </tr>`}
+                            ${webAddress && 
+                                `<tr>
+                                    <td>
+                                        <p style="font-size:15px; color:#ffffff; text-align: center; margin: 5px 0;">Website: ${webAddress}</p>
+                                    </td>
+                                </tr>`}
+                            ${address && 
+                                `<tr>
+                                    <td>
+                                        <p style="font-size:15px; color:#ffffff; text-align: center; margin: 5px 0;">Office Address: ${address}</p>
+                                    </td>
+                                </tr>`}
                             <tr>
-                                <td>
-                                    <p style="font-size:10px; color:#ffffff; text-align: center; padding-bottom:10px;">Connect with me on</p>
-                                </td>
-                            </tr>
-                            <tr>
-                            <td style="padding-bottom:30px;" align="center">
-                                <table align="center" style="border-spacing: 0; display: inline-block;border-collapse: unset;">
-                                    <tr>
-                                        <td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
-                                            <a href="${fbUrl ? fbUrl : "https://www.facebook.com/"}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/ocean/facebook.jpg" alt="facebook"></a>
-                                        </td>
-                                        <td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
-                                            <a href="${twitterUrl ? twitterUrl : "https://twitter.com/"}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/ocean/twitter.jpg" alt="twitter"></a>
-                                        </td>
-                                        <td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
-                                            <a href="${youtubeUrl ? youtubeUrl : "https://youtube.com/"}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/ocean/youtube.jpg" alt="youtube"></a>
-                                        </td>
-                                        <td style="width:28px; height:28px; padding-left:5px; padding-right:5px;" width="38" height="28">
-                                            <a href="${linkedinUrl ? linkedinUrl : "https://www.linkedin.com/"}"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/ocean/linkedin.jpg" alt="linkedin"></a>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                            </tr>
-                            <tr>
-                                <td style="text-align: center; padding-bottom:6px;">
+                                <td style="text-align: center; padding-top: 20px; padding-bottom:6px;">
                                     <a href=""><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/ocean/logo-footer.jpg" alt=""></a>
                                 </td>
                             </tr>

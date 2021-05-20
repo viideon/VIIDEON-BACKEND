@@ -84,10 +84,9 @@ module.exports.sendWithGmail = async (req, res) => {
     const { thumbnail, eMailTemplate, title, description } = video;
 
     const user = await userService.getUserById(userId);
-    const { userName, url } = user;
+    const { userName, url, email, mobileNumber, businessPhone, webAddress, facebookAddress, twitterAddress, youtubeAddress, linkedinAddress, address  } = user;
     
     if (eMailTemplate) themeName = eMailTemplate;
-    let settings = { colors: {}, logoUrl: false, text: false };
     
     if (themeName) {
       settings = await userService.getSetttingByUserIDAndName(
@@ -97,443 +96,277 @@ module.exports.sendWithGmail = async (req, res) => {
     }
     let templateString;
 
-    if (settings.length === 0 || !themeName) {
-      
-      if (themeName === undefined) {
+    if (themeName === undefined) {
 
-        templateString = await template.sleek2(
-          videoId,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false
-        );
-      }
-      if (themeName === "Spread") {
-        console.log('123')
-        templateString = await template.spreadTheme(
-          videoId,
-          thumbnail,
-          false,
-          false,
-          userName,
-          url,
-          false,
-          false,
-          false,
-          false,
-          title,
-          description,
-        );
-      }
-      if (themeName === "Corporate Light") {
-        templateString = await template.corporateLight(
-          videoId,
-          thumbnail,
-          false,
-          false,
-          userName,
-          url,
-          false,
-          false,
-          false,
-          false,
-          title,
-          description,
-        );
-      }
-      
-      if (themeName === "Modern Simple") {
-        templateString = await template.modernSimple(
-          videoId,
-          thumbnail,
-          false,
-          false,
-          userName,
-          url,
-          false,
-          false,
-          false,
-          false,
-          title,
-          description,
-        );
-      }
-      if (themeName === "Streamlined") {
-        templateString = await template.streamlined(
-          videoId,
-          thumbnail,
-          false,
-          false,
-          userName,
-          url,
-          false,
-          false,
-          false,
-          false,
-          title,
-          description,
-        );
-      }
-      if (themeName === "Simple Blue") {
-        templateString = await template.simple_blue(
-          videoId,
-          thumbnail,
-          false,
-          false,
-          userName,
-          url,
-          false,
-          false,
-          false,
-          false,
-          title,
-          description,
-        );
-      }
-      if (themeName === "Sleek") {
-        templateString = await template.sleek(
-          videoId,
-          thumbnail,
-          false,
-          false,
-          userName,
-          url,
-          false,
-          false,
-          false,
-          false,
-          title,
-          description,
-        );
-      }
-      if (themeName === "Social Business") {
-        templateString = await template.social_business(
-          videoId,
-          thumbnail,
-          false,
-          false,
-          userName,
-          url,
-          false,
-          false,
-          false,
-          false,
-          title,
-          description,
-        );
-      }
-      if (themeName === "Social Impact") {
-        templateString = await template.social_impact(
-          videoId,
-          thumbnail,
-          false,
-          false,
-          userName,
-          url,
-          false,
-          false,
-          false,
-          false,
-          title,
-          description,
-        );
-      }
-      if (themeName === "Clasic Dark") {
-        templateString = await template.classic_dark(
-          videoId,
-          thumbnail,
-          false,
-          false,
-          userName,
-          url,
-          false,
-          false,
-          false,
-          false,
-          title,
-          description,
-        );
-      }
-      if (themeName === "Ocean") {
-        templateString = await template.ocean(
-          videoId,
-          thumbnail,
-          false,
-          false,
-          userName,
-          url,
-          false,
-          false,
-          false,
-          false,
-          title,
-          description,
-        );
-      }
-      authorize(sendMessage);
-      function authorize(callback) {
-        const oAuth2Client = new google.auth.OAuth2(
-          `${process.env.CLIENT_ID}`,
-          `${process.env.CLIENT_SECRET}`
-        );
-        oAuth2Client.setCredentials(singleTokenObj);
-        callback(oAuth2Client);
-      }
-      async function sendMessage(auth) {
-        var raw = await makeBody(
-          recieverEmail,
-          fromEmail,
-          "message from viideon member",
-          templateString
-        );
-        const gmail = google.gmail({ version: "v1", auth });
-        gmail.users.messages.send(
-          {
-            auth: auth,
-            userId: "me",
-            resource: {
-              raw: raw,
-            },
-          },
-          function (err, response) {
-            if (err) {
-              return res.status(400).json({
-                messaage: "failed,server error",
-              });
-            }
-            if (response) {
-              return res.status(200).json({
-                message: "email sent",
-              });
-            }
-          }
-        );
-      }
-    } else {
-      let {
-        logoUrl,
-        fbUrl,
-        text,
-        twitterUrl,
-        youtubeUrl,
-        linkedinUrl,
-      } = settings[0];
-
-      var emailList = recieverEmail.split(",");
-      await incrementVideoEmail(videoId, emailList.length);
-      templateString = await template.generateStringTemplate(
+      templateString = await template.sleek2(
         videoId,
-        thumbnail
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
       );
-      if (themeName === "Spread") {
-
-        templateString = await template.spreadTheme(
-          videoId,
-          thumbnail,
-          logoUrl,
-          text,
-          userName,
-          url,
-          fbUrl,
-          twitterUrl,
-          youtubeUrl,
-          linkedinUrl,
-          title,
-          description
-        );
-      }
-      if (themeName === "Corporate Light") {
-        templateString = await template.corporateLight(
-          videoId,
-          thumbnail,
-          settings.logoUrl,
-          settings.text,
-          userName,
-          url,
-          false,
-          false,
-          false,
-          false,
-          title,
-          description
-        );
-      }
-      if (themeName === "Modern Simple") {
-        templateString = await template.modernSimple(
-          videoId,
-          thumbnail,
-          settings.logoUrl,
-          settings.text,
-          userName,
-          url,
-          false,
-          false,
-          false,
-          false,
-          title,
-          description
-        );
-      }
-      if (themeName === "Streamlined") {
-        templateString = await template.streamlined(
-          videoId,
-          thumbnail,
-          settings.logoUrl,
-          settings.text,
-          userName,
-          url,
-          false,
-          false,
-          false,
-          false,
-          title,
-          description
-        );
-      }
-      if (themeName === "Simple Blue") {
-        templateString = await template.simple_blue(
-          videoId,
-          thumbnail,
-          settings.logoUrl,
-          settings.text,
-          userName,
-          url,
-          false,
-          false,
-          false,
-          false,
-          title,
-          description
-        );
-      }
-      if (themeName === "Sleek") {
-        templateString = await template.sleek(
-          videoId,
-          thumbnail,
-          settings.logoUrl,
-          settings.text,
-          userName,
-          url,
-          false,
-          false,
-          false,
-          false,
-          title,
-          description
-        );
-      }
-      if (themeName === "Social Business") {
-        templateString = await template.social_business(
-          videoId,
-          thumbnail,
-          settings.logoUrl,
-          settings.text,
-          userName,
-          url,
-          false,
-          false,
-          false,
-          false,
-          title,
-          description
-        );
-      }
-      if (themeName === "Social Impact") {
-        templateString = await template.social_impact(
-          videoId,
-          thumbnail,
-          settings.logoUrl,
-          settings.text,
-          userName,
-          url,
-          false,
-          false,
-          false,
-          false,
-          title,
-          description
-        );
-      }
-      if (themeName === "Clasic Dark") {
-        templateString = await template.classic_dark(
-          videoId,
-          thumbnail,
-          settings.logoUrl,
-          settings.text,
-          userName,
-          url,
-          false,
-          false,
-          false,
-          false,
-          title,
-          description
-        );
-      }
-      if (themeName === "Ocean") {
-        templateString = await template.ocean(
-          videoId,
-          thumbnail,
-          settings.logoUrl,
-          settings.text,
-          userName,
-          url,
-          false,
-          false,
-          false,
-          false,
-          title,
-          description
-        );
-      }
-      authorize(sendMessage);
-      function authorize(callback) {
-        const oAuth2Client = new google.auth.OAuth2(
-          `${process.env.CLIENT_ID}`,
-          `${process.env.CLIENT_SECRET}`
-        );
-        oAuth2Client.setCredentials(singleTokenObj);
-        callback(oAuth2Client);
-      }
-
-      async function sendMessage(auth) {
-        var raw = await makeBody(
-          recieverEmail,
-          fromEmail,
-          "message from viideon member",
-          templateString
-        );
-        const gmail = google.gmail({ version: "v1", auth });
-        gmail.users.messages.send(
-          {
-            auth: auth,
-            userId: "me",
-            resource: {
-              raw: raw,
-            },
+    }
+    if (themeName === "Spread") {
+      templateString = await template.spreadTheme(
+        videoId,
+        thumbnail,
+        title,
+        description,
+        false,
+        false,
+        userName,
+        url,
+        facebookAddress,
+        twitterAddress,
+        youtubeAddress,
+        linkedinAddress,
+        mobileNumber,
+        businessPhone,
+        email,
+        webAddress,
+        address
+      );
+    }
+    if (themeName === "Corporate Light") {
+      templateString = await template.corporateLight(
+        videoId,
+        thumbnail,
+        title,
+        description,
+        false,
+        false,
+        userName,
+        url,
+        facebookAddress,
+        twitterAddress,
+        youtubeAddress,
+        linkedinAddress,
+        mobileNumber,
+        businessPhone,
+        email,
+        webAddress,
+        address
+      );
+    }
+    
+    if (themeName === "Modern Simple") {
+      templateString = await template.modernSimple(
+        videoId,
+        thumbnail,
+        title,
+        description,
+        false,
+        false,
+        userName,
+        url,
+        facebookAddress,
+        twitterAddress,
+        youtubeAddress,
+        linkedinAddress,
+        mobileNumber,
+        businessPhone,
+        email,
+        webAddress,
+        address
+      );
+    }
+    if (themeName === "Streamlined") {
+      templateString = await template.streamlined(
+        videoId,
+        thumbnail,
+        title,
+        description,
+        false,
+        false,
+        userName,
+        url,
+        facebookAddress,
+        twitterAddress,
+        youtubeAddress,
+        linkedinAddress,
+        mobileNumber,
+        businessPhone,
+        email,
+        webAddress,
+        address
+      );
+    }
+    if (themeName === "Simple Blue") {
+      templateString = await template.simple_blue(
+        videoId,
+        thumbnail,
+        title,
+        description,
+        false,
+        false,
+        userName,
+        url,
+        facebookAddress,
+        twitterAddress,
+        youtubeAddress,
+        linkedinAddress,
+        mobileNumber,
+        businessPhone,
+        email,
+        webAddress,
+        address
+      );
+    }
+    if (themeName === "Sleek") {
+      templateString = await template.sleek(
+        videoId,
+        thumbnail,
+        title,
+        description,
+        false,
+        false,
+        userName,
+        url,
+        facebookAddress,
+        twitterAddress,
+        youtubeAddress,
+        linkedinAddress,
+        mobileNumber,
+        businessPhone,
+        email,
+        webAddress,
+        address
+      );
+    }
+    if (themeName === "Social Business") {
+      templateString = await template.social_business(
+        videoId,
+        thumbnail,
+        title,
+        description,
+        false,
+        false,
+        userName,
+        url,
+        facebookAddress,
+        twitterAddress,
+        youtubeAddress,
+        linkedinAddress,
+        mobileNumber,
+        businessPhone,
+        email,
+        webAddress,
+        address
+      );
+    }
+    if (themeName === "Social Impact") {
+      templateString = await template.social_impact(
+        videoId,
+        thumbnail,
+        title,
+        description,
+        false,
+        false,
+        userName,
+        url,
+        facebookAddress,
+        twitterAddress,
+        youtubeAddress,
+        linkedinAddress,
+        mobileNumber,
+        businessPhone,
+        email,
+        webAddress,
+        address
+      );
+    }
+    if (themeName === "Clasic Dark") {
+      templateString = await template.classic_dark(
+        videoId,
+        thumbnail,
+        title,
+        description,
+        false,
+        false,
+        userName,
+        url,
+        facebookAddress,
+        twitterAddress,
+        youtubeAddress,
+        linkedinAddress,
+        mobileNumber,
+        businessPhone,
+        email,
+        webAddress,
+        address
+      );
+    }
+    if (themeName === "Ocean") {
+      templateString = await template.ocean(
+        videoId,
+        thumbnail,
+        title,
+        description,
+        false,
+        false,
+        userName,
+        url,
+        facebookAddress,
+        twitterAddress,
+        youtubeAddress,
+        linkedinAddress,
+        mobileNumber,
+        businessPhone,
+        email,
+        webAddress,
+        address
+      );
+    }
+    authorize(sendMessage);
+    function authorize(callback) {
+      const oAuth2Client = new google.auth.OAuth2(
+        `${process.env.CLIENT_ID}`,
+        `${process.env.CLIENT_SECRET}`
+      );
+      oAuth2Client.setCredentials(singleTokenObj);
+      callback(oAuth2Client);
+    }
+    async function sendMessage(auth) {
+      var raw = await makeBody(
+        recieverEmail,
+        fromEmail,
+        "message from viideon member",
+        templateString
+      );
+      const gmail = google.gmail({ version: "v1", auth });
+      gmail.users.messages.send(
+        {
+          auth: auth,
+          userId: "me",
+          resource: {
+            raw: raw,
           },
-          function (err, response) {
-            if (err) {
-              return res.status(400).json({
-                messaage: "failed,server error",
-              });
-            }
-            if (response) {
-              return res.status(200).json({
-                message: "email sent",
-              });
-            }
+        },
+        function (err, response) {
+          if (err) {
+            return res.status(400).json({
+              messaage: "failed,server error",
+            });
           }
-        );
-      }
+          if (response) {
+            return res.status(200).json({
+              message: "email sent",
+            });
+          }
+        }
+      );
     }
   } catch (error) {
     res.status(400).json({
