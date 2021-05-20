@@ -339,34 +339,46 @@ module.exports.sendWithGmail = async (req, res) => {
       callback(oAuth2Client);
     }
     async function sendMessage(auth) {
-      var raw = await makeBody(
-        recieverEmail,
-        fromEmail,
-        "message from viideon member",
-        templateString
-      );
+      var receiverEmails = recieverEmail.split(",");
       const gmail = google.gmail({ version: "v1", auth });
-      gmail.users.messages.send(
-        {
-          auth: auth,
-          userId: "me",
-          resource: {
-            raw: raw,
-          },
-        },
-        function (err, response) {
-          if (err) {
-            return res.status(400).json({
-              messaage: "failed,server error",
-            });
+
+      const emailPromises = []
+
+      console.log(emailPromises);
+      
+      receiverEmails.forEach(receiverEmail => {
+        var raw = makeBody(
+          receiverEmail,
+          fromEmail,
+          "message from viideon member",
+          templateString
+        );
+        
+        emailPromises.push(gmail.users.messages.send(
+          {
+            auth: auth,
+            userId: "me",
+            resource: {
+              raw: raw,
+            },
           }
-          if (response) {
-            return res.status(200).json({
-              message: "email sent",
-            });
-          }
-        }
-      );
+        ));
+      });
+
+      await Promise.all(emailPromises).then(data => {
+        console.log('start');
+        console.log('length: ' + data.length);
+        console.log(data);
+        console.log('end');
+        return res.status(200).json({
+          message: "email sent"
+        });
+      }).catch(error => {
+        console.log(error);
+        return res.status(400).json({
+          messaage: "failed,server error"
+        });
+      })
     }
   } catch (error) {
     res.status(400).json({
