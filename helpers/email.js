@@ -1,21 +1,14 @@
 const nodemailer = require("nodemailer");
+const sgMail = require('@sendgrid/mail');
 require("dotenv").config();
 
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  host: "smtp.gmail.com",
-  port: 587,
-  secure: false,
-  auth: {
-    user: `${process.env.FROM_EMAIL}`,
-    pass: `${process.env.EMAIL_PASSWORD}`,
-  },
-});
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
 const sendEmail = async (user, req, res) => {
   const token = user.generateVerificationToken();
-  const mailOptions = {
+  const msg = {
     to: user.email,
-    from: `viideon<${process.env.FROM_EMAIL}>`,
+    from: process.env.FROM_EMAIL,
     subject: "Account Verification",
     text: `Hi ${user.firstName} ${user.lastName} \n 
                 Please click on this link to verify your email  ${process.env.APP_DOMAIN}/login/VerifyEmail?code=${token.token} . \n\n`,
@@ -25,7 +18,7 @@ const sendEmail = async (user, req, res) => {
     if (!tokenSaved) {
       return false;
     }
-    await transporter.sendMail(mailOptions);
+    await sgMail.send(msg);
     return true;
   } catch (err) {
     return false;
