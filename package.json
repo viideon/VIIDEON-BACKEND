@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "@hapi/joi": "^17.1.1",
+    "@sendgrid/mail": "^7.6.0",
     "axios": "^0.19.2",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
@@ -20,12 +21,13 @@
     "express-fileupload": "^1.1.7-alpha.3",
     "fluent-ffmpeg": "^2.1.2",
     "googleapis": "^52.1.0",
+    "grabzit": "^3.4.5",
     "jsontokens": "^3.0.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.2",
     "nodemailer": "^6.4.5",
     "nodemailer-express-handlebars": "^4.0.0",
-    "nodemon": "^2.0.2",
+    "nodemon": "^2.0.14",
     "randomstring": "^1.1.5"
   }
 }

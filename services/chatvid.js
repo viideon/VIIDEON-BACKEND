@@ -50,8 +50,18 @@ const updateChatvidStep = (_id, step) => {
   return InterActiveMessage.updateOne({ _id }, { $push: { steps: step } })
 }
 
+const updateChatvidSteps = (_id, steps) => {
+  return InterActiveMessage.updateOne({_id}, { steps})
+}
+
 const getChatvidById = (_id) => {
   return InterActiveMessage.find({ _id })
+    .populate({ path: "steps", populate: [{ path: "videoId" }, { path: "choices" }] })
+    .populate("userId")
+    .lean()
+}
+const getSingleChatvidById = (_id) => {
+  return InterActiveMessage.findOne({ _id })
     .populate({ path: "steps", populate: [{ path: "videoId" }, { path: "choices" }] })
     .populate("userId")
     .lean()
@@ -66,9 +76,7 @@ const getChatvidByUserId = async (userId) => {
 }
 
 const getStepById = (_id) => {
-  return Step.find({ _id })
-    .populate("videoId")
-    .populate("replies")
+  return Step.findOne({ _id }).lean();
 }
 const updateStepReply = (_id, reply) => {
   return Step.updateOne({ _id }, { $push: { replies: reply } });
@@ -91,12 +99,14 @@ const saveMetrics = (payload) => {
   let metrics = new Metrics({ ...payload });
   return metrics.save();
 }
-
+const deleteChatvid = async (id) => {
+  const chatVid = await InterActiveMessage.deleteOne({_id: id});
+}
 const getMetrics = (chatvidId, dateFrom, dateTo, deviceType, isInteracted, isCompleted, isAnswered) => {
   var dateTo = new Date(dateTo)
   var dateFrom = new Date(dateFrom)
   dateTo.setDate(dateTo.getDate() +1)
-  dateFrom.setDate(dateTo.getDate() -1)
+  dateFrom.setDate(dateFrom.getDate() -1)
   if(deviceType === "all") {
     return Metrics.find({ chatvidId, createdAt: { $gte: dateFrom, $lte: dateTo } }).lean();
   } else {
@@ -107,6 +117,7 @@ module.exports = {
   createChatvid,
   registerPeople,
   updateChatvidStep,
+  updateChatvidSteps,
   saveStep,
   saveReply,
   saveVideo,
@@ -122,4 +133,6 @@ module.exports = {
   updateStep,
   saveMetrics,
   getMetrics,
+  deleteChatvid,
+  getSingleChatvidById,
 };

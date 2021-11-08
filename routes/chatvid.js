@@ -7,6 +7,8 @@ router.route("/").get(controller.get);
 router.route("/").patch(controller.update);
 router.route("/").delete(controller.deleteChatvid);
 router.route("/reply").post(controller.addReply);
+router.route("/step").patch(controller.updateJumps);
 router.route("/metrics").post(controller.saveAnalytics);
 router.route("/metrics/:id").post(controller.getMetrics);
+router.route("/delete/:id").delete(controller.deleteChatvid);
 module.exports = router;

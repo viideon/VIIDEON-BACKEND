@@ -9,6 +9,7 @@ const videoSchema = new mongoose.Schema({
   recieverEmail: { type: String, required: false },
   campaign: { type: Boolean, required: false },
   isChatvid: { type: Boolean, required: false },
+  isVideo: { type: Boolean, required: false },
   recordingEdit: { type: Boolean, require: false },
   views: { type: Number },
   watch: { type: Number },
@@ -26,7 +27,11 @@ const videoSchema = new mongoose.Schema({
     align: { type: String },
     vAlign: { type: String },
     textColor: { type: String },
-    fontSize: { type: Number }
+    fontSize: { type: String },
+    reveal: [],
+    fontWeight: { type: Boolean },
+    textDecoration: { type: Boolean },
+    fontStyle: { type: Boolean },
   },
   musicProps: {
     url: { type: String },
@@ -34,7 +39,7 @@ const videoSchema = new mongoose.Schema({
     musicVolume: { type: Number }
   },
   description: { type: String },
-  eMailTemplate: { type: String}
+  eMailTemplate: { type: String }
 });
 videoSchema.index({ title: "text" });
 module.exports = mongoose.model("Video", videoSchema);

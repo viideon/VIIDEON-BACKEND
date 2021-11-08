@@ -8,13 +8,18 @@ const userSchema = new mongoose.Schema({
   lastName: { type: String, minlength: 2, required: true },
   userName: { type: String, uniqe: true, required: true },
   password: { type: String, minlength: 6, required: true },
-  mobileNumber: { type: Number, minlength: 7, required: false },
-  timeZone: { type: String, required: false },
-  businessPhone: { type: Number, minlength: 7, required: false },
+  mobileNumber: { type: String, minlength: 12, required: false },
+  businessPhone: { type: String, minlength: 12, required: false },
+  address: { type: String, required: false },
   webAddress: { type: String, minlength: 3, required: false },
-  title: { type: String, minlength: 5, required: false },
+  facebookAddress: { type: String, required: false },
+  twitterAddress: { type: String, required: false },
+  youtubeAddress: { type: String, required: false },
+  linkedinAddress: { type: String, required: false },
+  timeZone: { type: String, required: false },
   affiliateId: { type: String, required: false },
   url: { type: String, required: false },
+  
   isVerified: {
     type: Boolean,
     default: false

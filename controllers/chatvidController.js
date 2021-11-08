@@ -1,5 +1,6 @@
-const { array } = require("@hapi/joi");
 const chatVidServices = require("../services/chatvid")
+const videoService = require("../services/videoService");
+const { helpers } = require("../helpers");
 
 const get = async (req, res) => {
   try {
@@ -15,7 +16,6 @@ const get = async (req, res) => {
 
     res.status(200).json({ message: chatvids })
   } catch (error) {
-    console.log("Error message: ", error.message)
     res.status(400).json({ message: error.message })
   }
 };
@@ -75,13 +75,26 @@ const save = async (req, res) => {
 const update = async (req, res) => {
   try {
     const { video, userId, chatvidId, fitvideo, responseType, choices, calendar, isAudio, isVideo, isText, text, stepNo } = req.body;
+    const chatvid = await chatVidServices.getChatvidById(chatvidId);
+    if (!chatvid && chatvid.length > 0) throw ({ message: "No chatvid found!" });
     let vid = await chatVidServices.saveVideo(video);
     if (!vid) throw ({ message: "unabel to store video" });
     const newStep = {
       isFull: fitvideo, responseType, calendar, isAudio, isVideo, isText, text, videoId: vid._id, roomId: chatvidId, userId, stepNo
     }
     let step = await chatVidServices.saveStep(newStep);
-    await chatVidServices.updateChatvidStep(chatvidId, step._id);
+    let steps = [...Array(chatvid[0].steps.length + 1).keys()];
+    steps[stepNo] = step._id;
+    var minus = 0;
+    await steps.map((stp, index) => {
+      if (isNaN(stp)) {
+        minus = 1;
+      } else {
+        steps[index] = chatvid[0].steps[index - minus]._id
+      }
+      return true
+    })
+    await chatVidServices.updateChatvidSteps(chatvidId, steps);
     try {
       await Promise.all(choices.map(async (choice, ind) => {
         if (responseType !== "Multiple-Choice") return resolve();
@@ -100,23 +113,53 @@ const update = async (req, res) => {
     }
     res.status(200).json({ message: "Successfully added" })
   } catch (error) {
-    console.log("ERR: ", error)
     res.status(400).json({ message: error.message })
   }
 };
 const deleteChatvid = async (req, res) => {
   try {
-    const { userId } = req.params;
-    console.log('delete chat vid called !!!')
-    let chatvids = [];
-    res.status(200).json({ message: chatvids })
+    const { id } = req.params;
+    const singleChatvid = await chatVidServices.getSingleChatvidById(id);
+    const s = await videoService.deleteVideoByThumnail(singleChatvid.thumbnail)
+    chatVidServices.deleteChatvid(id);
+    res.status(200).json({ message: "Chatvid deleted succesfully!" })
   } catch (error) {
     res.status(400).json({ message: error.message })
   }
 };
+function isEmpty(obj) {
+  for (var key in obj) {
+    if (obj.hasOwnProperty(key))
+      return false;
+  }
+  return true;
+}
+const updateJumps = async (req, res) => {
+  try {
+    const { _id, jumpTo } = req.body;
+    let step = await chatVidServices.getStepById(_id);
+    if (!step) throw ({ message: "no record found" })
+    delete req.body._id;
+    if (jumpTo || jumpTo=="end") {
+      await chatVidServices.updateStep(_id, req.body)
+    } else {
+      if (!isEmpty(step.jumpChoice)) {
+        let jumpChoice = {...step.jumpChoice, ...req.body.jumpChoice}
+        await chatVidServices.updateStep(_id, {jumpChoice})
+      }else {
+        await chatVidServices.updateStep(_id, req.body)
+      }
+    }
+    res.status(200).json({ message: "updated...!", data: req.body })
+  } catch (error) {
+    res.status(400).json({ message: error.message })
+  }
+}
 const addReply = async (req, res) => {
   try {
     const { people, reply } = req.body;
+    const { logo } = req.body;
+    
     if (reply.type !== "choice") {
       delete reply.choiceId
     }
@@ -126,7 +169,7 @@ const addReply = async (req, res) => {
         date: Date.now(),
         campaign: false,
       }
-      const video = await chatVidServices.saveVideo(vidObj);
+      const video = await chatVidServices.saveVideo(vidObj)
       reply.videoId = video._id;
     }
     let peopleID = await chatVidServices.getPeopleByEmail(people.email)
@@ -140,11 +183,15 @@ const addReply = async (req, res) => {
     if (reply.type === "choice") {
       await chatVidServices.updateChoice(reply.choiceId, rply._id)
     }
+  
+    const mail = await helpers.responseEmail(people.email,logo);
+    
+
     await chatVidServices.updateStepReply(reply.stepId, rply);
-    await chatVidServices.updateChatvidPeople(reply.chatvidId, ppl ? ppl : peopleID)
+    await chatVidServices.updateChatvidPeople(reply.chatvidId, ppl ? ppl : peopleID);
     res.status(200).json({ message: "Replied Successfully!" })
   } catch (error) {
-    console.log(error)
+   
     res.status(400).json({ message: error.message })
   }
 }
@@ -153,11 +200,9 @@ const saveAnalytics = async (req, res) => {
     await chatVidServices.saveMetrics(req.body)
     res.status(200).json({ message: "successfully save" })
   } catch (error) {
-    console.log(error)
     res.status(400).json({ message: error.message })
   }
 }
-
 const getMetrics = async (req, res) => {
   try {
     const { chatvidId, dateFrom, dateTo, deviceType, isAnswered, isCompleted, isInteracted } = req.body;
@@ -181,7 +226,6 @@ const getMetrics = async (req, res) => {
     datasets.mobile = await Object.values(unique.mobile);
     res.status(200).json({ message: [], stats: { landed, completed, answered, interacted, total: allMetrics.length, datasets } })
   } catch (error) {
-    console.log(error)
     res.status(400).json({ message: error.message })
   }
 }
@@ -192,6 +236,7 @@ const controller = {
   update,
   deleteChatvid,
   addReply,
+  updateJumps,
   saveAnalytics,
   getMetrics
 }

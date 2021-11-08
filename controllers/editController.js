@@ -10,7 +10,6 @@ module.exports.mergeVideos = async (req, res) => {
     const files = req.files;
     await fileUpload(files.one, "temp/one");
     await fileUpload(files.two, "temp/two");
-    console.log("files uploaded");
     ffmpeg()
       .input(path.join(__dirname, "..", "temp/one"))
       .input(path.join(__dirname, "..", "temp/two"))
@@ -42,7 +41,6 @@ module.exports.mergeVideos = async (req, res) => {
       })
       .mergeToFile("temp/merged.webm", "/temp");
   } catch (err) {
-    console.log("error", err);
     res.status(400).json({
       error: err
     });
@@ -58,7 +56,6 @@ module.exports.mergeFile = async (req, res) => {
     const files = req.files;
     await fileUpload(files.one, "temp/one");
     await fileUpload(files.two, "temp/two");
-    console.log("files uploaded");
 
     process.stdout.on("error", function(err) {
       if (err.code == "EPIPE") {
@@ -98,7 +95,6 @@ module.exports.mergeFile = async (req, res) => {
       })
       .save(filePath);
   } catch (err) {
-    console.log("error", err);
     res.status(400).json({
       error: err
     });
@@ -132,7 +128,6 @@ module.exports.addMusic = async (req, res, next) => {
       .complexFilter("[0:a][1:a]amerge , pan=stereo|c0<c0+c2|c1<c1+c3[out]")
       .outputOptions(["-map 1:v", "-map [out]", "-c:v copy", "-shortest"])
       .on("error", function(err) {
-        console.log("error", err);
         res.status(400).json({ message: "failed to merge" });
         res.on("finish", function() {
           try {
@@ -160,19 +155,9 @@ module.exports.addMusic = async (req, res, next) => {
       })
       .saveToFile(filePath);
   } catch (err) {
-    console.log("error", err);
     res.status(400).json({
       error: err
     });
   }
 };
 
-// ffmpeg("temp/" + req.files.mp4.name)
-// .toFormat("mp3")
-// .on("end", function() {
-//   console.log("done");
-// })
-// .on("error", function(err) {
-//   console.log("error occured", err);
-// })
-// .pipe(res, { end: true });
