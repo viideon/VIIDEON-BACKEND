@@ -16,8 +16,6 @@ require("dotenv").config();
 
 const app = express();
 
-const port = process.env.PORT || 3008;
-
 mongoose.connect(`${process.env.MONGO_DB}`, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -46,10 +44,6 @@ app.use("/chatvid", chatvids);
 
 app.get("/", (req, res) => {
   res.send("Root place");
-});
-
-app.listen(port, () => {
-  console.log(`listening on port ${port}`);
 });
 
 module.exports.handler = serverless(app);
