@@ -1,4 +1,5 @@
 const express = require("express");
+const serverless = require("serverless-http");
 const path = require("path");
 const fileUpload = require("express-fileupload");
 const mongoose = require("mongoose");
@@ -12,6 +13,7 @@ const campaign = require("./routes/campaign");
 const industry = require("./routes/industry");
 const chatvids = require("./routes/chatvid");
 require("dotenv").config();
+
 const app = express();
 
 const port = process.env.PORT || 3008;
@@ -33,9 +35,6 @@ app.use(
   fileUpload({ useTempFiles: true, tempFileDir: path.join(__dirname, "temp") })
 );
 
-
-
-
 app.use("/user", user);
 app.use("/video", videos);
 app.use("/contact", contact);
@@ -52,3 +51,5 @@ app.get("/", (req, res) => {
 app.listen(port, () => {
   console.log(`listening on port ${port}`);
 });
+
+module.exports.handler = serverless(app);
