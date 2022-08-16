@@ -1,6 +1,6 @@
 {
   "name": "vidionpro-backend",
-  "version": "1.0.0",
+  "version": "2.0.0-0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -28,6 +28,7 @@
     "nodemailer": "^6.4.5",
     "nodemailer-express-handlebars": "^4.0.0",
     "nodemon": "^2.0.14",
-    "randomstring": "^1.1.5"
+    "randomstring": "^1.1.5",
+    "serverless-http": "^3.0.2"
   }
 }

@@ -1,0 +1,17 @@
+service: viideon-backend
+frameworkVersion: '3'
+
+custom:
+  tableName: 'users-table-${sls:stage}'
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  environment:
+    USERS_TABLE: ${self:custom.tableName}
+
+functions:
+  api:
+    handler: server.handler
+    events:
+      - httpApi: '*'
