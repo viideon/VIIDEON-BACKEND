@@ -2,13 +2,450 @@ service: viideon-backend
 frameworkVersion: '3'
 
 custom:
-  tableName: 'users-table-${sls:stage}'
+  campaignTemplateTableName: '${self:service}-${sls:stage}-campaign-template'
+  choicesTableName: '${self:service}-${sls:stage}-choices'
+  contactTableName: '${self:service}-${sls:stage}-contact'
+  emailConfigTableName: '${self:service}-${sls:stage}-email-config'
+  industriesTableName: '${self:service}-${sls:stage}-industries'
+  interactiveTableName: '${self:service}-${sls:stage}-interactive'
+  metricsTableName: '${self:service}-${sls:stage}-metrics'
+  peopleTableName: '${self:service}-${sls:stage}-people'
+  publicMusicAssetsTableName: '${self:service}-${sls:stage}-public-music-assets'
+  replyTableName: '${self:service}-${sls:stage}-reply'
+  settingTableName: '${self:service}-${sls:stage}-setting'
+  stepTableName: '${self:service}-${sls:stage}-step'
+  tokenTableName: '${self:service}-${sls:stage}-token'
+  userTableName: '${self:service}-${sls:stage}-user'
+  userAssetsTableName: '${self:service}-${sls:stage}-user-assets'
+  videosTableName: '${self:service}-${sls:stage}-videos'
+  recovery:
+    prod: True
+    dev: False
+  additionalStacks:
+    tables:
+      Outputs:
+        CampaignTemplateStreamArn:
+          Value:
+            Fn::GetAtt:
+              - CampaignTemplateTable
+              - StreamArn
+          Export:
+            Name: ${self:custom.campaignTemplateTableName}-streamarn
+        ChoicesStreamArn:
+          Value:
+            Fn::GetAtt:
+              - ChoicesTable
+              - StreamArn
+          Export:
+            Name: ${self:custom.choicesTableName}-streamarn
+        ContactStreamArn:
+          Value:
+            Fn::GetAtt:
+              - ContactTable
+              - StreamArn
+          Export:
+            Name: ${self:custom.contactTableName}-streamarn
+        EmailConfigStreamArn:
+          Value:
+            Fn::GetAtt:
+              - EmailConfigTable
+              - StreamArn
+          Export:
+            Name: ${self:custom.emailConfigTableName}-streamarn
+        IndustriesStreamArn:
+          Value:
+            Fn::GetAtt:
+              - IndustriesTable
+              - StreamArn
+          Export:
+            Name: ${self:custom.industriesTableName}-streamarn
+        InteractiveStreamArn:
+          Value:
+            Fn::GetAtt:
+              - InteractiveTable
+              - StreamArn
+          Export:
+            Name: ${self:custom.interactiveTableName}-streamarn
+        MetricsStreamArn:
+          Value:
+            Fn::GetAtt:
+              - MetricsTable
+              - StreamArn
+          Export:
+            Name: ${self:custom.metricsTableName}-streamarn
+        PeopleStreamArn:
+          Value:
+            Fn::GetAtt:
+              - PeopleTable
+              - StreamArn
+          Export:
+            Name: ${self:custom.peopleTableName}-streamarn
+        PublicMusicAssetsStreamArn:
+          Value:
+            Fn::GetAtt:
+              - PublicMusicAssetsTable
+              - StreamArn
+          Export:
+            Name: ${self:custom.publicMusicAssetsTableName}-streamarn
+        ReplyStreamArn:
+          Value:
+            Fn::GetAtt:
+              - ReplyTable
+              - StreamArn
+          Export:
+            Name: ${self:custom.replyTableName}-streamarn
+        SettingStreamArn:
+          Value:
+            Fn::GetAtt:
+              - SettingTable
+              - StreamArn
+          Export:
+            Name: ${self:custom.settingTableName}-streamarn
+        StepStreamArn:
+          Value:
+            Fn::GetAtt:
+              - StepTable
+              - StreamArn
+          Export:
+            Name: ${self:custom.stepTableName}-streamarn
+        TokenStreamArn:
+          Value:
+            Fn::GetAtt:
+              - TokenTable
+              - StreamArn
+          Export:
+            Name: ${self:custom.tokenTableName}-streamarn
+        UserStreamArn:
+          Value:
+            Fn::GetAtt:
+              - UserTable
+              - StreamArn
+          Export:
+            Name: ${self:custom.userTableName}-streamarn
+        UserAssetsStreamArn:
+          Value:
+            Fn::GetAtt:
+              - UserAssetsTable
+              - StreamArn
+          Export:
+            Name: ${self:custom.userAssetsTableName}-streamarn
+        VideosStreamArn:
+          Value:
+            Fn::GetAtt:
+              - VideosTable
+              - StreamArn
+          Export:
+            Name: ${self:custom.videosTableName}-streamarn
+      Resources:
+        CampaignTemplateTable:
+          Type: AWS::DynamoDB::Table
+          DeletionPolicy: Retain
+          Properties:
+            PointInTimeRecoverySpecification:
+              PointInTimeRecoveryEnabled: ${self:custom.recovery.${sls:stage, 'dev'}}
+            AttributeDefinitions:
+              - AttributeName: id
+                AttributeType: S
+            KeySchema:
+              - AttributeName: id
+                KeyType: HASH
+            BillingMode: PAY_PER_REQUEST
+            TableName: ${self:custom.campaignTemplateTableName}
+            StreamSpecification:
+              StreamViewType: NEW_AND_OLD_IMAGES
+        ChoicesTable:
+          Type: AWS::DynamoDB::Table
+          DeletionPolicy: Retain
+          Properties:
+            PointInTimeRecoverySpecification:
+              PointInTimeRecoveryEnabled: ${self:custom.recovery.${sls:stage, 'dev'}}
+            AttributeDefinitions:
+              - AttributeName: id
+                AttributeType: S
+            KeySchema:
+              - AttributeName: id
+                KeyType: HASH
+            BillingMode: PAY_PER_REQUEST
+            TableName: ${self:custom.choicesTableName}
+            StreamSpecification:
+              StreamViewType: NEW_AND_OLD_IMAGES
+        ContactTable:
+          Type: AWS::DynamoDB::Table
+          DeletionPolicy: Retain
+          Properties:
+            PointInTimeRecoverySpecification:
+              PointInTimeRecoveryEnabled: ${self:custom.recovery.${sls:stage, 'dev'}}
+            AttributeDefinitions:
+              - AttributeName: id
+                AttributeType: S
+            KeySchema:
+              - AttributeName: id
+                KeyType: HASH
+            BillingMode: PAY_PER_REQUEST
+            TableName: ${self:custom.contactTableName}
+            StreamSpecification:
+              StreamViewType: NEW_AND_OLD_IMAGES
+        EmailConfigTable:
+          Type: AWS::DynamoDB::Table
+          DeletionPolicy: Retain
+          Properties:
+            PointInTimeRecoverySpecification:
+              PointInTimeRecoveryEnabled: ${self:custom.recovery.${sls:stage, 'dev'}}
+            AttributeDefinitions:
+              - AttributeName: id
+                AttributeType: S
+            KeySchema:
+              - AttributeName: id
+                KeyType: HASH
+            BillingMode: PAY_PER_REQUEST
+            TableName: ${self:custom.emailConfigTableName}
+            StreamSpecification:
+              StreamViewType: NEW_AND_OLD_IMAGES
+        IndustriesTable:
+          Type: AWS::DynamoDB::Table
+          DeletionPolicy: Retain
+          Properties:
+            PointInTimeRecoverySpecification:
+              PointInTimeRecoveryEnabled: ${self:custom.recovery.${sls:stage, 'dev'}}
+            AttributeDefinitions:
+              - AttributeName: id
+                AttributeType: S
+            KeySchema:
+              - AttributeName: id
+                KeyType: HASH
+            BillingMode: PAY_PER_REQUEST
+            TableName: ${self:custom.industriesTableName}
+            StreamSpecification:
+              StreamViewType: NEW_AND_OLD_IMAGES
+        InteractiveTable:
+          Type: AWS::DynamoDB::Table
+          DeletionPolicy: Retain
+          Properties:
+            PointInTimeRecoverySpecification:
+              PointInTimeRecoveryEnabled: ${self:custom.recovery.${sls:stage, 'dev'}}
+            AttributeDefinitions:
+              - AttributeName: id
+                AttributeType: S
+            KeySchema:
+              - AttributeName: id
+                KeyType: HASH
+            BillingMode: PAY_PER_REQUEST
+            TableName: ${self:custom.interactiveTableName}
+            StreamSpecification:
+              StreamViewType: NEW_AND_OLD_IMAGES
+        MetricsTable:
+          Type: AWS::DynamoDB::Table
+          DeletionPolicy: Retain
+          Properties:
+            PointInTimeRecoverySpecification:
+              PointInTimeRecoveryEnabled: ${self:custom.recovery.${sls:stage, 'dev'}}
+            AttributeDefinitions:
+              - AttributeName: id
+                AttributeType: S
+            KeySchema:
+              - AttributeName: id
+                KeyType: HASH
+            BillingMode: PAY_PER_REQUEST
+            TableName: ${self:custom.metricsTableName}
+            StreamSpecification:
+              StreamViewType: NEW_AND_OLD_IMAGES
+        PeopleTable:
+          Type: AWS::DynamoDB::Table
+          DeletionPolicy: Retain
+          Properties:
+            PointInTimeRecoverySpecification:
+              PointInTimeRecoveryEnabled: ${self:custom.recovery.${sls:stage, 'dev'}}
+            AttributeDefinitions:
+              - AttributeName: id
+                AttributeType: S
+            KeySchema:
+              - AttributeName: id
+                KeyType: HASH
+            BillingMode: PAY_PER_REQUEST
+            TableName: ${self:custom.peopleTableName}
+            StreamSpecification:
+              StreamViewType: NEW_AND_OLD_IMAGES
+        PublicMusicAssetsTable:
+          Type: AWS::DynamoDB::Table
+          DeletionPolicy: Retain
+          Properties:
+            PointInTimeRecoverySpecification:
+              PointInTimeRecoveryEnabled: ${self:custom.recovery.${sls:stage, 'dev'}}
+            AttributeDefinitions:
+              - AttributeName: id
+                AttributeType: S
+            KeySchema:
+              - AttributeName: id
+                KeyType: HASH
+            BillingMode: PAY_PER_REQUEST
+            TableName: ${self:custom.publicMusicAssetsTableName}
+            StreamSpecification:
+              StreamViewType: NEW_AND_OLD_IMAGES
+        ReplyTable:
+          Type: AWS::DynamoDB::Table
+          DeletionPolicy: Retain
+          Properties:
+            PointInTimeRecoverySpecification:
+              PointInTimeRecoveryEnabled: ${self:custom.recovery.${sls:stage, 'dev'}}
+            AttributeDefinitions:
+              - AttributeName: id
+                AttributeType: S
+            KeySchema:
+              - AttributeName: id
+                KeyType: HASH
+            BillingMode: PAY_PER_REQUEST
+            TableName: ${self:custom.replyTableName}
+            StreamSpecification:
+              StreamViewType: NEW_AND_OLD_IMAGES
+        SettingTable:
+          Type: AWS::DynamoDB::Table
+          DeletionPolicy: Retain
+          Properties:
+            PointInTimeRecoverySpecification:
+              PointInTimeRecoveryEnabled: ${self:custom.recovery.${sls:stage, 'dev'}}
+            AttributeDefinitions:
+              - AttributeName: id
+                AttributeType: S
+            KeySchema:
+              - AttributeName: id
+                KeyType: HASH
+            BillingMode: PAY_PER_REQUEST
+            TableName: ${self:custom.settingTableName}
+            StreamSpecification:
+              StreamViewType: NEW_AND_OLD_IMAGES
+        StepTable:
+          Type: AWS::DynamoDB::Table
+          DeletionPolicy: Retain
+          Properties:
+            PointInTimeRecoverySpecification:
+              PointInTimeRecoveryEnabled: ${self:custom.recovery.${sls:stage, 'dev'}}
+            AttributeDefinitions:
+              - AttributeName: id
+                AttributeType: S
+            KeySchema:
+              - AttributeName: id
+                KeyType: HASH
+            BillingMode: PAY_PER_REQUEST
+            TableName: ${self:custom.stepTableName}
+            StreamSpecification:
+              StreamViewType: NEW_AND_OLD_IMAGES
+        TokenTable:
+          Type: AWS::DynamoDB::Table
+          DeletionPolicy: Retain
+          Properties:
+            PointInTimeRecoverySpecification:
+              PointInTimeRecoveryEnabled: ${self:custom.recovery.${sls:stage, 'dev'}}
+            AttributeDefinitions:
+              - AttributeName: id
+                AttributeType: S
+            KeySchema:
+              - AttributeName: id
+                KeyType: HASH
+            BillingMode: PAY_PER_REQUEST
+            TableName: ${self:custom.tokenTableName}
+            StreamSpecification:
+              StreamViewType: NEW_AND_OLD_IMAGES
+        UserTable:
+          Type: AWS::DynamoDB::Table
+          DeletionPolicy: Retain
+          Properties:
+            PointInTimeRecoverySpecification:
+              PointInTimeRecoveryEnabled: ${self:custom.recovery.${sls:stage, 'dev'}}
+            AttributeDefinitions:
+              - AttributeName: id
+                AttributeType: S
+            KeySchema:
+              - AttributeName: id
+                KeyType: HASH
+            BillingMode: PAY_PER_REQUEST
+            TableName: ${self:custom.userTableName}
+            StreamSpecification:
+              StreamViewType: NEW_AND_OLD_IMAGES
+        UserAssetsTable:
+          Type: AWS::DynamoDB::Table
+          DeletionPolicy: Retain
+          Properties:
+            PointInTimeRecoverySpecification:
+              PointInTimeRecoveryEnabled: ${self:custom.recovery.${sls:stage, 'dev'}}
+            AttributeDefinitions:
+              - AttributeName: id
+                AttributeType: S
+            KeySchema:
+              - AttributeName: id
+                KeyType: HASH
+            BillingMode: PAY_PER_REQUEST
+            TableName: ${self:custom.userAssetsTableName}
+            StreamSpecification:
+              StreamViewType: NEW_AND_OLD_IMAGES
+        VideosTable:
+          Type: AWS::DynamoDB::Table
+          DeletionPolicy: Retain
+          Properties:
+            PointInTimeRecoverySpecification:
+              PointInTimeRecoveryEnabled: ${self:custom.recovery.${sls:stage, 'dev'}}
+            AttributeDefinitions:
+              - AttributeName: id
+                AttributeType: S
+            KeySchema:
+              - AttributeName: id
+                KeyType: HASH
+            BillingMode: PAY_PER_REQUEST
+            TableName: ${self:custom.videosTableName}
+            StreamSpecification:
+              StreamViewType: NEW_AND_OLD_IMAGES
 
 provider:
   name: aws
-  runtime: nodejs14.x
+  runtime: nodejs16.x
+  architecture: arm64
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DescribeTable
+          Resource:
+            - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.campaignTemplateTableName}
+            - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.choicesTableName}
+            - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.contactTableName}
+            - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.emailConfigTableName}
+            - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.industriesTableName}
+            - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.interactiveTableName}
+            - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.metricsTableName}
+            - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.peopleTableName}
+            - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.publicMusicAssetsTableName}
+            - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.replyTableName}
+            - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.settingTableName}
+            - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.stepTableName}
+            - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.tokenTableName}
+            - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.userTableName}
+            - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.userAssetsTableName}
+            - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.videosTableName}
   environment:
-    USERS_TABLE: ${self:custom.tableName}
+    CAMPAIGN_TEMPLATE_TABLE_NAME: ${self:custom.campaignTemplateTableName}
+    CHOICES_TABLE_NAME: ${self:custom.choicesTableName}
+    CONTACT_TABLE_NAME: ${self:custom.contactTableName}
+    EMAIL_CONFIG_TABLE_NAME: ${self:custom.emailConfigTableName}
+    INDUSTRIES_TABLE_NAME: ${self:custom.industriesTableName}
+    INTERACTIVE_TABLE_NAME: ${self:custom.interactiveTableName}
+    METRICS_TABLE_NAME: ${self:custom.metricsTableName}
+    PEOPLE_TABLE_NAME: ${self:custom.peopleTableName}
+    PUBLIC_MUSIC_ASSETS_TABLE_NAME: ${self:custom.publicMusicAssetsTableName}
+    REPLY_TABLE_NAME: ${self:custom.replyTableName}
+    SETTING_TABLE_NAME: ${self:custom.settingTableName}
+    STEP_TABLE_NAME: ${self:custom.stepTableName}
+    TOKEN_TABLE_NAME: ${self:custom.tokenTableName}
+    USER_TABLE_NAME: ${self:custom.userTableName}
+    USER_ASSETS_TABLE_NAME: ${self:custom.userAssetsTableName}
+    VIDEOS_TABLE_NAME: ${self:custom.videosTableName}
+
+plugins:
+  - serverless-plugin-additional-stacks
 
 functions:
   api:
