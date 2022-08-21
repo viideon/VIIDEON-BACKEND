@@ -1,20 +1,16 @@
 const PublicMusic = require("../models/publicMusicAssets");
-const userAssets = require("../models/userAssets");
-
-
+const userAssetsModel = require("../models/userAssets");
 
 const addAsset = (userId, asset) => {
-  return userAssets.findOneAndUpdate(
+  return userAssetsModel.update(
     { userId: userId },
-    { $push: { assets: asset } },
-    { upsert: true }
+    { $ADD: { assets: asset } }
   );
 };
 const addMusicAsset = (userId, asset) => {
-  return userAssets.findOneAndUpdate(
+  return userAssetsModel.update(
     { userId: userId },
-    { $push: { musicAssets: asset } },
-    { upsert: true }
+    { $ADD: { musicAssets: asset } }
   );
 };
 const addPublicMusic = (asset) => {
@@ -32,39 +28,35 @@ const deleteMusicAsset = (id) => {
 }
 
 const getAssets = userId => {
-  return userAssets.findOne({ userId: userId }, "assets").exec();
+  return userAssetsModel.findByUserId(userId);
 };
 const getAllAssets = () => {
-  return userAssets.find();
+  return userAssetsModel.find();
 }
 const getMusicAssets = userId => {
-  return userAssets.findOne({ userId: userId }, "musicAssets").exec();
+  return userAssetsModel.findByUserId({ userId: userId });
 };
-const removeUserAsset = (userId, assetId, res) => {
-  return userAssets.updateOne(
-    { userId: userId },
-    { $pull: { assets: { _id: assetId } } },
-    { safe: true },
-    function(err, obj) {
-      if (err) {
-        return res.status(400).json({ message: "failed to remove" });
-      }
-      res.status(200).json({ message: "asset removed" });
-    }
-  );
+const removeUserAsset = async (userId, assetId, res) => {
+  try {
+    await userAssetsModel.update(
+      { userId: userId },
+      { $delete: { assets: { _id: assetId } } },
+    );
+    res.status(200).json({ message: "asset removed" });
+  } catch (_error) {
+    return res.status(400).json({ message: "failed to remove" });
+  }
 };
-const removeMusicAsset = (userId, assetId, res) => {
-  return userAssets.updateOne(
-    { userId: userId },
-    { $pull: { musicAssets: { _id: assetId } } },
-    { safe: true },
-    function(err, obj) {
-      if (err) {
-        return res.status(400).json({ message: "failed to remove" });
-      }
-      res.status(200).json({ message: "asset removed" });
-    }
-  );
+const removeMusicAsset = async (userId, assetId, res) => {
+  try {
+    await userAssetsModel.update(
+        { userId: userId },
+        { $delete: { musicAssets: { _id: assetId } } },
+    );
+    res.status(200).json({ message: "asset removed" });
+  } catch (_error) {
+    res.status(200).json({ message: "asset removed" });
+  }
 };
 module.exports = {
   addAsset,
