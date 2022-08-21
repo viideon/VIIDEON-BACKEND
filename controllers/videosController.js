@@ -1,4 +1,4 @@
-const Video = require("../models/videos");
+const videoModel = require("../models/videos");
 const { sendEmail } = require("../helpers/email");
 const videoService = require("../services/videoService");
 const template = require("../helpers/template");
@@ -305,10 +305,9 @@ module.exports.sendMultipleEmail = async (req, res) => {
 };
 module.exports.postVideo = async (req, res) => {
   try {
-    const video = new Video({
+    const video = await videoModel.save({
       ...req.body,
     });
-    video.save();
     return res
       .status(201)
       .json({ video: video, message: "video sucessfully saved" });
@@ -498,39 +497,38 @@ module.exports.getVideoCount = async (req, res) => {
     let ChatvidCount = await videoService.getChatVidCount(id);
     let totalCount = videoCount + ChatvidCount;
     
-    await Video.find({ userId: id }, function (err, userVideos) {
-      if (userVideos.length < 1)
-        return res.status(200).json({
-          count: 0,
-          viewCount: 0,
-          emailShareCount: 0,
-          emailOpenCount: 0,
-          ctaCount: 0,
-          watchCount: 0,
-        });
-      let viewValues = userVideos.map((x) => parseInt(x["views"]) || 0);
-      let viewCount = viewValues.reduce((a, b) => a + b);
-      let emailShareValues = userVideos.map(
-        (x) => parseInt(x["emailShareCount"]) || 0
-      );
-      let emailShareCount = emailShareValues.reduce((a, b) => a + b);
-      let emailOpensValue = userVideos.map(
-        (x) => parseInt(x["emailOpens"]) || 0
-      );
-      let emailOpenCount = emailOpensValue.reduce((a, b) => a + b);
-      let ctaValues = userVideos.map((x) => parseInt(x["ctaClicks"]) || 0);
-      let ctaCount = ctaValues.reduce((a, b) => a + b);
-      let watchValues = userVideos.map((x) => parseInt(x["watch"]) || 0);
-      let watchCount = watchValues.reduce((a, b) => a + b);
-      
+    const userVideos = await videoModel.find({ userId: id });
+    if (userVideos.length < 1)
       return res.status(200).json({
-        count: totalCount,
-        viewCount,
-        watchCount,
-        emailOpenCount,
-        ctaCount,
-        emailShareCount,
+        count: 0,
+        viewCount: 0,
+        emailShareCount: 0,
+        emailOpenCount: 0,
+        ctaCount: 0,
+        watchCount: 0,
       });
+    let viewValues = userVideos.map((x) => parseInt(x["views"]) || 0);
+    let viewCount = viewValues.reduce((a, b) => a + b);
+    let emailShareValues = userVideos.map(
+      (x) => parseInt(x["emailShareCount"]) || 0
+    );
+    let emailShareCount = emailShareValues.reduce((a, b) => a + b);
+    let emailOpensValue = userVideos.map(
+      (x) => parseInt(x["emailOpens"]) || 0
+    );
+    let emailOpenCount = emailOpensValue.reduce((a, b) => a + b);
+    let ctaValues = userVideos.map((x) => parseInt(x["ctaClicks"]) || 0);
+    let ctaCount = ctaValues.reduce((a, b) => a + b);
+    let watchValues = userVideos.map((x) => parseInt(x["watch"]) || 0);
+    let watchCount = watchValues.reduce((a, b) => a + b);
+
+    return res.status(200).json({
+      count: totalCount,
+      viewCount,
+      watchCount,
+      emailOpenCount,
+      ctaCount,
+      emailShareCount,
     });
   } catch (error) {
     res.status(400).json({ error: error.message });

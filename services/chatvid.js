@@ -3,12 +3,11 @@ const Reply = require("../models/reply");
 const People = require("../models/people");
 const Step = require("../models/step");
 const Choice = require("../models/choices");
-const Video = require("../models/videos");
+const videoModel = require("../models/videos");
 const Metrics = require('../models/metrics')
 
 const saveVideo = (video) => {
-  let newVideo = new Video({ ...video })
-  return newVideo.save();
+  return videoModel.save({ ...video })
 }
 
 const createChatvid = ({ name, userId, steps, people, thumbnail, branding }) => {
@@ -33,9 +32,8 @@ const saveStep = (step) => {
   return newStep.save();
 }
 
-const saveChoice = (choice) => {
-  let option = new Choice({ ...choice });
-  return option.save();
+const saveChoice = (_choice) => {
+  return Choice.save({ ..._choice });
 }
 
 const updateChoice = (_id, reply) => {
@@ -100,7 +98,7 @@ const saveMetrics = (payload) => {
   return metrics.save();
 }
 const deleteChatvid = async (id) => {
-  const chatVid = await InterActiveMessage.deleteOne({_id: id});
+  await InterActiveMessage.deleteOne({_id: id});
 }
 const getMetrics = (chatvidId, dateFrom, dateTo, deviceType, isInteracted, isCompleted, isAnswered) => {
   var dateTo = new Date(dateTo)

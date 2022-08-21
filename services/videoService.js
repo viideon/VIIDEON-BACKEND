@@ -1,108 +1,88 @@
-const Video = require("../models/videos");
+const videoModel = require("../models/videos");
 const Interactives = require("../models/interactive")
 
 const updateVideo = (id, video) => {
-  return Video.findByIdAndUpdate(id, video, { new: true });
+  return videoModel.update(id, video, { new: true });
 };
 
 const deleteVideo = videoId => {
-  return Video.deleteOne({ _id: videoId });
+  return videoModel.delete({ _id: videoId });
 };
 
 
 const deleteVideoByThumnail = thumbnail => {
-  return Video.findOneAndDelete({thumbnail});
+  return videoModel.deleteByThumbnail(thumbnail);
 };
 
 const findUserVideo = (userId, page) => {
-  return Video.find({ userId: userId, campaign: { $ne: true } })
-    .sort({ date: -1 })
-    .skip((page - 1) * 9)
-    .limit(9);
+  // TODO: Update to support DynamoDB paging
+  return videoModel.findByUserIdAndCampaign(userId, false);
 };
 
-const findUserVideoByTitle = (userId, page, search) => {
-  return Video.find({
-    $and: [
-      { userId: userId, campaign: { $ne: true } },
-      { title: { $regex: new RegExp(".*" + search + ".*"), $options: "i" } }
-    ]
-  }).sort({ date: -1 });
+const findUserVideoByTitle = async (userId, page, search) => {
+  // TODO: Update to support DynamoDB paging
+  const videos = await videoModel.findByUserIdAndTitle(userId, false, search);
+  return _.reverse(_.sortBy(videos, 'date'));
 };
 
 const findUserCampaignVideo = (userId, page) => {
-  return Video.find({ userId: userId, campaign: true })
-    .sort({ date: -1 })
-    .skip((page - 1) * 9)
-    .limit(9);
+  // TODO: Update to support DynamoDB paging
+  return videoModel.findByUserIdAndCampaign(userId, true);
 };
 
-const findUserCamaignVideoByTitle = (userId, page, search) => {
-  return Video.find({
-    $and: [
-      { userId: userId, campaign: true },
-      { title: { $regex: new RegExp(".*" + search + ".*"), $options: "i" } }
-    ]
-  }).sort({ date: -1 });
+const findUserCamaignVideoByTitle = async (userId, page, search) => {
+  // TODO: Update to support DynamoDB paging
+  const videos = await videoModel.findByUserIdAndTitle(userId, true, search);
+  return _.reverse(_.sortBy(videos, 'date'));
 };
 
 const getAllVideos = () => {
-  return Video.find();
+  return videoModel.find();
 };
 const findVideoByUrl = url => {
-  return Video.find({ url: url });
+  return videoModel.findByUrl(url);
 };
 const findVideoById = id => {
-  return Video.findOne({ _id: id });
+  return videoModel.get(id);
 };
 const getCampaignVideos = id => {
-  return Video.find({ userId: id, campaign: true });
+  return videoModel.findByUserIdAndCampaign(id, true);
 };
 const getViewCount = async id => {
-  let count = await Video.find({ userId: id }, function(err, userVideos) {
-    if (userVideos.length < 1) return;
-    let values = userVideos.map(x => parseInt(x["views"]) || 0);
-    let count = values.reduce((a, b) => a + b);
-    return count;
-  });
-  return count;
+  const userVideos = await videoModel.findByUserId(id);
+  if (userVideos.length < 1) return;
+
+  const values = userVideos.map(x => parseInt(x["views"]) || 0);
+  return values.reduce((a, b) => a + b);
 };
-const getVideoCount = id => {
-  const count = Video.countDocuments({ userId: id,isVideo:true }, function(err, count) {
-    return count;
-  });
+const getVideoCount = async id => {
+  const {count} = await videoModel.countVideos(id);
   return count ;
 };
 const getChatVidCount = id => {
-  const chatVids = Interactives.countDocuments({ userId: id }, function(err, chatvidcount) {
+  return Interactives.countDocuments({ userId: id }, function(err, chatvidcount) {
     return chatvidcount;
   });
-  return chatVids ;
 };
-const getCampaignCount = id => {
-  const count = Video.countDocuments({ userId: id, campaign: true }, function(
-    err,
-    count
-  ) {
-    return count;
-  });
+const getCampaignCount = async id => {
+  const {count} = await videoModel.countCampaignVideos(id);
   return count;
 };
 
 const incrementVideoEmail = (_id, count) => {
-  return Video.updateOne({ _id }, { $inc: { emailShareCount: count } });
+  return videoModel.update({ _id }, { $ADD: { emailShareCount: count } });
 };
 const incrementVideoViews = _id => {
-  return Video.updateOne({ _id }, { $inc: { views: 1 } });
+  return videoModel.update({ _id }, { $ADD: { views: 1 } });
 };
 const incrementVideoWatch = _id => {
-  return Video.updateOne({ _id }, { $inc: { watch: 1 } });
+  return videoModel.update({ _id }, { $ADD: { watch: 1 } });
 };
 const incrementEmailOpen = _id => {
-  return Video.updateOne({ _id }, { $inc: { emailOpens: 1 } });
+  return videoModel.update({ _id }, { $ADD: { emailOpens: 1 } });
 };
 const incrementCtaClicks = _id => {
-  return Video.updateOne({ _id }, { $inc: { ctaClicks: 1 } });
+  return videoModel.update({ _id }, { $ADD: { ctaClicks: 1 } });
 };
 module.exports = {
   updateVideo,
