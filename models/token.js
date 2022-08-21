@@ -1,16 +1,41 @@
-const mongoose = require("mongoose");
+const dynamoose = require("dynamoose");
 
-const tokenSchema = new mongoose.Schema({
+const userModel = require('./user');
+
+module.exports.schema = new dynamoose.Schema({
   userId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: userModel.model,
     required: true,
-    ref: "User",
   },
 
   token: {
     type: String,
     required: true,
+    index: {
+      name: 'gidx-token',
+      global: true,
+    },
   },
 });
 
-module.exports = mongoose.model("Token", tokenSchema);
+module.exports.model = dynamoose.model(process.env.TOKEN_TABLE, schema, {create: false});
+
+module.exports.create = data => {
+  return this.model.create(data);
+}
+
+module.exports.getByToken = token => {
+  return new Promise((resolve, reject) => {
+    this.model.query('token').eq(token).using('gidx-token').all().exec((err, response) => {
+      if (err) {
+        return reject(err);
+      }
+
+      if (response.length !== 1) {
+        return resolve(null);
+      }
+
+      return resolve(response[0]);
+    });
+  });
+}

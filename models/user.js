@@ -1,5 +1,5 @@
 const dynamoose = require("dynamoose");
-const token = require("./token");
+const tokenModel = require("./token");
 const randomstring = require("randomstring");
 const { v4: uuid } = require('uuid');
 
@@ -38,8 +38,8 @@ const schema = new dynamoose.Schema({
 
 module.exports.model = dynamoose.model(process.env.USER_TABLE, schema, {create: false});
 
-module.exports.save = (data) => {
-  return this.model.save(data);
+module.exports.create = (data) => {
+  return this.model.create(data);
 }
 
 module.exports.generateVerificationToken = function() {
@@ -51,7 +51,7 @@ module.exports.generateVerificationToken = function() {
     })
   };
 
-  return token.save(payload);
+  return tokenModel.create(payload);
 };
 
 module.exports.get = _id => {

@@ -16,7 +16,7 @@ const verifyUser = _id => {
 };
 
 const createNewUser = (email, firstName, lastName, userName, hash) => {
-  return userModel.save({
+  return userModel.create({
     email: email,
     firstName: firstName,
     lastName: lastName,
