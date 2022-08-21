@@ -1,33 +1,32 @@
-const User = require("../models/user");
+const userModel = require("../models/user");
 const Setting = require("../models/setting");
 
 const findUserByEmail = email => {
-  return User.findOne({ email: email });
+  return userModel.getByEmail( email );
 };
 
 const findByNameEmail = (email, name) => {
-  return User.findOne({ $or: [{ email: email }, { userName: name }] });
+  return userModel.findByNameAndEmail(email, name);
 };
 const getUserById = id => {
-  return User.findOne({ _id: id });
+  return userModel.get({ _id: id });
 };
 const verifyUser = _id => {
-  return User.updateOne({ _id }, { $set: { isVerified: true } });
+  return userModel.updateOne({ _id }, { isVerified: true });
 };
 
 const createNewUser = (email, firstName, lastName, userName, hash) => {
-  const user = new User({
+  return userModel.save({
     email: email,
     firstName: firstName,
     lastName: lastName,
     userName: userName,
     password: hash
   });
-  return user.save();
 };
 
 const updateUser = (userId, user) => {
-  return User.findOneAndUpdate(
+  return userModel.update(
     { _id: userId },
     {
       $set: { ...user }
@@ -36,7 +35,7 @@ const updateUser = (userId, user) => {
   );
 };
 const updatePassword = (_id, password) => {
-  return User.findOneAndUpdate(
+  return userModel.update(
     { _id },
     {
       $set: { password }
@@ -44,14 +43,15 @@ const updatePassword = (_id, password) => {
     { new: true }
   );
 };
-const getAllUsers = async (pageNo, pageSize) => {
-  const skip = pageSize * (pageNo - 1);
-  let count = await User.count();
-  let users = await User.find().skip(skip).limit(Number(pageSize));
-  return {count, users}
+const getAllUsers = async () => {
+  // const skip = pageSize * (pageNo - 1);
+  // TODO: Rewrite to use keys for pagination
+  // let count = await userModel.count();
+  let users = await userModel.find();
+  return {count: users.length, users}
 };
 const deleteUser = id => {
-  return User.deleteOne({ _id: id });
+  return userModel.delete({ _id: id });
 };
 
 const saveSetting = (setting) => {
@@ -76,8 +76,7 @@ const getSetttingByUserIDAndName = (userId, name) => {
 }
 
 const removeUserById = async (id) => {
-  const user = await User.findById(id)
-  return user.remove()
+  return userModel.delete({_id: id});
 }
 module.exports = {
   findUserByEmail,
