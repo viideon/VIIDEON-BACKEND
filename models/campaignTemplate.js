@@ -1,11 +1,23 @@
-const mongoose = require("mongoose");
+const dynamoose = require("dynamoose");
+const _ = require('lodash');
+const { v4: uuid } = require('uuid');
 
-const campaignTemplate = new mongoose.Schema({
+const Industries = require('./industries');
+
+const schema = new dynamoose.Schema({
+  id: { type: String, required: true, hashKey: true, default: uuid()},
   name: { type: String, required: true },
   templateDescription: { type: String, required: true },
   totalSteps: { type: Number, required: true },
   templateThumbnailUrl: { type: String },
-  industryId: { type: mongoose.Schema.Types.ObjectId, ref: "Industry", required: true},
+  industryId: {
+    type: Industries,
+    required: true,
+    index: {
+      name: 'gidx-industryId',
+      global: true,
+    }
+  },
   duration: { type: Number},
   steps: [
     {
@@ -17,4 +29,51 @@ const campaignTemplate = new mongoose.Schema({
   ]
 });
 
-module.exports = mongoose.model("campaignTemplate", campaignTemplate);
+module.exports.model = dynamoose.model(process.env.CAMPAIGN_CLIENT_TABLE, schema, {create: false});
+
+module.exports.create = data => {
+  return this.model.create(data);
+}
+
+module.exports.find = () => {
+  return new Promise((resolve, reject) => {
+    this.model.scan().all().exec((err, response) => {
+      if (err) {
+        return reject(err);
+      }
+
+      resolve(Promise.all(_.map(response, _record => _record.populate())));
+    });
+  });
+}
+
+module.exports.update = async (id, template) => {
+  const _record = await this.model.update(id, template);
+  return _record.populate();
+}
+
+module.exports.findByIndex = (indexName, key, value) => {
+  return new Promise((resolve, reject) => {
+    this.model.query(key).eq(value).using(indexName).all().exec((err, response) => {
+      if (err) {
+        return reject(err);
+      }
+
+      resolve(Promise.all(_.map(response, _record => _record.populate())));
+    })
+  });
+}
+
+module.exports.delete = id => {
+  return this.model.delete(id);
+}
+
+module.exports.deleteByIndustryId = async key => {
+  if (_.has(key, 'industryId')) {
+    const _campaigns = await this.findByIndex('gidx-industry', 'industryId', key.industryId);
+    await Promise.all(_.map(_campaigns, _campaign => this.model.delete({id: _campaign.id})));
+    return {};
+  }
+
+  return {};
+}
