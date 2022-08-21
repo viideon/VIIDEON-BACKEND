@@ -2,7 +2,7 @@ const InterActiveMessage = require("../models/interactive")
 const Reply = require("../models/reply");
 const People = require("../models/people");
 const Step = require("../models/step");
-const Choice = require("../models/choices");
+const choiceModel = require("../models/choices");
 const videoModel = require("../models/videos");
 const Metrics = require('../models/metrics')
 
@@ -33,11 +33,11 @@ const saveStep = (step) => {
 }
 
 const saveChoice = (_choice) => {
-  return Choice.save({ ..._choice });
+  return choiceModel.create({ ..._choice });
 }
 
 const updateChoice = (_id, reply) => {
-  return Choice.updateOne({ _id }, { $push: { replies: reply } })
+  return choiceModel.update({ _id }, { $ADD: { replies: reply } })
 }
 const saveReply = (reply) => {
   const newReply = new Reply({ ...reply });
@@ -101,14 +101,14 @@ const deleteChatvid = async (id) => {
   await InterActiveMessage.deleteOne({_id: id});
 }
 const getMetrics = (chatvidId, dateFrom, dateTo, deviceType, isInteracted, isCompleted, isAnswered) => {
-  var dateTo = new Date(dateTo)
-  var dateFrom = new Date(dateFrom)
+  var _dateTo = new Date(dateTo)
+  var _dateFrom = new Date(dateFrom)
   dateTo.setDate(dateTo.getDate() +1)
   dateFrom.setDate(dateFrom.getDate() -1)
   if(deviceType === "all") {
-    return Metrics.find({ chatvidId, createdAt: { $gte: dateFrom, $lte: dateTo } }).lean();
+    return Metrics.find({ chatvidId, createdAt: { $gte: _dateFrom, $lte: _dateTo } }).lean();
   } else {
-    return Metrics.find({ chatvidId, createdAt: { $gte: dateFrom, $lte: dateTo }, deviceType }).lean();
+    return Metrics.find({ chatvidId, createdAt: { $gte: _dateFrom, $lte: _dateTo }, deviceType }).lean();
   }
 }
 module.exports = {
