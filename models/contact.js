@@ -1,10 +1,12 @@
-const mongoose = require("mongoose");
+const dynamoose = require("dynamoose");
 
-const contactSchema = new mongoose.Schema({
+const userModel = require('./user');
+
+const schema = new dynamoose.Schema({
   avatarUrl: { type: String },
   company: { type: String },
   displayName: { type: String, required: false },
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  userId: { type: userModel.model },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
   email: { type: String },
@@ -21,4 +23,9 @@ const contactSchema = new mongoose.Schema({
   unsubscribed: { type: Boolean },
   unsubscribedEmail: { type: String }
 });
-module.exports = mongoose.model("Contact", contactSchema);
+
+module.exports.model = mongoose.model(process.env.CONTACT_TABLE_NAME, schema);
+
+module.exports.create = data => {
+  return this.model.create(data);
+}
