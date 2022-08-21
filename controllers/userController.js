@@ -3,7 +3,7 @@ const {
   comparePassword,
   generateToken,
 } = require("./../helpers/helper");
-const Token = require("../models/token");
+const tokenModel = require("../models/token");
 const userService = require("../services/userService");
 const gifService = require("../services/gifService");
 const { verificationTokenSchema } = require("../schemas/auth");
@@ -107,7 +107,7 @@ module.exports.verify = async (req, res, next) => {
   if (!tokenCode)
     return res.status(400).json({ message: "token is not provided" });
   try {
-    const token = await Token.findOne({ token: req.body.token });
+    const token = await tokenModel.getByToken(req.body.token);
     if (!token) {
       return res.status(400).json({ message: "invalid Token" });
     }
@@ -193,7 +193,7 @@ module.exports.forget = async (req, res) => {
 
 module.exports.reset = async (req, res) => {
   try {
-    const token = await Token.findOne({ token: req.body.token });
+    const token = await tokenModel.getByToken(req.body.token);
     if (!token) {
       return res.status(400).json({ message: "invalid Token" });
     }

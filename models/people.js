@@ -1,7 +1,9 @@
 const mongoose = require("mongoose");
 
+const userModel = require('./user');
+
 const peopleSchema = new mongoose.Schema({
-  userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+  userId: {type: userModel.model},
   email: {type: String, unique: true},
   name: {type: String},
   isUser: {type: Boolean}

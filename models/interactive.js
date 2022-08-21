@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 
+const userModel = require('./user');
+
 const roomSchema = new mongoose.Schema(
   {
     name: { type: String, trim: true },
@@ -7,7 +9,7 @@ const roomSchema = new mongoose.Schema(
     thumbnail: { type: String },
     steps: [{ type: mongoose.Schema.Types.ObjectId, ref: "Step" }],
     people: [{ type: mongoose.Schema.Types.ObjectId, ref: "People" }],
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    userId: { type: userModel.model },
   },
   { timestamps: true }
 );

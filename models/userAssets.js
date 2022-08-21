@@ -1,12 +1,12 @@
 const dynamoose = require("dynamoose");
 const { v4: uuid } = require('uuid');
 
-const user = require('./user');
+const userModel = require('./user');
 
 const userAssets = new dynamoose.Schema({
   _id: { type: String, default: uuid(), hashKey: true },
   userId: {
-    type: user.model,
+    type: userModel.model,
     index: {
       name: 'gidx-userId',
       global: true,

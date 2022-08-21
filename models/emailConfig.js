@@ -1,7 +1,9 @@
 const mongoose = require("mongoose");
 
+const userModel = require('./user');
+
 const emailConfigSchema = new mongoose.Schema({
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  userId: { type: userModel.model },
   date: { type: Date, default: Date.now },
   userEmail: { type: String },
   tokenObj: {

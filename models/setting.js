@@ -1,8 +1,10 @@
 const mongoose = require("mongoose");
 
+const userModel = require('./user');
+
 const stepSchema = new mongoose.Schema(
   {
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    userId: { type: userModel.model },
     name: { type: String },
     logoUrl: { type: String },
     text: { type: String },
