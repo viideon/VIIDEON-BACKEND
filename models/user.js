@@ -3,7 +3,7 @@ const token = require("./token");
 const randomstring = require("randomstring");
 const { v4: uuid } = require('uuid');
 
-module.exports.schema = new dynamoose.Schema({
+const schema = new dynamoose.Schema({
   _id: { type: String, required: true, default: uuid(), hashKey: true },
   email: {
     type: String,
@@ -36,10 +36,10 @@ module.exports.schema = new dynamoose.Schema({
   }
 });
 
-const User = dynamoose.model(process.env.USER_TABLE, this.schema, {create: false});
+module.exports.model = dynamoose.model(process.env.USER_TABLE, schema, {create: false});
 
 module.exports.save = (data) => {
-  return User.save(data);
+  return this.model.save(data);
 }
 
 module.exports.generateVerificationToken = function() {
@@ -55,12 +55,12 @@ module.exports.generateVerificationToken = function() {
 };
 
 module.exports.get = _id => {
-  return User.get(_id);
+  return this.model.get(_id);
 }
 
 module.exports.getByEmail = email => {
   return new Promise((resolve, reject) => {
-    User.query('email').eq(email).using('idx-email').all().exec((err, response) => {
+    this.model.query('email').eq(email).using('idx-email').all().exec((err, response) => {
       if (err) {
         return reject(err);
       }
@@ -80,7 +80,7 @@ module.exports.getByEmail = email => {
 
 module.exports.findByNameAndEmail = (email, name) => {
   return new Promise((resolve, reject) => {
-    User.scan().where('email').eq(email).or().where('name').eq(name).all().exec((err, response) => {
+    this.model.scan().where('email').eq(email).or().where('name').eq(name).all().exec((err, response) => {
       if (err) {
         return reject(err);
       }
@@ -99,21 +99,21 @@ module.exports.findByNameAndEmail = (email, name) => {
 }
 
 module.exports.updateOne = (userId, data) => {
-  return User.update(userId, data);
+  return this.model.update(userId, data);
 }
 
 module.exports.update = (userId, data) => {
-  return User.update(userId, data);
+  return this.model.update(userId, data);
 }
 
 module.exports.count = () => {
-  return User.scan().count().exec();
+  return this.model.scan().count().exec();
 }
 
 module.exports.find = () => {
-  return User.scan().exec();
+  return this.model.scan().exec();
 }
 
 module.exports.delete = (id) => {
-  return User.delete(id);
+  return this.model.delete(id);
 }
