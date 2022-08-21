@@ -96,8 +96,8 @@ const schema = new dynamoose.Schema({
 
 module.exports.model = dynamoose.model(process.env.VIDEOS_TABLE_NAME, schema);
 
-module.exports.save = data => {
-  return this.model.save(data);
+module.exports.create = data => {
+  return this.model.create(data);
 }
 
 module.exports.update = (id, data) => {

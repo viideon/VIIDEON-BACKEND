@@ -7,7 +7,7 @@ const videoModel = require("../models/videos");
 const Metrics = require('../models/metrics')
 
 const saveVideo = (video) => {
-  return videoModel.save({ ...video })
+  return videoModel.create({ ...video })
 }
 
 const createChatvid = ({ name, userId, steps, people, thumbnail, branding }) => {

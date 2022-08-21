@@ -305,7 +305,7 @@ module.exports.sendMultipleEmail = async (req, res) => {
 };
 module.exports.postVideo = async (req, res) => {
   try {
-    const video = await videoModel.save({
+    const video = await videoModel.create({
       ...req.body,
     });
     return res
