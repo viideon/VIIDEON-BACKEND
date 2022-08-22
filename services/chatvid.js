@@ -1,6 +1,6 @@
 const interactiveModel = require("../models/interactive")
 const Reply = require("../models/reply");
-const People = require("../models/people");
+const peopleModel = require("../models/people");
 const Step = require("../models/step");
 const choiceModel = require("../models/choices");
 const videoModel = require("../models/videos");
@@ -23,8 +23,7 @@ const createChatvid = ({ name, userId, steps, people, thumbnail, branding }) => 
 }
 
 const registerPeople = (person) => {
-  const regPerson = new People({ ...person });
-  return regPerson.save();
+  return peopleModel.create({ ...person });
 }
 
 const saveStep = (step) => {
@@ -84,12 +83,11 @@ const updateChatvidPeople = async (_id, people) => {
 }
 
 const getPeopleByEmail = (email) => {
-  return People.findOne({ email }).lean();
+  return peopleModel.findByEmail({ email });
 }
 
 const saveMetrics = (payload) => {
-  let metrics = new Metrics({ ...payload });
-  return metrics.save();
+  return metricsModel.create({ ...payload });
 }
 const deleteChatvid = async (id) => {
   await interactiveModel.delete({_id: id});

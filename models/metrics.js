@@ -21,6 +21,10 @@ const metricsSchema = new dynamoose.Schema({
 
 module.exports.model = dynamoose.model(process.env.    METRICS_TABLE_NAME, metricsSchema);
 
+module.exports.create = data => {
+  return this.model.create(data);
+}
+
 module.exports.findByChatvidId = (chatvidId, dateFrom, dateTo, deviceType = 'all') => {
   let query = this.model.query('chatvidId').eq(chatvidId).using('gidx-chatvidId').where('createdAt').le(dateTo).where('createdAt').ge(dateFrom);
   if (deviceType !== 'all') {
