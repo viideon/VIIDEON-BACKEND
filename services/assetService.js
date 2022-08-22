@@ -1,4 +1,4 @@
-const PublicMusic = require("../models/publicMusicAssets");
+const publicMusicModel = require("../models/publicMusicAssets");
 const userAssetsModel = require("../models/userAssets");
 
 const addAsset = (userId, asset) => {
@@ -14,17 +14,16 @@ const addMusicAsset = (userId, asset) => {
   );
 };
 const addPublicMusic = (asset) => {
-  const newMusic = new PublicMusic({
+  return publicMusicModel.create({
     ...asset
   });
-  return newMusic.save();
 };
 
 const getAllPublicmusic = () => {
-  return PublicMusic.find();
+  return publicMusicModel.find();
 }
 const deleteMusicAsset = (id) => {
-  return PublicMusic.deleteOne({_id: id})
+  return publicMusicModel.delete({_id: id})
 }
 
 const getAssets = userId => {
