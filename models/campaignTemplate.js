@@ -2,7 +2,7 @@ const dynamoose = require("dynamoose");
 const _ = require('lodash');
 const { v4: uuid } = require('uuid');
 
-const Industries = require('./industries');
+const industriesModel = require('./industries');
 
 const schema = new dynamoose.Schema({
   id: { type: String, required: true, hashKey: true, default: uuid()},
@@ -11,7 +11,7 @@ const schema = new dynamoose.Schema({
   totalSteps: { type: Number, required: true },
   templateThumbnailUrl: { type: String },
   industryId: {
-    type: Industries,
+    type: industriesModel.model,
     required: true,
     index: {
       name: 'gidx-industryId',
@@ -69,11 +69,7 @@ module.exports.delete = id => {
 }
 
 module.exports.deleteByIndustryId = async key => {
-  if (_.has(key, 'industryId')) {
-    const _campaigns = await this.findByIndex('gidx-industry', 'industryId', key.industryId);
-    await Promise.all(_.map(_campaigns, _campaign => this.model.delete({id: _campaign.id})));
-    return {};
-  }
-
+  const _campaigns = await this.findByIndex('gidx-industry', 'industryId', key.industryId);
+  await Promise.all(_.map(_campaigns, _campaign => this.model.delete({id: _campaign.id})));
   return {};
 }
