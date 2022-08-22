@@ -1,16 +1,48 @@
-const mongoose = require("mongoose");
+const dynamoose = require("dynamoose");
+const { v4: uuid } = require('uuid');
 
 const userModel = require('./user');
 
-const roomSchema = new mongoose.Schema(
-  {
-    name: { type: String, trim: true },
-    branding: { type: Boolean },
-    thumbnail: { type: String },
-    steps: [{ type: mongoose.Schema.Types.ObjectId, ref: "Step" }],
-    people: [{ type: mongoose.Schema.Types.ObjectId, ref: "People" }],
-    userId: { type: userModel.model },
-  },
-  { timestamps: true }
+const schema = new dynamoose.Schema({
+      _id: {type: String, hashKey: true, default: uuid()},
+      name: { type: String, trim: true },
+      branding: { type: Boolean },
+      thumbnail: { type: String },
+      steps: [{ type: mongoose.Schema.Types.ObjectId, ref: "Step" }],
+      people: [{ type: mongoose.Schema.Types.ObjectId, ref: "People" }],
+      userId: {
+            type: userModel.model,
+            index: {
+                  name: 'gidx-userId',
+                  global: true,
+            },
+      },
+    },
+{ timestamps: true }
 );
-module.exports = mongoose.model("InteractiveMessage", roomSchema);
+
+module.exports.model = dynamoose.model(process.env.INTERACTIVE_TABLE_NAME, schema);
+
+module.exports.create = data => {
+      return this.model.create(data);
+}
+
+module.exports.update = (id, data) => {
+      return this.model.update(id, data);
+}
+
+module.exports.get = id => {
+      return this.model.get(id);
+}
+
+module.exports.findByUserId = userId => {
+      return this.model.query('userId').eq(userId).using('gidx-userId').exec();
+}
+
+module.exports.countDocumentsByUserId = userId => {
+      return this.model.query('userId').eq(userId).count().exec();
+}
+
+module.exports.delete = id => {
+      return this.model.delete(id);
+}

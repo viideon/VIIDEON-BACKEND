@@ -1,5 +1,5 @@
 const videoModel = require("../models/videos");
-const Interactives = require("../models/interactive")
+const interactiveModel = require("../models/interactive")
 
 const updateVideo = (id, video) => {
   return videoModel.update(id, video, { new: true });
@@ -8,7 +8,6 @@ const updateVideo = (id, video) => {
 const deleteVideo = videoId => {
   return videoModel.delete({ _id: videoId });
 };
-
 
 const deleteVideoByThumnail = thumbnail => {
   return videoModel.deleteByThumbnail(thumbnail);
@@ -57,12 +56,11 @@ const getViewCount = async id => {
 };
 const getVideoCount = async id => {
   const {count} = await videoModel.countVideos(id);
-  return count ;
+  return count;
 };
-const getChatVidCount = id => {
-  return Interactives.countDocuments({ userId: id }, function(err, chatvidcount) {
-    return chatvidcount;
-  });
+const getChatVidCount = async id => {
+  const {count} = await interactiveModel.countDocumentsByUserId(id);
+  return count;
 };
 const getCampaignCount = async id => {
   const {count} = await videoModel.countCampaignVideos(id);
