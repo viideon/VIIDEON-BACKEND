@@ -1,5 +1,5 @@
 const userModel = require("../models/user");
-const Setting = require("../models/setting");
+const settingModel = require("../models/setting");
 
 const findUserByEmail = email => {
   return userModel.getByEmail( email );
@@ -55,24 +55,23 @@ const deleteUser = id => {
 };
 
 const saveSetting = (setting) => {
-  let newSet = new Setting({...setting});
-  return newSet.save();
+  return settingModel.create({...setting});
 }
 
 const updateSetting = (_id, userId, setting) => {
-  return Setting.updateOne({_id, userId}, {...setting});
+  return settingModel.update({_id, userId}, {...setting});
 }
 
 const getSettingsByUserID = (userId) => {
-  return Setting.find({userId});
+  return settingModel.findByUserId(userId);
 }
 
 const getSettingsByID = (_id) => {
-  return Setting.find({_id})
+  return settingModel.findById(_id);
 }
 
 const getSetttingByUserIDAndName = (userId, name) => {
-  return Setting.find({userId, name});
+  return settingModel.findByUserIdAndName({userId, name});
 }
 
 const removeUserById = async (id) => {
