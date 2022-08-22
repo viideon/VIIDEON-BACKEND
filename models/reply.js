@@ -1,7 +1,9 @@
 const mongoose = require("mongoose");
 
+const interactiveModel = require('./interactive');
+
 const messageSchema = new mongoose.Schema({
-  chatvidId: {type: mongoose.Schema.Types.ObjectId, ref: 'InteractiveMessage'},
+  chatvidId: {type: interactiveModel.model},
   stepId: {type: mongoose.Schema.Types.ObjectId, ref: 'Step'},
   videoId: {type: mongoose.Schema.Types.ObjectId, ref: 'Video'},
   peopleId: {type: mongoose.Schema.Types.ObjectId, ref: 'People'},

@@ -2,10 +2,11 @@ const dynamoose = require("dynamoose");
 const { v4: uuid } = require('uuid');
 
 const userModel = require('./user');
+const interactiveModel = require('./interactive');
 
 const schema = new dynamoose.Schema({
   id: {type: String, required: true, hashKey: true, default: uuid()},
-  chatvidId: {type: mongoose.Schema.Types.ObjectId, ref: 'InteractiveMessage'},
+  chatvidId: {type: interactiveModel.model},
   stepId: {type: mongoose.Schema.Types.ObjectId, ref: 'Step'},
   replies: [{type: mongoose.Schema.Types.ObjectId, ref: 'Reply'}],
   text: {type: String},

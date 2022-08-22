@@ -1,8 +1,9 @@
-const { string } = require("@hapi/joi");
 const mongoose = require("mongoose");
 
+const interactiveModel = require('./interactive');
+
 const stepSchema = new mongoose.Schema({
-  roomId: { type: mongoose.Schema.Types.ObjectId, ref: 'InteractiveMessage' },
+  roomId: { type: interactiveModel.model },
   stepNo: { type: String },
   videoId: { type: mongoose.Schema.Types.ObjectId, ref: 'Video' },
   replies: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Reply' }],

@@ -4,7 +4,7 @@ const People = require("../models/people");
 const Step = require("../models/step");
 const choiceModel = require("../models/choices");
 const videoModel = require("../models/videos");
-const Metrics = require('../models/metrics')
+const metricsModel = require('../models/metrics')
 const _ = require('lodash');
 
 const saveVideo = (video) => {
@@ -100,9 +100,9 @@ const getMetrics = (chatvidId, dateFrom, dateTo, deviceType, isInteracted, isCom
   dateTo.setDate(dateTo.getDate() +1)
   dateFrom.setDate(dateFrom.getDate() -1)
   if(deviceType === "all") {
-    return Metrics.find({ chatvidId, createdAt: { $gte: _dateFrom, $lte: _dateTo } }).lean();
+    return metricsModel.findByChatvidId(chatvidId, _dateFrom, _dateTo);
   } else {
-    return Metrics.find({ chatvidId, createdAt: { $gte: _dateFrom, $lte: _dateTo }, deviceType }).lean();
+    return metricsModel.findByChatvidId(chatvidId, _dateFrom, _dateTo, deviceType);
   }
 }
 module.exports = {
