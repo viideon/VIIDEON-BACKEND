@@ -1,5 +1,5 @@
 const interactiveModel = require("../models/interactive")
-const Reply = require("../models/reply");
+const replyModel = require("../models/reply");
 const peopleModel = require("../models/people");
 const Step = require("../models/step");
 const choiceModel = require("../models/choices");
@@ -39,8 +39,7 @@ const updateChoice = (_id, reply) => {
   return choiceModel.update({ _id }, { $ADD: { replies: reply } })
 }
 const saveReply = (reply) => {
-  const newReply = new Reply({ ...reply });
-  return newReply.save();
+  return replyModel.create({ ...reply });
 }
 
 const updateChatvidStep = (_id, step) => {
