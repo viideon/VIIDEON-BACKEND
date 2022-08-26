@@ -1,7 +1,8 @@
 const dynamoose = require("dynamoose");
-const tokenModel = require("./token");
 const randomstring = require("randomstring");
 const { v4: uuid } = require('uuid');
+
+const tokenModel = require("./token");
 
 const schema = new dynamoose.Schema({
   _id: { type: String, required: true, default: uuid(), hashKey: true },

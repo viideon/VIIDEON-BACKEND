@@ -1,7 +1,7 @@
 const interactiveModel = require("../models/interactive")
 const replyModel = require("../models/reply");
 const peopleModel = require("../models/people");
-const Step = require("../models/step");
+const stepModel = require("../models/step");
 const choiceModel = require("../models/choices");
 const videoModel = require("../models/videos");
 const metricsModel = require('../models/metrics')
@@ -27,8 +27,7 @@ const registerPeople = (person) => {
 }
 
 const saveStep = (step) => {
-  const newStep = new Step({ ...step })
-  return newStep.save();
+  return stepModel.create({ ...step })
 }
 
 const saveChoice = (_choice) => {
@@ -66,16 +65,16 @@ const getChatvidByUserId = async (userId) => {
 }
 
 const getStepById = (_id) => {
-  return Step.findOne({ _id }).lean();
+  return stepModel.get({ _id });
 }
 const updateStepReply = (_id, reply) => {
-  return Step.updateOne({ _id }, { $push: { replies: reply } });
+  return stepModel.update({ _id }, { $ADD: { replies: reply } });
 }
 const updateStepChoice = (_id, choice) => {
-  return Step.updateOne({ _id }, { $push: { choices: choice } });
+  return stepModel.update({ _id }, { $ADD: { choices: choice } });
 }
 const updateStep = (_id, data) => {
-  return Step.updateOne({ _id }, { ...data });
+  return stepModel.update({ _id }, { ...data });
 }
 const updateChatvidPeople = async (_id, people) => {
   return interactiveModel.update({ _id }, { $ADD: { people: people } })
@@ -92,8 +91,8 @@ const deleteChatvid = async (id) => {
   await interactiveModel.delete({_id: id});
 }
 const getMetrics = (chatvidId, dateFrom, dateTo, deviceType, isInteracted, isCompleted, isAnswered) => {
-  var _dateTo = new Date(dateTo)
-  var _dateFrom = new Date(dateFrom)
+  const _dateTo = new Date(dateTo)
+  const _dateFrom = new Date(dateFrom)
   dateTo.setDate(dateTo.getDate() +1)
   dateFrom.setDate(dateFrom.getDate() -1)
   if(deviceType === "all") {

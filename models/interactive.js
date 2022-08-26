@@ -1,6 +1,8 @@
 const dynamoose = require("dynamoose");
 const { v4: uuid } = require('uuid');
 
+const peopleModel = require('./people');
+const stepModel = require('./step');
 const userModel = require('./user');
 
 const schema = new dynamoose.Schema({
@@ -8,8 +10,8 @@ const schema = new dynamoose.Schema({
       name: { type: String, trim: true },
       branding: { type: Boolean },
       thumbnail: { type: String },
-      steps: [{ type: mongoose.Schema.Types.ObjectId, ref: "Step" }],
-      people: [{ type: mongoose.Schema.Types.ObjectId, ref: "People" }],
+      steps: [{ type: stepModel.model }],
+      people: [{ type: peopleModel.model }],
       userId: {
             type: userModel.model,
             index: {

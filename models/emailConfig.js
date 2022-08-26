@@ -1,4 +1,5 @@
 const dynamoose = require("dynamoose");
+const {v4: uuid} = require('uuid');
 
 const userModel = require('./user');
 

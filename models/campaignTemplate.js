@@ -5,7 +5,7 @@ const { v4: uuid } = require('uuid');
 const industriesModel = require('./industries');
 
 const schema = new dynamoose.Schema({
-  id: { type: String, required: true, hashKey: true, default: uuid()},
+  _id: { type: String, required: true, hashKey: true, default: uuid()},
   name: { type: String, required: true },
   templateDescription: { type: String, required: true },
   totalSteps: { type: Number, required: true },

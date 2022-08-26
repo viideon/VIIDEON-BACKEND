@@ -1,14 +1,16 @@
 const dynamoose = require("dynamoose");
 const { v4: uuid } = require('uuid');
 
-const userModel = require('./user');
 const interactiveModel = require('./interactive');
+const replyModel = require('./reply');
+const stepModel = require('./step');
+const userModel = require('./user');
 
 const schema = new dynamoose.Schema({
-  id: {type: String, required: true, hashKey: true, default: uuid()},
+  _id: {type: String, required: true, hashKey: true, default: uuid()},
   chatvidId: {type: interactiveModel.model},
-  stepId: {type: mongoose.Schema.Types.ObjectId, ref: 'Step'},
-  replies: [{type: mongoose.Schema.Types.ObjectId, ref: 'Reply'}],
+  stepId: {type: stepModel.model},
+  replies: [{type: replyModel.model}],
   text: {type: String},
   userId: {type: userModel.model}
 }, {timestamps: true});

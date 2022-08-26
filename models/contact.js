@@ -1,8 +1,10 @@
 const dynamoose = require("dynamoose");
+const {v4: uuid} = require('uuid');
 
 const userModel = require('./user');
 
 const schema = new dynamoose.Schema({
+  _id: {type: String, required: true, hashKey: true, default: uuid()},
   avatarUrl: { type: String },
   company: { type: String },
   displayName: { type: String, required: false },
