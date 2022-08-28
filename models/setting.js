@@ -30,7 +30,10 @@ const schema = new dynamoose.Schema(
     linkedinUrl: {
       type: String,
     },
-    colors: {},
+    // colors: {
+    //   type: Array,
+    //   schema: [String],
+    // },
   },
   { timestamps: true }
 );

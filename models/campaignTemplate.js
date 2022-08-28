@@ -2,8 +2,6 @@ const dynamoose = require("dynamoose");
 const _ = require('lodash');
 const { v4: uuid } = require('uuid');
 
-const industriesModel = require('./industries');
-
 const schema = new dynamoose.Schema({
   _id: { type: String, required: true, hashKey: true, default: uuid()},
   name: { type: String, required: true },
@@ -11,7 +9,7 @@ const schema = new dynamoose.Schema({
   totalSteps: { type: Number, required: true },
   templateThumbnailUrl: { type: String },
   industryId: {
-    type: industriesModel.model,
+    type: String,
     required: true,
     index: {
       name: 'gidx-industryId',
@@ -21,10 +19,13 @@ const schema = new dynamoose.Schema({
   duration: { type: Number},
   steps: [
     {
-      title: { type: String },
-      description: { type: String },
-      duration: { type: String },
-      examples: [{ type: String }]
+      type: Object,
+      schema: {
+        title: { type: String },
+        description: { type: String },
+        duration: { type: String },
+        examples: [{ type: String }]
+      }
     }
   ]
 });

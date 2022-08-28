@@ -3,7 +3,7 @@ const {v4: uuid} = require('uuid');
 
 const userModel = require('./user');
 
-module.exports.schema = new dynamoose.Schema({
+const schema = new dynamoose.Schema({
   _id: {type: String, hashKey: true, default: uuid()},
   userId: {
     type: userModel.model,

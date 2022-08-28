@@ -26,7 +26,7 @@ const schema = new dynamoose.Schema({
   unsubscribedEmail: { type: String }
 });
 
-module.exports.model = mongoose.model(process.env.CONTACT_TABLE_NAME, schema);
+module.exports.model = dynamoose.model(process.env.CONTACT_TABLE_NAME, schema);
 
 module.exports.create = data => {
   return this.model.create(data);

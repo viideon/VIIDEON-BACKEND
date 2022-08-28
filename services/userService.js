@@ -12,7 +12,7 @@ const getUserById = id => {
   return userModel.get({ _id: id });
 };
 const verifyUser = _id => {
-  return userModel.updateOne({ _id }, { isVerified: true });
+  return userModel.update({ _id }, { isVerified: true });
 };
 
 const createNewUser = (email, firstName, lastName, userName, hash) => {

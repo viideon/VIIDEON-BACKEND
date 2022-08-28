@@ -19,12 +19,15 @@ const schema = new dynamoose.Schema({
   date: { type: Date, default: Date.now },
   userEmail: { type: String },
   tokenObj: {
-    access_token: { type: String },
-    expires_in: { type: Number },
-    refresh_token: { type: String },
-    scope: { type: String },
-    token_type: { type: String },
-    id_token: { type: String }
+    type: Object,
+    schema: {
+      access_token: { type: String },
+      expires_in: { type: Number },
+      refresh_token: { type: String },
+      scope: { type: String },
+      token_type: { type: String },
+      id_token: { type: String }
+    }
   }
 });
 

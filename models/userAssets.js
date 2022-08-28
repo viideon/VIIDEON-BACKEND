@@ -12,8 +12,8 @@ const userAssets = new dynamoose.Schema({
       global: true,
     }
   },
-  assets: [{ type: { type: String }, url: String }],
-  musicAssets: [{ url: String, title: String }]
+  assets: [{ type: Object, schema: { type: String, url: String } }],
+  musicAssets: [{ type: Object, schema: { url: String, title: String } }]
 });
 
 module.exports.model = dynamoose.model(process.env.USER_ASSETS_TABLE_NAME, userAssets);

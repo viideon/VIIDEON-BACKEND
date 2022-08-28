@@ -9,7 +9,10 @@ const schema = new dynamoose.Schema({
   name: { type: String, required: true },
   description: { type: String, required: true },
   thumbnailUrl: { type: String, required: true },
-  styles: [{type: campaignTemplateModel.model}]
+  styles: {
+    type: Set,
+    schema: [campaignTemplateModel.model]
+  }
 }, { timestamps: true });
 
 module.exports.model = dynamoose.model(process.env.INDUSTRY_TABLE, schema, {create: false});

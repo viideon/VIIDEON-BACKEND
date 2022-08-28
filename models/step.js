@@ -2,13 +2,12 @@ const dynamoose = require("dynamoose");
 const {v4: uuid} = require('uuid');
 
 const choicesModel = require('./choices');
-const interactiveModel = require('./interactive');
 const replyModel = require('./reply');
 const videoModel = require('./videos');
 
 const schema = new dynamoose.Schema({
   _id: {type: String, hashKey: true, default: uuid()},
-  roomId: { type: interactiveModel.model },
+  roomId: String,
   stepNo: { type: String },
   videoId: { type: videoModel.model },
   replies: [{ type: replyModel.model }],
@@ -21,7 +20,7 @@ const schema = new dynamoose.Schema({
   responseType: { type: String },
   choices: [{ type: choicesModel.model }],
   jumpTo: { type: Number },
-  jumpChoice: {}
+  // jumpChoice: {}
 }, { timestamps: true });
 
 module.exports.model = dynamoose.model(process.env.STEP_TABLE_NAME, schema);

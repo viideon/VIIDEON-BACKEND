@@ -99,10 +99,6 @@ module.exports.findByNameAndEmail = (email, name) => {
   });
 }
 
-module.exports.updateOne = (userId, data) => {
-  return this.model.update(userId, data);
-}
-
 module.exports.update = (userId, data) => {
   return this.model.update(userId, data);
 }

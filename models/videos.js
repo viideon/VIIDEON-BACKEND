@@ -1,7 +1,8 @@
 const dynamoose = require("dynamoose");
 const { v4: uuid } = require('uuid');
+const _ = require('lodash');
 
-const user = require('./user');
+const userModel = require('./user');
 
 const schema = new dynamoose.Schema({
   _id: {
@@ -36,7 +37,7 @@ const schema = new dynamoose.Schema({
     },
   },
   userId: {
-    type: user.schema,
+    type: userModel.model,
     index: [
       {
         name: 'gidx-userId',
@@ -69,26 +70,35 @@ const schema = new dynamoose.Schema({
   emailOpens: { type: Number },
   ctaClicks: { type: Number },
   logoProps: {
-    url: { type: String },
-    width: { type: String },
-    height: { type: String },
-    position: { type: String }
+    type: Object,
+    schema: {
+      url: { type: String },
+      width: { type: String },
+      height: { type: String },
+      position: { type: String }
+    }
   },
   textProps: {
-    text: { type: String },
-    align: { type: String },
-    vAlign: { type: String },
-    textColor: { type: String },
-    fontSize: { type: String },
-    reveal: [],
-    fontWeight: { type: Boolean },
-    textDecoration: { type: Boolean },
-    fontStyle: { type: Boolean },
+    type: Object,
+    schema: {
+      text: { type: String },
+      align: { type: String },
+      vAlign: { type: String },
+      textColor: { type: String },
+      fontSize: { type: String },
+      reveal: {type: Array, schema: [String]},
+      fontWeight: { type: Boolean },
+      textDecoration: { type: Boolean },
+      fontStyle: { type: Boolean },
+    }
   },
   musicProps: {
-    url: { type: String },
-    title: { type: String },
-    musicVolume: { type: Number }
+    type: Object,
+    schema: {
+      url: { type: String },
+      title: { type: String },
+      musicVolume: { type: Number }
+    }
   },
   description: { type: String },
   eMailTemplate: { type: String }

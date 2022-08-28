@@ -2,17 +2,15 @@ const dynamoose = require("dynamoose");
 const { v4: uuid } = require('uuid');
 
 const choicesModel = require('./choices');
-const interactiveModel = require('./interactive');
 const peopleModel = require('./people');
-const stepModel = require('./step');
 const videoModel = require('./videos');
 
 const schema = new dynamoose.Schema({
   _id: {type: String, hashKey: true, default: uuid()},
-  chatvidId: {type: interactiveModel.model},
-  stepId: {type: stepModel.model},
-  videoId: {type: videoModel.model},
-  peopleId: {type: peopleModel.model},
+  chatvidId: String,
+  stepId: String,
+  videoId: videoModel.model,
+  peopleId: peopleModel.model,
   choiceId: {type: choicesModel.model},
   url: {type: String},
   text: {type: String},
