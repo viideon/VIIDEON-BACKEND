@@ -15,7 +15,7 @@ const schema = new dynamoose.Schema({
   }
 }, { timestamps: true });
 
-module.exports.model = dynamoose.model(process.env.INDUSTRY_TABLE, schema, {create: false});
+module.exports.model = dynamoose.model(process.env.INDUSTRY_TABLE_NAME, schema, {create: false});
 
 module.exports.find = () => {
   return new Promise((resolve, reject) => {

@@ -5,7 +5,7 @@ const { v4: uuid } = require('uuid');
 const tokenModel = require("./token");
 
 const schema = new dynamoose.Schema({
-  _id: { type: String, required: true, default: uuid(), hashKey: true },
+  _id: { type: String, required: true, hashKey: true },
   email: {
     type: String,
     unique: true,
@@ -37,15 +37,16 @@ const schema = new dynamoose.Schema({
   }
 });
 
-module.exports.model = dynamoose.model(process.env.USER_TABLE, schema, {create: false});
+module.exports.model = dynamoose.model(process.env.USER_TABLE_NAME, schema, {create: false});
 
 module.exports.create = (data) => {
+  data._id = uuid();
   return this.model.create(data);
 }
 
-module.exports.generateVerificationToken = function() {
+module.exports.generateVerificationToken = (_user) => {
   let payload = {
-    userId: this._id,
+    userId: _user._id,
     token: randomstring.generate({
       length: 6,
       charset: "numeric"
@@ -61,7 +62,7 @@ module.exports.get = _id => {
 
 module.exports.getByEmail = email => {
   return new Promise((resolve, reject) => {
-    this.model.query('email').eq(email).using('idx-email').all().exec((err, response) => {
+    this.model.query('email').eq(email).using('gidx-email').all().exec((err, response) => {
       if (err) {
         return reject(err);
       }
@@ -81,17 +82,15 @@ module.exports.getByEmail = email => {
 
 module.exports.findByNameAndEmail = (email, name) => {
   return new Promise((resolve, reject) => {
-    this.model.scan().where('email').eq(email).or().where('name').eq(name).all().exec((err, response) => {
+    console.log('findByNameAndEmail', email, name);
+    this.model.scan('email').eq(email).or().where('userName').eq(name).all().exec((err, response) => {
+      console.log('Query executed', err, response);
       if (err) {
         return reject(err);
       }
 
-      if (response.length > 1) {
-        return reject(new Error('Invalid user data found'));
-      }
-
       if (response.length === 0) {
-        return resolve([]);
+        return resolve(null);
       }
 
       return resolve(response);

@@ -1,3 +1,5 @@
+const _ = require('lodash');
+
 const {
   hashPassword,
   comparePassword,
@@ -9,19 +11,28 @@ const gifService = require("../services/gifService");
 const { verificationTokenSchema } = require("../schemas/auth");
 const { helpers } = require("../helpers");
 const Templates = require("../helpers/template");
+const userModel = require('../models/user');
 
 module.exports.registerUser = async (req, res) => {
   try {
     const { email, firstName, lastName, userName, password } = req.body;
-    const person = await userService.findByNameEmail(email, userName);
+    console.log('Registering user', req.body);
+    const persons = await userService.findByNameEmail(email, userName);
+    let person = null;
+    if (persons.length > 0) {
+      person = persons[0];
+    }
     if (person && person.email === email) {
+      console.log('User found', person);
       return res
         .status(303)
         .json({ message: "Email address is already registered" });
     }
     if (person && person.userName === userName) {
+      console.log('User found', person);
       return res.status(303).json({ message: "Username is already taken" });
     }
+    console.log('User does not exist');
     const hash = await hashPassword(password);
     const register = await userService.createNewUser(
       email,
@@ -30,7 +41,9 @@ module.exports.registerUser = async (req, res) => {
       userName,
       hash
     );
+    console.log('User created', register);
     const mail = await helpers.sendEmail(register, req, res);
+    console.log('Mail sent', mail);
     if (mail) {
       return res.status(201).json({
         success: register,
@@ -43,6 +56,7 @@ module.exports.registerUser = async (req, res) => {
       });
     }
   } catch (error) {
+    console.error('Error creating user', error);
     res.status(400).json(error);
   }
 };
@@ -175,15 +189,15 @@ module.exports.forget = async (req, res) => {
           "Please verify your account with the link sent to your email before changing your password",
       });
     }
-    const token = user.generateVerificationToken();
-    const mail = await helpers.sendForGotEmail(user, token);
+    const token = userModel.generateVerificationToken(user);
+    const mail = await helpers.sendForgotEmail(user, token);
     if (mail) {
       return res.status(201).json({
-        message: "Forgot password link  has been sent to your email.",
+        message: "Forgot password link has been sent to your email.",
       });
     } else {
       return res.status(400).json({
-        message: "Failed to send email , try again",
+        message: "Failed to send email, try again.",
       });
     }
   } catch (error) {
@@ -195,28 +209,35 @@ module.exports.reset = async (req, res) => {
   try {
     const token = await tokenModel.getByToken(req.body.token);
     if (!token) {
+      console.error('Token not found');
       return res.status(400).json({ message: "invalid Token" });
     }
-    var user = await userService.getUserById(token.userId);
+    console.log('Token loaded', {token});
+    const user = await userService.getUserById(token.userId);
     if (!user) {
       return res.status(400).json({ message: "no user for this token." });
     }
-    var hash = await hashPassword(req.body.password);
+    console.log('User loaded', user);
+    const hash = await hashPassword(req.body.password);
     user.password = hash;
     try {
       let newUser = await userService.updatePassword(user._id, hash);
       if (newUser) {
+        console.log('User updated', newUser);
         return res.status(200).json({
           success: true,
           message: "Password reset successfully",
           user: newUser,
         });
       }
+      console.error('User not updated, returning error');
       return res.status(400).json({ message: "Password not updated." });
     } catch (err) {
+      console.error(err);
       return res.status(500).json({ message: err, errr: "catch2" });
     }
   } catch (error) {
+    console.error(error);
     res.status(500).json({ message: error.message, errr: "catch" });
   }
 };
@@ -225,18 +246,22 @@ module.exports.addTempSetting = async (req, res) => {
   try {
     let { settings } = req.body;
     settings.userId = settings.userId._id;
+    console.log('Loading setting', settings);
     let setting = await userService.getSetttingByUserIDAndName(
       settings.userId,
       settings.name
     );
+    console.log('Setting loaded', setting);
 
     if (setting.length > 0) {
+      console.log('Updating settings', setting, settings);
       await userService.updateSetting(
         setting[0]._id,
         setting[0].userId,
-        settings
+        _.omit(settings, ['_id', 'userId'])
       );
     } else {
+      console.log('Savings settings', settings);
       await userService.saveSetting(settings);
     }
     return res
@@ -245,14 +270,14 @@ module.exports.addTempSetting = async (req, res) => {
         message: `Successfully ${setting.length > 0 ? "Updated!" : "Saved!"}`,
       });
   } catch (error) {
-    res.status(500).json({ message: error.message, errr: "catch" });
+    res.status(500).json({ message: error.message, error: "catch" });
   }
 };
 
 module.exports.updateTempSetting = async (req, res) => {
   try {
     const { id, userId } = req.params;
-    userService.updateSetting(id, userId, req.body);
+    await userService.updateSetting(id, userId, req.body);
     return res.status(200).json({ message: "Successfully saved!" });
   } catch (error) {
     res.status(500).json({ message: error.message, errr: "catch" });
@@ -284,8 +309,8 @@ module.exports.shareVideoInEmail = async (req, res) => {
 
 module.exports.getTempSetting = async (req, res) => {
   try {
-    const { id } = req.params;
-    var settings = await userService.getSettingsByUserID(id);
+    const { userId } = req.params;
+    var settings = await userService.getSettingsByUserID(userId);
     return res
       .status(200)
       .json({ message: "Successfull!", settings: settings || [] });

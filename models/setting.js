@@ -5,7 +5,7 @@ const userModel = require('./user');
 
 const schema = new dynamoose.Schema(
   {
-    _id: {type: String, hashKey: true, default: uuid()},
+    _id: {type: String, hashKey: true},
     userId: {
       type: userModel.model,
       rangeKey: true,
@@ -41,6 +41,7 @@ const schema = new dynamoose.Schema(
 module.exports.model = dynamoose.model(process.env.SETTING_TABLE_NAME, schema);
 
 module.exports.create = data => {
+  data._id = uuid();
   return this.model.create(data);
 }
 

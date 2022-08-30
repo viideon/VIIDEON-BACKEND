@@ -28,9 +28,7 @@ const createNewUser = (email, firstName, lastName, userName, hash) => {
 const updateUser = (userId, user) => {
   return userModel.update(
     { _id: userId },
-    {
-      $set: { ...user }
-    },
+    user,
     { new: true }
   );
 };
@@ -38,9 +36,8 @@ const updatePassword = (_id, password) => {
   return userModel.update(
     { _id },
     {
-      $set: { password }
-    },
-    { new: true }
+      password
+    }
   );
 };
 const getAllUsers = async () => {
@@ -51,6 +48,7 @@ const getAllUsers = async () => {
   return {count: users.length, users}
 };
 const deleteUser = id => {
+  console.log('Deleting user', id);
   return userModel.delete({ _id: id });
 };
 
@@ -59,6 +57,7 @@ const saveSetting = (setting) => {
 }
 
 const updateSetting = (_id, userId, setting) => {
+  console.log('updateSetting', _id, userId, setting);
   return settingModel.update({_id, userId}, {...setting});
 }
 
@@ -71,7 +70,7 @@ const getSettingsByID = (_id) => {
 }
 
 const getSetttingByUserIDAndName = (userId, name) => {
-  return settingModel.findByUserIdAndName({userId, name});
+  return settingModel.findByUserIdAndName(userId, name);
 }
 
 const removeUserById = async (id) => {

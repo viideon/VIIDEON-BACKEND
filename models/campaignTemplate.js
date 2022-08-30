@@ -30,7 +30,7 @@ const schema = new dynamoose.Schema({
   ]
 });
 
-module.exports.model = dynamoose.model(process.env.CAMPAIGN_CLIENT_TABLE, schema, {create: false});
+module.exports.model = dynamoose.model(process.env.CAMPAIGN_TEMPLATE_TABLE_NAME, schema, {create: false});
 
 module.exports.create = data => {
   return this.model.create(data);

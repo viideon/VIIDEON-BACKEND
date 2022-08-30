@@ -18,7 +18,7 @@ const schema = new dynamoose.Schema({
   isUser: {type: Boolean}
 }, {timestamps: true});
 
-module.exports.model = dynamoose.model(    process.env.PEOPLE_TABLE_NAME, schema);
+module.exports.model = dynamoose.model(process.env.PEOPLE_TABLE_NAME, schema);
 
 module.exports.create = data => {
   return this.model.create(data);

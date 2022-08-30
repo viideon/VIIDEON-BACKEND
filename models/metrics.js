@@ -19,7 +19,7 @@ const metricsSchema = new dynamoose.Schema({
   isCompleted: {type:Boolean},
 }, {timestamps: true});
 
-module.exports.model = dynamoose.model(process.env.    METRICS_TABLE_NAME, metricsSchema);
+module.exports.model = dynamoose.model(process.env.METRICS_TABLE_NAME, metricsSchema);
 
 module.exports.create = data => {
   return this.model.create(data);

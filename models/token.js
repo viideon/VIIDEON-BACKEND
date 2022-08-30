@@ -4,7 +4,7 @@ const {v4: uuid} = require('uuid');
 const userModel = require('./user');
 
 const schema = new dynamoose.Schema({
-  _id: {type: String, hashKey: true, default: uuid()},
+  _id: {type: String, hashKey: true},
   userId: {
     type: userModel.model,
     required: true,
@@ -20,9 +20,10 @@ const schema = new dynamoose.Schema({
   },
 });
 
-module.exports.model = dynamoose.model(process.env.TOKEN_TABLE, schema, {create: false});
+module.exports.model = dynamoose.model(process.env.TOKEN_TABLE_NAME, schema, {create: false});
 
 module.exports.create = data => {
+  data._id = uuid();
   return this.model.create(data);
 }
 
