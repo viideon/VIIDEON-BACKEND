@@ -194,11 +194,20 @@ custom:
             AttributeDefinitions:
               - AttributeName: _id
                 AttributeType: S
+              - AttributeName: userId
+                AttributeType: S
             KeySchema:
               - AttributeName: _id
                 KeyType: HASH
             BillingMode: PAY_PER_REQUEST
             TableName: ${self:custom.emailConfigTableName}
+            GlobalSecondaryIndexes:
+              - IndexName: gidx-userId
+                KeySchema:
+                  - AttributeName: userId
+                    KeyType: HASH
+                Projection:
+                  ProjectionType: ALL
             StreamSpecification:
               StreamViewType: NEW_AND_OLD_IMAGES
         IndustriesTable:
@@ -496,6 +505,7 @@ provider:
             - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.choicesTableName}
             - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.contactTableName}
             - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.emailConfigTableName}
+            - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.emailConfigTableName}/index/gidx-userId
             - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.industriesTableName}
             - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.interactiveTableName}
             - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.interactiveTableName}/index/gidx-userId

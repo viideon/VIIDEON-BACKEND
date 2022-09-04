@@ -374,13 +374,14 @@ module.exports.sendWithGmail = async (req, res) => {
           message: "email sent"
         });
       }).catch(error => {
-        console.log(error);
+        console.error(error);
         return res.status(400).json({
           messaage: "failed,server error"
         });
       })
     }
   } catch (error) {
+    console.error(error);
     res.status(400).json({
       error: error.message,
     });

@@ -6,7 +6,6 @@ const userModel = require('./user');
 const schema = new dynamoose.Schema({
   _id: {
     type: String,
-    default: uuid(),
     hashKey: true,
   },
   userId: {
@@ -16,7 +15,7 @@ const schema = new dynamoose.Schema({
       global: true,
     },
   },
-  date: { type: Date, default: Date.now },
+  date: { type: Date },
   userEmail: { type: String },
   tokenObj: {
     type: Object,
@@ -34,6 +33,8 @@ const schema = new dynamoose.Schema({
 module.exports.model = dynamoose.model(process.env.EMAIL_CONFIG_TABLE_NAME, schema);
 
 module.exports.create = data => {
+  data._id = uuid();
+  data.date = Date.now();
   return this.model.create(data);
 }
 

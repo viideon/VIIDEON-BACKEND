@@ -8,11 +8,11 @@ const saveEmailConfig = object => {
   });
 };
 const findUserConfig = async userId => {
-  const config = await emailConfigModel.getByUserId({ userId: userId });
+  const config = await emailConfigModel.getByUserId(userId);
   return _.pick(config, ['userId', 'userEmail', '_id', 'date']);
 };
 const findUserTokenObj = userId => {
-  return emailConfigModel.getByUserId({ userId: userId });
+  return emailConfigModel.getByUserId(userId);
 };
 const findEmailConfig = id => {
   return emailConfigModel.get({ _id: id });
