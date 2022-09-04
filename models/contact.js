@@ -4,13 +4,13 @@ const {v4: uuid} = require('uuid');
 const userModel = require('./user');
 
 const schema = new dynamoose.Schema({
-  _id: {type: String, required: true, hashKey: true, default: uuid()},
+  _id: {type: String, required: true, hashKey: true},
   avatarUrl: { type: String },
   company: { type: String },
   displayName: { type: String, required: false },
   userId: { type: userModel.model },
-  createdAt: { type: Date, default: Date.now },
-  updatedAt: { type: Date, default: Date.now },
+  createdAt: { type: Date },
+  updatedAt: { type: Date },
   email: { type: String },
   firstName: { type: String },
   fullName: { type: String },
@@ -29,5 +29,8 @@ const schema = new dynamoose.Schema({
 module.exports.model = dynamoose.model(process.env.CONTACT_TABLE_NAME, schema);
 
 module.exports.create = data => {
+  data._id = uuid();
+  data.createdAt = Date.now();
+  data.updatedAt = Date.now();
   return this.model.create(data);
 }
