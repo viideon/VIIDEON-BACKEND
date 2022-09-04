@@ -226,6 +226,8 @@ custom:
             AttributeDefinitions:
               - AttributeName: _id
                 AttributeType: S
+              - AttributeName: userId
+                AttributeType: S
             KeySchema:
               - AttributeName: _id
                 KeyType: HASH
@@ -233,6 +235,13 @@ custom:
             TableName: ${self:custom.interactiveTableName}
             StreamSpecification:
               StreamViewType: NEW_AND_OLD_IMAGES
+            GlobalSecondaryIndexes:
+              - IndexName: gidx-userId
+                KeySchema:
+                  - AttributeName: userId
+                    KeyType: HASH
+                Projection:
+                  ProjectionType: ALL
         MetricsTable:
           Type: AWS::DynamoDB::Table
           DeletionPolicy: Retain
@@ -419,11 +428,44 @@ custom:
             AttributeDefinitions:
               - AttributeName: _id
                 AttributeType: S
+              - AttributeName: url
+                AttributeType: S
+              - AttributeName: thumbnail
+                AttributeType: S
+              - AttributeName: title
+                AttributeType: S
+              - AttributeName: userId
+                AttributeType: S
             KeySchema:
               - AttributeName: _id
                 KeyType: HASH
             BillingMode: PAY_PER_REQUEST
             TableName: ${self:custom.videosTableName}
+            GlobalSecondaryIndexes:
+              - IndexName: gidx-url
+                KeySchema:
+                  - AttributeName: url
+                    KeyType: HASH
+                Projection:
+                  ProjectionType: ALL
+              - IndexName: gidx-thumbnail
+                KeySchema:
+                  - AttributeName: thumbnail
+                    KeyType: HASH
+                Projection:
+                  ProjectionType: ALL
+              - IndexName: gidx-title
+                KeySchema:
+                  - AttributeName: title
+                    KeyType: HASH
+                Projection:
+                  ProjectionType: ALL
+              - IndexName: gidx-userId
+                KeySchema:
+                  - AttributeName: userId
+                    KeyType: HASH
+                Projection:
+                  ProjectionType: ALL
             StreamSpecification:
               StreamViewType: NEW_AND_OLD_IMAGES
 
@@ -456,6 +498,7 @@ provider:
             - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.emailConfigTableName}
             - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.industriesTableName}
             - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.interactiveTableName}
+            - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.interactiveTableName}/index/gidx-userId
             - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.metricsTableName}
             - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.peopleTableName}
             - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.publicMusicAssetsTableName}
@@ -469,6 +512,10 @@ provider:
             - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.userTableName}/index/gidx-email
             - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.userAssetsTableName}
             - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.videosTableName}
+            - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.videosTableName}/index/gidx-url
+            - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.videosTableName}/index/gidx-thumbnail
+            - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.videosTableName}/index/gidx-title
+            - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.videosTableName}/index/gidx-userId
   environment:
     CAMPAIGN_TEMPLATE_TABLE_NAME: ${self:custom.campaignTemplateTableName}
     CHOICES_TABLE_NAME: ${self:custom.choicesTableName}

@@ -9,7 +9,6 @@ const schema = new dynamoose.Schema({
     type: String,
     required: true,
     hashKey: true,
-    default: uuid(),
   },
   url: {
     type: String,
@@ -43,16 +42,6 @@ const schema = new dynamoose.Schema({
         name: 'gidx-userId',
         global: true,
       },
-      {
-        name: 'gidx-userId-isVideo',
-        rangeKey: 'isVideo',
-        global: true,
-      },
-      {
-        name: 'gidx-userId-campaign',
-        rangeKey: 'campaign',
-        global: true,
-      },
     ],
   },
   date: { type: Date, default: Date.now },
@@ -64,11 +53,11 @@ const schema = new dynamoose.Schema({
     required: false,
   },
   recordingEdit: { type: Boolean, require: false },
-  views: { type: Number },
-  watch: { type: Number },
-  emailShareCount: { type: Number },
-  emailOpens: { type: Number },
-  ctaClicks: { type: Number },
+  views: { type: Number, default: 0 },
+  watch: { type: Number, default: 0 },
+  emailShareCount: { type: Number, default: 0 },
+  emailOpens: { type: Number, default: 0 },
+  ctaClicks: { type: Number, default: 0 },
   logoProps: {
     type: Object,
     schema: {
@@ -107,6 +96,7 @@ const schema = new dynamoose.Schema({
 module.exports.model = dynamoose.model(process.env.VIDEOS_TABLE_NAME, schema);
 
 module.exports.create = data => {
+  data._id = uuid();
   return this.model.create(data);
 }
 
@@ -197,14 +187,14 @@ module.exports.findByUrl = url => {
 }
 
 module.exports.get = _id => {
-  return this.model.get(_id);
+  return this.model.get({_id});
 }
 
 module.exports.countVideos = (userId) => {
-  return this.model.query('userId').eq(userId).where('isVideo').eq(true).using('gidx-userId-isVideo').all().count().exec();
+  return this.model.query('userId').eq(userId).where('isVideo').eq(true).using('gidx-userId').all().count().exec();
 }
 
 module.exports.countCampaignVideos = (userId) => {
-  return this.model.query('userId').eq(userId).where('campaign').eq(true).using('gidx-userId-campaign').all().count().exec();
+  return this.model.query('userId').eq(userId).where('campaign').eq(true).using('gidx-userId').all().count().exec();
 }
 

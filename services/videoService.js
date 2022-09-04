@@ -1,3 +1,5 @@
+const _ = require('lodash');
+
 const videoModel = require("../models/videos");
 const interactiveModel = require("../models/interactive")
 
@@ -67,7 +69,7 @@ const getCampaignCount = async id => {
   return count;
 };
 
-const incrementVideoEmail = (_id, count) => {
+const incrementVideoEmail = (_id, count = 1) => {
   return videoModel.update({ _id }, { $ADD: { emailShareCount: count } });
 };
 const incrementVideoViews = _id => {

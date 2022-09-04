@@ -4,12 +4,12 @@ const videoService = require("../services/videoService");
 const template = require("../helpers/template");
 const userService = require("../services/userService");
 
-function splitUrl(logo) {
-  if (logo && logo.indexOf("blob:") !== -1) {
-    return logo && logo.split("blob:")[1];
-  }
-  return logo;
-}
+// function splitUrl(logo) {
+//   if (logo && logo.indexOf("blob:") !== -1) {
+//     return logo && logo.split("blob:")[1];
+//   }
+//   return logo;
+// }
 
 module.exports.getTemplate = async (req, res) => {
   try {
@@ -264,7 +264,8 @@ module.exports.emailVideo = async (req, res) => {
   const { id, recieverEmail } = req.body;
 
   const video = await videoService.findVideoById(id);
-  const { thumbnail } = video;
+
+  const { thumbnail, url } = video;
   try {
     if (req.body.recieverEmail === "") {
       return res.status(400).json({ message: "no email provided" });
@@ -273,7 +274,7 @@ module.exports.emailVideo = async (req, res) => {
     if (result.error || result === false) {
       return res.status(400).json({ message: "fail to send email" });
     } else {
-      return res.status(200).json({ message: "email sent sucessfully" });
+      return res.status(200).json({ message: "email sent successfully" });
     }
   } catch (error) {
     res.status(400).json(error);
@@ -303,6 +304,7 @@ module.exports.sendMultipleEmail = async (req, res) => {
     res.status(400).json(err);
   }
 };
+
 module.exports.postVideo = async (req, res) => {
   try {
     const video = await videoModel.create({
@@ -340,6 +342,7 @@ module.exports.getUserVideos = async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 };
+
 module.exports.getUserCampaignVideos = async (req, res) => {
   let id = req.query.id;
   let page = req.query.page ? req.query.page : 1;
@@ -450,10 +453,13 @@ module.exports.deleteVideo = async (req, res) => {
   let { id, pageNo } = req.query;
   try {
     const video = await videoService.findVideoById(id);
+    console.log('Video found', video);
     if (video) {
       let userId = video.userId;
       await videoService.deleteVideo(id);
+      console.log('Video deleted');
       const videos = await videoService.findUserVideo(userId, pageNo);
+      console.log('Videos loaded', videos);
       return res.status(200).json({
         message: "video deleted",
         nextVideo: videos[videos.length - 1],
@@ -491,8 +497,8 @@ module.exports.getSingleVideo = async (req, res) => {
 module.exports.getVideoCount = async (req, res) => {
   let id = req.query.id;
   try {
-    const customTemplate = await template.spreadTheme();
-    const TemplateString = await template.sleek();
+    // const customTemplate = await template.spreadTheme();
+    // const TemplateString = await template.sleek();
     let videoCount = await videoService.getVideoCount(id);
     let ChatvidCount = await videoService.getChatVidCount(id);
     let totalCount = videoCount + ChatvidCount;
