@@ -2,7 +2,7 @@ const dynamoose = require("dynamoose");
 const { v4: uuid } = require('uuid');
 
 const schema = new dynamoose.Schema({
-  _id: {type: String, hashKey: true, default: uuid()},
+  _id: {type: String, hashKey: true},
   url:{type:String},
   title:{type:String}
 });
@@ -10,6 +10,7 @@ const schema = new dynamoose.Schema({
 module.exports.model = dynamoose.model(process.env.PUBLIC_MUSIC_ASSETS_TABLE_NAME, schema);
 
 module.exports.create = data => {
+  data._id = uuid();
   return this.model.create(data);
 }
 

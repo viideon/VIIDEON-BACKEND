@@ -421,11 +421,20 @@ custom:
             AttributeDefinitions:
               - AttributeName: _id
                 AttributeType: S
+              - AttributeName: userId
+                AttributeType: S
             KeySchema:
               - AttributeName: _id
                 KeyType: HASH
             BillingMode: PAY_PER_REQUEST
             TableName: ${self:custom.userAssetsTableName}
+            GlobalSecondaryIndexes:
+              - IndexName: gidx-userId
+                KeySchema:
+                  - AttributeName: userId
+                    KeyType: HASH
+                Projection:
+                  ProjectionType: ALL
             StreamSpecification:
               StreamViewType: NEW_AND_OLD_IMAGES
         VideosTable:
@@ -521,6 +530,7 @@ provider:
             - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.userTableName}
             - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.userTableName}/index/gidx-email
             - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.userAssetsTableName}
+            - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.userAssetsTableName}/index/gidx-userId
             - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.videosTableName}
             - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.videosTableName}/index/gidx-url
             - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.videosTableName}/index/gidx-thumbnail
