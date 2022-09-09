@@ -3,7 +3,7 @@ const _ = require('lodash');
 const { v4: uuid } = require('uuid');
 
 const schema = new dynamoose.Schema({
-  _id: { type: String, required: true, hashKey: true, default: uuid()},
+  _id: { type: String, required: true, hashKey: true},
   name: { type: String, required: true },
   templateDescription: { type: String, required: true },
   totalSteps: { type: Number, required: true },
@@ -17,22 +17,27 @@ const schema = new dynamoose.Schema({
     }
   },
   duration: { type: Number},
-  steps: [
-    {
+  steps: {
+    type: Array,
+    schema: [{
       type: Object,
       schema: {
         title: { type: String },
         description: { type: String },
         duration: { type: String },
-        examples: [{ type: String }]
+        examples: {
+          type: Array,
+          schema: [String],
+        }
       }
-    }
-  ]
+    }]
+  }
 });
 
 module.exports.model = dynamoose.model(process.env.CAMPAIGN_TEMPLATE_TABLE_NAME, schema, {create: false});
 
 module.exports.create = data => {
+  data._id = uuid();
   return this.model.create(data);
 }
 
