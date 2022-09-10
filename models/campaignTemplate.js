@@ -13,7 +13,7 @@ const schema = new dynamoose.Schema({
     required: true,
     index: {
       name: 'gidx-industryId',
-      global: true,
+      type: 'global',
     }
   },
   duration: { type: Number},
@@ -75,7 +75,7 @@ module.exports.delete = id => {
 }
 
 module.exports.deleteByIndustryId = async key => {
-  const _campaigns = await this.findByIndex('gidx-industry', 'industryId', key.industryId);
-  await Promise.all(_.map(_campaigns, _campaign => this.model.delete({id: _campaign.id})));
+  const _campaigns = await this.findByIndex('gidx-industryId', 'industryId', key);
+  await Promise.all(_.map(_campaigns, _campaign => this.model.delete({_id: _campaign._id})));
   return {};
 }

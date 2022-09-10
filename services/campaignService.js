@@ -26,6 +26,7 @@ const updateIndustry = (_id, industry) => {
 }
 const deleteIndustry = async (_id) => {
   await campaignTemplateModel.deleteByIndustryId(_id);
+  console.log('Campaigns deleted');
   return industriesModel.delete({_id});
 }
 module.exports = { addTemplate, getTemplates, updateTemplate, deleteTemplate, getIndustries, addIndustry, updateIndustry, deleteIndustry };

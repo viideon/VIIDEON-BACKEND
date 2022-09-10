@@ -11,7 +11,7 @@ const schema = new dynamoose.Schema(
       rangeKey: true,
       index: {
         name: 'gidx-userIdName',
-        global: true,
+        type: 'global',
         rangeKey: 'name',
       }
     },

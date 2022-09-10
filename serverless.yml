@@ -146,11 +146,20 @@ custom:
             AttributeDefinitions:
               - AttributeName: _id
                 AttributeType: S
+              - AttributeName: industryId
+                AttributeType: S
             KeySchema:
               - AttributeName: _id
                 KeyType: HASH
             BillingMode: PAY_PER_REQUEST
             TableName: ${self:custom.campaignTemplateTableName}
+            GlobalSecondaryIndexes:
+              - IndexName: gidx-industryId
+                KeySchema:
+                  - AttributeName: industryId
+                    KeyType: HASH
+                Projection:
+                  ProjectionType: ALL
             StreamSpecification:
               StreamViewType: NEW_AND_OLD_IMAGES
         ChoicesTable:
@@ -511,6 +520,7 @@ provider:
             - dynamodb:DeleteItem
           Resource:
             - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.campaignTemplateTableName}
+            - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.campaignTemplateTableName}/index/gidx-industryId
             - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.choicesTableName}
             - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.contactTableName}
             - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.emailConfigTableName}

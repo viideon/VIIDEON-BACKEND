@@ -12,7 +12,7 @@ const schema = new dynamoose.Schema({
     required: true,
     index: {
       name: 'gidx-email',
-      global: true,
+      type: 'global',
     }
   },
   firstName: { type: String, minlength: 3, required: true },

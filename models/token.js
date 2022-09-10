@@ -15,7 +15,7 @@ const schema = new dynamoose.Schema({
     required: true,
     index: {
       name: 'gidx-token',
-      global: true,
+      type: 'global',
     },
   },
 });

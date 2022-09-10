@@ -16,7 +16,7 @@ const schema = new dynamoose.Schema({
     required: true,
     index: {
       name: 'gidx-url',
-      global: true,
+      type: 'global',
     },
   },
   thumbnail: {
@@ -24,7 +24,7 @@ const schema = new dynamoose.Schema({
     required: false,
     index: {
       name: 'gidx-thumbnail',
-      global: true,
+      type: 'global',
     },
   },
   title: {
@@ -32,7 +32,7 @@ const schema = new dynamoose.Schema({
     required: false,
     index: {
       name: 'gidx-title',
-      global: true,
+      type: 'global',
     },
   },
   userId: {
@@ -40,7 +40,7 @@ const schema = new dynamoose.Schema({
     index: [
       {
         name: 'gidx-userId',
-        global: true,
+        type: 'global',
       },
     ],
   },

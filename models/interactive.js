@@ -17,7 +17,7 @@ const schema = new dynamoose.Schema(
       type: userModel.model,
       index: {
         name: 'gidx-userId',
-        global: true,
+        type: 'global',
       },
     },
   },

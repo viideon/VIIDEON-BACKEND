@@ -31,6 +31,7 @@ module.exports.updateIndustry = async (req, res) => {
 module.exports.deleteIndustry = async (req, res) => {
   try {
     const { id } = req.params;
+    console.log('Deleting industry', {id});
     await campaignService.deleteIndustry(id);
     res.status(200).json("Successfully Deleted");
   } catch (error) {

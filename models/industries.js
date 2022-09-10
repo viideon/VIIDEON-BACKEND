@@ -5,17 +5,17 @@ const { v4: uuid } = require('uuid');
 const campaignTemplateModel = require('./campaignTemplate');
 
 const schema = new dynamoose.Schema({
-  _id: { type: String, required: true, hashKey: true, default: uuid()},
+  _id: { type: String, required: true, hashKey: true, },
   name: { type: String, required: true },
   description: { type: String, required: true },
   thumbnailUrl: { type: String, required: true },
   styles: {
-    type: Set,
+    type: Array,
     schema: [campaignTemplateModel.model]
   }
 }, { timestamps: true });
 
-module.exports.model = dynamoose.model(process.env.INDUSTRY_TABLE_NAME, schema, {create: false});
+module.exports.model = dynamoose.model(process.env.INDUSTRIES_TABLE_NAME, schema, {create: false});
 
 module.exports.find = () => {
   return new Promise((resolve, reject) => {
@@ -30,6 +30,7 @@ module.exports.find = () => {
 }
 
 module.exports.create = data => {
+  data._id = uuid();
   return this.model.create(data);
 }
 

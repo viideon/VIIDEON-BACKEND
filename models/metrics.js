@@ -9,7 +9,7 @@ const metricsSchema = new dynamoose.Schema({
     type: interactiveModel.model,
     index: {
       name: 'gidx-chatvidId',
-      global: true,
+      type: 'global',
     },
   },
   deviceType: {type: String},
