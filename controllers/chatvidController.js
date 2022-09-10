@@ -22,10 +22,10 @@ const get = async (req, res) => {
 const save = async (req, res) => {
   try {
     const { video, fitvideo, responseType, choices, calendar, title, isAudio, isVideo, isText, text } = req.body;
-    if (!title) throw ({ message: "now title" })
+    if (!title) throw ({ message: "No title" })
     let vid = await chatVidServices.saveVideo(video);
     if (vid) {
-      let chatvid = await {
+      let chatvid = {
         name: title,
         userId: video.userId,
         steps: [],
@@ -35,7 +35,7 @@ const save = async (req, res) => {
       }
       let room = await chatVidServices.createChatvid(chatvid);
 
-      let roomstep = await {
+      let roomstep = {
         roomId: room._id,
         stepNo: 1,
         videoId: vid._id,
