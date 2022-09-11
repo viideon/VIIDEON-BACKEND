@@ -1,5 +1,6 @@
 const dynamoose = require("dynamoose");
 const {v4: uuid} = require('uuid');
+const _ = require('lodash');
 
 const userModel = require('./user');
 
@@ -42,9 +43,14 @@ module.exports.getByUserId = userId => {
   return new Promise((resolve, reject) => {
     this.model.query('userId').eq(userId).using('gidx-userId').all().exec((err, response) => {
       if (err) {
+        console.error('Error getting user token', err);
         return reject(err);
       }
 
+      console.log('Email config loaded', {response});
+      if (_.isNil(response)) {
+        return resolve(null);
+      }
       if (response.length > 1) {
         return reject('Multiple users found');
       }

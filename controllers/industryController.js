@@ -5,6 +5,7 @@ module.exports.getIndustries = async (req, res) => {
     if (!industries) throw({ message: "No templates found" });
       res.status(200).json({ industries });
   } catch (error) {
+    console.error('Error loading industries', {error});
     res.status(400).json({ message: error.message });
   }
 };
@@ -15,6 +16,7 @@ module.exports.addIndustry = async (req, res) => {
     if (newTemplate) return res.status(201).json({ template: newTemplate });
       throw ({ message: "failed to add new template" });
   } catch (error) {
+    console.error('Error adding industry', {error});
     res.status(400).json({ message: error.message });
   }
 };

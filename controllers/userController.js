@@ -19,7 +19,7 @@ module.exports.registerUser = async (req, res) => {
     console.log('Registering user', req.body);
     const persons = await userService.findByNameEmail(email, userName);
     let person = null;
-    if (persons.length > 0) {
+    if (!_.isNil(persons) && persons.length > 0) {
       person = persons[0];
     }
     if (person && person.email === email) {

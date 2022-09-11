@@ -1,6 +1,7 @@
 const dynamoose = require("dynamoose");
 const randomstring = require("randomstring");
 const { v4: uuid } = require('uuid');
+const _ = require('lodash');
 
 const tokenModel = require("./token");
 
@@ -87,6 +88,10 @@ module.exports.findByNameAndEmail = (email, name) => {
       console.log('Query executed', err, response);
       if (err) {
         return reject(err);
+      }
+
+      if (_.isNil(response)) {
+        return resolve(null);
       }
 
       if (response.length === 0) {

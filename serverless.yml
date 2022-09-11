@@ -500,6 +500,8 @@ provider:
   name: aws
   runtime: nodejs16.x
   architecture: arm64
+  httpApi:
+    cors: true
   iam:
     role:
       statements:
