@@ -1,10 +1,51 @@
-const mongoose = require("mongoose");
+const dynamoose = require("dynamoose");
+const _ = require('lodash');
+const { v4: uuid } = require('uuid');
 
-const industrySchema = new mongoose.Schema({
+const campaignTemplateModel = require('./campaignTemplate');
+
+const schema = new dynamoose.Schema({
+  _id: { type: String, required: true, hashKey: true, },
   name: { type: String, required: true },
   description: { type: String, required: true },
   thumbnailUrl: { type: String, required: true },
-  styles: [{type: mongoose.Schema.Types.ObjectId, ref: 'campaignTemplate'}]
+  styles: {
+    type: Array,
+    schema: [campaignTemplateModel.model]
+  }
 }, { timestamps: true });
 
-module.exports = mongoose.model("Industry", industrySchema);
+module.exports.model = dynamoose.model(process.env.INDUSTRIES_TABLE_NAME, schema, {create: false});
+
+module.exports.find = () => {
+  return new Promise((resolve, reject) => {
+    this.model.scan().all().exec((err, response) => {
+      if (err) {
+        console.log('Error loading industries', err);
+        return reject(err);
+      }
+
+      console.log('Industries loaded', response);
+
+      if (_.isNil(response)) {
+        return resolve([]);
+      }
+
+      resolve (Promise.all(_.map(response, _record => _record.populate())));
+    });
+  });
+}
+
+module.exports.create = data => {
+  data._id = uuid();
+  return this.model.create(data);
+}
+
+module.exports.update = async (id, data) => {
+  const industry = await this.model.update(id, data);
+  return industry.populate();
+}
+
+module.exports.delete = id => {
+  return this.model.delete(id);
+}

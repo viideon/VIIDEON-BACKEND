@@ -1,26 +1,26 @@
-const nodemailer = require("nodemailer");
 const sgMail = require('@sendgrid/mail');
-require("dotenv").config();
 
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+const userModel = require('../models/user');
+const config = require('../util/config');
 
-const sendEmail = async (user, req, res) => {
-  const token = user.generateVerificationToken();
-  const msg = {
-    to: user.email,
-    from: process.env.FROM_EMAIL,
-    subject: "Account Verification",
-    text: `Hi ${user.firstName} ${user.lastName} \n 
-                Please click on this link to verify your email  ${process.env.APP_DOMAIN}/login/VerifyEmail?code=${token.token} . \n\n`,
-  };
+const sendEmail = async (user) => {
+  const appConfig = await config.getConfig();
+  sgMail.setApiKey(await appConfig.get('SENDGRID_API_KEY'));
   try {
-    const tokenSaved = await token.save();
-    if (!tokenSaved) {
-      return false;
-    }
+    console.log('Sending email to user', user);
+    const token = await userModel.generateVerificationToken(user);
+    const msg = {
+      to: user.email,
+      from: process.env.FROM_EMAIL,
+      subject: "Account Verification",
+      text: `Hi ${user.firstName} ${user.lastName} \n 
+                Please click on this link to verify your email ${process.env.APP_DOMAIN}/login/VerifyEmail?code=${token.token} . \n\n`,
+    };
+    console.log('Token created', token, msg);
     await sgMail.send(msg);
     return true;
   } catch (err) {
+    console.log('Error sending token', err);
     return false;
   }
 };
@@ -33,14 +33,16 @@ const sendVideoEmail = async (recieverEmail, templateString) => {
     html: templateString,
   };
   try {
-    await transporter.sendMail(mailOptions);
+    const appConfig = await config.getConfig();
+    sgMail.setApiKey(await appConfig.get('SENDGRID_API_KEY'));
+    await sgMail.send(mailOptions);
     return true;
   } catch (err) {
     return false;
   }
 };
 
-const sendForGotEmail = async (user, token) => {
+const sendForgotEmail = async (user, token) => {
   const mailOptions = {
     to: user.email,
     from: `viideon<${process.env.FROM_EMAIL}>`,
@@ -49,13 +51,12 @@ const sendForGotEmail = async (user, token) => {
         <a href="${process.env.APP_DOMAIN}/resetpassword?code=${token.token}">${process.env.APP_DOMAIN}/resetpassword?code=${token.token}</a> \n\n If you did not request this, please ignore this email and your password will remain unchanged.\n </p>`,
   };
   try {
-    const tokenSaved = await token.save();
-    if (!tokenSaved) {
-      return false;
-    }
-    await transporter.sendMail(mailOptions);
+    const appConfig = await config.getConfig();
+    sgMail.setApiKey(await appConfig.get('SENDGRID_API_KEY'));
+    await sgMail.send(mailOptions);
     return true;
   } catch (err) {
+    console.error(err);
     return false;
   }
 };
@@ -81,7 +82,9 @@ const shareVideoInEmail = async (
       html: `<a href="${videoLink}" target="_blank"><img src="${videoThumnail}" alt="New Chatvid"  width=250/>
       </a>`,
     };
-    const response = await transporter.sendMail(mailOptions);
+    const appConfig = await config.getConfig();
+    sgMail.setApiKey(await appConfig.get('SENDGRID_API_KEY'));
+    const response = await sgMail.send(mailOptions);
     return true;
   } catch (err) {
     return false;
@@ -112,7 +115,9 @@ const responseEmail = async (email, logo) => {
 `,
   };
   try {
-    await transporter.sendMail(mailOptions);
+    const appConfig = await config.getConfig();
+    sgMail.setApiKey(await appConfig.get('SENDGRID_API_KEY'));
+    await sgMail.send(mailOptions);
     return true;
   } catch (err) {
     return false;
@@ -127,7 +132,9 @@ const sendResetEmail = async (user, req, res) => {
     html: `<p>This is a confirmation that the password for your account ${user.email} has just been changed. </p>`,
   };
   try {
-    await transporter.sendMail(mailOptions);
+    const appConfig = await config.getConfig();
+    sgMail.setApiKey(await appConfig.get('SENDGRID_API_KEY'));
+    await sgMail.send(mailOptions);
     return true;
   } catch (err) {
     return false;
@@ -136,7 +143,7 @@ const sendResetEmail = async (user, req, res) => {
 
 module.exports = {
   sendEmail,
-  sendForGotEmail,
+  sendForgotEmail,
   sendVideoEmail,
   sendResetEmail,
   shareVideoInEmail,

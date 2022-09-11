@@ -1,22 +1,24 @@
-const emailConfig = require("../models/emailConfig");
+const _ = require('lodash');
+
+const emailConfigModel = require("../models/emailConfig");
 
 const saveEmailConfig = object => {
-  const config = new emailConfig({
+  return emailConfigModel.create({
     ...object
   });
-  return config.save();
 };
-const findUserConfig = userId => {
-  return emailConfig.find({ userId: userId }, "userId userEmail _id date");
+const findUserConfig = async userId => {
+  const config = await emailConfigModel.getByUserId(userId);
+  return _.pick(config, ['userId', 'userEmail', '_id', 'date']);
 };
 const findUserTokenObj = userId => {
-  return emailConfig.find({ userId: userId });
+  return emailConfigModel.getByUserId(userId);
 };
 const findEmailConfig = id => {
-  return emailConfig.findOne({ _id: id });
+  return emailConfigModel.get({ _id: id });
 };
 const deleteConfigById = id => {
-  return emailConfig.deleteOne({ _id: id });
+  return emailConfigModel.delete({ _id: id });
 };
 module.exports = {
   saveEmailConfig,

@@ -144,13 +144,22 @@ custom:
             PointInTimeRecoverySpecification:
               PointInTimeRecoveryEnabled: ${self:custom.recovery.${sls:stage, 'dev'}}
             AttributeDefinitions:
-              - AttributeName: id
+              - AttributeName: _id
+                AttributeType: S
+              - AttributeName: industryId
                 AttributeType: S
             KeySchema:
-              - AttributeName: id
+              - AttributeName: _id
                 KeyType: HASH
             BillingMode: PAY_PER_REQUEST
             TableName: ${self:custom.campaignTemplateTableName}
+            GlobalSecondaryIndexes:
+              - IndexName: gidx-industryId
+                KeySchema:
+                  - AttributeName: industryId
+                    KeyType: HASH
+                Projection:
+                  ProjectionType: ALL
             StreamSpecification:
               StreamViewType: NEW_AND_OLD_IMAGES
         ChoicesTable:
@@ -160,10 +169,10 @@ custom:
             PointInTimeRecoverySpecification:
               PointInTimeRecoveryEnabled: ${self:custom.recovery.${sls:stage, 'dev'}}
             AttributeDefinitions:
-              - AttributeName: id
+              - AttributeName: _id
                 AttributeType: S
             KeySchema:
-              - AttributeName: id
+              - AttributeName: _id
                 KeyType: HASH
             BillingMode: PAY_PER_REQUEST
             TableName: ${self:custom.choicesTableName}
@@ -176,10 +185,10 @@ custom:
             PointInTimeRecoverySpecification:
               PointInTimeRecoveryEnabled: ${self:custom.recovery.${sls:stage, 'dev'}}
             AttributeDefinitions:
-              - AttributeName: id
+              - AttributeName: _id
                 AttributeType: S
             KeySchema:
-              - AttributeName: id
+              - AttributeName: _id
                 KeyType: HASH
             BillingMode: PAY_PER_REQUEST
             TableName: ${self:custom.contactTableName}
@@ -192,13 +201,22 @@ custom:
             PointInTimeRecoverySpecification:
               PointInTimeRecoveryEnabled: ${self:custom.recovery.${sls:stage, 'dev'}}
             AttributeDefinitions:
-              - AttributeName: id
+              - AttributeName: _id
+                AttributeType: S
+              - AttributeName: userId
                 AttributeType: S
             KeySchema:
-              - AttributeName: id
+              - AttributeName: _id
                 KeyType: HASH
             BillingMode: PAY_PER_REQUEST
             TableName: ${self:custom.emailConfigTableName}
+            GlobalSecondaryIndexes:
+              - IndexName: gidx-userId
+                KeySchema:
+                  - AttributeName: userId
+                    KeyType: HASH
+                Projection:
+                  ProjectionType: ALL
             StreamSpecification:
               StreamViewType: NEW_AND_OLD_IMAGES
         IndustriesTable:
@@ -208,10 +226,10 @@ custom:
             PointInTimeRecoverySpecification:
               PointInTimeRecoveryEnabled: ${self:custom.recovery.${sls:stage, 'dev'}}
             AttributeDefinitions:
-              - AttributeName: id
+              - AttributeName: _id
                 AttributeType: S
             KeySchema:
-              - AttributeName: id
+              - AttributeName: _id
                 KeyType: HASH
             BillingMode: PAY_PER_REQUEST
             TableName: ${self:custom.industriesTableName}
@@ -224,15 +242,24 @@ custom:
             PointInTimeRecoverySpecification:
               PointInTimeRecoveryEnabled: ${self:custom.recovery.${sls:stage, 'dev'}}
             AttributeDefinitions:
-              - AttributeName: id
+              - AttributeName: _id
+                AttributeType: S
+              - AttributeName: userId
                 AttributeType: S
             KeySchema:
-              - AttributeName: id
+              - AttributeName: _id
                 KeyType: HASH
             BillingMode: PAY_PER_REQUEST
             TableName: ${self:custom.interactiveTableName}
             StreamSpecification:
               StreamViewType: NEW_AND_OLD_IMAGES
+            GlobalSecondaryIndexes:
+              - IndexName: gidx-userId
+                KeySchema:
+                  - AttributeName: userId
+                    KeyType: HASH
+                Projection:
+                  ProjectionType: ALL
         MetricsTable:
           Type: AWS::DynamoDB::Table
           DeletionPolicy: Retain
@@ -240,10 +267,10 @@ custom:
             PointInTimeRecoverySpecification:
               PointInTimeRecoveryEnabled: ${self:custom.recovery.${sls:stage, 'dev'}}
             AttributeDefinitions:
-              - AttributeName: id
+              - AttributeName: _id
                 AttributeType: S
             KeySchema:
-              - AttributeName: id
+              - AttributeName: _id
                 KeyType: HASH
             BillingMode: PAY_PER_REQUEST
             TableName: ${self:custom.metricsTableName}
@@ -256,10 +283,10 @@ custom:
             PointInTimeRecoverySpecification:
               PointInTimeRecoveryEnabled: ${self:custom.recovery.${sls:stage, 'dev'}}
             AttributeDefinitions:
-              - AttributeName: id
+              - AttributeName: _id
                 AttributeType: S
             KeySchema:
-              - AttributeName: id
+              - AttributeName: _id
                 KeyType: HASH
             BillingMode: PAY_PER_REQUEST
             TableName: ${self:custom.peopleTableName}
@@ -272,10 +299,10 @@ custom:
             PointInTimeRecoverySpecification:
               PointInTimeRecoveryEnabled: ${self:custom.recovery.${sls:stage, 'dev'}}
             AttributeDefinitions:
-              - AttributeName: id
+              - AttributeName: _id
                 AttributeType: S
             KeySchema:
-              - AttributeName: id
+              - AttributeName: _id
                 KeyType: HASH
             BillingMode: PAY_PER_REQUEST
             TableName: ${self:custom.publicMusicAssetsTableName}
@@ -288,10 +315,10 @@ custom:
             PointInTimeRecoverySpecification:
               PointInTimeRecoveryEnabled: ${self:custom.recovery.${sls:stage, 'dev'}}
             AttributeDefinitions:
-              - AttributeName: id
+              - AttributeName: _id
                 AttributeType: S
             KeySchema:
-              - AttributeName: id
+              - AttributeName: _id
                 KeyType: HASH
             BillingMode: PAY_PER_REQUEST
             TableName: ${self:custom.replyTableName}
@@ -304,11 +331,26 @@ custom:
             PointInTimeRecoverySpecification:
               PointInTimeRecoveryEnabled: ${self:custom.recovery.${sls:stage, 'dev'}}
             AttributeDefinitions:
-              - AttributeName: id
+              - AttributeName: _id
+                AttributeType: S
+              - AttributeName: userId
+                AttributeType: S
+              - AttributeName: name
                 AttributeType: S
             KeySchema:
-              - AttributeName: id
+              - AttributeName: _id
                 KeyType: HASH
+              - AttributeName: userId
+                KeyType: RANGE
+            GlobalSecondaryIndexes:
+              - IndexName: gidx-userIdName
+                KeySchema:
+                  - AttributeName: userId
+                    KeyType: HASH
+                  - AttributeName: name
+                    KeyType: RANGE
+                Projection:
+                  ProjectionType: ALL
             BillingMode: PAY_PER_REQUEST
             TableName: ${self:custom.settingTableName}
             StreamSpecification:
@@ -320,10 +362,10 @@ custom:
             PointInTimeRecoverySpecification:
               PointInTimeRecoveryEnabled: ${self:custom.recovery.${sls:stage, 'dev'}}
             AttributeDefinitions:
-              - AttributeName: id
+              - AttributeName: _id
                 AttributeType: S
             KeySchema:
-              - AttributeName: id
+              - AttributeName: _id
                 KeyType: HASH
             BillingMode: PAY_PER_REQUEST
             TableName: ${self:custom.stepTableName}
@@ -336,13 +378,22 @@ custom:
             PointInTimeRecoverySpecification:
               PointInTimeRecoveryEnabled: ${self:custom.recovery.${sls:stage, 'dev'}}
             AttributeDefinitions:
-              - AttributeName: id
+              - AttributeName: _id
+                AttributeType: S
+              - AttributeName: token
                 AttributeType: S
             KeySchema:
-              - AttributeName: id
+              - AttributeName: _id
                 KeyType: HASH
             BillingMode: PAY_PER_REQUEST
             TableName: ${self:custom.tokenTableName}
+            GlobalSecondaryIndexes:
+              - IndexName: gidx-token
+                KeySchema:
+                  - AttributeName: token
+                    KeyType: HASH
+                Projection:
+                  ProjectionType: ALL
             StreamSpecification:
               StreamViewType: NEW_AND_OLD_IMAGES
         UserTable:
@@ -352,13 +403,22 @@ custom:
             PointInTimeRecoverySpecification:
               PointInTimeRecoveryEnabled: ${self:custom.recovery.${sls:stage, 'dev'}}
             AttributeDefinitions:
-              - AttributeName: id
+              - AttributeName: _id
+                AttributeType: S
+              - AttributeName: email
                 AttributeType: S
             KeySchema:
-              - AttributeName: id
+              - AttributeName: _id
                 KeyType: HASH
             BillingMode: PAY_PER_REQUEST
             TableName: ${self:custom.userTableName}
+            GlobalSecondaryIndexes:
+              - IndexName: gidx-email
+                KeySchema:
+                  - AttributeName: email
+                    KeyType: HASH
+                Projection:
+                  ProjectionType: ALL
             StreamSpecification:
               StreamViewType: NEW_AND_OLD_IMAGES
         UserAssetsTable:
@@ -368,13 +428,22 @@ custom:
             PointInTimeRecoverySpecification:
               PointInTimeRecoveryEnabled: ${self:custom.recovery.${sls:stage, 'dev'}}
             AttributeDefinitions:
-              - AttributeName: id
+              - AttributeName: _id
+                AttributeType: S
+              - AttributeName: userId
                 AttributeType: S
             KeySchema:
-              - AttributeName: id
+              - AttributeName: _id
                 KeyType: HASH
             BillingMode: PAY_PER_REQUEST
             TableName: ${self:custom.userAssetsTableName}
+            GlobalSecondaryIndexes:
+              - IndexName: gidx-userId
+                KeySchema:
+                  - AttributeName: userId
+                    KeyType: HASH
+                Projection:
+                  ProjectionType: ALL
             StreamSpecification:
               StreamViewType: NEW_AND_OLD_IMAGES
         VideosTable:
@@ -384,13 +453,46 @@ custom:
             PointInTimeRecoverySpecification:
               PointInTimeRecoveryEnabled: ${self:custom.recovery.${sls:stage, 'dev'}}
             AttributeDefinitions:
-              - AttributeName: id
+              - AttributeName: _id
+                AttributeType: S
+              - AttributeName: url
+                AttributeType: S
+              - AttributeName: thumbnail
+                AttributeType: S
+              - AttributeName: title
+                AttributeType: S
+              - AttributeName: userId
                 AttributeType: S
             KeySchema:
-              - AttributeName: id
+              - AttributeName: _id
                 KeyType: HASH
             BillingMode: PAY_PER_REQUEST
             TableName: ${self:custom.videosTableName}
+            GlobalSecondaryIndexes:
+              - IndexName: gidx-url
+                KeySchema:
+                  - AttributeName: url
+                    KeyType: HASH
+                Projection:
+                  ProjectionType: ALL
+              - IndexName: gidx-thumbnail
+                KeySchema:
+                  - AttributeName: thumbnail
+                    KeyType: HASH
+                Projection:
+                  ProjectionType: ALL
+              - IndexName: gidx-title
+                KeySchema:
+                  - AttributeName: title
+                    KeyType: HASH
+                Projection:
+                  ProjectionType: ALL
+              - IndexName: gidx-userId
+                KeySchema:
+                  - AttributeName: userId
+                    KeyType: HASH
+                Projection:
+                  ProjectionType: ALL
             StreamSpecification:
               StreamViewType: NEW_AND_OLD_IMAGES
 
@@ -398,9 +500,17 @@ provider:
   name: aws
   runtime: nodejs16.x
   architecture: arm64
+  httpApi:
+    cors: true
   iam:
     role:
       statements:
+        - Effect: Allow
+          Action:
+            - ssm:GetParameters
+          Resource:
+            - arn:aws:ssm:${aws:region}:${aws:accountId}:parameter/viideon
+            - arn:aws:ssm:${aws:region}:${aws:accountId}:parameter/viideon/*
         - Effect: Allow
           Action:
             - dynamodb:Query
@@ -409,23 +519,35 @@ provider:
             - dynamodb:PutItem
             - dynamodb:UpdateItem
             - dynamodb:DescribeTable
+            - dynamodb:DeleteItem
           Resource:
             - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.campaignTemplateTableName}
+            - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.campaignTemplateTableName}/index/gidx-industryId
             - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.choicesTableName}
             - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.contactTableName}
             - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.emailConfigTableName}
+            - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.emailConfigTableName}/index/gidx-userId
             - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.industriesTableName}
             - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.interactiveTableName}
+            - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.interactiveTableName}/index/gidx-userId
             - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.metricsTableName}
             - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.peopleTableName}
             - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.publicMusicAssetsTableName}
             - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.replyTableName}
             - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.settingTableName}
+            - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.settingTableName}/index/gidx-userIdName
             - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.stepTableName}
             - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.tokenTableName}
+            - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.tokenTableName}/index/gidx-token
             - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.userTableName}
+            - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.userTableName}/index/gidx-email
             - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.userAssetsTableName}
+            - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.userAssetsTableName}/index/gidx-userId
             - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.videosTableName}
+            - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.videosTableName}/index/gidx-url
+            - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.videosTableName}/index/gidx-thumbnail
+            - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.videosTableName}/index/gidx-title
+            - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.videosTableName}/index/gidx-userId
   environment:
     CAMPAIGN_TEMPLATE_TABLE_NAME: ${self:custom.campaignTemplateTableName}
     CHOICES_TABLE_NAME: ${self:custom.choicesTableName}
@@ -450,6 +572,7 @@ plugins:
 functions:
   api:
     handler: server.handler
+    timeout: 30
     events:
       - httpApi:
           path: /
@@ -485,7 +608,7 @@ functions:
           path: /user/template
           method: post
       - httpApi:
-          path: /user/template
+          path: /user/template/{userId}
           method: get
       - httpApi:
           path: /user/template/{id}/{userId}

@@ -1,8 +1,20 @@
-const mongoose = require("mongoose");
+const dynamoose = require("dynamoose");
+const { v4: uuid } = require('uuid');
 
-const stepSchema = new mongoose.Schema(
+const userModel = require('./user');
+
+const schema = new dynamoose.Schema(
   {
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    _id: {type: String, hashKey: true},
+    userId: {
+      type: userModel.model,
+      rangeKey: true,
+      index: {
+        name: 'gidx-userIdName',
+        type: 'global',
+        rangeKey: 'name',
+      }
+    },
     name: { type: String },
     logoUrl: { type: String },
     text: { type: String },
@@ -18,9 +30,33 @@ const stepSchema = new mongoose.Schema(
     linkedinUrl: {
       type: String,
     },
-    colors: {},
+    // colors: {
+    //   type: Array,
+    //   schema: [String],
+    // },
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Setting", stepSchema);
+module.exports.model = dynamoose.model(process.env.SETTING_TABLE_NAME, schema);
+
+module.exports.create = data => {
+  data._id = uuid();
+  return this.model.create(data);
+}
+
+module.exports.update = (id, data) => {
+  return this.model.update(id, data);
+}
+
+module.exports.findByUserId = userId => {
+  return this.model.query('userId').eq(userId).using('gidx-userIdName').all().exec();
+}
+
+module.exports.findByUserIdAndName = (userId, name) => {
+  return this.model.query('userId').eq(userId).where('name').eq(name).using('gidx-userIdName').all().exec();
+}
+
+module.exports.findById = id => {
+  return this.model.query('_id').eq(id).all().exec();
+}

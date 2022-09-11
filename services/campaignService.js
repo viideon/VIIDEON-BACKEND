@@ -1,33 +1,32 @@
-const campaignTemplate = require("../models/campaignTemplate");
-const Industries = require("../models/industries");
+const campaignTemplateModel = require("../models/campaignTemplate");
+const industriesModel = require("../models/industries");
 
 const addTemplate = template => {
-  const newTemplate = new campaignTemplate({
+  return campaignTemplateModel.create({
     ...template
   });
-  return newTemplate.save();
 };
 const getTemplates = () => {
-  return campaignTemplate.find();
+  return campaignTemplateModel.find();
 };
 const updateTemplate = (id, template) => {
-  return campaignTemplate.findByIdAndUpdate(id, template, { new: true });
+  return campaignTemplateModel.update(id, template);
 };
 const deleteTemplate = (id) => {
-  return campaignTemplate.deleteOne({_id: id})
+  return campaignTemplateModel.delete({_id: id})
 }
 const getIndustries = () => {
-  return Industries.find()
+  return industriesModel.find()
 }
 const addIndustry = (industry) => {
-  const newIndustry = new Industries({...industry})
-  return newIndustry.save();
+  return industriesModel.create({...industry});
 }
 const updateIndustry = (_id, industry) => {
-  return Industries.updateOne({_id}, {...industry})
+  return industriesModel.update({_id}, {...industry})
 }
 const deleteIndustry = async (_id) => {
-  await campaignTemplate.deleteMany({industryId: _id});
-  return Industries.deleteOne({_id});
+  await campaignTemplateModel.deleteByIndustryId(_id);
+  console.log('Campaigns deleted');
+  return industriesModel.delete({_id});
 }
 module.exports = { addTemplate, getTemplates, updateTemplate, deleteTemplate, getIndustries, addIndustry, updateIndustry, deleteIndustry };

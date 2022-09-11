@@ -1,11 +1,26 @@
-const mongoose = require("mongoose");
+const dynamoose = require("dynamoose");
+const { v4: uuid } = require('uuid');
 
-const choicesSchema = new mongoose.Schema({
-  chatvidId: {type: mongoose.Schema.Types.ObjectId, ref: 'InteractiveMessage'},
-  stepId: {type: mongoose.Schema.Types.ObjectId, ref: 'Step'},
-  replies: [{type: mongoose.Schema.Types.ObjectId, ref: 'Reply'}],
+const userModel = require('./user');
+
+const schema = new dynamoose.Schema({
+  _id: {type: String, required: true, hashKey: true, default: uuid()},
+  chatvidId: String,
+  stepId: String,
+  replies: {
+    type: Set,
+    schema: [String],
+  },
   text: {type: String},
-  userId: {type: mongoose.Schema.Types.ObjectId, ref: "User"}
+  userId: {type: userModel.model}
 }, {timestamps: true});
 
-module.exports = mongoose.model("Choices", choicesSchema);
+module.exports.model = dynamoose.model(process.env.CHOICES_TABLE_NAME, schema, {create: false});
+
+module.exports.create = data => {
+  return this.model.create(data);
+}
+
+module.exports.update = (id, data) => {
+  return this.model.update(id, data);
+}

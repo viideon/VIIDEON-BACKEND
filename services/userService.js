@@ -1,83 +1,80 @@
-const User = require("../models/user");
-const Setting = require("../models/setting");
+const userModel = require("../models/user");
+const settingModel = require("../models/setting");
 
 const findUserByEmail = email => {
-  return User.findOne({ email: email });
+  return userModel.getByEmail( email );
 };
 
 const findByNameEmail = (email, name) => {
-  return User.findOne({ $or: [{ email: email }, { userName: name }] });
+  return userModel.findByNameAndEmail(email, name);
 };
 const getUserById = id => {
-  return User.findOne({ _id: id });
+  return userModel.get({ _id: id });
 };
 const verifyUser = _id => {
-  return User.updateOne({ _id }, { $set: { isVerified: true } });
+  return userModel.update({ _id }, { isVerified: true });
 };
 
 const createNewUser = (email, firstName, lastName, userName, hash) => {
-  const user = new User({
+  return userModel.create({
     email: email,
     firstName: firstName,
     lastName: lastName,
     userName: userName,
     password: hash
   });
-  return user.save();
 };
 
 const updateUser = (userId, user) => {
-  return User.findOneAndUpdate(
+  return userModel.update(
     { _id: userId },
-    {
-      $set: { ...user }
-    },
+    user,
     { new: true }
   );
 };
 const updatePassword = (_id, password) => {
-  return User.findOneAndUpdate(
+  return userModel.update(
     { _id },
     {
-      $set: { password }
-    },
-    { new: true }
+      password
+    }
   );
 };
-const getAllUsers = async (pageNo, pageSize) => {
-  const skip = pageSize * (pageNo - 1);
-  let count = await User.count();
-  let users = await User.find().skip(skip).limit(Number(pageSize));
-  return {count, users}
+const getAllUsers = async () => {
+  // const skip = pageSize * (pageNo - 1);
+  // TODO: Rewrite to use keys for pagination
+  // let count = await userModel.count();
+  let users = await userModel.find();
+  return {count: users.length, users}
 };
 const deleteUser = id => {
-  return User.deleteOne({ _id: id });
+  console.log('Deleting user', id);
+  return userModel.delete({ _id: id });
 };
 
 const saveSetting = (setting) => {
-  let newSet = new Setting({...setting});
-  return newSet.save();
+  return settingModel.create({...setting});
 }
 
 const updateSetting = (_id, userId, setting) => {
-  return Setting.updateOne({_id, userId}, {...setting});
+  console.log('updateSetting', _id, userId, setting);
+  return settingModel.update({_id, userId}, {...setting});
 }
 
 const getSettingsByUserID = (userId) => {
-  return Setting.find({userId});
+  return settingModel.findByUserId(userId);
 }
 
 const getSettingsByID = (_id) => {
-  return Setting.find({_id})
+  return settingModel.findById(_id);
 }
 
 const getSetttingByUserIDAndName = (userId, name) => {
-  return Setting.find({userId, name});
+  return settingModel.findByUserIdAndName(userId, name);
 }
 
 const removeUserById = async (id) => {
-  const user = await User.findById(id)
-  return user.remove()
+  return userModel.delete({_id: id});
 }
 module.exports = {
   findUserByEmail,

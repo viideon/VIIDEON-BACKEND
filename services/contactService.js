@@ -1,10 +1,9 @@
-const Contact = require("../models/contact");
+const contactModel = require("../models/contact");
 
 const createContact = contactData => {
-  const contact = new Contact({
+  return contactModel.create({
     ...contactData
   });
-  return contact.save();
 };
 
 module.exports = {

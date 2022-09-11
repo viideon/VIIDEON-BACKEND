@@ -1,18 +1,18 @@
-const InterActiveMessage = require("../models/interactive")
-const Reply = require("../models/reply");
-const People = require("../models/people");
-const Step = require("../models/step");
-const Choice = require("../models/choices");
-const Video = require("../models/videos");
-const Metrics = require('../models/metrics')
+const interactiveModel = require("../models/interactive")
+const replyModel = require("../models/reply");
+const peopleModel = require("../models/people");
+const stepModel = require("../models/step");
+const choiceModel = require("../models/choices");
+const videoModel = require("../models/videos");
+const metricsModel = require('../models/metrics')
+const _ = require('lodash');
 
 const saveVideo = (video) => {
-  let newVideo = new Video({ ...video })
-  return newVideo.save();
+  return videoModel.create({ ...video })
 }
 
 const createChatvid = ({ name, userId, steps, people, thumbnail, branding }) => {
-  const interActive = new InterActiveMessage({
+  return interactiveModel.create({
     name,
     userId,
     steps,
@@ -20,97 +20,85 @@ const createChatvid = ({ name, userId, steps, people, thumbnail, branding }) => 
     thumbnail,
     branding,
   });
-  return interActive.save();
 }
 
 const registerPeople = (person) => {
-  const regPerson = new People({ ...person });
-  return regPerson.save();
+  return peopleModel.create({ ...person });
 }
 
 const saveStep = (step) => {
-  const newStep = new Step({ ...step })
-  return newStep.save();
+  return stepModel.create({ ...step })
 }
 
-const saveChoice = (choice) => {
-  let option = new Choice({ ...choice });
-  return option.save();
+const saveChoice = (_choice) => {
+  return choiceModel.create({ ..._choice });
 }
 
 const updateChoice = (_id, reply) => {
-  return Choice.updateOne({ _id }, { $push: { replies: reply } })
+  return choiceModel.update({ _id }, { $ADD: { replies: reply } })
 }
 const saveReply = (reply) => {
-  const newReply = new Reply({ ...reply });
-  return newReply.save();
+  return replyModel.create({ ...reply });
 }
 
 const updateChatvidStep = (_id, step) => {
-  return InterActiveMessage.updateOne({ _id }, { $push: { steps: step } })
+  return interactiveModel.update({ _id }, { $ADD: { steps: step } })
 }
 
 const updateChatvidSteps = (_id, steps) => {
-  return InterActiveMessage.updateOne({_id}, { steps})
+  return interactiveModel.update({_id}, { steps})
 }
 
-const getChatvidById = (_id) => {
-  return InterActiveMessage.find({ _id })
-    .populate({ path: "steps", populate: [{ path: "videoId" }, { path: "choices" }] })
-    .populate("userId")
-    .lean()
+const getChatvidById = async (_id) => {
+  const vid = await interactiveModel.get({ _id });
+  return vid.populate();
 }
-const getSingleChatvidById = (_id) => {
-  return InterActiveMessage.findOne({ _id })
-    .populate({ path: "steps", populate: [{ path: "videoId" }, { path: "choices" }] })
-    .populate("userId")
-    .lean()
+const getSingleChatvidById = async (_id) => {
+  const vid = await interactiveModel.get({ _id });
+  return vid.populate();
 }
 
 const getChatvidByUserId = async (userId) => {
-  return InterActiveMessage.find({ userId })
-    .sort({ _id: -1 })
-    .populate("people")
-    .populate({ path: "steps", populate: [{ path: "videoId" }, { path: "replies", populate: { path: "peopleId" } }, { path: "choices", populate: { path: "replies", select: "peopleId" } }] })
-    .lean();
+  let records = await interactiveModel.findByUserId(userId);
+  records = _.reverse(_.sortBy(records, ['_id']));
+  return _.map(records, record => record.populate());
 }
 
 const getStepById = (_id) => {
-  return Step.findOne({ _id }).lean();
+  return stepModel.get({ _id });
 }
 const updateStepReply = (_id, reply) => {
-  return Step.updateOne({ _id }, { $push: { replies: reply } });
+  return stepModel.update({ _id }, { $ADD: { replies: reply } });
 }
 const updateStepChoice = (_id, choice) => {
-  return Step.updateOne({ _id }, { $push: { choices: choice } });
+  return stepModel.update({ _id }, { $ADD: { choices: choice } });
 }
 const updateStep = (_id, data) => {
-  return Step.updateOne({ _id }, { ...data });
+  return stepModel.update({ _id }, { ...data });
 }
 const updateChatvidPeople = async (_id, people) => {
-  return InterActiveMessage.updateOne({ _id }, { $push: { people: people } })
+  return interactiveModel.update({ _id }, { $ADD: { people: people } })
 }
 
 const getPeopleByEmail = (email) => {
-  return People.findOne({ email }).lean();
+  return peopleModel.findByEmail({ email });
 }
 
 const saveMetrics = (payload) => {
-  let metrics = new Metrics({ ...payload });
-  return metrics.save();
+  return metricsModel.create({ ...payload });
 }
 const deleteChatvid = async (id) => {
-  const chatVid = await InterActiveMessage.deleteOne({_id: id});
+  await interactiveModel.delete({_id: id});
 }
 const getMetrics = (chatvidId, dateFrom, dateTo, deviceType, isInteracted, isCompleted, isAnswered) => {
-  var dateTo = new Date(dateTo)
-  var dateFrom = new Date(dateFrom)
+  const _dateTo = new Date(dateTo)
+  const _dateFrom = new Date(dateFrom)
   dateTo.setDate(dateTo.getDate() +1)
   dateFrom.setDate(dateFrom.getDate() -1)
   if(deviceType === "all") {
-    return Metrics.find({ chatvidId, createdAt: { $gte: dateFrom, $lte: dateTo } }).lean();
+    return metricsModel.findByChatvidId(chatvidId, _dateFrom, _dateTo);
   } else {
-    return Metrics.find({ chatvidId, createdAt: { $gte: dateFrom, $lte: dateTo }, deviceType }).lean();
+    return metricsModel.findByChatvidId(chatvidId, _dateFrom, _dateTo, deviceType);
   }
 }
 module.exports = {

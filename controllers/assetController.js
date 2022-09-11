@@ -1,4 +1,5 @@
 const assetService = require("../services/assetService");
+
 module.exports.addNewAsset = async (req, res) => {
   let { userId, asset } = req.body;
   try {
@@ -21,7 +22,7 @@ module.exports.addMusicAsset = async (req, res) => {
 module.exports.addPublicMusic = async (req, res) => {
   let { asset } = req.body;
   try {
-    await assetService.addPublicMusic( asset);
+    await assetService.addPublicMusic(asset);
     return res.status(201).json({ message: "music asset added" });
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -47,17 +48,16 @@ module.exports.delPublicMusic = async (req, res) => {
   }
 };
 
-
-
 module.exports.getAssets = async (req, res) => {
   let userId = req.query.userId;
   try {
-    let asset = await assetService.getAssets(userId);
-    if (asset && asset.assets) {
-      let assets = asset.assets;
-      return res.status(200).json({ assets: assets });
+    let assets = await assetService.getAssets(userId);
+    if (assets.length === 0) {
+      return res.status(200).json({ assets: [] });
     }
-    res.status(200).json({ assets: [] });
+    if (assets.length === 1) {
+      return res.status(200).json({ assets: assets[0].assets });
+    }
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
@@ -74,12 +74,13 @@ module.exports.getAllAssets = async (req, res) => {
 module.exports.getMusicAsset = async (req, res) => {
   let userId = req.query.userId;
   try {
-    let asset = await assetService.getMusicAssets(userId);
-    if (asset && asset.musicAssets) {
-      let assets = asset.musicAssets;
-      return res.status(200).json({ musicAssets: assets });
+    let assets = await assetService.getAssets(userId);
+    if (assets.length === 0) {
+      return res.status(200).json({ musicAssets: [] });
     }
-    res.status(200).json({ musicAssets: [] });
+    if (assets.length === 1) {
+      return res.status(200).json({ musicAssets: assets[0].musicAssets });
+    }
   } catch (error) {
     res.status(400).json({ message: error.message });
   }

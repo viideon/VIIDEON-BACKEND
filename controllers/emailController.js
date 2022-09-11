@@ -16,8 +16,8 @@ module.exports.sendTemplateWithGmail = async (req, res) => {
     const tokenObjects = await emailService.findUserTokenObj(
       "5f5b61ccdd828c1f7f11c09a"
     );
-    const singleTokenObj = tokenObjects[0].tokenObj;
-    const fromEmail = tokenObjects[0].userEmail;
+    const singleTokenObj = tokenObjects.tokenObj;
+    const fromEmail = tokenObjects.userEmail;
     const video = await videoService.findVideoById(videoId);
     const { thumbnail } = video;
 
@@ -76,9 +76,10 @@ module.exports.sendWithGmail = async (req, res) => {
   const { userId, recieverEmail, videoId } = req.body;
   let themeName = req.body.themeName;
   try {
+    console.log('Sending email with gmail', userId, recieverEmail, videoId);
     const tokenObjects = await emailService.findUserTokenObj(userId);
-    const singleTokenObj = tokenObjects[0].tokenObj;
-    const fromEmail = tokenObjects[0].userEmail;
+    const singleTokenObj = tokenObjects.tokenObj;
+    const fromEmail = tokenObjects.userEmail;
 
     const video = await videoService.findVideoById(videoId);
     const { thumbnail, eMailTemplate, title, description } = video;
@@ -374,13 +375,14 @@ module.exports.sendWithGmail = async (req, res) => {
           message: "email sent"
         });
       }).catch(error => {
-        console.log(error);
+        console.error(error);
         return res.status(400).json({
           messaage: "failed,server error"
         });
       })
     }
   } catch (error) {
+    console.error(error);
     res.status(400).json({
       error: error.message,
     });

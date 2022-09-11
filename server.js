@@ -2,7 +2,7 @@ const express = require("express");
 const serverless = require("serverless-http");
 const path = require("path");
 const fileUpload = require("express-fileupload");
-const mongoose = require("mongoose");
+// const mongoose = require("mongoose");
 const cors = require("cors");
 const user = require("./routes/user");
 const videos = require("./routes/videos");
@@ -16,16 +16,16 @@ require("dotenv").config();
 
 const app = express();
 
-mongoose.connect(`${process.env.MONGO_DB}`, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: false,
-    useFindAndModify: false
-  }
-).then(
-  () => { console.log("DB Connected") },
-  err => { console.error(err) }
-);
+// mongoose.connect(`${process.env.MONGO_DB}`, {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//     useCreateIndex: false,
+//     useFindAndModify: false
+//   }
+// ).then(
+//   () => { console.log("DB Connected") },
+//   err => { console.error(err) }
+// );
 
 app.use(cors());
 app.use(express.json());
@@ -46,4 +46,8 @@ app.get("/", (req, res) => {
   res.send("Root place");
 });
 
-module.exports.handler = serverless(app);
+module.exports.handler = serverless(app, {
+  request: (request, event) => {
+    request.context = event.requestContext;
+  }
+});
