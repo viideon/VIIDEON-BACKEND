@@ -314,6 +314,7 @@ module.exports.postVideo = async (req, res) => {
       .status(201)
       .json({ video: video, message: "video sucessfully saved" });
   } catch (error) {
+    console.error('Error creating video', error);
     res.status(400).json(error);
   }
 };

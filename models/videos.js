@@ -74,7 +74,7 @@ const schema = new dynamoose.Schema({
       align: { type: String },
       vAlign: { type: String },
       textColor: { type: String },
-      fontSize: { type: String },
+      fontSize: { type: Number },
       reveal: {type: Array, schema: [String]},
       fontWeight: { type: Boolean },
       textDecoration: { type: Boolean },

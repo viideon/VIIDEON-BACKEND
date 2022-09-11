@@ -46,4 +46,8 @@ app.get("/", (req, res) => {
   res.send("Root place");
 });
 
-module.exports.handler = serverless(app);
+module.exports.handler = serverless(app, {
+  request: (request, event) => {
+    request.context = event.requestContext;
+  }
+});

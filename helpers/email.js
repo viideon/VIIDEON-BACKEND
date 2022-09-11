@@ -14,7 +14,7 @@ const sendEmail = async (user) => {
       from: process.env.FROM_EMAIL,
       subject: "Account Verification",
       text: `Hi ${user.firstName} ${user.lastName} \n 
-                Please click on this link to verify your email ${process.env.APP_DOMAIN}/login/VerifyEmail?code=${token.token} . \n\n`,
+                Please click on this link to verify your email ${await appConfig.get('APP_DOMAIN')}/login/VerifyEmail?code=${token.token} . \n\n`,
     };
     console.log('Token created', token, msg);
     await sgMail.send(msg);

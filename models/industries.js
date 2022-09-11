@@ -21,7 +21,14 @@ module.exports.find = () => {
   return new Promise((resolve, reject) => {
     this.model.scan().all().exec((err, response) => {
       if (err) {
+        console.log('Error loading industries', err);
         return reject(err);
+      }
+
+      console.log('Industries loaded', response);
+
+      if (_.isNil(response)) {
+        return resolve([]);
       }
 
       resolve (Promise.all(_.map(response, _record => _record.populate())));
