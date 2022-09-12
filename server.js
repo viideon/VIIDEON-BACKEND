@@ -12,7 +12,6 @@ const asset = require("./routes/asset");
 const campaign = require("./routes/campaign");
 const industry = require("./routes/industry");
 const chatvids = require("./routes/chatvid");
-require("dotenv").config();
 
 const app = express();
 

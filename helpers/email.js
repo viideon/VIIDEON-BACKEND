@@ -11,7 +11,7 @@ const sendEmail = async (user) => {
     const token = await userModel.generateVerificationToken(user);
     const msg = {
       to: user.email,
-      from: process.env.FROM_EMAIL,
+      from: await appConfig.get('FROM_EMAIL'),
       subject: "Account Verification",
       text: `Hi ${user.firstName} ${user.lastName} \n 
                 Please click on this link to verify your email ${await appConfig.get('APP_DOMAIN')}/login/VerifyEmail?code=${token.token} . \n\n`,
@@ -26,9 +26,10 @@ const sendEmail = async (user) => {
 };
 
 const sendVideoEmail = async (recieverEmail, templateString) => {
+  const appConfig = await config.getConfig();
   const mailOptions = {
     to: recieverEmail,
-    from: `viideon<${process.env.FROM_EMAIL}>`,
+    from: `viideon<${await appConfig.get('FROM_EMAIL')}>`,
     subject: "Video send by Mail ",
     html: templateString,
   };
@@ -43,12 +44,13 @@ const sendVideoEmail = async (recieverEmail, templateString) => {
 };
 
 const sendForgotEmail = async (user, token) => {
+  const appConfig = await config.getConfig();
   const mailOptions = {
     to: user.email,
-    from: `viideon<${process.env.FROM_EMAIL}>`,
+    from: `viideon<${await appConfig.get('FROM_EMAIL')}>`,
     subject: "Reset password link",
     html: `<p>You are receiving this because you (or someone else) have requested to reset  the password for your account.\n\n Please click on the following link, or paste this into your browser to complete the process:\n\n
-        <a href="${process.env.APP_DOMAIN}/resetpassword?code=${token.token}">${process.env.APP_DOMAIN}/resetpassword?code=${token.token}</a> \n\n If you did not request this, please ignore this email and your password will remain unchanged.\n </p>`,
+        <a href="${await appConfig.get('APP_DOMAIN')}}/resetpassword?code=${token.token}">${await appConfig.get('APP_DOMAIN')}}/resetpassword?code=${token.token}</a> \n\n If you did not request this, please ignore this email and your password will remain unchanged.\n </p>`,
   };
   try {
     const appConfig = await config.getConfig();
@@ -68,21 +70,14 @@ const shareVideoInEmail = async (
   videoLink
 ) => {
   try {
-    console.log(
-      "sender Email",
-      process.env.FROM_EMAIL,
-      process.env.EMAIL_PASSWORD,
-      "receiver mail",
-      email
-    );
+    const appConfig = await config.getConfig();
     const mailOptions = {
       to: email,
-      from: `viideon<${process.env.FROM_EMAIL}>`,
+      from: `viideon<${await appConfig.get('FROM_EMAIL')}>`,
       subject: "New Chatvid",
       html: `<a href="${videoLink}" target="_blank"><img src="${videoThumnail}" alt="New Chatvid"  width=250/>
       </a>`,
     };
-    const appConfig = await config.getConfig();
     sgMail.setApiKey(await appConfig.get('SENDGRID_API_KEY'));
     const response = await sgMail.send(mailOptions);
     return true;
@@ -92,9 +87,10 @@ const shareVideoInEmail = async (
 };
 
 const responseEmail = async (email, logo) => {
+  const appConfig = await config.getConfig();
   const mailOptions = {
     to: email,
-    from: `viideon<${process.env.FROM_EMAIL}>`,
+    from: `viideon<${await appConfig.get('FROM_EMAIL')}>`,
     subject: "Thank you for using Viideon's ChatVid to respond ",
     html: `<div style="display: flex;">
     <div style="margin-right: 30px;">
@@ -115,7 +111,6 @@ const responseEmail = async (email, logo) => {
 `,
   };
   try {
-    const appConfig = await config.getConfig();
     sgMail.setApiKey(await appConfig.get('SENDGRID_API_KEY'));
     await sgMail.send(mailOptions);
     return true;
@@ -125,14 +120,14 @@ const responseEmail = async (email, logo) => {
 };
 
 const sendResetEmail = async (user, req, res) => {
+  const appConfig = await config.getConfig();
   const mailOptions = {
     to: user.email,
-    from: `viideon<${process.env.FROM_EMAIL}>`,
+    from: `viideon<${await appConfig.get('FROM_EMAIL')}>`,
     subject: "Your password has been changed",
     html: `<p>This is a confirmation that the password for your account ${user.email} has just been changed. </p>`,
   };
   try {
-    const appConfig = await config.getConfig();
     sgMail.setApiKey(await appConfig.get('SENDGRID_API_KEY'));
     await sgMail.send(mailOptions);
     return true;
