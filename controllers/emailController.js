@@ -8,9 +8,11 @@ const emailService = require("../services/emailService");
 const userService = require("../services/userService");
 const { incrementVideoEmail } = require("../services/videoService");
 const videoService = require("../services/videoService");
-require("dotenv").config();
+const config = require('../util/config');
 
 module.exports.sendTemplateWithGmail = async (req, res) => {
+  const appConfig = await config.getConfig();
+
   const { userId, recieverEmail, videoId } = req.body;
   try {
     const tokenObjects = await emailService.findUserTokenObj(
@@ -26,10 +28,10 @@ module.exports.sendTemplateWithGmail = async (req, res) => {
     const customTemplate = await template.spreadTheme();
 
     authorize(sendMessage);
-    function authorize(callback) {
+    async function authorize(callback) {
       const oAuth2Client = new google.auth.OAuth2(
-        `${process.env.CLIENT_ID}`,
-        `${process.env.CLIENT_SECRET}`
+        await appConfig.get('CLIENT_ID'),
+        await appConfig.get('CLIENT_SECRET')
       );
       oAuth2Client.setCredentials(singleTokenObj);
       callback(oAuth2Client);
@@ -75,8 +77,9 @@ module.exports.sendTemplateWithGmail = async (req, res) => {
 module.exports.sendWithGmail = async (req, res) => {
   const { userId, recieverEmail, videoId } = req.body;
   let themeName = req.body.themeName;
+  const appConfig = await config.getConfig();
+
   try {
-    console.log('Sending email with gmail', userId, recieverEmail, videoId);
     const tokenObjects = await emailService.findUserTokenObj(userId);
     const singleTokenObj = tokenObjects.tokenObj;
     const fromEmail = tokenObjects.userEmail;
@@ -331,10 +334,10 @@ module.exports.sendWithGmail = async (req, res) => {
       );
     }
     authorize(sendMessage);
-    function authorize(callback) {
+    async function authorize(callback) {
       const oAuth2Client = new google.auth.OAuth2(
-        `${process.env.CLIENT_ID}`,
-        `${process.env.CLIENT_SECRET}`
+        await appConfig.get('CLIENT_ID'),
+        await appConfig.get('CLIENT_SECRET')
       );
       oAuth2Client.setCredentials(singleTokenObj);
       callback(oAuth2Client);
@@ -397,17 +400,20 @@ module.exports.getAndSaveConfig = async (req, res) => {
       error: "include authorization code",
     });
   }
+
+  const appConfig = await config.getConfig();
+
   try {
     const params = new url.URLSearchParams({
       code: code,
-      client_id: `${process.env.CLIENT_ID}`,
-      client_secret: `${process.env.CLIENT_SECRET}`,
+      client_id: await appConfig.get('CLIENT_ID'),
+      client_secret: await appConfig.get('CLIENT_SECRET'),
       grant_type: "authorization_code",
       redirect_uri: "postmessage",
     });
 
     const response = await axios.post(
-      `${process.env.TOKEN_OBJECT_PATH}`,
+      await appConfig.get('TOKEN_OBJECT_PATH'),
       params.toString()
     );
     

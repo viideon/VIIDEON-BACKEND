@@ -1,6 +1,8 @@
+const config = require('../util/config');
 
+async function getTemplate(templateName, logo, usenrame, primaryColor, secondaryColor, facebookLink, twitterLink){
+    const appConfig = await config.getConfig();
 
-function getTemplate(templateName, logo, usenrame, primaryColor, secondaryColor, facebookLink, twitterLink){
     return `<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
     <html>
     
@@ -91,7 +93,7 @@ function getTemplate(templateName, logo, usenrame, primaryColor, secondaryColor,
         <tr align="center">
             <td align="center">
     
-                <a href="${process.env.APP_DOMAIN}/watch/${id}/cta">
+                <a href="${await appConfig.get('APP_DOMAIN')}/watch/${id}/cta">
                     <p style="margin: 0px;color: black; font-size: 30px;
                     font-weight: bold;
                     margin-bottom: 5px;

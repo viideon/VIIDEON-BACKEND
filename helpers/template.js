@@ -1,5 +1,8 @@
-require("dotenv").config();
-module.exports.generateStringTemplate = (id, thumbnail) => {
+const config = require('../util/config');
+
+module.exports.generateStringTemplate = async (id, thumbnail) => {
+  const appConfig = await config.getConfig();
+
   return `<!DOCTYPE html>
   <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml"
       xmlns:o="urn:schemas-microsoft-com:office:office">
@@ -9,10 +12,10 @@ module.exports.generateStringTemplate = (id, thumbnail) => {
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="x-apple-disable-message-reformatting" />
   </head>
-  <body width="100%" style="margin: 0; font-family: 'Montserrat',Georgia, sans-serif; padding: 0 !important; mso-line-height-rule: exactly; background-color: #F2F2F1;"> <center style="width: 100%; background-color: #F2F2F1;"> <div style="max-width: 600px; margin: 0 auto;padding: 5px" class="email-container"> <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: auto;"> <tr> <td> <h5 style="font-size:16px">vidionPro</h5> </td> <td> <h5 style="text-align: end;font-size: 16px" align="end"> Hello </h5> </td> </tr> </table> </div> <div style="max-width: 600px; margin-top: 0px;margin-bottom: 50px; margin-left: auto; margin-right: auto;background-color: #fff;padding: 10px 10px 30px 10px" class="email-container"> <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: auto;"> <tr> <td> <a href="${process.env.APP_DOMAIN}/watch/${id}"> <div style="width: 100%;background-color:#000;"> <div style="height:280px;background-image:url(${thumbnail});object-fit:contain;background-size: contain;background-repeat:no-repeat;background-position: center"> <img style="width: 80px;margin-left: 44%;margin-top: 18%" src="https://vidionpro-backend.herokuapp.com/video/email/track?id=${id}" /> </div> </div> </td> </tr> <tr> <td> <h5 style="text-align: center;color: #76827F;padding:0px 30px;font-weight: 800" align="center"> Video powered by vidionPro </h5> </td> </tr> <tr> <td style="text-align: center;" align="center"> <a style="cursor: pointer;background-color: #19AF8F;color: #fff;padding:10px 14px;border-radius: 3px;font-weight: 400;text-decoration: none; margin-bottom: 30px" href="${process.env.APP_DOMAIN}/watch/${id}/cta">WATCH VIDEO</a> </td> </tr> </table> </div> </center> </body> </html>`;
+  <body width="100%" style="margin: 0; font-family: 'Montserrat',Georgia, sans-serif; padding: 0 !important; mso-line-height-rule: exactly; background-color: #F2F2F1;"> <center style="width: 100%; background-color: #F2F2F1;"> <div style="max-width: 600px; margin: 0 auto;padding: 5px" class="email-container"> <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: auto;"> <tr> <td> <h5 style="font-size:16px">vidionPro</h5> </td> <td> <h5 style="text-align: end;font-size: 16px" align="end"> Hello </h5> </td> </tr> </table> </div> <div style="max-width: 600px; margin-top: 0px;margin-bottom: 50px; margin-left: auto; margin-right: auto;background-color: #fff;padding: 10px 10px 30px 10px" class="email-container"> <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: auto;"> <tr> <td> <a href="${await appConfig.get('APP_DOMAIN')}/watch/${id}"> <div style="width: 100%;background-color:#000;"> <div style="height:280px;background-image:url(${thumbnail});object-fit:contain;background-size: contain;background-repeat:no-repeat;background-position: center"> <img style="width: 80px;margin-left: 44%;margin-top: 18%" src="https://vidionpro-backend.herokuapp.com/video/email/track?id=${id}" /> </div> </div> </td> </tr> <tr> <td> <h5 style="text-align: center;color: #76827F;padding:0px 30px;font-weight: 800" align="center"> Video powered by vidionPro </h5> </td> </tr> <tr> <td style="text-align: center;" align="center"> <a style="cursor: pointer;background-color: #19AF8F;color: #fff;padding:10px 14px;border-radius: 3px;font-weight: 400;text-decoration: none; margin-bottom: 30px" href="${await appConfig.get('APP_DOMAIN')}/watch/${id}/cta">WATCH VIDEO</a> </td> </tr> </table> </div> </center> </body> </html>`;
 };
 
-module.exports.spreadTheme = (
+module.exports.spreadTheme = async (
   id = false,
   thumbnail = false,
   title,
@@ -31,6 +34,7 @@ module.exports.spreadTheme = (
   webAddress,
   address
 ) => {
+  const appConfig = await config.getConfig();
   return `
 <!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Trransitional//EN”   “http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd”>
 <html xmlns=”http://www.w3.org/1999/xhtml”>
@@ -144,7 +148,7 @@ module.exports.spreadTheme = (
                             </tr>
                             <tr>
                                 <td align="center" style="text-align: center; padding-bottom:30px;">
-                                    <a href="${process.env.APP_DOMAIN}/watch/${id}/cta">
+                                    <a href="${await appConfig.get('APP_DOMAIN')}/watch/${id}/cta">
                                         <img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/spread/watch-btn.jpg" alt="">
                                     </a>
                                 </td>
@@ -235,7 +239,7 @@ module.exports.spreadTheme = (
 </html> 
   `;
 };
-module.exports.corporateLight = (
+module.exports.corporateLight = async (
   id = false,
   thumbnail = false,
   title,
@@ -254,6 +258,8 @@ module.exports.corporateLight = (
   webAddress,
   address
 ) => {
+  const appConfig = await config.getConfig();
+
   return `
 <!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Trransitional//EN”   “http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd”>
 <html xmlns=”http://www.w3.org/1999/xhtml”>
@@ -357,7 +363,7 @@ module.exports.corporateLight = (
                             </tr>
                             <tr>
                                 <td align="center" style="text-align: center; padding:0 30px 15px">
-                                    <a href="${process.env.APP_DOMAIN}/watch/${id}/cta"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/corporate-light/watch-btn.jpg" alt=""></a>
+                                    <a href="${await appConfig.get('APP_DOMAIN')}/watch/${id}/cta"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/corporate-light/watch-btn.jpg" alt=""></a>
                                 </td>
                             </tr>
                         </table>
@@ -450,7 +456,7 @@ module.exports.corporateLight = (
   `;
 };
 
-module.exports.modernSimple = (
+module.exports.modernSimple = async (
   id = false,
   thumbnail = false,
   title,
@@ -469,6 +475,8 @@ module.exports.modernSimple = (
   webAddress,
   address
 ) => {
+  const appConfig = await config.getConfig();
+
   return `
 <!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Trransitional//EN”   “http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd”>
 <html xmlns=”http://www.w3.org/1999/xhtml”>
@@ -576,7 +584,7 @@ module.exports.modernSimple = (
                                         </tr>
                                         <tr>
                                             <td align="center" style="text-align: center; padding-bottom:30px;">
-                                                <a href="${process.env.APP_DOMAIN}/watch/${id}/cta"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/modern-simple/watch-btn.jpg" alt=""></a>
+                                                <a href="${await appConfig.get('APP_DOMAIN')}/watch/${id}/cta"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/modern-simple/watch-btn.jpg" alt=""></a>
                                             </td>
                                         </tr>
                                         <tr>
@@ -673,7 +681,7 @@ module.exports.modernSimple = (
   `;
 };
 
-module.exports.classic_dark = (
+module.exports.classic_dark = async (
   id = false,
   thumbnail = false,
   title,
@@ -692,6 +700,8 @@ module.exports.classic_dark = (
   webAddress,
   address
 ) => {
+  const appConfig = await config.getConfig();
+
   return `
 <!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Trransitional//EN”   “http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd”>
 <html xmlns=”http://www.w3.org/1999/xhtml”>
@@ -787,7 +797,7 @@ module.exports.classic_dark = (
                             </tr>
                             <tr>
                                 <td  style="text-align: center; padding-bottom:24px;">
-                                    <a href="${process.env.APP_DOMAIN}/watch/${id}/cta"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/classic-dark/watch-btn.jpg" alt=""></a>
+                                    <a href="${await appConfig.get('APP_DOMAIN')}/watch/${id}/cta"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/classic-dark/watch-btn.jpg" alt=""></a>
                                 </td>
                             </tr>
                             ${(fbUrl || twitterUrl || youtubeUrl || linkedinUrl) &&
@@ -871,7 +881,7 @@ module.exports.classic_dark = (
   `;
 };
 
-module.exports.sleek = (
+module.exports.sleek = async (
   id = false,
   thumbnail = false,
   title,
@@ -890,7 +900,8 @@ module.exports.sleek = (
   webAddress,
   address
 ) => {
- 
+  const appConfig = await config.getConfig();
+
   return `
 <!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Trransitional//EN”   “http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd”>
 <html xmlns=”http://www.w3.org/1999/xhtml”>
@@ -1021,7 +1032,7 @@ module.exports.sleek = (
                             </tr>
                             <tr>
                                 <td align="center" style="text-align: center;">
-                                    <a href="${process.env.APP_DOMAIN}/watch/${id}/cta"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/sleek/watch-btn.jpg" alt=""></a>
+                                    <a href="${await appConfig.get('APP_DOMAIN')}/watch/${id}/cta"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/sleek/watch-btn.jpg" alt=""></a>
                                 </td>
                             </tr>
                         </table>
@@ -1112,7 +1123,7 @@ module.exports.sleek = (
 </html>
   `;
 };
-module.exports.sleek2 = (
+module.exports.sleek2 = async (
   id = false,
   thumbnail = false,
   title,
@@ -1131,6 +1142,8 @@ module.exports.sleek2 = (
   webAddress,
   address
 ) => {
+  const appConfig = await config.getConfig();
+
   return `
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
@@ -1167,7 +1180,7 @@ module.exports.sleek2 = (
     
         <tr align="center">
             <td align="center">
-                <a href="${process.env.APP_DOMAIN}/watch/${id}/cta">
+                <a href="${await appConfig.get('APP_DOMAIN')}/watch/${id}/cta">
                     <p style="margin: 0px;color: black; font-size: 30px; font-weight: bold; margin-bottom: 5px; max-width: 300px; width: 100%; cursor: pointer;">Watch this Video!</p>
                 </a>
             </td>
@@ -1178,7 +1191,7 @@ module.exports.sleek2 = (
     `;
 };
 
-module.exports.social_business = (
+module.exports.social_business = async (
   id = false,
   thumbnail = false,
   title,
@@ -1197,6 +1210,8 @@ module.exports.social_business = (
   webAddress,
   address
 ) => {
+  const appConfig = await config.getConfig();
+
   return `
 <!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Trransitional//EN”   “http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd”>
 <html xmlns=”http://www.w3.org/1999/xhtml”>
@@ -1331,7 +1346,7 @@ module.exports.social_business = (
                                         </tr>
                                         <tr>
                                             <td align="center" style="text-align: center;">
-                                                <a href="${process.env.APP_DOMAIN}/watch/${id}/cta"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/social-business/watch-btn.jpg" alt=""></a>
+                                                <a href="${await appConfig.get('APP_DOMAIN')}/watch/${id}/cta"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/social-business/watch-btn.jpg" alt=""></a>
                                             </td>
                                         </tr>
                                     </table>
@@ -1429,7 +1444,7 @@ module.exports.social_business = (
   `;
 };
 
-module.exports.streamlined = (
+module.exports.streamlined = async (
   id = false,
   thumbnail = false,
   title,
@@ -1448,6 +1463,8 @@ module.exports.streamlined = (
   webAddress,
   address
 ) => {
+  const appConfig = await config.getConfig();
+
   return `
 <!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Trransitional//EN”   “http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd”>
 <html xmlns=”http://www.w3.org/1999/xhtml”>
@@ -1559,7 +1576,7 @@ module.exports.streamlined = (
                             </tr>
                             <tr>
                                 <td align="center" style="text-align: center;">
-                                    <a href="${process.env.APP_DOMAIN}/watch/${id}/cta">
+                                    <a href="${await appConfig.get('APP_DOMAIN')}/watch/${id}/cta">
                                         <img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/streamlined/watch-btn.jpg" alt="">
                                     </a>
                                 </td>
@@ -1653,7 +1670,7 @@ module.exports.streamlined = (
   `;
 };
 
-module.exports.simple_blue = (
+module.exports.simple_blue = async (
   id = false,
   thumbnail = false,
   title,
@@ -1672,6 +1689,8 @@ module.exports.simple_blue = (
   webAddress,
   address
 ) => {
+  const appConfig = await config.getConfig();
+
   return `
 <!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Trransitional//EN”   “http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd”>
 <html xmlns=”http://www.w3.org/1999/xhtml”>
@@ -1777,7 +1796,7 @@ module.exports.simple_blue = (
                             </tr>
                             <tr>
                                 <td align="center" style="text-align: center;">
-                                    <a href="${process.env.APP_DOMAIN}/watch/${id}/cta">
+                                    <a href="${await appConfig.get('APP_DOMAIN')}/watch/${id}/cta">
                                         <img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/simple-blue/watch-btn.jpg" alt="">
                                     </a>
                                 </td>
@@ -1870,7 +1889,7 @@ module.exports.simple_blue = (
   `;
 };
 
-module.exports.social_impact = (
+module.exports.social_impact = async (
   id = false,
   thumbnail = false,
   title,
@@ -1889,6 +1908,8 @@ module.exports.social_impact = (
   webAddress,
   address
 ) => {
+  const appConfig = await config.getConfig();
+
   return `
 <!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Trransitional//EN”   “http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd”>
 <html xmlns=”http://www.w3.org/1999/xhtml”>
@@ -2010,7 +2031,7 @@ module.exports.social_impact = (
                             </tr>
                             <tr>
                                 <td align="center" style="text-align: center;">
-                                    <a href="${process.env.APP_DOMAIN}/watch/${id}/cta"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/social-impact/watch-btn.jpg" alt=""></a>
+                                    <a href="${await appConfig.get('APP_DOMAIN')}/watch/${id}/cta"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/social-impact/watch-btn.jpg" alt=""></a>
                                 </td>
                             </tr>
                         </table>
@@ -2101,7 +2122,7 @@ module.exports.social_impact = (
     `;
 };
 
-module.exports.ocean = (
+module.exports.ocean = async (
   id = false,
   thumbnail = false,
   title,
@@ -2120,6 +2141,8 @@ module.exports.ocean = (
   webAddress,
   address
 ) => {
+  const appConfig = await config.getConfig();
+
   return `
 <!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Trransitional//EN”   “http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd”>
 <html xmlns=”http://www.w3.org/1999/xhtml”>
@@ -2237,7 +2260,7 @@ module.exports.ocean = (
                                         </tr>
                                         <tr>
                                             <td align="center" style="text-align: center; padding-bottom:20px;">
-                                                <a href="${process.env.APP_DOMAIN}/watch/${id}/cta"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/ocean/watch-btn.jpg" alt=""></a>
+                                                <a href="${await appConfig.get('APP_DOMAIN')}/watch/${id}/cta"><img src="https://viideon.s3-us-west-1.amazonaws.com/email-templates/ocean/watch-btn.jpg" alt=""></a>
                                             </td>
                                         </tr>
                                     </table>
