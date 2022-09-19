@@ -15,8 +15,9 @@ const verifyUser = _id => {
   return userModel.update({ _id }, { isVerified: true });
 };
 
-const createNewUser = (email, firstName, lastName, userName, hash) => {
+const createNewUser = (userSub, email, firstName, lastName, userName, hash) => {
   return userModel.create({
+    _id: userSub,
     email: email,
     firstName: firstName,
     lastName: lastName,
