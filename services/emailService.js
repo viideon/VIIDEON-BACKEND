@@ -9,7 +9,10 @@ const saveEmailConfig = object => {
 };
 const findUserConfig = async userId => {
   const config = await emailConfigModel.getByUserId(userId);
-  return _.pick(config, ['userId', 'userEmail', '_id', 'date']);
+  if (config !== null) {
+    return _.pick(config, ['userId', 'userEmail', '_id', 'date']);
+  }
+  return config;
 };
 const findUserTokenObj = userId => {
   return emailConfigModel.getByUserId(userId);

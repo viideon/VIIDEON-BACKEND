@@ -47,7 +47,6 @@ module.exports.getByUserId = userId => {
         return reject(err);
       }
 
-      console.log('Email config loaded', {response});
       if (_.isNil(response)) {
         return resolve(null);
       }

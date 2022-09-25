@@ -7,16 +7,46 @@ const {
 } = require("./../helpers/helper");
 const tokenModel = require("../models/token");
 const userService = require("../services/userService");
-const gifService = require("../services/gifService");
+// const gifService = require("../services/gifService");
 const { verificationTokenSchema } = require("../schemas/auth");
 const { helpers } = require("../helpers");
 const Templates = require("../helpers/template");
 const userModel = require('../models/user');
+const {getError} = require('../util/api');
+const CognitoIdentityServiceProvider = require('aws-sdk/clients/cognitoidentityserviceprovider');
+
+const getOwner = async (request) => {
+  console.log('getOwner request', {request: request, identity: request.requestContext.identity, cognitoIdentity: request.requestContext.authorizer.iam.cognitoIdentity});
+  if (
+    !_.has(request, 'requestContext') ||
+    !_.has(request.requestContext, 'authorizer') ||
+    !_.has(request.requestContext.authorizer, 'iam') ||
+    !_.has(request.requestContext.authorizer.iam, 'cognitoIdentity') ||
+    !_.has(request.requestContext.authorizer.iam.cognitoIdentity, 'amr') ||
+    !_.isArray(request.requestContext.authorizer.iam.cognitoIdentity.amr)
+  ) {
+    throw getError({ code: 'NotAuthorizedException' });
+  }
+  let _idParts;
+  _.forEach(request.requestContext.authorizer.iam.cognitoIdentity.amr, _amr => {
+    if (_.startsWith(_amr, 'cognito-idp.us-east-1.amazonaws.com') && _amr.includes(':CognitoSignIn:')) {
+      _idParts = _amr.split(':CognitoSignIn:');
+    }
+  });
+
+  console.log('ID processed', _idParts);
+
+  if (_.isNil(_idParts)) {
+    throw getError({ code: 'NotAuthorizedException' });
+  }
+
+  return _idParts[1];
+}
 
 module.exports.registerUser = async (req, res) => {
   try {
-    const { email, firstName, lastName, userName, password } = req.body;
-    console.log('Registering user', req.body);
+    const { email, firstName, lastName, userName, userSub } = req.body;
+
     const persons = await userService.findByNameEmail(email, userName);
     let person = null;
     if (!_.isNil(persons) && persons.length > 0) {
@@ -33,13 +63,12 @@ module.exports.registerUser = async (req, res) => {
       return res.status(303).json({ message: "Username is already taken" });
     }
     console.log('User does not exist');
-    const hash = await hashPassword(password);
     const register = await userService.createNewUser(
+      userSub,
       email,
       firstName,
       lastName,
-      userName,
-      hash
+      userName
     );
     console.log('User created', register);
     const mail = await helpers.sendEmail(register, req, res);
@@ -134,12 +163,35 @@ module.exports.verify = async (req, res, next) => {
         .status(400)
         .json({ message: " user has already been verified." });
     }
+    const params = {
+      UserPoolId: process.env.COGNITO_USER_POOL_ID,
+      Username: user.email,
+    }
+    // TODO: Also need to verify the email address
+    console.log('Verifying Cognito user', {params});
+    const cisp = new CognitoIdentityServiceProvider({apiVersion: '2016-04-18'});
+    await cisp.adminConfirmSignUp(params).promise();
+    console.log('User signed up');
+    await cisp.adminUpdateUserAttributes(
+      {
+        ...params,
+        UserAttributes: [
+          {
+            Name: 'email_verified',
+            Value: 'true'
+          }
+        ]
+      }
+    ).promise();
+    console.log('Cognito user verified');
     await userService.verifyUser(user._id);
     return res.status(201).json({
       success: true,
       message: "Account is successfully verified.",
     });
   } catch (error) {
+    console.log('Error verifying user', error);
+    console.error(error);
     res.status(500).json({ message: error.message });
   }
 };

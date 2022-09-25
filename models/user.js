@@ -1,6 +1,6 @@
 const dynamoose = require("dynamoose");
 const randomstring = require("randomstring");
-const { v4: uuid } = require('uuid');
+// const { v4: uuid } = require('uuid');
 const _ = require('lodash');
 
 const tokenModel = require("./token");
@@ -19,7 +19,6 @@ const schema = new dynamoose.Schema({
   firstName: { type: String, minlength: 3, required: true },
   lastName: { type: String, minlength: 2, required: true },
   userName: { type: String, unique: true, required: true },
-  password: { type: String, minlength: 6, required: true },
   mobileNumber: { type: String, minlength: 12, required: false },
   businessPhone: { type: String, minlength: 12, required: false },
   address: { type: String, required: false },
@@ -41,7 +40,6 @@ const schema = new dynamoose.Schema({
 module.exports.model = dynamoose.model(process.env.USER_TABLE_NAME, schema, {create: false});
 
 module.exports.create = (data) => {
-  data._id = uuid();
   return this.model.create(data);
 }
 
