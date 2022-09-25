@@ -513,6 +513,12 @@ provider:
             - arn:aws:ssm:${aws:region}:${aws:accountId}:parameter/${sls:stage}/viideon/*
         - Effect: Allow
           Action:
+            - cognito-idp:AdminConfirmSignUp
+            - cognito-idp:AdminUpdateUserAttributes
+          Resource:
+            - Fn::GetAtt: [CognitoUserPool, Arn]
+        - Effect: Allow
+          Action:
             - dynamodb:Query
             - dynamodb:Scan
             - dynamodb:GetItem
@@ -583,6 +589,8 @@ functions:
       - httpApi:
           path: /
           method: get
+          authorizer:
+            type: aws_iam
       - httpApi:
           path: /user
           method: get
@@ -592,12 +600,18 @@ functions:
       - httpApi:
           path: /user/login
           method: post
+          authorizer:
+            type: aws_iam
       - httpApi:
           path: /user/update/{id}
           method: patch
+          authorizer:
+            type: aws_iam
       - httpApi:
           path: /user/{id}
           method: get
+          authorizer:
+            type: aws_iam
       - httpApi:
           path: /user/verify
           method: post
@@ -613,170 +627,278 @@ functions:
       - httpApi:
           path: /user/template
           method: post
+          authorizer:
+            type: aws_iam
       - httpApi:
           path: /user/template/{userId}
           method: get
+          authorizer:
+            type: aws_iam
       - httpApi:
           path: /user/template/{id}/{userId}
           method: patch
+          authorizer:
+            type: aws_iam
       - httpApi:
           path: /user/preview
           method: post
+          authorizer:
+            type: aws_iam
       - httpApi:
           path: /user/emailvideo
           method: post
+          authorizer:
+            type: aws_iam
       - httpApi:
           path: /video
           method: post
+          authorizer:
+            type: aws_iam
       - httpApi:
           path: /video
           method: get
+          authorizer:
+            type: aws_iam
       - httpApi:
           path: /video
           method: patch
+          authorizer:
+            type: aws_iam
       - httpApi:
           path: /video
           method: delete
+          authorizer:
+            type: aws_iam
       - httpApi:
           path: /video/getTemplate
           method: post
+          authorizer:
+            type: aws_iam
       - httpApi:
           path: /video/email
           method: post
+          authorizer:
+            type: aws_iam
       - httpApi:
           path: /video/updateViews
           method: post
+          authorizer:
+            type: aws_iam
       - httpApi:
           path: /video/updateWatch
           method: post
+          authorizer:
+            type: aws_iam
       - httpApi:
           path: /video/updateEmailShare
           method: post
+          authorizer:
+            type: aws_iam
       - httpApi:
           path: /video/update/cta
           method: post
+          authorizer:
+            type: aws_iam
       - httpApi:
           path: /video/user
           method: get
+          authorizer:
+            type: aws_iam
       - httpApi:
           path: /video/single
           method: get
+          authorizer:
+            type: aws_iam
       - httpApi:
           path: /video/campaignVideos
           method: get
+          authorizer:
+            type: aws_iam
       - httpApi:
           path: /video/multiple/email
           method: post
+          authorizer:
+            type: aws_iam
       - httpApi:
           path: /video/count
           method: get
+          authorizer:
+            type: aws_iam
       - httpApi:
           path: /video/campaign/count
           method: get
+          authorizer:
+            type: aws_iam
       - httpApi:
           path: /video/email/track
           method: get
+          authorizer:
+            type: aws_iam
       - httpApi:
           path: /contact/create
           method: post
+          authorizer:
+            type: aws_iam
       - httpApi:
           path: /email/config
           method: post
+          authorizer:
+            type: aws_iam
       - httpApi:
           path: /email/config
           method: get
+          authorizer:
+            type: aws_iam
       - httpApi:
           path: /email/config
           method: delete
+          authorizer:
+            type: aws_iam
       - httpApi:
           path: /email/send
           method: post
+          authorizer:
+            type: aws_iam
       - httpApi:
           path: /email/send/{id}
           method: post
+          authorizer:
+            type: aws_iam
       - httpApi:
           path: /asset/add
           method: post
+          authorizer:
+            type: aws_iam
       - httpApi:
           path: /asset/addpublicmusic
           method: post
+          authorizer:
+            type: aws_iam
       - httpApi:
           path: /asset/getpublicmusic
           method: get
+          authorizer:
+            type: aws_iam
       - httpApi:
           path: /asset/delpublicmusic/{id}
           method: delete
+          authorizer:
+            type: aws_iam
       - httpApi:
           path: /asset/add/music
           method: post
+          authorizer:
+            type: aws_iam
       - httpApi:
           path: /asset/get
           method: get
+          authorizer:
+            type: aws_iam
       - httpApi:
           path: /asset/getAllAssets
           method: get
+          authorizer:
+            type: aws_iam
       - httpApi:
           path: /asset/get/music
           method: get
+          authorizer:
+            type: aws_iam
       - httpApi:
           path: /asset/remove
           method: delete
+          authorizer:
+            type: aws_iam
       - httpApi:
           path: /asset/remove/music
           method: delete
+          authorizer:
+            type: aws_iam
       - httpApi:
           path: /campaign/templates
           method: get
+          authorizer:
+            type: aws_iam
       - httpApi:
           path: /campaign/templates
           method: post
+          authorizer:
+            type: aws_iam
       - httpApi:
           path: /campaign/templates
           method: patch
+          authorizer:
+            type: aws_iam
       - httpApi:
           path: /campaign/templates/{id}
           method: delete
+          authorizer:
+            type: aws_iam
       - httpApi:
           path: /industry
           method: get
+          authorizer:
+            type: aws_iam
       - httpApi:
           path: /industry
           method: post
+          authorizer:
+            type: aws_iam
       - httpApi:
           path: /industry
           method: patch
+          authorizer:
+            type: aws_iam
       - httpApi:
           path: /industry/{id}
           method: delete
+          authorizer:
+            type: aws_iam
       - httpApi:
           path: /chatvid
           method: post
+          authorizer:
+            type: aws_iam
       - httpApi:
           path: /chatvid
           method: get
+          authorizer:
+            type: aws_iam
       - httpApi:
           path: /chatvid
           method: patch
+          authorizer:
+            type: aws_iam
       - httpApi:
           path: /chatvid
           method: delete
+          authorizer:
+            type: aws_iam
       - httpApi:
           path: /chatvid/reply
           method: post
+          authorizer:
+            type: aws_iam
       - httpApi:
           path: /chatvid/step
           method: patch
+          authorizer:
+            type: aws_iam
       - httpApi:
           path: /chatvid/metrics
           method: post
+          authorizer:
+            type: aws_iam
       - httpApi:
           path: /chatvid/metrics/{id}
           method: post
+          authorizer:
+            type: aws_iam
       - httpApi:
           path: /chatvid/delete/{id}
           method: delete
-  preSignUp:
-    handler: trigger/preSignUp.handler
+          authorizer:
+            type: aws_iam
 
 resources:
   Resources:
@@ -810,11 +932,6 @@ resources:
             Name: 'email'
             Required: true
             Mutable: false
-        LambdaConfig:
-          PreSignUp:
-            Fn::GetAtt:
-              - PreSignUpLambdaFunction
-              - Arn
     CognitoUserPoolClient:
       Type: AWS::Cognito::UserPoolClient
       Properties:
@@ -859,21 +976,32 @@ resources:
                 Federated: "cognito-identity.amazonaws.com"
               Action:
                 - "sts:AssumeRoleWithWebIdentity"
-              Condition:
-                StringEquals:
-                  'cognito-identity.amazonaws.com:aud':
-                    Ref: CognitoIdentityPool
-                'ForAnyValue:StringLike':
-                  'cognito-identity.amazonaws.com:amr': authenticated
         Policies:
-          - PolicyName: "CognitoUnauthorizedPolicy"
+          - PolicyName: 'CognitoAuthorizedPolicy'
             PolicyDocument:
-              Version: "2012-10-17"
+              Version: '2012-10-17'
               Statement:
-                - Effect: "Allow"
+                - Effect: 'Allow'
                   Action:
-                    - "cognito-sync:*"
-                  Resource: "*"
+                    - 'cognito-sync:*'
+                    - 'cognito-identity:*'
+                    - 'lambda:*'
+                    - 'execute-api:Invoke'
+                    - 'apigateway:*'
+                  Resource: '*'
+                - Effect: 'Allow'
+                  Action:
+                    - 'sts:AssumeRole'
+                    - 'ssm:GetParametersByPath'
+                  Resource:
+                    - 'arn:aws:iam::*:role/*'
+                    - Fn::Join:
+                        - ':'
+                        -
+                          - 'arn:aws:ssm'
+                          - Ref: 'AWS::Region'
+                          - Ref: 'AWS::AccountId'
+                          - 'parameter/*'
     CognitoAuthRole:
       Type: AWS::IAM::Role
       Properties:
@@ -918,15 +1046,3 @@ resources:
                           - Ref: 'AWS::Region'
                           - Ref: 'AWS::AccountId'
                           - 'parameter/*'
-    PreSignupTriggerInvokePermission:
-      Type: AWS::Lambda::Permission
-      DependsOn: PreSignUpLambdaFunction
-      Properties:
-        Action: lambda:InvokeFunction
-        Principal: cognito-idp.amazonaws.com
-        SourceArn:
-          Fn::GetAtt:
-            - CognitoUserPool
-            - Arn
-        FunctionName:
-          Ref: PreSignUpLambdaFunction

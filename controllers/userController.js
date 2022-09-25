@@ -13,6 +13,7 @@ const { helpers } = require("../helpers");
 const Templates = require("../helpers/template");
 const userModel = require('../models/user');
 const {getError} = require('../util/api');
+const CognitoIdentityServiceProvider = require('aws-sdk/clients/cognitoidentityserviceprovider');
 
 const getOwner = async (request) => {
   console.log('getOwner request', {request: request, identity: request.requestContext.identity, cognitoIdentity: request.requestContext.authorizer.iam.cognitoIdentity});
@@ -44,8 +45,7 @@ const getOwner = async (request) => {
 
 module.exports.registerUser = async (req, res) => {
   try {
-    const userSub = await getOwner(req);
-    const { email, firstName, lastName, userName } = req.body;
+    const { email, firstName, lastName, userName, userSub } = req.body;
 
     const persons = await userService.findByNameEmail(email, userName);
     let person = null;
@@ -163,12 +163,35 @@ module.exports.verify = async (req, res, next) => {
         .status(400)
         .json({ message: " user has already been verified." });
     }
+    const params = {
+      UserPoolId: process.env.COGNITO_USER_POOL_ID,
+      Username: user.email,
+    }
+    // TODO: Also need to verify the email address
+    console.log('Verifying Cognito user', {params});
+    const cisp = new CognitoIdentityServiceProvider({apiVersion: '2016-04-18'});
+    await cisp.adminConfirmSignUp(params).promise();
+    console.log('User signed up');
+    await cisp.adminUpdateUserAttributes(
+      {
+        ...params,
+        UserAttributes: [
+          {
+            Name: 'email_verified',
+            Value: 'true'
+          }
+        ]
+      }
+    ).promise();
+    console.log('Cognito user verified');
     await userService.verifyUser(user._id);
     return res.status(201).json({
       success: true,
       message: "Account is successfully verified.",
     });
   } catch (error) {
+    console.log('Error verifying user', error);
+    console.error(error);
     res.status(500).json({ message: error.message });
   }
 };

@@ -45,4 +45,4 @@ app.get("/", (req, res) => {
   res.send("Root place");
 });
 
-module.exports.handler = serverless(app, {provider: 'aws'});
+module.exports.handler = serverless(app);

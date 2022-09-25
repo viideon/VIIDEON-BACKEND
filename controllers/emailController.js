@@ -3,28 +3,57 @@ const axios = require("axios");
 const decodeToken = require("jsontokens").decodeToken;
 const { google } = require("googleapis");
 const template = require("../helpers/template");
-const { sendVideoEmail } = require("../helpers/email");
 const emailService = require("../services/emailService");
 const userService = require("../services/userService");
-const { incrementVideoEmail } = require("../services/videoService");
 const videoService = require("../services/videoService");
 const config = require('../util/config');
+const _ = require('lodash');
+const {getError} = require('../util/api');
+
+
+const getOwner = async (request) => {
+  console.log('getOwner request', {request: request, identity: request.requestContext.identity, cognitoIdentity: request.requestContext.authorizer.iam.cognitoIdentity});
+  if (
+      !_.has(request, 'requestContext') ||
+      !_.has(request.requestContext, 'authorizer') ||
+      !_.has(request.requestContext.authorizer, 'iam') ||
+      !_.has(request.requestContext.authorizer.iam, 'cognitoIdentity') ||
+      !_.has(request.requestContext.authorizer.iam.cognitoIdentity, 'amr') ||
+      !_.isArray(request.requestContext.authorizer.iam.cognitoIdentity.amr)
+  ) {
+    throw getError({ code: 'NotAuthorizedException' });
+  }
+  let _idParts;
+  _.forEach(request.requestContext.authorizer.iam.cognitoIdentity.amr, _amr => {
+    if (_.startsWith(_amr, 'cognito-idp.us-east-1.amazonaws.com') && _amr.includes(':CognitoSignIn:')) {
+      _idParts = _amr.split(':CognitoSignIn:');
+    }
+  });
+
+  console.log('ID processed', _idParts);
+
+  if (_.isNil(_idParts)) {
+    throw getError({ code: 'NotAuthorizedException' });
+  }
+
+  return _idParts[1];
+}
 
 module.exports.sendTemplateWithGmail = async (req, res) => {
   const appConfig = await config.getConfig();
 
-  const { userId, recieverEmail, videoId } = req.body;
+  const { videoId } = req.body;
   try {
     const tokenObjects = await emailService.findUserTokenObj(
       "5f5b61ccdd828c1f7f11c09a"
     );
     const singleTokenObj = tokenObjects.tokenObj;
     const fromEmail = tokenObjects.userEmail;
-    const video = await videoService.findVideoById(videoId);
-    const { thumbnail } = video;
-
-    const headerImage = require("../template/spreadHeader.jpg");
-    const logo = require("../template/logo.png");
+    // const video = await videoService.findVideoById(videoId);
+    // const { thumbnail } = video;
+    //
+    // const headerImage = require("../template/spreadHeader.jpg");
+    // const logo = require("../template/logo.png");
     const customTemplate = await template.spreadTheme();
 
     authorize(sendMessage);
@@ -393,7 +422,9 @@ module.exports.sendWithGmail = async (req, res) => {
 };
 
 module.exports.getAndSaveConfig = async (req, res) => {
-  const { code, userId } = req.body;
+  const { code } = req.body;
+
+  console.log('getAndSaveConfig', code, req);
 
   if (code === "") {
     return res.status(400).json({
@@ -401,9 +432,9 @@ module.exports.getAndSaveConfig = async (req, res) => {
     });
   }
 
-  const appConfig = await config.getConfig();
-
   try {
+    const appConfig = await config.getConfig();
+    const _userId = await getOwner(req);
     const params = new url.URLSearchParams({
       code: code,
       client_id: await appConfig.get('CLIENT_ID'),
@@ -420,10 +451,12 @@ module.exports.getAndSaveConfig = async (req, res) => {
     const tokenObj = response.data;
     const userEmail = await decodeJwtToEmail(tokenObj.id_token);
     const result = await emailService.saveEmailConfig({
-      userId,
+      userId: _userId,
       userEmail,
       tokenObj,
     });
+
+    console.log('email config created', result);
 
     if (result) {
       res.status(201).json({
@@ -432,6 +465,8 @@ module.exports.getAndSaveConfig = async (req, res) => {
       });
     }
   } catch (error) {
+    console.log('Error creating config', error);
+    console.error(error);
     res.status(400).json({
       error: error.message,
     });
@@ -439,12 +474,16 @@ module.exports.getAndSaveConfig = async (req, res) => {
 };
 module.exports.getUserEmailConfig = async (req, res) => {
   let userId = req.query.userId;
+  console.log('getUserEmailConfig userId', userId, req);
   try {
-    const result = await emailService.findUserConfig(userId);
+    const _userId = await getOwner(req);
+    const result = await emailService.findUserConfig(_userId);
+    console.log('User config loaded', result);
     res.status(200).json({
       configurations: result,
     });
   } catch (error) {
+    console.error('Error loading config', error);
     res.status(400).json({
       error: error.message,
     });
@@ -490,9 +529,8 @@ function makeBody(recieverEmail, from, subject, message) {
     message,
   ].join("");
 
-  var encodedMail = new Buffer.from(str)
+  return new Buffer.from(str)
     .toString("base64")
     .replace(/\+/g, "-")
     .replace(/\//g, "_");
-  return encodedMail;
 }
