@@ -1,3 +1,5 @@
+const {serializeError} = require('serialize-error');
+
 const videoModel = require("../models/videos");
 const { sendEmail } = require("../helpers/email");
 const videoService = require("../services/videoService");
@@ -366,23 +368,29 @@ module.exports.getUserCampaignVideos = async (req, res) => {
 };
 
 module.exports.updateVideo = async (req, res) => {
+  console.log('Entering update video', {body: req.body});
   let videoId = req.body.id;
   delete req.body.id;
   try {
     if (!videoId) {
+      console.error('Video ID was not passed', {body: req.body});
       return res.status(400).json({
         message: "video id not provided",
       });
     }
+    console.log('Updating video', {body: req.body});
     const video = await videoService.updateVideo(videoId, req.body);
+    console.log('Video updated', {video});
     if (video) {
       return res.status(200).json({
         message: "video updated",
         video: video,
       });
     }
+    console.error('Video was not updated properly', {video});
     res.status(400).json({ message: "video update failed" });
   } catch (error) {
+    console.error('Error updating video', {error: serializeError(error)})
     res.status(400).json({ message: error });
   }
 };

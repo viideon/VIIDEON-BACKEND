@@ -50,9 +50,9 @@ module.exports.getByUserId = userId => {
       if (_.isNil(response)) {
         return resolve(null);
       }
-      if (response.length > 1) {
-        return reject('Multiple users found');
-      }
+      // if (response.length > 1) {
+      //   return reject('Multiple users found');
+      // }
 
       if (response.length === 0) {
         return resolve(null);
