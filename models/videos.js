@@ -61,7 +61,7 @@ const schema = new dynamoose.Schema({
   logoProps: {
     type: Object,
     schema: {
-      url: { type: String },
+      url: { type: [String, dynamoose.type.NULL] },
       width: { type: String },
       height: { type: String },
       position: { type: String }
@@ -101,6 +101,10 @@ module.exports.create = data => {
 }
 
 module.exports.update = (id, data) => {
+  if (_.has(data, 'date')) {
+    data.date = new Date(data.date);
+  }
+  delete data._id;
   return this.model.update(id, data);
 }
 

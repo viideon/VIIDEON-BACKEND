@@ -1,6 +1,6 @@
 {
   "name": "vidionpro-backend",
-  "version": "2.0.0-4",
+  "version": "2.0.0-5",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -35,6 +35,7 @@
     "nodemailer-express-handlebars": "^4.0.0",
     "nodemon": "^2.0.14",
     "randomstring": "^1.1.5",
+    "serialize-error": "^8.1.0",
     "serverless-http": "^3.0.2",
     "ssm-parameter-store": "^2.1.2",
     "uuid": "^8.3.2"
