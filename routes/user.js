@@ -15,5 +15,5 @@ router.route("/template/:userId").get(userController.getTempSetting);
 router.route("/template/:id/:userId").patch(userController.updateTempSetting);
 router.route("/preview/").post(userController.getPreview);
 router.route("/emailvideo").post(userController.shareVideoInEmail);
-
+router.route('/signedUrl').post(userController.createSignedUrl);
 module.exports = router;

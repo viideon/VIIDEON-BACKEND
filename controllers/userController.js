@@ -1,4 +1,6 @@
 const _ = require('lodash');
+const CognitoIdentityServiceProvider = require('aws-sdk/clients/cognitoidentityserviceprovider');
+const {serializeError} = require('serialize-error');
 
 const {
   hashPassword,
@@ -13,7 +15,7 @@ const { helpers } = require("../helpers");
 const Templates = require("../helpers/template");
 const userModel = require('../models/user');
 const {getError} = require('../util/api');
-const CognitoIdentityServiceProvider = require('aws-sdk/clients/cognitoidentityserviceprovider');
+const s3 = require('../util/s3');
 
 const getOwner = async (request) => {
   console.log('getOwner request', {request: request, identity: request.requestContext.identity, cognitoIdentity: request.requestContext.authorizer.iam.cognitoIdentity});
@@ -441,7 +443,6 @@ module.exports.getPreview = async (req, res) => {
   }
 };
 
-
 module.exports.removeUser = async (req, res) => {
   try {
     const { id } = req.params;
@@ -451,3 +452,28 @@ module.exports.removeUser = async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 };
+
+module.exports.createSignedUrl = async (req, res) => {
+  const userId = await getOwner(req);
+  const key = `${userId}/${req.body.filename}`;
+  try {
+    const urlData = await s3.getSignedUrl(process.env.CLIENT_S3_BUCKET, key, 'putObject', req.body.contentType);
+
+    res.status(200).json(urlData);
+  } catch (error) {
+    console.error('Error creating signed url', {error: serializeError(error)});
+    res.status(400).json({message: error.message});
+  }
+}
+
+module.exports.getSignedUrl = async (req, res) => {
+  const key = req.query.key;
+  try {
+    const urlData = await s3.getSignedUrl(process.env.CLIENT_S3_BUCKET, key, 'getObject', req.query.contentType);
+
+    res.status(200).json({signedRequest: urlData.signedRequest});
+  } catch (error) {
+    console.error('Error creating signed url', {error: serializeError(error)});
+    res.status(400).json({message: error.message});
+  }
+}
