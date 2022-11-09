@@ -54,7 +54,7 @@ _Note_: In current form, after deployment, your API is public and can be invoked
 
 The app uses AWS Systems Manager Parameter Store to provide configuration details to the application. You'll want to ensure the following parameters are configured:
 
-*** NOTE: `environment` in the configuration items match the `--stage` value used during deployment (ie, `dev` or `prod`).
+**NOTE: `environment` in the configuration items match the `--stage` value used during deployment (ie, `dev` or `prod`).**
 
 * `/{environment}/viideon/appDomain` - full URL to the app you're currently working with (ie, `http://localhost:3000` for dev or `https://test.app.viideon.com` for a higher environment.
 * `/{environment}/viideon/fromEmail` - email that is used as the from email address (ie `contact@viideon.com`)
