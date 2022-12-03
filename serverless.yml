@@ -18,6 +18,7 @@ custom:
   userTableName: '${self:service}-${sls:stage}-user'
   userAssetsTableName: '${self:service}-${sls:stage}-user-assets'
   videosTableName: '${self:service}-${sls:stage}-videos'
+  clientBucketName: ${self:service}-${sls:stage}-${aws:accountId}-viideon
   recovery:
     prod: True
     dev: False
@@ -495,6 +496,45 @@ custom:
                   ProjectionType: ALL
             StreamSpecification:
               StreamViewType: NEW_AND_OLD_IMAGES
+    s3:
+      Outputs:
+        ClientBucketName:
+          Value: !Ref ClientBucket
+          Export:
+            Name: ${self:custom.clientBucketName}-name
+        ClientBucketArn:
+          Value:
+            Fn::GetAtt:
+              - ClientBucket
+              - Arn
+          Export:
+            Name: ${self:custom.clientBucketName}-arn
+      Resources:
+        ClientBucket:
+          Type: AWS::S3::Bucket
+          Properties:
+            BucketName: ${self:custom.clientBucketName}
+            BucketEncryption:
+              ServerSideEncryptionConfiguration:
+                - ServerSideEncryptionByDefault:
+                    SSEAlgorithm: AES256
+            PublicAccessBlockConfiguration:
+              BlockPublicAcls: True
+              BlockPublicPolicy: True
+              IgnorePublicAcls: True
+              RestrictPublicBuckets: True
+            VersioningConfiguration:
+              Status: Enabled
+            CorsConfiguration:
+              CorsRules:
+                - AllowedHeaders:
+                    - '*'
+                  AllowedMethods:
+                    - PUT
+                    - POST
+                    - GET
+                  AllowedOrigins:
+                    - '*'
 
 provider:
   name: aws
@@ -517,6 +557,13 @@ provider:
             - cognito-idp:AdminUpdateUserAttributes
           Resource:
             - Fn::GetAtt: [CognitoUserPool, Arn]
+        - Effect: Allow
+          Action:
+            - s3:GetObject
+            - s3:PutObject
+          Resource:
+            - arn:aws:s3:::${self:custom.clientBucketName}
+            - arn:aws:s3:::${self:custom.clientBucketName}/*
         - Effect: Allow
           Action:
             - dynamodb:Query
@@ -571,6 +618,7 @@ provider:
     USER_TABLE_NAME: ${self:custom.userTableName}
     USER_ASSETS_TABLE_NAME: ${self:custom.userAssetsTableName}
     VIDEOS_TABLE_NAME: ${self:custom.videosTableName}
+    CLIENT_S3_BUCKET: ${self:custom.clientBucketName}
     ENVIRONMENT: ${sls:stage}
 
 plugins:
@@ -646,6 +694,11 @@ functions:
             type: aws_iam
       - httpApi:
           path: /user/emailvideo
+          method: post
+          authorizer:
+            type: aws_iam
+      - httpApi:
+          path: /user/signedUrl
           method: post
           authorizer:
             type: aws_iam

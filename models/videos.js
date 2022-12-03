@@ -3,6 +3,11 @@ const { v4: uuid } = require('uuid');
 const _ = require('lodash');
 
 const userModel = require('./user');
+const s3 = require('../util/s3');
+
+const getSignedUrl = async (bucket, key, operation) => {
+  return await s3.getSignedUrl(bucket, key, operation);
+}
 
 const schema = new dynamoose.Schema({
   _id: {
@@ -18,6 +23,7 @@ const schema = new dynamoose.Schema({
       name: 'gidx-url',
       type: 'global',
     },
+    get: async (value) => (await getSignedUrl(process.env.CLIENT_S3_BUCKET, value, 'getObject')).signedRequest
   },
   thumbnail: {
     type: String,
@@ -26,6 +32,7 @@ const schema = new dynamoose.Schema({
       name: 'gidx-thumbnail',
       type: 'global',
     },
+    get: async (value) => (await getSignedUrl(process.env.CLIENT_S3_BUCKET, value, 'getObject')).signedRequest
   },
   title: {
     type: String,
@@ -61,7 +68,10 @@ const schema = new dynamoose.Schema({
   logoProps: {
     type: Object,
     schema: {
-      url: { type: [String, dynamoose.type.NULL] },
+      url: {
+        type: [String, dynamoose.type.NULL],
+        get: async (value) => (await getSignedUrl(process.env.CLIENT_S3_BUCKET, value, 'getObject')).signedRequest
+      },
       width: { type: String },
       height: { type: String },
       position: { type: String }
@@ -84,7 +94,10 @@ const schema = new dynamoose.Schema({
   musicProps: {
     type: Object,
     schema: {
-      url: { type: String },
+      url: {
+        type: String,
+        get: async (value) => (await getSignedUrl(process.env.CLIENT_S3_BUCKET, value, 'getObject')).signedRequest
+      },
       title: { type: String },
       musicVolume: { type: Number }
     }
