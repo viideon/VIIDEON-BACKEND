@@ -24,7 +24,7 @@ const schema = new dynamoose.Schema({
       schema: {
         title: { type: String },
         description: { type: String },
-        duration: { type: String },
+        duration: { type: Number },
         examples: {
           type: Array,
           schema: [String],

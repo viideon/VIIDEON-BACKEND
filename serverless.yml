@@ -530,11 +530,19 @@ custom:
                 - AllowedHeaders:
                     - '*'
                   AllowedMethods:
+                    - GET
+                    - HEAD
                     - PUT
                     - POST
-                    - GET
+                    - DELETE
                   AllowedOrigins:
                     - '*'
+                  ExposedHeaders:
+                    - x-amz-server-side-encryption
+                    - x-amz-request-id
+                    - x-amz-id-2
+                    - ETag
+                  MaxAge: 3000
 
 provider:
   name: aws
@@ -985,6 +993,10 @@ resources:
             Name: 'email'
             Required: true
             Mutable: false
+          - AttributeDataType: 'String'
+            Name: 'userType'
+            Required: false
+            Mutable: true
     CognitoUserPoolClient:
       Type: AWS::Cognito::UserPoolClient
       Properties:
@@ -1034,6 +1046,35 @@ resources:
             PolicyDocument:
               Version: '2012-10-17'
               Statement:
+                - Effect: Allow
+                  Action:
+                    - s3:GetObject
+                    - s3:PutObject
+                    - s3:DeleteObject
+                  Resource:
+                    - arn:aws:s3:::${self:custom.clientBucketName}/public/*
+                - Effect: Allow
+                  Action:
+                    - s3:PutObject
+                  Resource:
+                    - arn:aws:s3:::${self:custom.clientBucketName}/uploads/*
+                - Effect: Allow
+                  Action:
+                    - s3:GetObject
+                  Resource:
+                    - arn:aws:s3:::${self:custom.clientBucketName}/protected/*
+                - Effect: 'Allow'
+                  Action:
+                    - s3:ListBucket
+                  Resource:
+                    - arn:aws:s3:::${self:custom.clientBucketName}
+                  Condition:
+                    StringLike:
+                      s3:prefix:
+                        - public/
+                        - public/*
+                        - protected/
+                        - protected/*
                 - Effect: 'Allow'
                   Action:
                     - 'cognito-sync:*'
@@ -1078,6 +1119,39 @@ resources:
             PolicyDocument:
               Version: '2012-10-17'
               Statement:
+                - Effect: 'Allow'
+                  Action:
+                    - s3:GetObject
+                    - s3:PutObject
+                    - s3:DeleteObject
+                  Resource:
+                    - arn:aws:s3:::${self:custom.clientBucketName}/public/*
+                    - !Join ['', ['arn:aws:s3:::', '${self:custom.clientBucketName}', '/protected/', '$', '{cognito-identity.amazonaws.com:sub}', '/*']]
+                    - !Join ['', ['arn:aws:s3:::', '${self:custom.clientBucketName}', '/private/', '$', '{cognito-identity.amazonaws.com:sub}', '/*']]
+                - Effect: 'Allow'
+                  Action:
+                    - s3:PutObject
+                  Resource:
+                    - arn:aws:s3:::${self:custom.clientBucketName}/uploads/*
+                - Effect: 'Allow'
+                  Action:
+                    - s3:GetObject
+                  Resource:
+                    - arn:aws:s3:::${self:custom.clientBucketName}/protected/*
+                - Effect: 'Allow'
+                  Action:
+                    - s3:ListBucket
+                  Resource:
+                    - arn:aws:s3:::${self:custom.clientBucketName}
+                  Condition:
+                    StringLike:
+                      s3:prefix:
+                        - public/
+                        - public/*
+                        - protected/
+                        - protected/*
+                        - !Join ['', ['private/', '$', '{cognito-identity.amazonaws.com:sub}', '/']]
+                        - !Join ['', ['private/', '$', '{cognito-identity.amazonaws.com:sub}', '/*']]
                 - Effect: 'Allow'
                   Action:
                     - 'cognito-sync:*'
