@@ -25,6 +25,7 @@
     "express": "^4.17.1",
     "express-fileupload": "^1.1.7-alpha.3",
     "fluent-ffmpeg": "^2.1.2",
+    "gifshot": "^0.4.5",
     "googleapis": "^52.1.0",
     "grabzit": "^3.4.5",
     "http-status": "^1.5.3",
@@ -41,6 +42,8 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "serverless-plugin-additional-stacks": "^1.6.0"
+    "serverless-plugin-additional-stacks": "^1.6.0",
+    "serverless-plugin-common-excludes": "^4.0.0",
+    "serverless-plugin-include-dependencies": "^5.0.0"
   }
 }

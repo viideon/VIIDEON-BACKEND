@@ -37,3 +37,48 @@ module.exports.getSignedUrl = (bucket, key, operation, contentType = 'applicatio
     });
   });
 }
+
+module.exports.getRawFromS3 = (bucket, key) => {
+  let s3 = new S3();
+
+  const params = {
+    Bucket: bucket,
+    Key: key,
+  }
+
+  return s3.getObject(params);
+}
+
+module.exports.sendToS3 = (body, bucket, key, contentType = 'application/octet-stream', storageClass = 'STANDARD', encryption = 'AES256', tagging = '') => {
+  let s3 = new S3();
+
+  const params = {
+    Body: body,
+    Bucket: bucket,
+    ContentType: contentType,
+    ServerSideEncryption: encryption,
+    StorageClass: storageClass,
+    Key: key,
+    Tagging: tagging,
+  }
+
+  if (process.env.IS_OFFLINE) {
+    return new Promise(resolve => {
+      resolve({
+        Location: 'https://some.url',
+        ETag: 'etag',
+        Bucket: bucket,
+        Key: key,
+      });
+    });
+  }
+
+  return new Promise((resolve, reject) => {
+    s3.upload(params, function(err, data) {
+      if (err) {
+        return reject(err);
+      }
+      return resolve(data);
+    });
+  });
+}
