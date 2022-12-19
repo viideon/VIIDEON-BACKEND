@@ -753,8 +753,8 @@ functions:
       - httpApi:
           path: /video/thumbnail
           method: post
-#          authorizer:
-#            type: aws_iam
+          authorizer:
+            type: aws_iam
       - httpApi:
           path: /video/updateViews
           method: post
