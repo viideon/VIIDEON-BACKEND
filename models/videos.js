@@ -5,10 +5,6 @@ const _ = require('lodash');
 const userModel = require('./user');
 const s3 = require('../util/s3');
 
-const getSignedUrl = async (bucket, key, operation) => {
-  return await s3.getSignedUrl(bucket, key, operation);
-}
-
 const schema = new dynamoose.Schema({
   _id: {
     type: String,
@@ -23,7 +19,7 @@ const schema = new dynamoose.Schema({
       name: 'gidx-url',
       type: 'global',
     },
-    get: async (value) => (await getSignedUrl(process.env.CLIENT_S3_BUCKET, value, 'getObject')).signedRequest
+    // get: async (value) => (await getSignedUrl(process.env.CLIENT_S3_BUCKET, value, 'getObject')).signedRequest
   },
   thumbnail: {
     type: String,
@@ -32,7 +28,7 @@ const schema = new dynamoose.Schema({
       name: 'gidx-thumbnail',
       type: 'global',
     },
-    get: async (value) => (await getSignedUrl(process.env.CLIENT_S3_BUCKET, value, 'getObject')).signedRequest
+    // get: async (value) => (await getSignedUrl(process.env.CLIENT_S3_BUCKET, value, 'getObject')).signedRequest
   },
   title: {
     type: String,
@@ -51,6 +47,7 @@ const schema = new dynamoose.Schema({
       },
     ],
   },
+  identityId: String,
   date: { type: Date, default: Date.now },
   recieverEmail: { type: String, required: false },
   campaign: { type: Boolean, required: false },
@@ -70,7 +67,7 @@ const schema = new dynamoose.Schema({
     schema: {
       url: {
         type: [String, dynamoose.type.NULL],
-        get: async (value) => (await getSignedUrl(process.env.CLIENT_S3_BUCKET, value, 'getObject')).signedRequest
+        // get: async (value) => (await getSignedUrl(process.env.CLIENT_S3_BUCKET, value, 'getObject')).signedRequest
       },
       width: { type: String },
       height: { type: String },
@@ -96,7 +93,12 @@ const schema = new dynamoose.Schema({
     schema: {
       url: {
         type: String,
-        get: async (value) => (await getSignedUrl(process.env.CLIENT_S3_BUCKET, value, 'getObject')).signedRequest
+        // get: async (value) => (await getSignedUrl(process.env.CLIENT_S3_BUCKET, value, 'getObject')).signedRequest
+      },
+      type: {
+        type: String,
+        enum: ['public', 'protected', 'private', '', null],
+        default: 'public',
       },
       title: { type: String },
       musicVolume: { type: Number }

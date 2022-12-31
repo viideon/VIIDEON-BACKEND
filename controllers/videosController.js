@@ -269,7 +269,7 @@ module.exports.emailVideo = async (req, res) => {
 
   const video = await videoService.findVideoById(id);
 
-  const { thumbnail, url } = video;
+  const { thumbnail } = video;
   try {
     if (req.body.recieverEmail === "") {
       return res.status(400).json({ message: "no email provided" });
@@ -336,9 +336,11 @@ module.exports.createThumbnail = async (req, res) => {
     console.log('createThumbnail success', {thumbnail});
     const _response = JSON.parse(thumbnail.Payload);
     if (_.has(thumbnail, 'FunctionError')) {
+      console.error('Error creating thumbnail', {response: _response});
       return res.status(400).json(_response);
     }
-    return res.status(201).json({ thumbnail: _response.key, message: "video successfully saved" });
+    console.log('Thumbnail created, returning', {response: _response});
+    return res.status(201).json({ thumbnail: _response.Key, message: "video successfully saved" });
   } catch (error) {
     console.error('Error creating video', error);
     res.status(400).json(error);
