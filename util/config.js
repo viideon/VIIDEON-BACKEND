@@ -9,6 +9,8 @@ const parameters = new SSMParameterStore(new SSM(), {
   TOKEN_OBJECT_PATH: `/${process.env.ENVIRONMENT}/viideon/gmail/tokenObjectPath`,
   FROM_EMAIL: `/${process.env.ENVIRONMENT}/viideon/fromEmail`,
   SECRET_KEY: `/${process.env.ENVIRONMENT}/viideon/jwt/secretKey`,
+  FFMPEG_START_SEEK: `/${process.env.ENVIRONMENT}/viideon/ffmpeg/startSeek`,
+  FFMPEG_TIME: `/${process.env.ENVIRONMENT}/viideon/ffmpeg/time`,
 });
 
 module.exports.getConfig = async () => {

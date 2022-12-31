@@ -1,10 +1,12 @@
 const {serializeError} = require('serialize-error');
+const _ = require('lodash');
 
 const videoModel = require("../models/videos");
 const { sendEmail } = require("../helpers/email");
 const videoService = require("../services/videoService");
 const template = require("../helpers/template");
 const userService = require("../services/userService");
+const lambda = require("../util/lambda");
 
 // function splitUrl(logo) {
 //   if (logo && logo.indexOf("blob:") !== -1) {
@@ -267,7 +269,7 @@ module.exports.emailVideo = async (req, res) => {
 
   const video = await videoService.findVideoById(id);
 
-  const { thumbnail, url } = video;
+  const { thumbnail } = video;
   try {
     if (req.body.recieverEmail === "") {
       return res.status(400).json({ message: "no email provided" });
@@ -315,6 +317,30 @@ module.exports.postVideo = async (req, res) => {
     return res
       .status(201)
       .json({ video: video, message: "video sucessfully saved" });
+  } catch (error) {
+    console.error('Error creating video', error);
+    res.status(400).json(error);
+  }
+};
+
+module.exports.createThumbnail = async (req, res) => {
+  console.log('createThumbnail', {body: req.body});
+  try {
+    const thumbnail = await lambda.invoke(
+      `gifGenerator-${process.env.ENVIRONMENT}-animatedGifGenerator`,
+      {
+        video: req.body.video,
+        bucket: process.env.CLIENT_S3_BUCKET,
+      }
+    )
+    console.log('createThumbnail success', {thumbnail});
+    const _response = JSON.parse(thumbnail.Payload);
+    if (_.has(thumbnail, 'FunctionError')) {
+      console.error('Error creating thumbnail', {response: _response});
+      return res.status(400).json(_response);
+    }
+    console.log('Thumbnail created, returning', {response: _response});
+    return res.status(201).json({ thumbnail: _response.Key, message: "video successfully saved" });
   } catch (error) {
     console.error('Error creating video', error);
     res.status(400).json(error);

@@ -9,6 +9,7 @@ router.route("/").patch(videosController.updateVideo);
 router.route("/").delete(videosController.deleteVideo);
 
 router.route("/email").post(videosController.emailVideo);
+router.route("/thumbnail").post(videosController.createThumbnail);
 router.route("/updateViews").post(videosController.updateVideoViews);
 router.route("/updateWatch").post(videosController.updateVideoWatchCount);
 router.route("/updateEmailShare").post(videosController.updateVideoEmailShare);

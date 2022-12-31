@@ -555,6 +555,11 @@ provider:
       statements:
         - Effect: Allow
           Action:
+            - lambda:InvokeFunction
+          Resource:
+            - arn:aws:lambda:${aws:region}:${aws:accountId}:function:gifGenerator-${sls:stage}-animatedGifGenerator
+        - Effect: Allow
+          Action:
             - ssm:GetParameters
           Resource:
             - arn:aws:ssm:${aws:region}:${aws:accountId}:parameter/${sls:stage}/viideon
@@ -631,6 +636,11 @@ provider:
 
 plugins:
   - serverless-plugin-additional-stacks
+  - serverless-plugin-include-dependencies
+  - serverless-plugin-common-excludes
+
+package:
+  excludeDevDependencies: false
 
 functions:
   api:
@@ -737,6 +747,11 @@ functions:
             type: aws_iam
       - httpApi:
           path: /video/email
+          method: post
+          authorizer:
+            type: aws_iam
+      - httpApi:
+          path: /video/thumbnail
           method: post
           authorizer:
             type: aws_iam
