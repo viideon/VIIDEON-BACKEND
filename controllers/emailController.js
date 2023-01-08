@@ -9,6 +9,7 @@ const videoService = require("../services/videoService");
 const config = require('../util/config');
 const _ = require('lodash');
 const {getError} = require('../util/api');
+const s3 = require('../util/s3');
 
 
 const getOwner = async (request) => {
@@ -114,7 +115,9 @@ module.exports.sendWithGmail = async (req, res) => {
     const fromEmail = tokenObjects.userEmail;
 
     const video = await videoService.findVideoById(videoId);
-    const { thumbnail, eMailTemplate, title, description } = video;
+    const { thumbnail, eMailTemplate, title, description, identityId } = video;
+    const _thumbnail = await s3.getRawFromS3(process.env.CLIENT_S3_BUCKET, `protected/${identityId}/${thumbnail}`);
+    const _thumbnailBase64 = `data:${_thumbnail.ContentType};base64,${new Buffer(_thumbnail.Body).toString('base64')}`
 
     const user = await userService.getUserById(userId);
     const { userName, url, email, mobileNumber, businessPhone, webAddress, facebookAddress, twitterAddress, youtubeAddress, linkedinAddress, address  } = user;
@@ -154,7 +157,7 @@ module.exports.sendWithGmail = async (req, res) => {
     if (themeName === "Spread") {
       templateString = await template.spreadTheme(
         videoId,
-        thumbnail,
+        _thumbnailBase64,
         title,
         description,
         false,
@@ -175,7 +178,7 @@ module.exports.sendWithGmail = async (req, res) => {
     if (themeName === "Corporate Light") {
       templateString = await template.corporateLight(
         videoId,
-        thumbnail,
+        _thumbnailBase64,
         title,
         description,
         false,
@@ -197,7 +200,7 @@ module.exports.sendWithGmail = async (req, res) => {
     if (themeName === "Modern Simple") {
       templateString = await template.modernSimple(
         videoId,
-        thumbnail,
+        _thumbnailBase64,
         title,
         description,
         false,
@@ -218,7 +221,7 @@ module.exports.sendWithGmail = async (req, res) => {
     if (themeName === "Streamlined") {
       templateString = await template.streamlined(
         videoId,
-        thumbnail,
+        _thumbnailBase64,
         title,
         description,
         false,
@@ -239,7 +242,7 @@ module.exports.sendWithGmail = async (req, res) => {
     if (themeName === "Simple Blue") {
       templateString = await template.simple_blue(
         videoId,
-        thumbnail,
+        _thumbnailBase64,
         title,
         description,
         false,
@@ -260,7 +263,7 @@ module.exports.sendWithGmail = async (req, res) => {
     if (themeName === "Sleek") {
       templateString = await template.sleek(
         videoId,
-        thumbnail,
+        _thumbnailBase64,
         title,
         description,
         false,
@@ -281,7 +284,7 @@ module.exports.sendWithGmail = async (req, res) => {
     if (themeName === "Social Business") {
       templateString = await template.social_business(
         videoId,
-        thumbnail,
+        _thumbnailBase64,
         title,
         description,
         false,
@@ -302,7 +305,7 @@ module.exports.sendWithGmail = async (req, res) => {
     if (themeName === "Social Impact") {
       templateString = await template.social_impact(
         videoId,
-        thumbnail,
+        _thumbnailBase64,
         title,
         description,
         false,
@@ -323,7 +326,7 @@ module.exports.sendWithGmail = async (req, res) => {
     if (themeName === "Clasic Dark") {
       templateString = await template.classic_dark(
         videoId,
-        thumbnail,
+        _thumbnailBase64,
         title,
         description,
         false,
@@ -344,7 +347,7 @@ module.exports.sendWithGmail = async (req, res) => {
     if (themeName === "Ocean") {
       templateString = await template.ocean(
         videoId,
-        thumbnail,
+        _thumbnailBase64,
         title,
         description,
         false,

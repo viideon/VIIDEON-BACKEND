@@ -46,7 +46,15 @@ module.exports.getRawFromS3 = (bucket, key) => {
     Key: key,
   }
 
-  return s3.getObject(params);
+  return new Promise((resolve, reject) => {
+    s3.getObject(params, function(err, data) {
+      if (err) {
+        return reject(err);
+      }
+
+      resolve(data);
+    });
+  });
 }
 
 module.exports.sendToS3 = (body, bucket, key, contentType = 'application/octet-stream', storageClass = 'STANDARD', encryption = 'AES256', tagging = '') => {
